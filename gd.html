@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrossDump.ai — PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #38bdf8;
+            --neon-pink: #f472b6;
+            --danger: #ef4444;
+        }
+
+        body {
+            margin: 0; overflow: hidden;
+            background: #020617;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            user-select: none;
+            touch-action: none;
+            height: 100vh; width: 100vw;
+        }
+
+        /* Scanline Overlay */
+        body::before {
+            content: " "; display: block; position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            z-index: 5000; background-size: 100% 2px; pointer-events: none;
+        }
+
+        #boot-screen {
+            position: fixed; inset: 0; background: #020617;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; z-index: 9999;
+        }
+
+        #hud {
+            position: absolute; top: 20px; left: 20px; z-index: 100;
+            display: none; flex-direction: column; gap: 8px; pointer-events: none;
+        }
+
+        .stat-box {
+            background: rgba(15, 23, 42, 0.9); padding: 10px 15px; border-radius: 8px;
+            border-left: 4px solid var(--neon-blue); font-size: 18px;
+            min-width: 150px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        #hearts { color: var(--danger); font-size: 24px; }
+
+        #open-shop-btn {
+            position: absolute; top: 20px; right: 20px;
+            padding: 12px 20px; background: var(--neon-blue);
+            color: #000; border-radius: 8px; cursor: pointer;
+            font-weight: 900; z-index: 101; border: none; display: none;
+        }
+
+        #shop-menu {
+            display: none; position: fixed; inset: 0; 
+            background: rgba(2, 6, 23, 0.98); z-index: 2000;
+            flex-direction: column; align-items: center; justify-content: center; gap: 15px;
+        }
+
+        .shop-item {
+            background: rgba(30, 41, 59, 0.8); padding: 15px 25px;
+            border-radius: 12px; border: 1px solid var(--neon-blue);
+            width: 320px; display: flex; justify-content: space-between; align-items: center;
+        }
+
+        #bin {
+            position: absolute; bottom: 40px; left: 50%;
+            transform: translateX(-50%); font-size: 80px;
+            z-index: 50; pointer-events: none; display: none;
+        }
+
+        .item { position: absolute; font-size: 50px; z-index: 40; pointer-events: none; }
+        .poop { filter: drop-shadow(0 0 15px #78350f); }
+
+        #gameover {
+            display: none; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); background: rgba(0,0,0,0.95);
+            padding: 50px; border-radius: 20px; border: 2px solid var(--neon-pink);
+            text-align: center; z-index: 6000;
+        }
+
+        .btn-main {
+            padding: 15px 30px; background: var(--neon-blue);
+            color: #000; font-weight: 900; border-radius: 50px;
+            cursor: pointer; font-family: 'Orbitron'; border: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div id="boot-screen">
+    <h1 style="color:var(--neon-blue); letter-spacing:8px; font-size: 2.5rem; text-align: center;">GROSSDUMP.AI</h1>
+    <p style="color:white; margin-bottom: 30px;">V2.5 STABLE_READY</p>
+    <button class="btn-main" onclick="initGame()">FORCE START</button>
+</div>
+
+<div id="hud">
+    <div class="stat-box">SCORE: <span id="score">0</span></div>
+    <div class="stat-box">COINS: 💰 <span id="coins">0</span></div>
+    <div id="hearts">❤️❤️❤️</div>
+    <div id="combo-alert" style="color:var(--neon-blue); font-weight:900; height: 20px;"></div>
+</div>
+
+<button id="open-shop-btn" onclick="toggleShop(true)">🛒 UPGRADES</button>
+
+<div id="shop-menu">
+    <h1 style="color:var(--neon-pink)">TERMINAL_MARKET</h1>
+    <div class="shop-item"><span>❤️ REPAIR</span><button onclick="buy('heart', 150)" class="btn-main" style="padding:8px 15px; font-size:12px;">150💰</button></div>
+    <div class="shop-item"><span>🛡️ SHIELD</span><button onclick="buy('shield', 75)" class="btn-main" style="padding:8px 15px; font-size:12px;">75💰</button></div>
+    <div class="shop-item"><span>⌛ SLOW-MO</span><button onclick="buy('slow', 200)" class="btn-main" style="padding:8px 15px; font-size:12px;">200💰</button></div>
+    <div class="shop-item"><span>💎 2X COIN</span><button onclick="buy('mult', 400)" class="btn-main" style="padding:8px 15px; font-size:12px;">400💰</button></div>
+    <button class="btn-main" onclick="toggleShop(false)" style="margin-top:20px; background:white;">EXIT</button>
+</div>
+
+<div id="bin">🗑️</div>
+
+<div id="gameover">
+    <h1 style="color:var(--neon-pink);">SYSTEM CRITICAL</h1>
+    <p id="final-score" style="font-size:24px;"></p>
+    <button class="btn-main" onclick="location.reload()">RELOAD</button>
+</div>
+
+<script>
+    // Variables
+    let score = 0, coins = 0, lives = 3, combo = 0, speed = 5;
+    let playing = false, magnetMode = false, hasShield = false, coinMult = 1;
+    let binX = window.innerWidth / 2;
+    const bin = document.getElementById('bin');
+
+    // Startup
+    function initGame() {
+        document.getElementById('boot-screen').style.display = 'none';
+        document.getElementById('hud').style.display = 'flex';
+        document.getElementById('open-shop-btn').style.display = 'block';
+        bin.style.display = 'block';
+        bin.style.left = binX + 'px';
+        
+        playing = true;
+        updateUI();
+        gameLoop();
+    }
+
+    // Input
+    const handleMove = (e) => {
+        if (!playing) return;
+        const x = (e.clientX !== undefined) ? e.clientX : (e.touches ? e.touches[0].clientX : binX);
+        binX = Math.max(50, Math.min(window.innerWidth - 50, x));
+        bin.style.left = binX + 'px';
+    };
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('touchmove', handleMove);
+
+    function toggleShop(open) {
+        playing = !open;
+        document.getElementById('shop-menu').style.display = open ? 'flex' : 'none';
+    }
+
+    function buy(type, cost) {
+        if (coins >= cost) {
+            coins -= cost;
+            if (type === 'heart') lives++;
+            if (type === 'shield') { hasShield = true; document.getElementById('combo-alert').innerText = "SHIELD_ON"; }
+            if (type === 'slow') speed = Math.max(3, speed - 2);
+            if (type === 'mult') coinMult = 2;
+            updateUI();
+        }
+    }
+
+    function spawn() {
+        if (!playing) return;
+        const obj = document.createElement('div');
+        const rand = Math.random();
+        let type = 'trash';
+        
+        if (rand < 0.15) type = 'poop';
+        else if (rand > 0.96) type = 'magnet';
+
+        obj.className = 'item ' + (type === 'poop' ? 'poop' : '');
+        obj.innerText = type === 'poop' ? '💩' : (type === 'magnet' ? '🧲' : ["🍌", "🥤", "🍕", "🍔"][Math.floor(Math.random() * 4)]);
+        obj.style.left = Math.random() * (window.innerWidth - 60) + 'px';
+        obj.style.top = '-100px';
+        document.body.appendChild(obj);
+
+        let y = -100;
+        let fall = setInterval(() => {
+            if (!playing) return; 
+            y += speed;
+            obj.style.top = y + 'px';
+
+            const bRect = bin.getBoundingClientRect();
+            const oRect = obj.getBoundingClientRect();
+
+            if (oRect.bottom >= bRect.top && oRect.left < bRect.right && oRect.right > bRect.left) {
+                if (type === 'poop') {
+                    if (hasShield) { hasShield = false; document.getElementById('combo-alert').innerText = ""; }
+                    else { gameOver(); }
+                } else if (type === 'magnet') { /* Magnet code removed for extreme stability */ }
+                else {
+                    combo++; score += (10 * combo); coins += (5 * coinMult); speed += 0.05;
+                }
+                clearInterval(fall); obj.remove(); updateUI();
+            }
+
+            if (y > window.innerHeight) {
+                if (type === 'trash') {
+                    lives--; combo = 0;
+                    if (lives <= 0) gameOver();
+                }
+                clearInterval(fall); obj.remove(); updateUI();
+            }
+        }, 16);
+    }
+
+    function updateUI() {
+        document.getElementById('score').innerText = score;
+        document.getElementById('coins').innerText = coins;
+        document.getElementById('hearts').innerText = "❤️".repeat(Math.max(0, lives));
+    }
+
+    function gameOver() {
+        playing = false;
+        document.getElementById('final-score').innerText = "DATA_LOST: " + score;
+        document.getElementById('gameover').style.display = 'block';
+    }
+
+    function gameLoop() {
+        if (playing) spawn();
+        setTimeout(gameLoop, Math.max(400, 1000 - (score / 40)));
+    }
+</script>
+</body>
+</html>
+
