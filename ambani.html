@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ambani Wealth Simulator | Dixit Labs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --bg: #020617;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-bg: rgba(30, 41, 59, 0.8);
             --primary: #22c55e;
             --accent: #38bdf8;
             --danger: #ef4444;
@@ -21,55 +21,64 @@
             background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 100%);
             color: white;
             margin: 0;
-            overflow-x: hidden;
+            padding: 0;
+        }
+
+        /* --- Fix for Faded Screen (Intro) --- */
+        #gameIntro {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: 0.8s ease;
         }
 
         header {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 30px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px;
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 2px solid var(--accent);
+            text-align: center;
         }
 
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            color: var(--accent);
-        }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--accent); margin: 0; }
 
-        .money-sticky {
+        .money-display {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
             color: var(--primary);
-            text-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
             margin: 10px 0;
+            font-weight: 900;
         }
 
-        .progress-container {
-            width: 100%;
-            height: 6px;
+        .progress-bar-wrap {
+            width: 80%;
+            height: 10px;
             background: #111827;
-            border-radius: 10px;
-            margin-top: 15px;
+            margin: 10px auto;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
         }
 
-        #progress-bar {
+        #progress-fill {
             width: 0%;
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            transition: 0.5s ease;
+            transition: 0.4s;
         }
 
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
             padding: 40px 20px;
             max-width: 1400px;
             margin: 0 auto;
@@ -77,189 +86,149 @@
 
         .card {
             background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
             padding: 25px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(5px);
         }
 
         .card:hover {
             transform: translateY(-10px);
             border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: rgba(30, 41, 59, 1);
         }
 
-        .card-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            display: block;
+        .card-icon { font-size: 4rem; margin-bottom: 10px; display: block; }
+        .price-tag { color: var(--accent); font-weight: bold; font-size: 1.3rem; margin: 15px 0; }
+        
+        .qty-label { 
+            background: #020617; 
+            padding: 4px 12px; 
+            border-radius: 10px; 
+            font-size: 0.8rem; 
+            margin-bottom: 15px; 
+            display: inline-block;
         }
 
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 10px 0;
-            font-size: 1.1rem;
-        }
-
-        .price {
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
+        .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
         button {
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
-            text-transform: uppercase;
-            font-size: 0.8rem;
         }
 
-        button:active { transform: scale(0.9); }
-
-        .buy { background: var(--primary); color: #064e3b; }
-        .buy:hover { background: #4ade80; box-shadow: 0 0 15px var(--primary); }
-
-        .sell { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
+        .buy { background: var(--primary); color: #000; }
+        .buy:hover { box-shadow: 0 0 15px var(--primary); }
+        .sell { background: transparent; color: var(--danger); border: 2px solid var(--danger); }
         .sell:hover { background: var(--danger); color: white; }
 
-        .qty-badge {
-            background: #0f172a;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-            display: inline-block;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        #twitter-section {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
+        #twitter-box {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
         }
 
         #tweets {
             background: #020617;
-            border-radius: 20px;
-            height: 300px;
+            height: 350px;
             overflow-y: auto;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
 
         .tweet {
             background: #111827;
-            margin-bottom: 12px;
             padding: 15px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent);
-            animation: slideIn 0.3s ease-out;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--accent);
             text-align: left;
-            font-size: 0.9rem;
+            animation: popIn 0.3s ease;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        @keyframes popIn { from { opacity:0; transform: scale(0.9); } to { opacity:1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>DIXIT LABS: WEALTH_SIMULATOR</h1>
-    <div class="money-sticky">₹ <span id="money">0</span></div>
-    <div style="font-size: 0.8rem; opacity: 0.6; font-family: 'Orbitron';">REMAINING FORTUNE</div>
-    <div class="progress-container">
-        <div id="progress-bar"></div>
+<div id="gameIntro">
+    <h1 style="font-size: 3rem; margin-bottom: 20px;">💰</h1>
+    <button onclick="startGame()" style="background: var(--accent); padding: 20px 50px; border-radius: 50px; font-size: 1.2rem;">IGNITE WEALTH</button>
+</div>
+
+<header id="mainHeader">
+    <h1>AMBANI WEALTH SIMULATOR</h1>
+    <div class="money-display">₹ <span id="money">0</span></div>
+    <div class="progress-bar-wrap">
+        <div id="progress-fill"></div>
     </div>
+    <p style="font-size: 0.7rem; letter-spacing: 2px; opacity: 0.7;">FORTUNE SPENT: <span id="percent">0</span>%</p>
 </header>
 
 <div class="container" id="shop"></div>
 
-<div id="twitter-section">
-    <h2 style="font-family: 'Orbitron'; font-size: 1rem; color: var(--accent); text-align: left; margin-left: 20px;">
-        LIVE FEED: BILLIONAIRE REACTIONS
-    </h2>
+<div id="twitter-box">
+    <h2 style="font-family: 'Orbitron'; font-size: 1rem; color: var(--accent);">LIVE BILLIONAIRE FEED</h2>
     <div id="tweets"></div>
 </div>
 
+<footer style="padding: 50px; text-align: center; opacity: 0.5; font-size: 0.8rem; font-family: 'Orbitron';">
+    © DIXIT LABS // WEALTH DIVISION
+</footer>
+
 <script>
     let initialMoney = 900000000000000;
-    let money = 900000000000000;
+    let currentMoney = initialMoney;
 
-    // SFX Assets
-    const buySfx = new Audio('https://assets.mixkit.co/active_storage/sfx/1770/1770-preview.mp3'); 
-    const errorSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2539/2539-preview.mp3');
-    buySfx.volume = 0.3;
+    const buySfx = new Audio('https://assets.mixkit.co/active_storage/sfx/1770/1770-preview.mp3');
+    const startupSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
 
     const items = [
         {name:"Candy", price:2, icon:"🍬"},
         {name:"Samosa", price:20, icon:"🥟"},
         {name:"Ice Cream", price:60, icon:"🍦"},
-        {name:"Movie Ticket", price:250, icon:"🎬"},
-        {name:"Gaming Mouse", price:2500, icon:"🖱️"},
         {name:"Phone", price:80000, icon:"📱"},
         {name:"Gaming PC", price:250000, icon:"🖥️"},
-        {name:"Luxury Bike", price:1200000, icon:"🏍️"},
-        {name:"Supercar", price:45000000, icon:"🏎️"},
         {name:"Luxury Watch", price:5000000, icon:"⌚"},
-        {name:"Diamond Ring", price:25000000, icon:"💎"},
-        {name:"Private Helicopter", price:800000000, icon:"🚁"},
-        {name:"Antilia 2.0", price:15000000000, icon:"🏰"},
+        {name:"Supercar", price:45000000, icon:"🏎️"},
         {name:"Private Jet", price:6000000000, icon:"🛩️"},
         {name:"IPL Team", price:75000000000, icon:"🏏"},
         {name:"Space Rocket", price:400000000000, icon:"🚀"},
-        {name:"Satellite Network", price:900000000000, icon:"🛰️"},
-        {name:"Small Country Debt", price:5000000000000, icon:"🌎"},
-        {name:"Moon Colony", price:12000000000000, icon:"🌙"},
-        {name:"Mars Base", price:20000000000000, icon:"🔴"}
+        {name:"Small Country", price:5000000000000, icon:"🌍"},
+        {name:"Mars Colony", price:20000000000000, icon:"🔴"}
     ];
 
-    const tweets = [
-        "Elon Musk: Bro just bought WHAT 💀",
-        "Jeff Bezos: That's more deliveries than Amazon Prime.",
-        "Bill Gates: Maybe donate some? Just saying.",
-        "Finance Guru: This is NOT passive income behavior.",
-        "Stock Market Uncle: Beta, gold khareedo.",
-        "Economist: Inflation just went up 4% because of you.",
-        "CA Friend: Bhai GST ka bill sambhal ke rakhna.",
-        "Random Crypto Guy: Could've bought the dip instead.",
-        "Shark Tank Judge: And for that reason, I'm out."
+    const reactions = [
+        "Elon Musk: Stop spending my future budget! 💀",
+        "Jeff Bezos: I just saw your order... it's a lot.",
+        "Bill Gates: Have you considered a foundation? Just asking.",
+        "Shark Tank: This valuation is insane. I'm out.",
+        "Economist: You single-handedly caused inflation.",
+        "CA Friend: Bhai, please send me the GST bills."
     ];
 
-    function updateUI() {
-        document.getElementById("money").innerText = money.toLocaleString('en-IN');
-        let spent = initialMoney - money;
-        let percentage = (spent / initialMoney) * 100;
-        document.getElementById("progress-bar").style.width = percentage + "%";
+    function startGame() {
+        startupSfx.play().catch(()=>{});
+        document.getElementById("gameIntro").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("gameIntro").style.display = "none";
+            updateGlobalUI();
+        }, 800);
     }
 
-    function postTweet(text) {
-        let box = document.getElementById("tweets");
-        let div = document.createElement("div");
-        div.className = "tweet";
-        div.innerHTML = `<strong>@GlobalNews</strong>: ${text}`;
-        box.prepend(div);
-        if (box.children.length > 20) box.lastChild.remove();
+    function updateGlobalUI() {
+        document.getElementById("money").innerText = currentMoney.toLocaleString('en-IN');
+        let spent = initialMoney - currentMoney;
+        let p = (spent / initialMoney) * 100;
+        document.getElementById("progress-fill").style.width = p + "%";
+        document.getElementById("percent").innerText = p.toFixed(4);
     }
 
     const shop = document.getElementById("shop");
@@ -270,23 +239,53 @@
         card.className = "card";
         card.innerHTML = `
             <span class="card-icon">${item.icon}</span>
-            <div class="qty-badge" id="qty${item.name}">Owned: 0</div>
-            <h3>${item.name}</h3>
-            <p class="price">₹${item.price.toLocaleString('en-IN')}</p>
+            <div class="qty-label" id="qty${item.name}">Owned: 0</div>
+            <h3 style="font-family:Orbitron; margin:5px 0;">${item.name}</h3>
+            <p class="price-tag">₹${item.price.toLocaleString('en-IN')}</p>
             <div class="controls">
-                <button class="buy">Buy</button>
-                <button class="sell">Sell</button>
+                <button class="buy">BUY</button>
+                <button class="sell">SELL</button>
             </div>
         `;
 
-        let buyBtn = card.querySelector(".buy");
-        let sellBtn = card.querySelector(".sell");
-
-        buyBtn.onclick = () => {
-            if(money >= item.price) {
-                money -= item.price;
+        card.querySelector(".buy").onclick = () => {
+            if(currentMoney >= item.price) {
+                currentMoney -= item.price;
                 qty++;
                 buySfx.currentTime = 0;
                 buySfx.play().catch(()=>{});
                 updateItemUI();
-                if(Math.random() > 0.7) postTweet(tweets[Math.floor(Math.random()*tweets.length)]);
+                if(Math.random() > 0.7) addTweet(reactions[Math.floor(Math.random()*reactions.length)]);
+            }
+        };
+
+        card.querySelector(".sell").onclick = () => {
+            if(qty > 0) {
+                currentMoney += item.price;
+                qty--;
+                updateItemUI();
+            }
+        };
+
+        function updateItemUI() {
+            document.getElementById(`qty${item.name}`).innerText = "Owned: " + qty;
+            updateGlobalUI();
+        }
+
+        shop.appendChild(card);
+    });
+
+    function addTweet(msg) {
+        const box = document.getElementById("tweets");
+        const t = document.createElement("div");
+        t.className = "tweet";
+        t.innerHTML = `<strong>@GlobalFeed</strong>: ${msg}`;
+        box.prepend(t);
+    }
+
+    // Initial run to set money display
+    updateGlobalUI();
+</script>
+
+</body>
+</html>
