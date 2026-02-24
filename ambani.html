@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spend Mukesh Ambani's Money</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+margin:0;
+text-align:center;
+}
+
+header{
+background:#111827;
+padding:20px;
+font-size:30px;
+font-weight:bold;
+}
+
+.money{
+font-size:35px;
+margin:20px;
+color:#22c55e;
+}
+
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+padding:20px;
+}
+
+.card{
+
+background:#1f2937;
+padding:15px;
+width:230px;
+border-radius:12px;
+
+}
+
+button{
+
+padding:8px 10px;
+margin:5px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+
+}
+
+.buy{background:#22c55e;}
+.sell{background:#ef4444;color:white;}
+
+#tweets{
+
+background:#020617;
+padding:20px;
+margin-top:20px;
+height:220px;
+overflow:auto;
+text-align:left;
+
+}
+
+.tweet{
+
+background:#111827;
+margin:10px;
+padding:10px;
+border-radius:8px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+Spend Mukesh Ambani's Money 💸
+
+</header>
+
+<div class="money">
+
+₹ <span id="money"></span>
+
+</div>
+
+
+<div class="container" id="shop">
+
+</div>
+
+
+<h2>🧵 Billionaire Twitter Reactions</h2>
+
+<div id="tweets">
+
+</div>
+
+
+<script>
+
+
+let money = 900000000000000; // 90 lakh crore vibes 😂
+
+document.getElementById("money").innerText =
+money.toLocaleString();
+
+
+const tweets=[
+
+"Elon Musk: Bro just bought WHAT 💀",
+"Jeff Bezos: That's more deliveries than Amazon Prime.",
+"Bill Gates: Maybe donate some? Just saying.",
+"Random Crypto Guy: Should've bought Bitcoin instead.",
+"Shark Tank Judge: I'm out.",
+"Finance Guru: This is NOT passive income behaviour.",
+"Stock Market Uncle: Beta SIP karo.",
+"Twitter CEO: We're limiting your spending for safety.",
+"Economist: Inflation just increased 2%. Congrats.",
+"CA Friend: GST bhi lagega bhai."
+
+];
+
+
+function postTweet(text){
+
+let box=document.getElementById("tweets");
+
+let div=document.createElement("div");
+
+div.className="tweet";
+
+div.innerText=text;
+
+box.prepend(div);
+
+}
+
+
+const items=[
+
+{name:"Candy",price:2},
+{name:"Samosa",price:20},
+{name:"Ice Cream",price:60},
+{name:"Movie Ticket",price:250},
+{name:"Gaming Mouse",price:2500},
+{name:"Phone",price:80000},
+{name:"Gaming PC",price:250000},
+{name:"Bike",price:200000},
+{name:"Car",price:1500000},
+{name:"Luxury Watch",price:5000000},
+{name:"Diamond Ring",price:25000000},
+{name:"Lamborghini",price:50000000},
+{name:"Private Helicopter",price:800000000},
+{name:"Penthouse",price:2000000000},
+{name:"Private Jet",price:6000000000},
+{name:"IPL Team",price:75000000000},
+{name:"Space Rocket",price:400000000000},
+{name:"Satellite Network",price:900000000000},
+{name:"Small Country Debt",price:5000000000000},
+{name:"Moon Colony",price:12000000000000},
+{name:"Mars Base",price:20000000000000}
+
+];
+
+
+const shop=document.getElementById("shop");
+
+
+items.forEach(item=>{
+
+let qty=0;
+
+let div=document.createElement("div");
+
+div.className="card";
+
+
+div.innerHTML=`
+
+<h3>${item.name}</h3>
+
+<p>₹ ${item.price.toLocaleString()}</p>
+
+<p id="qty${item.name}">Owned : 0</p>
+
+<button class="buy">Buy</button>
+
+<button class="sell">Sell</button>
+
+`;
+
+let buy=div.querySelector(".buy");
+
+let sell=div.querySelector(".sell");
+
+
+buy.onclick=()=>{
+
+if(money>=item.price){
+
+money-=item.price;
+
+qty++;
+
+update();
+
+postTweet(
+tweets[Math.floor(Math.random()*tweets.length)]
+);
+
+}
+
+};
+
+
+sell.onclick=()=>{
+
+if(qty>0){
+
+qty--;
+
+money+=item.price;
+
+update();
+
+}
+
+};
+
+
+function update(){
+
+document.getElementById("money").innerText=
+money.toLocaleString();
+
+document.getElementById(
+"qty"+item.name
+).innerText="Owned : "+qty;
+
+}
+
+
+shop.appendChild(div);
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
