@@ -3,6 +3,8 @@
 
 <head>
 
+  <link rel="icon" href="logo.png">
+
   <meta name="description" content="Dixit Labs — fun Indian browser games and interactive experiments including GrossDumpster, built by student developer Atharv Dixit.">
 
 <meta name="keywords" content="browser games India, free online games, GrossDumpster game, Dixit Labs, Indian web experiments">
@@ -148,6 +150,67 @@ padding:20px;
 
 <body>
 
+  <!-- DixLabs Intro -->
+<div id="dixlabsIntro">
+
+<img src="logo.png" id="dixlabsLogo">
+
+</div>
+
+<style>
+
+#dixlabsIntro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+}
+
+#dixlabsLogo{
+width:230px;
+opacity:0;
+animation:dixintro 2.5s ease forwards;
+}
+
+@keyframes dixintro{
+
+0%{
+opacity:0;
+transform:scale(0.6);
+filter:blur(10px);
+}
+
+50%{
+opacity:1;
+transform:scale(1.15);
+filter:drop-shadow(0 0 30px white);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+</style>
+
+<script>
+
+setTimeout(()=>{
+
+document.getElementById("dixlabsIntro").style.display="none";
+
+},3000);
+
+</script>
+
 <header>
 
 <div class="logo">
@@ -241,6 +304,7 @@ PLAY NOW
 
 
 </html>
+
 
 
 
