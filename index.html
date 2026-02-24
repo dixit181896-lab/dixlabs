@@ -2,139 +2,134 @@
 <html lang="en">
 <head>
     <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-    <meta name="description" content="Dixit Labs — interactive browser games including GrossDumpster, Spend Ambani's Money, and DeepWork.ai timer.">
-    <link rel="icon" href="logo.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Innovation Hub</title>
-
+    <title>Dixit Labs | Tech-Art & Experiments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --neon-blue: #38bdf8;
             --neon-pink: #f472b6;
             --neon-green: #22c55e;
             --bg-dark: #020617;
+            --card-bg: rgba(15, 23, 42, 0.8);
         }
 
         body {
             margin: 0; background: var(--bg-dark);
-            color: white; font-family: 'Segoe UI', sans-serif;
+            color: white; font-family: 'Orbitron', sans-serif;
             text-align: center; overflow-x: hidden;
         }
 
-        /* --- FORCED INTRO FIX --- */
+        /* Scanline Overlay for Futuristic Look */
+        body::before {
+            content: " "; display: block; position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            z-index: 99999; background-size: 100% 2px; pointer-events: none;
+        }
+
+        /* --- STABILIZED STARTUP SCREEN --- */
         #dixlabsIntro {
-            position: fixed; inset: 0;
-            background: black; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 99999;
-            transition: opacity 1s ease, visibility 1s;
+            position: fixed; inset: 0; background: #000;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; z-index: 100000;
+            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.5s;
         }
 
         #dixlabsLogo {
-            width: 230px; opacity: 0;
-            animation: dixintro 2.5s ease forwards;
+            width: 250px; filter: drop-shadow(0 0 20px var(--neon-blue));
+            animation: breathe 3s infinite ease-in-out;
         }
 
-        @keyframes dixintro {
-            0% { opacity: 0; transform: scale(0.6); filter: blur(10px); }
-            50% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 30px var(--neon-blue)); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* --- HEADER & PROJECTS --- */
-        header { padding: 50px 20px; background: black; border-bottom: 1px solid rgba(56, 189, 248, 0.2); }
-        .logo { font-size: 48px; font-weight: 900; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 4px; }
-        
-        .projects { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 50px 20px; }
-        
+        /* --- HERO HEADER --- */
+        header {
+            padding: 80px 20px;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .logo {
+            font-size: 3.5rem; font-weight: 900; letter-spacing: 12px;
+            color: var(--neon-blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .tagline {
+            font-family: 'JetBrains Mono', monospace; font-size: 14px;
+            color: var(--neon-pink); margin-top: 15px; opacity: 0.8;
+        }
+
+        /* --- PROJECT GRID --- */
+        .projects {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 30px; padding: 60px 20px;
+        }
+
         .card {
-            background: #111827; padding: 25px; border-radius: 20px;
-            width: 280px; transition: 0.4s; border: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--card-bg); border: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 30px; border-radius: 2px; width: 300px;
+            transition: 0.4s; position: relative; overflow: hidden;
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2); }
+        .card::after {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 100%; height: 2px; background: var(--neon-blue);
+            transform: translateX(-100%); transition: 0.4s;
+        }
 
-        .btn { padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .btn-blue { background: var(--neon-blue); color: black; }
-        .btn-green { background: var(--neon-green); color: black; }
-        .btn-pink { background: var(--neon-pink); color: white; }
+        .card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: var(--neon-blue); transform: translateY(-5px);
+        }
 
-        footer { padding: 40px; opacity: 0.4; font-size: 12px; }
+        .card:hover::after { transform: translateX(0); }
+
+        h3 { font-size: 20px; color: #fff; margin-bottom: 15px; letter-spacing: 2px; }
+        p { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; line-height: 1.6; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            margin-top: 20px; padding: 12px; border: 1px solid var(--neon-blue);
+            background: transparent; color: var(--neon-blue);
+            font-family: 'Orbitron'; cursor: pointer; transition: 0.3s;
+            font-weight: 900; font-size: 12px;
+        }
+
+        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
+        .btn-pink:hover { background: var(--neon-pink); color: #000; border-color: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink); }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 60px 20px; background: #000;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .contact-link { color: var(--neon-blue); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s; }
+        .contact-link:hover { border-bottom: 1px solid var(--neon-blue); }
+
     </style>
 </head>
 <body>
 
     <div id="dixlabsIntro">
         <img src="logo.png" id="dixlabsLogo" alt="DixLabs Logo">
-        <p id="boot-text" style="margin-top:20px; font-family:monospace; color:var(--neon-blue); opacity:0.6;">INITIALIZING_SYSTEM...</p>
-        <button id="entry-btn" onclick="bootSystem()" style="margin-top:30px; padding:10px 25px; background:transparent; border:1px solid var(--neon-blue); color:var(--neon-blue); cursor:pointer; font-family:sans-serif; letter-spacing:2px;">ENTER_CORE</button>
+        <div id="loader-bar" style="width: 200px; height: 2px; background: #1e293b; margin-top: 40px; position: relative; overflow: hidden;">
+            <div id="loader-progress" style="width: 0%; height: 100%; background: var(--neon-blue); transition: width 2s ease;"></div>
+        </div>
+        <button id="boot-btn" onclick="startEngine()" style="margin-top: 40px; background: transparent; border: 1px solid #fff; color: #fff; padding: 10px 30px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px;">INITIALIZE</button>
     </div>
 
     <header>
-        <div class="logo">DIXIT LABS 🚀</div>
-        <p style="opacity:0.6;">INNOVATION ARCHIVE BY ATHARV DIXIT</p>
-    </header>
-
-    <div class="projects">
-        <div class="card" style="border: 2px solid var(--neon-blue);">
-            <h3>GrossDumpster</h3>
-            <p>Catch trash and survive the waste-land in this high-speed pro build.</p>
-            <button class="btn btn-blue" onclick="location.href='game.html'">PLAY NOW</button>
-        </div>
-
-        <div class="card">
-            <h3>Ambani Money</h3>
-            <p>Spend Mukesh Ambani's entire fortune. Test your shopping limits.</p>
-            <button class="btn btn-green" onclick="location.href='ambani.html'">START SPENDING</button>
-        </div>
-
-        <div class="card">
-            <h3>DeepWork.ai</h3>
-            <p>Custom mission terminal for focus sessions with music bridges.</p>
-            <button class="btn btn-pink" onclick="location.href='deepwork.html'">LAUNCH</button>
-        </div>
-    </div>
-
-    <footer>© Dixit Labs 2026 | Developed in India</footer>
-
-    <script>
-        // FUTURISTIC SOUND GENERATOR (No external file needed)
-        function playStartupSound() {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(40, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 1.5);
-
-            gain.gain.setValueAtTime(0.1, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
-
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.start();
-            osc.stop(ctx.currentTime + 1.5);
-        }
-
-        function bootSystem() {
-            // 1. Play the futuristic sound
-            try { playStartupSound(); } catch(e) { console.log("Audio Blocked"); }
-            
-            // 2. Hide the button and update text
-            document.getElementById('entry-btn').style.display = 'none';
-            document.getElementById('boot-text').innerText = "SYSTEM_ONLINE_WELCOME_ATHARV";
-            
-            // 3. Fade out the intro screen
-            setTimeout(() => {
-                const intro = document.getElementById("dixlabsIntro");
-                intro.style.opacity = "0";
-                intro.style.visibility = "hidden";
-            }, 1200);
-        }
-    </script>
-</body>
-</html>
+        <div class="logo">DIXLABS</div>
+        <div class="tagline">> ARCHITECTING_FUTURE_EXPERIMENTS // BY_ATHARV_DIXIT</div>
