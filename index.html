@@ -4,9 +4,12 @@
     <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
     
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Cyber-Industrial Experiments</title>
+    <title>Dixit Labs | Cyber-Industrial Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
     
     <style>
@@ -23,44 +26,44 @@
             text-align: center; overflow-x: hidden;
         }
 
-        /* Scanline Overlay */
+        /* CRT Scanline Overlay */
         body::before {
-            content: " "; display: block; position: absolute;
+            content: " "; display: block; position: fixed;
             inset: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             z-index: 100001; background-size: 100% 2px; pointer-events: none;
         }
 
-        /* --- STABLE STARTUP SCREEN --- */
+        /* --- STARTUP SCREEN --- */
         #dixlabsIntro {
             position: fixed; inset: 0; background: #000;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; z-index: 100000;
-            transition: 0.8s ease-in-out;
+            transition: 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         #dixlabsLogo {
-            width: 250px; filter: drop-shadow(0 0 15px var(--neon-blue));
+            width: 250px; 
+            filter: drop-shadow(0 0 15px var(--neon-blue));
             animation: breathe 3s infinite ease-in-out;
         }
 
         @keyframes breathe {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.03); opacity: 1; }
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* --- HEADER --- */
+        /* --- UI COMPONENTS --- */
         header {
             padding: 80px 20px;
             border-bottom: 1px solid rgba(56, 189, 248, 0.1);
             background: radial-gradient(circle at top, #0f172a, #020617);
         }
 
-        .logo {
-            font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; letter-spacing: 12px;
+        .logo-text {
+            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; letter-spacing: 12px;
             color: var(--neon-blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         }
 
-        /* --- PROJECT GRID --- */
         .projects {
             display: flex; justify-content: center; flex-wrap: wrap;
             gap: 30px; padding: 60px 20px;
@@ -68,93 +71,80 @@
 
         .card {
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.1);
-            padding: 30px; border-radius: 4px; width: 280px;
+            padding: 35px; border-radius: 4px; width: 300px;
             display: flex; flex-direction: column; justify-content: space-between;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s; position: relative;
         }
 
         .card:hover {
             border-color: var(--neon-blue); transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
-            background: rgba(30, 41, 59, 0.5);
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.2);
         }
 
-        .featured { border-left: 4px solid var(--neon-pink); }
-
-        h3 { font-size: 18px; margin-bottom: 10px; color: #fff; letter-spacing: 2px; }
+        h3 { font-size: 1.2rem; color: #fff; letter-spacing: 2px; margin-top: 0; }
         p { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8; line-height: 1.6; }
 
-        /* --- BUTTONS --- */
         .btn {
-            margin-top: 25px; padding: 12px; border: 1px solid var(--neon-blue);
+            margin-top: 25px; padding: 14px; border: 1px solid var(--neon-blue);
             background: transparent; color: var(--neon-blue);
             font-family: 'Orbitron'; cursor: pointer; font-weight: 900;
-            transition: 0.3s; font-size: 11px; letter-spacing: 1px;
+            transition: 0.3s; font-size: 11px; letter-spacing: 2px;
         }
 
-        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px var(--neon-blue); }
+        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
         .btn-pink { border-color: var(--neon-pink); color: var(--neon-pink); }
-        .btn-pink:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 15px var(--neon-pink); }
+        .btn-pink:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 20px var(--neon-pink); }
 
-        /* --- FOOTER --- */
         footer {
             padding: 80px 20px; background: #000; font-family: 'JetBrains Mono', monospace;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .email-box {
-            margin: 20px 0; padding: 10px; border: 1px dashed rgba(56, 189, 248, 0.3);
-            display: inline-block;
-        }
-
-        .email { color: var(--neon-blue); text-decoration: none; font-size: 14px; }
+        .email { color: var(--neon-blue); text-decoration: none; border-bottom: 1px dashed var(--neon-blue); }
     </style>
 </head>
 <body>
 
     <div id="dixlabsIntro">
-        <img src="logo.png" id="dixlabsLogo" alt="DixLabs Logo">
-        <p id="status-text" style="font-family: 'JetBrains Mono'; font-size: 12px; color: var(--neon-blue); margin-top: 20px;">SYSTEM_STABLE_AWAITING_INPUT</p>
-        <button onclick="boot()" id="bootBtn" style="margin-top: 30px; background: none; border: 1px solid #fff; color: #fff; padding: 12px 40px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px; transition: 0.3s;">INITIALIZE</button>
+        <img src="logo.png" id="dixlabsLogo" alt="DIXIT LABS LOGO" onerror="this.style.display='none'">
+        <button onclick="boot()" id="bootBtn" style="margin-top: 40px; background: none; border: 1px solid #fff; color: #fff; padding: 12px 40px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px;">INITIALIZE_CORE</button>
     </div>
 
     <header>
-        <div class="logo">DIXLABS</div>
+        <div class="logo-text">DIXLABS</div>
         <p style="font-family: 'JetBrains Mono'; color: var(--neon-pink); margin-top: 15px; font-size: 12px;">> EXPERIMENTAL_ARCHIVE // ATHARV_DIXIT</p>
     </header>
 
     <div class="projects">
-        <div class="card">
-            <h3>GROSSDUMP.AI</h3>
-            <p>Catch trash. Dodge toxins. Experience the high-performance pro build of the waste engine.</p>
-            <button class="btn" onclick="location.href='grossdump.html'">RUN_MODULE</button>
+        <div class="card" style="border-top: 4px solid var(--neon-blue);">
+            <h3>GROSSDUMPSTER</h3>
+            <p>Catch trash, avoid toxins, and survive the waste-land. The definitive survival engine.</p>
+            <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
         </div>
 
         <div class="card">
             <h3>AMBANI_MONEY</h3>
-            <p>Test the limits of an infinite fortune. Can you liquidate a billionaire's assets?</p>
+            <p>Can you spend it all? Test your consumer limits with an infinite billionaire fortune.</p>
             <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
         </div>
 
-        <div class="card featured">
+        <div class="card" style="border-top: 4px solid var(--neon-pink);">
             <h3>DEEPWORK.PRO</h3>
-            <p>Mission-critical 3-hour focus terminal with integrated media bridges and progress HUD.</p>
+            <p>Mission-critical 3-hour focus terminal with integrated media bridges.</p>
             <button class="btn btn-pink" onclick="location.href='deepwork.html'">RUN_MODULE</button>
         </div>
 
-        <div class="card" style="opacity: 0.6; border-style: dotted;">
-            <h3>NEXT_PROJECT 👀</h3>
-            <p>Something big is cooking in Dixit Labs. A new chaotic interactive experiment is coming soon.</p>
-            <button class="btn" style="border-color: #475569; color: #475569; cursor: not-allowed;">ENCRYPTED</button>
+        <div class="card" style="opacity: 0.6; border-style: dotted; border-width: 2px;">
+            <h3>NEXT_EXPERIMENT 👀</h3>
+            <p>Something big is cooking in Dixit Labs. A new chaotic interactive project is arriving soon.</p>
+            <button class="btn" style="border-color: #475569; color: #475569; cursor: not-allowed;">STAY_TUNED</button>
         </div>
     </div>
 
     <footer>
-        <p style="letter-spacing: 3px;">ATHARV DIXIT // STUDENT DEVELOPER</p>
-        <div class="email-box">
-            <a href="mailto:atharvdixit07@gmail.com" class="email">dixit181896@gmail.com</a>
-        </div>
-        <div style="margin-top: 30px; opacity: 0.3; font-size: 10px;">
+        <p style="letter-spacing: 3px; font-weight: bold;">ATHARV DIXIT // STUDENT DEVELOPER</p>
+        <p>Contact: <a href="mailto:dixit181896@gmail.com" class="email">dixit181896@gmail.com</a></p>
+        <div style="margin-top: 40px; opacity: 0.3; font-size: 10px;">
             © 2026 DIXLABS CORE <br>
             <a href="/sitemap.xml" style="color: white; text-decoration: none;">SITEMAP_INDEX</a>
         </div>
@@ -162,14 +152,14 @@
 
     <script>
         function boot() {
-            // High-Tech Rising Tone
+            // Futuristic Sound
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(60, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.6);
+                osc.frequency.setValueAtTime(80, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.6);
                 gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
                 osc.connect(gain);
@@ -178,16 +168,14 @@
                 osc.stop(audioCtx.currentTime + 0.6);
             } catch(e) {}
 
-            document.getElementById('status-text').innerText = "ACCESS_GRANTED";
-            document.getElementById('bootBtn').style.opacity = "0";
+            const intro = document.getElementById("dixlabsIntro");
+            intro.style.transform = "scale(1.2)";
+            intro.style.opacity = "0";
             
             setTimeout(() => {
-                const intro = document.getElementById("dixlabsIntro");
-                intro.style.transform = "translateY(-100%)";
-                setTimeout(() => intro.style.display = "none", 800);
-            }, 400);
+                intro.style.display = "none";
+            }, 800);
         }
     </script>
 </body>
 </html>
-
