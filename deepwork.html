@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepWork.ai — CUSTOM PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #38bdf8;
+            --neon-pink: #f472b6;
+            --neon-green: #22c55e;
+            --background: #020617;
+        }
+
+        body {
+            margin: 0; background: var(--background);
+            color: white; font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100vh; overflow: hidden;
+        }
+
+        /* Setup Screen */
+        #setup-screen {
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+            z-index: 100;
+        }
+
+        .input-group { display: flex; gap: 10px; align-items: center; }
+
+        input {
+            background: rgba(15, 23, 42, 0.9); border: 1px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 10px; width: 60px; text-align: center;
+            font-family: 'Orbitron'; font-size: 20px; outline: none;
+        }
+
+        /* Timer Screen */
+        #timer-screen { display: none; flex-direction: column; align-items: center; width: 100%; }
+
+        #quote-display {
+            height: 40px; color: #94a3b8; font-size: 14px; text-align: center;
+            margin-bottom: 20px; letter-spacing: 1px; transition: opacity 1s;
+            max-width: 80%;
+        }
+
+        #timer-display {
+            font-size: clamp(50px, 12vw, 120px); font-weight: 900; 
+            letter-spacing: 5px; color: white;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .progress-container {
+            width: 80%; max-width: 600px; height: 4px;
+            background: #1e293b; border-radius: 10px; margin: 30px 0;
+        }
+
+        #progress-bar {
+            width: 0%; height: 100%; background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green); transition: width 1s linear;
+        }
+
+        .btn-term {
+            padding: 12px 30px; background: transparent;
+            border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            cursor: pointer; font-family: 'Orbitron'; font-weight: 900;
+            transition: 0.3s; text-transform: uppercase;
+        }
+
+        .btn-term:hover { background: var(--neon-blue); color: #000; }
+        .btn-pause { border-color: var(--neon-pink); color: var(--neon-pink); margin-top: 20px; }
+
+        .media-bridge { margin-top: 50px; text-align: center; }
+        .music-grid { display: flex; gap: 15px; margin-top: 10px; }
+        .music-link { color: #64748b; text-decoration: none; font-size: 12px; }
+        .music-link:hover { color: white; }
+    </style>
+</head>
+<body>
+
+    <div id="setup-screen">
+        <h1 style="color:var(--neon-blue); letter-spacing: 5px;">MISSION_CONFIG</h1>
+        <div class="input-group">
+            <input type="number" id="cfg-hours" value="0" min="0" max="23"> <span>H</span>
+            <input type="number" id="cfg-mins" value="25" min="0" max="59"> <span>M</span>
+        </div>
+        <button class="btn-term" onclick="initializeMission()">INITIALIZE_SESSION</button>
+    </div>
+
+    <div id="timer-screen">
+        <div id="quote-display">INITIALIZING_MOTIVATION_CORE...</div>
+        <div id="timer-display">00:00:00</div>
+        
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <button id="pause-btn" class="btn-term btn-pause" onclick="togglePause()">PAUSE</button>
+
+        <div class="media-bridge">
+            <div class="music-grid">
+                <a href="https://spotify.com" target="_blank" class="music-link">SPOTIFY</a>
+                <a href="https://music.youtube.com" target="_blank" class="music-link">YT_MUSIC</a>
+                <a href="https://wynk.in" target="_blank" class="music-link">WYNK</a>
+                <a href="https://music.apple.com" target="_blank" class="music-link">APPLE</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalSeconds, timeLeft, timerId, isPaused = false;
+        
+        const quotes = [
+            "STAY FOCUSED. THE WORLD IS DISTRACTED.",
+            "DISCIPLINE IS DOING WHAT NEEDS TO BE DONE.",
+            "YOU DON'T NEED MOTIVATION. YOU NEED SYSTEMS.",
+            "FOCUS IS A MUSCLE. TRAIN IT.",
+            "EXECUTION OVER EXCUSES.",
+            "THE GRIND INCLUDES FRIDAY.",
+            "WORK UNTIL YOUR IDOLS BECOME YOUR RIVALS.",
+            "SMALL STEPS. EVERY SINGLE DAY."
+        ];
+
+        function initializeMission() {
+            const h = parseInt(document.getElementById('cfg-hours').value) || 0;
+            const m = parseInt(document.getElementById('cfg-mins').value) || 0;
+            
+            if (h === 0 && m === 0) return alert("SET_DURATION_FIRST");
+
+            totalSeconds = (h * 3600) + (m * 60);
+            timeLeft = totalSeconds;
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('timer-screen').style.display = 'flex';
+            
+            startCountdown();
+            cycleQuotes();
+        }
+
+        function formatTime(s) {
+            const hrs = Math.floor(s / 3600);
+            const mins = Math.floor((s % 3600) / 60);
+            const secs = s % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startCountdown() {
+            timerId = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    document.getElementById('timer-display').innerText = formatTime(timeLeft);
+                    
+                    const percent = ((totalSeconds - timeLeft) / totalSeconds) * 100;
+                    document.getElementById('progress-bar').style.width = percent + "%";
+
+                    if (timeLeft % 60 === 0) cycleQuotes(); // Refresh quote every minute
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        document.getElementById('timer-display').innerText = "COMPLETE";
+                    }
+                }
+            }, 1000);
+        }
+
+        function cycleQuotes() {
+            const qDisp = document.getElementById('quote-display');
+            qDisp.style.opacity = 0;
+            setTimeout(() => {
+                qDisp.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+                qDisp.style.opacity = 1;
+            }, 1000);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const btn = document.getElementById('pause-btn');
+            btn.innerText = isPaused ? "RESUME" : "PAUSE";
+            btn.style.borderColor = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
+            btn.style.color = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
+        }
+    </script>
+</body>
+</html>

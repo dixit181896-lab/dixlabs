@@ -1,183 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <meta name="description" content="Dixit Labs — interactive browser games including GrossDumpster, Spend Ambani's Money, and DeepWork.ai timer. Created by student developer Atharv Dixit.">
+    <meta name="keywords" content="browser games, Dixit Labs, GrossDumpster, Ambani money game, DeepWork timer, Atharv Dixit, Indian developer">
+    <meta name="author" content="Atharv Dixit">
+    
+    <link rel="icon" href="logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepWork.ai — CUSTOM PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <title>Dixit Labs | Innovation Hub</title>
+
     <style>
         :root {
             --neon-blue: #38bdf8;
             --neon-pink: #f472b6;
             --neon-green: #22c55e;
-            --background: #020617;
+            --bg-dark: #020617;
         }
 
         body {
-            margin: 0; background: var(--background);
-            color: white; font-family: 'Orbitron', sans-serif;
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; height: 100vh; overflow: hidden;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: white;
+            text-align: center;
         }
 
-        /* Setup Screen */
-        #setup-screen {
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-            z-index: 100;
+        /* --- DIXLABS INTRO ANIMATION --- */
+        #dixlabsIntro {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; display: flex; justify-content: center;
+            align-items: center; z-index: 99999;
         }
 
-        .input-group { display: flex; gap: 10px; align-items: center; }
-
-        input {
-            background: rgba(15, 23, 42, 0.9); border: 1px solid var(--neon-blue);
-            color: var(--neon-blue); padding: 10px; width: 60px; text-align: center;
-            font-family: 'Orbitron'; font-size: 20px; outline: none;
+        #dixlabsLogo {
+            width: 230px; opacity: 0;
+            animation: dixintro 2.5s ease forwards;
         }
 
-        /* Timer Screen */
-        #timer-screen { display: none; flex-direction: column; align-items: center; width: 100%; }
-
-        #quote-display {
-            height: 40px; color: #94a3b8; font-size: 14px; text-align: center;
-            margin-bottom: 20px; letter-spacing: 1px; transition: opacity 1s;
-            max-width: 80%;
+        @keyframes dixintro {
+            0% { opacity: 0; transform: scale(0.6); filter: blur(10px); }
+            50% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 30px white); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
-        #timer-display {
-            font-size: clamp(50px, 12vw, 120px); font-weight: 900; 
-            letter-spacing: 5px; color: white;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+        /* --- HEADER & BRANDING --- */
+        header { padding: 50px 20px; background: black; border-bottom: 1px solid rgba(56, 189, 248, 0.2); }
+
+        .logo {
+            font-size: 48px; font-weight: 900; color: var(--neon-blue);
+            text-transform: uppercase; letter-spacing: 4px;
+            animation: glow 2s infinite alternate;
         }
 
-        .progress-container {
-            width: 80%; max-width: 600px; height: 4px;
-            background: #1e293b; border-radius: 10px; margin: 30px 0;
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--neon-blue); }
+            to { text-shadow: 0 0 25px #22d3ee; }
         }
 
-        #progress-bar {
-            width: 0%; height: 100%; background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green); transition: width 1s linear;
+        .tagline { opacity: 0.6; font-size: 14px; margin-top: 10px; letter-spacing: 1px; }
+
+        /* --- PROJECT GRID --- */
+        .projects {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 25px; padding: 50px 20px;
         }
 
-        .btn-term {
-            padding: 12px 30px; background: transparent;
-            border: 2px solid var(--neon-blue); color: var(--neon-blue);
-            cursor: pointer; font-family: 'Orbitron'; font-weight: 900;
-            transition: 0.3s; text-transform: uppercase;
+        .card {
+            background: #111827; padding: 25px; border-radius: 20px;
+            width: 280px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative;
         }
 
-        .btn-term:hover { background: var(--neon-blue); color: #000; }
-        .btn-pause { border-color: var(--neon-pink); color: var(--neon-pink); margin-top: 20px; }
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2);
+            border-color: var(--neon-blue);
+        }
 
-        .media-bridge { margin-top: 50px; text-align: center; }
-        .music-grid { display: flex; gap: 15px; margin-top: 10px; }
-        .music-link { color: #64748b; text-decoration: none; font-size: 12px; }
-        .music-link:hover { color: white; }
+        /* Highlighted Pulse for Main Project */
+        .featured {
+            border: 2px solid var(--neon-blue);
+            animation: pulse 2.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px var(--neon-blue); }
+            50% { box-shadow: 0 0 20px var(--neon-blue); }
+            100% { box-shadow: 0 0 5px var(--neon-blue); }
+        }
+
+        h3 { margin-top: 0; font-size: 22px; color: var(--neon-blue); }
+        p { font-size: 14px; color: #94a3b8; line-height: 1.5; }
+
+        /* --- BUTTON STYLES --- */
+        .btn {
+            padding: 12px 20px; border-radius: 12px; border: none;
+            font-weight: bold; cursor: pointer; transition: 0.2s;
+            text-transform: uppercase; font-size: 13px; letter-spacing: 1px;
+        }
+
+        .btn-green { background: var(--neon-green); color: black; }
+        .btn-blue { background: var(--neon-blue); color: black; }
+        .btn-pink { background: var(--neon-pink); color: white; }
+
+        .btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+        footer { padding: 50px; opacity: 0.4; font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* Custom Label for coming soon */
+        .label-soon { font-size: 10px; background: #334155; padding: 4px 8px; border-radius: 5px; color: #cbd5e1; position: absolute; top: 15px; right: 15px; }
+
     </style>
 </head>
 <body>
 
-    <div id="setup-screen">
-        <h1 style="color:var(--neon-blue); letter-spacing: 5px;">MISSION_CONFIG</h1>
-        <div class="input-group">
-            <input type="number" id="cfg-hours" value="0" min="0" max="23"> <span>H</span>
-            <input type="number" id="cfg-mins" value="25" min="0" max="59"> <span>M</span>
-        </div>
-        <button class="btn-term" onclick="initializeMission()">INITIALIZE_SESSION</button>
+    <div id="dixlabsIntro">
+        <img src="logo.png" id="dixlabsLogo" alt="DixLabs Logo">
     </div>
 
-    <div id="timer-screen">
-        <div id="quote-display">INITIALIZING_MOTIVATION_CORE...</div>
-        <div id="timer-display">00:00:00</div>
-        
-        <div class="progress-container">
-            <div id="progress-bar"></div>
-        </div>
+    <header>
+        <div class="logo">DIXIT LABS 🚀</div>
+        <p class="tagline">INNOVATION ARCHIVE BY ATHARV DIXIT</p>
+    </header>
 
-        <button id="pause-btn" class="btn-term btn-pause" onclick="togglePause()">PAUSE</button>
+    <div class="projects">
 
-        <div class="media-bridge">
-            <div class="music-grid">
-                <a href="https://spotify.com" target="_blank" class="music-link">SPOTIFY</a>
-                <a href="https://music.youtube.com" target="_blank" class="music-link">YT_MUSIC</a>
-                <a href="https://wynk.in" target="_blank" class="music-link">WYNK</a>
-                <a href="https://music.apple.com" target="_blank" class="music-link">APPLE</a>
+        <div class="card featured">
+            <div>
+                <h3>GrossDumpster</h3>
+                <p>The definitive pro-build. Catch trash, dodge toxins, and survive the waste-land.</p>
             </div>
+            <button class="btn btn-blue" onclick="location.href='game.html'">PLAY PRO BUILD</button>
         </div>
+
+        <div class="card">
+            <div>
+                <h3>Ambani Money</h3>
+                <p>Think you can spend Mukesh Ambani's entire fortune? Test your shopping limits.</p>
+            </div>
+            <button class="btn btn-green" onclick="location.href='ambani.html'">START SPENDING</button>
+        </div>
+
+        <div class="card">
+            <div>
+                <h3>DeepWork.ai</h3>
+                <p>Custom focus terminal for heavy-duty sessions with music and progress tracking.</p>
+            </div>
+            <button class="btn btn-pink" onclick="location.href='deepwork.html'">LAUNCH MISSION</button>
+        </div>
+
+        <div class="card">
+            <span class="label-soon">LOCKED</span>
+            <div>
+                <h3>Next-Gen Lab</h3>
+                <p>The next experimental module is currently under encryption. Stay tuned.</p>
+            </div>
+            <button class="btn" style="background:#1e293b; color:#64748b; cursor:default;">COMMING_SOON</button>
+        </div>
+
     </div>
+
+    <footer>
+        © Dixit Labs 2026 | Developed in India 🇮🇳 <br>
+        <a href="/sitemap.xml" style="color:inherit; text-decoration:none; margin-top:10px; display:inline-block;">Sitemap Access</a>
+    </footer>
 
     <script>
-        let totalSeconds, timeLeft, timerId, isPaused = false;
-        
-        const quotes = [
-            "STAY FOCUSED. THE WORLD IS DISTRACTED.",
-            "DISCIPLINE IS DOING WHAT NEEDS TO BE DONE.",
-            "YOU DON'T NEED MOTIVATION. YOU NEED SYSTEMS.",
-            "FOCUS IS A MUSCLE. TRAIN IT.",
-            "EXECUTION OVER EXCUSES.",
-            "THE GRIND INCLUDES FRIDAY.",
-            "WORK UNTIL YOUR IDOLS BECOME YOUR RIVALS.",
-            "SMALL STEPS. EVERY SINGLE DAY."
-        ];
-
-        function initializeMission() {
-            const h = parseInt(document.getElementById('cfg-hours').value) || 0;
-            const m = parseInt(document.getElementById('cfg-mins').value) || 0;
-            
-            if (h === 0 && m === 0) return alert("SET_DURATION_FIRST");
-
-            totalSeconds = (h * 3600) + (m * 60);
-            timeLeft = totalSeconds;
-
-            document.getElementById('setup-screen').style.display = 'none';
-            document.getElementById('timer-screen').style.display = 'flex';
-            
-            startCountdown();
-            cycleQuotes();
-        }
-
-        function formatTime(s) {
-            const hrs = Math.floor(s / 3600);
-            const mins = Math.floor((s % 3600) / 60);
-            const secs = s % 60;
-            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function startCountdown() {
-            timerId = setInterval(() => {
-                if (!isPaused) {
-                    timeLeft--;
-                    document.getElementById('timer-display').innerText = formatTime(timeLeft);
-                    
-                    const percent = ((totalSeconds - timeLeft) / totalSeconds) * 100;
-                    document.getElementById('progress-bar').style.width = percent + "%";
-
-                    if (timeLeft % 60 === 0) cycleQuotes(); // Refresh quote every minute
-
-                    if (timeLeft <= 0) {
-                        clearInterval(timerId);
-                        document.getElementById('timer-display').innerText = "COMPLETE";
-                    }
-                }
-            }, 1000);
-        }
-
-        function cycleQuotes() {
-            const qDisp = document.getElementById('quote-display');
-            qDisp.style.opacity = 0;
+        // Intro handling with smooth transition
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                qDisp.innerText = quotes[Math.floor(Math.random() * quotes.length)];
-                qDisp.style.opacity = 1;
-            }, 1000);
-        }
-
-        function togglePause() {
-            isPaused = !isPaused;
-            const btn = document.getElementById('pause-btn');
-            btn.innerText = isPaused ? "RESUME" : "PAUSE";
-            btn.style.borderColor = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
-            btn.style.color = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
-        }
-    </script>
-</body>
-</html>
+                const intro = document.getElementById("dixlabsIntro");
+                intro.style.transition = "opacity 0.8s ease, visibility 0.8s";
+                intro.style.opacity = "0";
+                intro.style.
