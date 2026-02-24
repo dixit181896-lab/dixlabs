@@ -16,36 +16,31 @@
             --bg: #020617;
             --primary: #38bdf8;
             --hazard: #f59e0b;
-            --card-bg: rgba(17, 24, 39, 0.85);
+            --card-bg: rgba(17, 24, 39, 0.9);
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
             background: var(--bg);
-            background-image: 
-                radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%),
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100%, 100% 4px;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
             color: white;
             overflow-x: hidden;
-            min-height: 100vh;
         }
 
-        /* Scanline CRT Effect */
+        /* --- UI Overlay --- */
         body::after {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             z-index: 9999;
             pointer-events: none;
-            background-size: 100% 2px, 3px 100%;
+            background-size: 100% 2px;
         }
 
-        /* --- Refined Startup Screen --- */
+        /* --- Startup Screen (Guaranteed to Open) --- */
         #dixlabsIntro {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -55,52 +50,41 @@
             justify-content: center;
             align-items: center;
             z-index: 100000;
-            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease;
         }
 
         #dixlabsLogo {
             width: 220px;
             filter: drop-shadow(0 0 15px var(--primary));
-            animation: glitch 2s infinite;
+            margin-bottom: 30px;
         }
 
-        .btn-start {
-            margin-top: 40px;
+        .ignite-btn {
             padding: 15px 40px;
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .btn-start:hover {
             background: var(--primary);
             color: black;
-            box-shadow: 0 0 20px var(--primary);
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            letter-spacing: 3px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            transition: 0.3s;
         }
 
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
-            40% { transform: translate(-2px, -2px); filter: none; }
-            60% { transform: translate(2px, 2px); }
-            100% { transform: translate(0); }
+        .ignite-btn:hover {
+            transform: scale(1.1);
+            background: white;
         }
 
         /* --- Main UI --- */
         header { padding: 60px 20px; text-align: center; }
-        
         .logo-main {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 10vw, 4rem);
-            font-weight: 900;
-            color: white;
-            text-shadow: 3px 3px 0px var(--primary);
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px var(--primary);
             margin: 0;
         }
 
@@ -108,9 +92,8 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .card {
@@ -118,70 +101,109 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 30px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
             backdrop-filter: blur(10px);
         }
 
         .card:hover {
-            transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+            transform: translateY(-5px);
         }
-
-        .card.featured { border-color: var(--hazard); }
 
         .game-btn {
             width: 100%;
-            padding: 14px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            transition: 0.2s;
+            margin-top: 15px;
         }
 
         footer { 
-            padding: 80px 20px; 
+            padding: 60px 20px; 
             text-align: center; 
-            font-family: 'Orbitron', sans-serif; 
-            opacity: 0.6; 
+            font-family: 'Orbitron'; 
             font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .email { color: var(--primary); text-decoration: none; font-weight: bold; }
+        .email { color: var(--primary); text-decoration: none; }
     </style>
 </head>
 
-<body onclick="initAudio()">
+<body>
 
 <div id="dixlabsIntro">
-    <img src="logo.png" id="dixlabsLogo" alt="Logo">
-    <button class="btn-start" onclick="igniteSystems()">Ignite Engine</button>
+    <img src="logo.png" id="dixlabsLogo">
+    <button class="ignite-btn" onclick="openLabs()">IGNITE SYSTEMS</button>
 </div>
 
 <header>
     <h1 class="logo-main">DIXIT LABS</h1>
-    <p style="color: var(--primary); font-weight: bold; letter-spacing: 2px;">[ STUDENT_DEV // INDIA ]</p>
+    <p style="color: var(--primary); letter-spacing: 2px;">Made in India By Atharv Dixit (Student Developer)</p>
 </header>
 
 <div class="container">
     <div class="projects-grid">
-        <div class="card" onmouseenter="playTick()">
+        <div class="card">
             <h3>💸 Spend Mukesh's Money</h3>
-            <p style="color: #94a3b8;">Can you drain the vault before the market recovers? High-stakes simulator.</p>
-            <button class="game-btn" style="background: white; color: black;" onclick="location.href='ambani.html'">START GAME</button>
+            <p style="color: #94a3b8;">Spend insane money on crazy stuff. Can you actually finish it?</p>
+            <div style="font-size: 0.8rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin: 10px 0; border-left: 2px solid var(--primary);">
+                @startupbro: "I bought 3 islands and still had money left 😭"
+            </div>
+            <button class="game-btn" onclick="location.href='ambani.html'">PLAY NOW</button>
         </div>
 
-        <div class="card featured" onmouseenter="playTick()">
+        <div class="card" style="border-color: var(--hazard);">
             <h3 style="color: var(--hazard);">🗑️ GrossDumpster</h3>
-            <p style="color: #94a3b8;">Catch trash before it hits the ground. Our flagship interactive experiment.</p>
-            <button class="game-btn" style="background: var(--hazard); color: black;" onclick="window.location.href='https://grossdumpster.vercel.app'">LAUNCH_SITE</button>
+            <p style="color: #94a3b8;">Catch trash before it hits the ground! Interactive physics chaos.</p>
+            <button class="game-btn" style="background: var(--hazard);" onclick="window.location.href='https://grossdumpster.vercel.app'">PLAY NOW</button>
         </div>
 
-        <div class="card" onmouseenter="playTick()" style="opacity: 0.6; border-style: dashed;">
-            <h3>👀 Next Project</h3>
-            <p style="color: #64748b;">A new interactive packet is being compiled. System encrypted.</p>
-            <button class="game-btn" style="background: #334155; color: #94a3b8;" onclick="alert('Coming Soon 👀')">ENCRYPTED</button>
+        <div class="card" style="opacity: 0.6; border-style: dashed;">
+            <h3>👀 Next Experiment</h3>
+            <p style="color: #64748b;">Something chaotic is cooking... New project arriving soon.</p>
+            <button class="game-btn" onclick="alert('Coming Soon 👀')">STAY TUNED</button>
         </div>
+    </div>
+</div>
+
+<footer>
+    <div style="margin-bottom: 10px;">
+        CONTACT: <a href="mailto:dixit181896@gmail.com" class="email">dixit181896@gmail.com</a>
+    </div>
+    © Dixit Labs | 2026
+</footer>
+
+<script>
+    // These are robust, fast-loading sounds
+    const startupSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); // Futuristic Tech Rise
+    const hoverSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Click/Tick
+
+    function openLabs() {
+        // 1. Play Sound
+        startupSfx.play().catch(() => console.log("Sound muted by browser"));
+
+        // 2. Clear Intro Instantly
+        const intro = document.getElementById("dixlabsIntro");
+        intro.style.opacity = "0";
+        intro.style.transform = "scale(1.5)";
+        
+        setTimeout(() => {
+            intro.style.display = "none";
+        }, 500);
+    }
+
+    // Attach hover sounds to cards
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            hoverSfx.currentTime = 0;
+            hoverSfx.play().catch(() => {});
+        });
+    });
+</script>
+
+</body>
+</html>
