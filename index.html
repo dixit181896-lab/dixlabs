@@ -26,8 +26,8 @@
             background: var(--bg);
             background-image: 
                 radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%),
-                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.03), rgba(0, 0, 0, 0), rgba(56, 189, 248, 0.03));
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
             background-size: 100%, 100% 4px, 3px 100%;
             color: white;
             overflow-x: hidden;
@@ -46,7 +46,7 @@
             background-size: 100% 2px;
         }
 
-        /* --- Refined Startup Screen --- */
+        /* --- Startup Screen --- */
         #dixlabsIntro {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -57,33 +57,40 @@
             align-items: center;
             z-index: 99999;
             cursor: pointer;
+            transition: 0.8s all ease;
         }
 
         #dixlabsLogo {
-            width: 220px;
+            width: 240px;
             filter: drop-shadow(0 0 20px var(--primary));
             animation: glitchBoot 3s infinite;
         }
 
         .click-prompt {
-            margin-top: 30px;
+            margin-top: 40px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
             color: var(--primary);
-            animation: blink 1s infinite;
+            padding: 15px 30px;
+            border: 1px solid var(--primary);
             text-transform: uppercase;
+            animation: pulseGlow 1.5s infinite;
         }
 
         @keyframes glitchBoot {
             0% { transform: scale(1); filter: hue-rotate(0deg); }
-            5% { transform: scale(1.02) skew(2deg); filter: hue-rotate(90deg); }
-            10% { transform: scale(1) skew(0deg); filter: hue-rotate(0deg); }
+            2% { transform: scale(1.1) skew(5deg); filter: invert(1); }
+            4% { transform: scale(1) skew(0deg); filter: invert(0); }
+            100% { transform: scale(1); }
         }
 
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary); opacity: 1; }
+            50% { box-shadow: 0 0 20px var(--primary); opacity: 0.5; }
+        }
 
-        /* --- Main UI --- */
+        /* --- Main Content --- */
         header { padding: 80px 20px 40px; text-align: center; }
         
         .logo {
@@ -115,10 +122,8 @@
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 24px;
             padding: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
         }
 
         .card:hover {
@@ -127,8 +132,7 @@
             box-shadow: 0 0 40px rgba(56, 189, 248, 0.25);
         }
 
-        .card.featured { border-color: var(--hazard); }
-        .card.featured:hover { box-shadow: 0 0 40px rgba(245, 158, 11, 0.25); }
+        .card.featured { border: 1px solid var(--hazard); }
 
         .btn {
             background: white;
@@ -144,10 +148,25 @@
             transition: 0.3s;
         }
 
-        .btn:hover { background: var(--primary); color: white; transform: scale(1.02); }
-        .btn-hazard:hover { background: var(--hazard); color: black; }
+        .btn:hover { background: var(--primary); color: white; box-shadow: 0 0 15px var(--primary); }
 
-        footer { padding: 60px; text-align: center; font-family: 'Orbitron'; opacity: 0.4; font-size: 0.7rem; letter-spacing: 5px; }
+        .email-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .email-link:hover { text-shadow: 0 0 10px var(--primary); }
+
+        footer { 
+            padding: 80px 20px 40px; 
+            text-align: center; 
+            font-family: 'Orbitron'; 
+            font-size: 0.7rem; 
+            letter-spacing: 3px;
+            line-height: 2;
+        }
     </style>
 </head>
 
@@ -155,7 +174,7 @@
 
 <div id="dixlabsIntro">
     <img src="logo.png" id="dixlabsLogo">
-    <div class="click-prompt">Click to Ignite Systems</div>
+    <div class="click-prompt">Enter Laboratory</div>
 </div>
 
 <header>
@@ -181,48 +200,54 @@
         <div class="card featured" onmouseenter="playTick()">
             <h3 style="font-family: 'Orbitron'; color: var(--hazard);">🗑️ GrossDumpster</h3>
             <p style="color: #94a3b8;">The flagship interactive experiment. Physics-based disposal chaos.</p>
-            <button class="btn btn-hazard" onclick="window.location.href='https://grossdumpster.vercel.app'">LAUNCH_CORE</button>
+            <button class="btn" style="background: var(--hazard);" onclick="window.location.href='https://grossdumpster.vercel.app'">LAUNCH_CORE</button>
         </div>
 
-        <div class="card" onmouseenter="playTick()" style="opacity: 0.7; border-style: dashed;">
+        <div class="card" onmouseenter="playTick()" style="opacity: 0.6; border-style: dashed;">
             <h3 style="font-family: 'Orbitron';">👀 Experiment_04</h3>
-            <p style="color: #64748b;">Something chaotic is cooking. New data packets incoming.</p>
+            <p style="color: #64748b;">Classified data. Interactive chaos incoming.</p>
             <button class="btn" style="background: #334155; color: #94a3b8;" onclick="alert('Coming Soon 👀 Stay Tuned!')">LOCKED</button>
         </div>
     </div>
 </div>
 
-<footer>© 2026 DIXIT LABS // ALL SYSTEMS NOMINAL</footer>
+<footer>
+    <div style="margin-bottom: 20px;">
+        CONTACT: <a href="mailto:dixit181896@gmail.com" class="email-link">dixit181896@gmail.com</a>
+    </div>
+    © 2026 DIXIT LABS // ALL SYSTEMS OPERATIONAL
+</footer>
 
 <script>
-    // Audio Assets
-    const engineSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/1544/1544-preview.mp3'); // Car Rev
-    const tickSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // UI Tick
+    // Using high-quality sound triggers
+    const engineSfx = new Audio('https://www.soundjay.com/mechanical/sounds/car-accelerating-1.mp3');
+    const tickSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
     
-    engineSfx.volume = 0.5;
-    tickSfx.volume = 0.15;
+    engineSfx.volume = 0.6;
+    tickSfx.volume = 0.2;
 
     let engineStarted = false;
 
     function startEngine() {
         if (!engineStarted) {
-            engineSfx.play();
             engineStarted = true;
+            engineSfx.play().catch(e => console.log("Audio play blocked"));
             
-            // Fade out the intro screen after the "rev"
+            const intro = document.getElementById("dixlabsIntro");
+            intro.style.opacity = "0";
+            intro.style.transform = "scale(1.2) translateY(-100px)";
+            
             setTimeout(() => {
-                const intro = document.getElementById("dixlabsIntro");
-                intro.style.transition = "opacity 1s ease, transform 1s ease";
-                intro.style.opacity = "0";
-                intro.style.transform = "scale(1.1)";
-                setTimeout(() => { intro.style.display = "none"; }, 1000);
-            }, 1200);
+                intro.style.display = "none";
+            }, 800);
         }
     }
 
     function playTick() {
-        tickSfx.currentTime = 0;
-        tickSfx.play().catch(()=>{});
+        if(engineStarted) {
+            tickSfx.currentTime = 0;
+            tickSfx.play().catch(()=>{});
+        }
     }
 </script>
 
