@@ -3,207 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logo.png">
-    <meta name="description" content="Dixit Labs — fun Indian browser games and interactive experiments including GrossDumpster, built by student developer Atharv Dixit.">
-    <meta name="keywords" content="browser games India, free online games, GrossDumpster game, Dixit Labs, Indian web experiments">
-    <meta name="author" content="Atharv Dixit">
-    <title>Dixit Labs | Interactive Playground</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;500&display=swap" rel="stylesheet">
-
+    <title>DeepWork.ai — CUSTOM PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #020617;
-            --primary: #38bdf8;
-            --hazard: #f59e0b;
-            --card-bg: rgba(17, 24, 39, 0.9);
+            --neon-blue: #38bdf8;
+            --neon-pink: #f472b6;
+            --neon-green: #22c55e;
+            --background: #020617;
         }
 
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
-            color: white;
-            overflow-x: hidden;
+            margin: 0; background: var(--background);
+            color: white; font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100vh; overflow: hidden;
         }
 
-        /* --- UI Overlay --- */
-        body::after {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            z-index: 9999;
-            pointer-events: none;
-            background-size: 100% 2px;
+        /* Setup Screen */
+        #setup-screen {
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+            z-index: 100;
         }
 
-        /* --- Startup Screen (Guaranteed to Open) --- */
-        #dixlabsIntro {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100000;
-            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s ease;
+        .input-group { display: flex; gap: 10px; align-items: center; }
+
+        input {
+            background: rgba(15, 23, 42, 0.9); border: 1px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 10px; width: 60px; text-align: center;
+            font-family: 'Orbitron'; font-size: 20px; outline: none;
         }
 
-        #dixlabsLogo {
-            width: 220px;
-            filter: drop-shadow(0 0 15px var(--primary));
-            margin-bottom: 30px;
+        /* Timer Screen */
+        #timer-screen { display: none; flex-direction: column; align-items: center; width: 100%; }
+
+        #quote-display {
+            height: 40px; color: #94a3b8; font-size: 14px; text-align: center;
+            margin-bottom: 20px; letter-spacing: 1px; transition: opacity 1s;
+            max-width: 80%;
         }
 
-        .ignite-btn {
-            padding: 15px 40px;
-            background: var(--primary);
-            color: black;
-            border: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            letter-spacing: 3px;
-            cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-            transition: 0.3s;
+        #timer-display {
+            font-size: clamp(50px, 12vw, 120px); font-weight: 900; 
+            letter-spacing: 5px; color: white;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
         }
 
-        .ignite-btn:hover {
-            transform: scale(1.1);
-            background: white;
+        .progress-container {
+            width: 80%; max-width: 600px; height: 4px;
+            background: #1e293b; border-radius: 10px; margin: 30px 0;
         }
 
-        /* --- Main UI --- */
-        header { padding: 60px 20px; text-align: center; }
-        .logo-main {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px var(--primary);
-            margin: 0;
+        #progress-bar {
+            width: 0%; height: 100%; background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green); transition: width 1s linear;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+        .btn-term {
+            padding: 12px 30px; background: transparent;
+            border: 2px solid var(--neon-blue); color: var(--neon-blue);
+            cursor: pointer; font-family: 'Orbitron'; font-weight: 900;
+            transition: 0.3s; text-transform: uppercase;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
-        }
+        .btn-term:hover { background: var(--neon-blue); color: #000; }
+        .btn-pause { border-color: var(--neon-pink); color: var(--neon-pink); margin-top: 20px; }
 
-        .card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .game-btn {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        footer { 
-            padding: 60px 20px; 
-            text-align: center; 
-            font-family: 'Orbitron'; 
-            font-size: 0.8rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .email { color: var(--primary); text-decoration: none; }
+        .media-bridge { margin-top: 50px; text-align: center; }
+        .music-grid { display: flex; gap: 15px; margin-top: 10px; }
+        .music-link { color: #64748b; text-decoration: none; font-size: 12px; }
+        .music-link:hover { color: white; }
     </style>
 </head>
-
 <body>
 
-<div id="dixlabsIntro">
-    <img src="logo.png" id="dixlabsLogo">
-    <button class="ignite-btn" onclick="openLabs()">IGNITE SYSTEMS</button>
-</div>
-
-<header>
-    <h1 class="logo-main">DIXIT LABS</h1>
-    <p style="color: var(--primary); letter-spacing: 2px;">Made in India By Atharv Dixit (Student Developer)</p>
-</header>
-
-<div class="container">
-    <div class="projects-grid">
-        <div class="card">
-            <h3>💸 Spend Mukesh's Money</h3>
-            <p style="color: #94a3b8;">Spend insane money on crazy stuff. Can you actually finish it?</p>
-            <div style="font-size: 0.8rem; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; margin: 10px 0; border-left: 2px solid var(--primary);">
-                @startupbro: "I bought 3 islands and still had money left 😭"
-            </div>
-            <button class="game-btn" onclick="location.href='ambani.html'">PLAY NOW</button>
+    <div id="setup-screen">
+        <h1 style="color:var(--neon-blue); letter-spacing: 5px;">MISSION_CONFIG</h1>
+        <div class="input-group">
+            <input type="number" id="cfg-hours" value="0" min="0" max="23"> <span>H</span>
+            <input type="number" id="cfg-mins" value="25" min="0" max="59"> <span>M</span>
         </div>
-
-        <div class="card" style="border-color: var(--hazard);">
-            <h3 style="color: var(--hazard);">🗑️ GrossDumpster</h3>
-            <p style="color: #94a3b8;">Catch trash before it hits the ground! Interactive physics chaos.</p>
-            <button class="game-btn" style="background: var(--hazard);" onclick="window.location.href='https://grossdumpster.vercel.app'">PLAY NOW</button>
-        </div>
-
-        <div class="card" style="opacity: 0.6; border-style: dashed;">
-            <h3>👀 Next Experiment</h3>
-            <p style="color: #64748b;">Something chaotic is cooking... New project arriving soon.</p>
-            <button class="game-btn" onclick="alert('Coming Soon 👀')">STAY TUNED</button>
-        </div>
+        <button class="btn-term" onclick="initializeMission()">INITIALIZE_SESSION</button>
     </div>
-</div>
 
-<footer>
-    <div style="margin-bottom: 10px;">
-        CONTACT: <a href="mailto:dixit181896@gmail.com" class="email">dixit181896@gmail.com</a>
-    </div>
-    © Dixit Labs | 2026
-</footer>
-
-<script>
-    // These are robust, fast-loading sounds
-    const startupSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); // Futuristic Tech Rise
-    const hoverSfx = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Click/Tick
-
-    function openLabs() {
-        // 1. Play Sound
-        startupSfx.play().catch(() => console.log("Sound muted by browser"));
-
-        // 2. Clear Intro Instantly
-        const intro = document.getElementById("dixlabsIntro");
-        intro.style.opacity = "0";
-        intro.style.transform = "scale(1.5)";
+    <div id="timer-screen">
+        <div id="quote-display">INITIALIZING_MOTIVATION_CORE...</div>
+        <div id="timer-display">00:00:00</div>
         
-        setTimeout(() => {
-            intro.style.display = "none";
-        }, 500);
-    }
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
 
-    // Attach hover sounds to cards
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            hoverSfx.currentTime = 0;
-            hoverSfx.play().catch(() => {});
-        });
-    });
-</script>
+        <button id="pause-btn" class="btn-term btn-pause" onclick="togglePause()">PAUSE</button>
 
+        <div class="media-bridge">
+            <div class="music-grid">
+                <a href="https://spotify.com" target="_blank" class="music-link">SPOTIFY</a>
+                <a href="https://music.youtube.com" target="_blank" class="music-link">YT_MUSIC</a>
+                <a href="https://wynk.in" target="_blank" class="music-link">WYNK</a>
+                <a href="https://music.apple.com" target="_blank" class="music-link">APPLE</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let totalSeconds, timeLeft, timerId, isPaused = false;
+        
+        const quotes = [
+            "STAY FOCUSED. THE WORLD IS DISTRACTED.",
+            "DISCIPLINE IS DOING WHAT NEEDS TO BE DONE.",
+            "YOU DON'T NEED MOTIVATION. YOU NEED SYSTEMS.",
+            "FOCUS IS A MUSCLE. TRAIN IT.",
+            "EXECUTION OVER EXCUSES.",
+            "THE GRIND INCLUDES FRIDAY.",
+            "WORK UNTIL YOUR IDOLS BECOME YOUR RIVALS.",
+            "SMALL STEPS. EVERY SINGLE DAY."
+        ];
+
+        function initializeMission() {
+            const h = parseInt(document.getElementById('cfg-hours').value) || 0;
+            const m = parseInt(document.getElementById('cfg-mins').value) || 0;
+            
+            if (h === 0 && m === 0) return alert("SET_DURATION_FIRST");
+
+            totalSeconds = (h * 3600) + (m * 60);
+            timeLeft = totalSeconds;
+
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('timer-screen').style.display = 'flex';
+            
+            startCountdown();
+            cycleQuotes();
+        }
+
+        function formatTime(s) {
+            const hrs = Math.floor(s / 3600);
+            const mins = Math.floor((s % 3600) / 60);
+            const secs = s % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function startCountdown() {
+            timerId = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    document.getElementById('timer-display').innerText = formatTime(timeLeft);
+                    
+                    const percent = ((totalSeconds - timeLeft) / totalSeconds) * 100;
+                    document.getElementById('progress-bar').style.width = percent + "%";
+
+                    if (timeLeft % 60 === 0) cycleQuotes(); // Refresh quote every minute
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerId);
+                        document.getElementById('timer-display').innerText = "COMPLETE";
+                    }
+                }
+            }, 1000);
+        }
+
+        function cycleQuotes() {
+            const qDisp = document.getElementById('quote-display');
+            qDisp.style.opacity = 0;
+            setTimeout(() => {
+                qDisp.innerText = quotes[Math.floor(Math.random() * quotes.length)];
+                qDisp.style.opacity = 1;
+            }, 1000);
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            const btn = document.getElementById('pause-btn');
+            btn.innerText = isPaused ? "RESUME" : "PAUSE";
+            btn.style.borderColor = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
+            btn.style.color = isPaused ? "var(--neon-green)" : "var(--neon-pink)";
+        }
+    </script>
 </body>
 </html>
