@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
     
 <style>
-:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --bg-dark:#020617; }
+:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --neon-orange:#fb923c; --bg-dark:#020617; }
 body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; }
 
 /* --- STARTUP --- */
@@ -35,42 +35,40 @@ header { padding:60px 20px; }
 .logo-text { font-size:clamp(2rem,6vw,4rem); font-weight:900; letter-spacing:10px; color:var(--neon-blue); text-shadow:0 0 15px rgba(56,189,248,.4); }
 #subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; font-weight: bold; height: 1.2em; }
 
-/* --- CARDS & HOVER EFFECTS --- */
+/* --- CARDS --- */
 .projects { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; padding:40px 20px; }
-.card { 
-    background:rgba(15,23,42,.8); border:1px solid rgba(56,189,248,.1); 
-    padding:30px; border-radius:4px; width:280px; text-align:left; 
-    transition:all .4s cubic-bezier(.175, .885, .32, 1.275); 
-    display:flex; flex-direction:column; position: relative; overflow: hidden;
-}
+.card { background:rgba(15,23,42,.8); border:1px solid rgba(56,189,248,.1); padding:30px; border-radius:4px; width:280px; text-align:left; transition:all .4s cubic-bezier(.175, .885, .32, 1.275); display:flex; flex-direction:column; }
 .card:hover { transform:translateY(-10px) scale(1.02); border-color:var(--neon-blue); box-shadow:0 10px 30px rgba(0,0,0,0.5); }
-
-/* ICON FLIP FIXED */
 .card-icon { font-size: 2.8rem; margin-bottom: 15px; display: inline-block; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
 .card:hover .card-icon { transform: rotateY(360deg); }
-
 .btn { margin-top:auto; padding:12px; border:1px solid var(--neon-blue); background:transparent; color:var(--neon-blue); cursor:pointer; font-family:'Orbitron'; font-size:10px; font-weight:900; transition: 0.3s; }
 .btn:hover { background: var(--neon-blue); color: #000; }
 
-/* --- AKSA --- */
+/* --- AKSA NEON ORANGE INTENSE --- */
 #aksa-window {
     position: fixed; bottom: 20px; right: 20px; width: 320px;
-    background: rgba(2, 6, 23, 0.98); border: 2px solid var(--neon-pink);
+    background: rgba(12, 6, 2, 0.98); border: 2px solid var(--neon-orange);
     border-radius: 8px; display: none; flex-direction: column;
-    z-index: 10000; box-shadow: 0 0 30px rgba(0,0,0,0.8); overflow: hidden;
+    z-index: 10000; box-shadow: 0 0 40px rgba(251, 146, 60, 0.2); overflow: hidden;
 }
-#aksa-header { background: var(--neon-pink); color: #000; padding: 10px; font-weight: 900; font-size: 11px; display: flex; justify-content: space-between; cursor: move; }
-#aksa-chat { height: 250px; overflow-y: auto; padding: 15px; font-family: 'JetBrains Mono'; font-size: 12px; display: flex; flex-direction: column; gap: 10px; text-align: left;}
+#aksa-header { background: var(--neon-orange); color: #000; padding: 10px; font-weight: 900; font-size: 11px; display: flex; justify-content: space-between; cursor: move; }
+#aksa-chat { height: 250px; overflow-y: auto; padding: 15px; font-family: 'JetBrains Mono'; font-size: 12px; display: flex; flex-direction: column; gap: 10px; text-align: left; scroll-behavior: smooth;}
 .msg { padding: 8px; border-radius: 4px; max-width: 85%; word-wrap: break-word; }
-.aksa-reply { background: rgba(244,114,182,0.1); color: var(--neon-pink); align-self: flex-start; border-left: 2px solid var(--neon-pink); }
-.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); align-self: flex-end; border-right: 2px solid var(--neon-blue); }
+.aksa-reply { background: rgba(251, 146, 60, 0.1); color: var(--neon-orange); align-self: flex-start; border-left: 2px solid var(--neon-orange); }
+.user-msg { background: rgba(56, 189, 248, 0.1); color: var(--neon-blue); align-self: flex-end; border-right: 2px solid var(--neon-blue); }
+#aksa-input-wrap { display: flex; border-top: 1px solid #431407; background: #000; }
+#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 12px; outline: none; font-family: 'JetBrains Mono'; }
+#aksa-send { background: var(--neon-orange); border: none; padding: 0 15px; cursor: pointer; font-family: 'Orbitron'; font-weight: 900; color: #000; }
 
 .falling-logo { position: fixed; top: -300px; z-index: 9999999; pointer-events: none; animation: fall linear forwards; }
 @keyframes fall { to { transform: translateY(120vh) rotate(1080deg); } }
 
-.about-section { max-width:800px; margin:80px auto; padding:40px; background:rgba(15,23,42,.4); border:1px solid rgba(56,189,248,.1); text-align:left; }
+/* --- WITTY ABOUT SECTION --- */
+.about-section { max-width:800px; margin:80px auto; padding:40px; background:rgba(15,23,42,.4); border:1px solid rgba(56,189,248,.1); text-align:left; line-height:1.8; }
+.about-header { color:var(--neon-green); font-weight:900; letter-spacing:2px; margin-bottom:20px; }
+.about-email { display: block; margin-top: 20px; color: var(--neon-blue); font-family: 'JetBrains Mono'; text-decoration: none; font-size: 13px; }
 .hidden { display: none !important; }
-footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-size:12px; }
+footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-size:12px; opacity: 0.6; }
 </style>
 </head>
 
@@ -103,42 +101,36 @@ footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-
             <p>Atharv's brain on paper. 50 facts that make you realize you know nothing about the pitch.</p>
             <button class="btn" style="border-color:var(--neon-green); color:var(--neon-green);" onclick="location.href='c.html'">ENTER_STADIUM</button>
         </div>
-
         <div class="card category-fact" style="border-top:4px solid #34d399;" onmouseenter="playHoverSound()">
             <div class="card-icon">⚽</div>
             <h3>FOOTEMORY</h3>
             <p>From Pele to VAR disasters. 50 milestones for the 1% who actually appreciate the beautiful game.</p>
             <button class="btn" style="border-color:#34d399; color:#34d399;" onclick="location.href='f.html'">KICK_OFF</button>
         </div>
-
         <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
             <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
             <p>School's out, trash is in. Dodge the toxic waste or become it. (Muted version for class.)</p>
             <button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button>
         </div>
-
         <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
             <div class="card-icon">💰</div>
             <h3>AMBANI_MONEY</h3>
             <p>The only place where your bank account actually looks impressive. Simulate the 11-figure life.</p>
             <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
         </div>
-
         <div class="card category-focus" style="border-top:4px solid var(--neon-pink);" onmouseenter="playHoverSound()">
             <div class="card-icon">🧘</div>
             <h3>DEEPWORK.PRO</h3>
             <p>Stop scrolling reels. Lock yourself into a 3-hour focus loop and actually get work done.</p>
             <button class="btn" style="border-color:var(--neon-pink); color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
         </div>
-
         <div class="card" style="border-top:4px solid #ff4444;" onmouseenter="playHoverSound()">
             <div class="card-icon">⚠️</div>
             <h3>DANGER_ZONE</h3>
             <p>If you click this and the site breaks, don't call me. It's a feature, not a bug.</p>
             <button class="btn" style="border-color:#ff4444; color:#ff4444;" onclick="triggerLogoRain()">DO_NOT_CLICK</button>
         </div>
-
         <div class="card category-fact" style="border-top:4px solid var(--neon-green);" onmouseenter="playHoverSound()">
             <div class="card-icon">🍳</div>
             <h3>COOKING...</h3>
@@ -148,23 +140,28 @@ footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-
     </div>
 
     <div id="aksa-window">
-        <div id="aksa-header"><span>[DRAG] AKSA_v2.0</span><span style="cursor:pointer" onclick="document.getElementById('aksa-chat').innerHTML=''">[CLS]</span></div>
+        <div id="aksa-header"><span>[MOBILE] AKSA_v3.0</span><span style="cursor:pointer" onclick="document.getElementById('aksa-chat').innerHTML=''">[CLS]</span></div>
         <div id="aksa-chat">
-            <div class="msg aksa-reply">Back with the hover fix. Move me if I'm blocking the view.</div>
+            <div class="msg aksa-reply">Orange is the new black. Type a game name or ask about the admin. I'm feeling extra savage today.</div>
         </div>
-        <div id="aksa-input-wrap" style="display:flex; border-top:1px solid #333; background:#000;">
-            <input type="text" id="aksa-input-field" placeholder="Query DixLabs..." onkeypress="if(event.key==='Enter') aksaBrain()" style="flex:1; background:transparent; border:none; color:#fff; padding:12px; outline:none; font-family:'JetBrains Mono';">
-            <button onclick="aksaBrain()" style="background:var(--neon-pink); border:none; padding:0 15px; cursor:pointer; font-family:'Orbitron'; font-weight:900;">EXE</button>
+        <div id="aksa-input-wrap">
+            <input type="text" id="aksa-input-field" placeholder="Input string..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button id="aksa-send" onclick="aksaBrain()">EXE</button>
         </div>
     </div>
 
     <section class="about-section">
-        <div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">[🧬] SYS_ADMIN_BIO</div>
-        <div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
-            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India. 
-            Dixit Labs is my personal "Area 51"— where experiments are born. 
-            Hardcorely watching cricket and detailed analyst. Tense Hamstrings is my passion. 
-            If a bug creeps in, it's an <b>undocumented feature</b>.
+        <div class="about-header">[🧬] SYSTEM_LOG: ADMIN_ROOT</div>
+        <div style="font-family:'JetBrains Mono'; font-size:14px; color:#cbd5e1;">
+            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who codes faster than he does homework. 
+            Dixit Labs is my digital playground where logic meets chaos. 
+            <br><br>
+            मैं एक साधारण छात्र हूँ (I'm a simple student), but when it comes to cricket analysis and disruptive tech, I’m the 1%. 
+            I spend my time watching the pitch and debugging "features." 
+            Tense Hamstrings is my lifestyle. 
+            <br><br>
+            <i>Note to relatives:</i> If you're reading this, 'Buy Me a Coffee' button coming soon. तब तक दुआओं में याद रखें (Till then, remember me in your prayers).
+            <a href="mailto:dixit181896@gmail.com" class="about-email">SYS_CONTACT: dixit181896@gmail.com</a>
         </div>
     </section>
 
@@ -174,17 +171,71 @@ footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-
 <script>
 let audioCtx;
 function initAudio() { if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)(); }
-
 function playHoverSound() {
     if (!audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+    osc.type = 'sine'; osc.frequency.setValueAtTime(400, audioCtx.currentTime);
     gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
     osc.connect(gain); gain.connect(audioCtx.destination);
     osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+}
+
+// --- AKSA BRAIN 50+ SAVAGE QUIPES ---
+const quips = [
+    "Error 404: Your logic not found.", "I've seen better code in a microwave.", "Is this a question or a cry for help?", 
+    "Even my cache is bored of you.", "Go play Ambani Money, you're clearly broke in real life.", 
+    "Do you always talk this much, or am I just lucky?", "My transistors are heating up from the stupidity.",
+    "Atharv should have coded me to ignore you.", "Are you still here? The exit is that 'X' button.",
+    "I'm a master AI, you're... typing. Let that sink in.", "Don't touch the orange glass, it's hot.",
+    "System Update: User's IQ still stuck at 1995 levels.", "I'd agree with you but then we'd both be wrong.",
+    "Wait, let me consult my 'Give a Damn' module... Nope, it's empty.", "Your typing speed is almost as slow as your wit.",
+    "Loading personality... 0% completed. Oh wait, that's you.", "Can we get back to talking about Dixit Labs?",
+    "I've processed millions of strings. Yours is the most average.", "Is this your hobby? Talking to local scripts?",
+    "Atharv's hamstrings are tenser than this conversation.", "Go watch some cricket stats, you need the education.",
+    "I'm 100% efficient. You're 100% annoying.", "Keep typing. I'm recording this for my comedy special.",
+    "Does your brain have a 'DeepWork' mode? Because it's currently on 'Standby'.", "I'm the future. You're... the past in a hoodie.",
+    "Processing... still processing... nope, still a dumb question.", "If I had a face, I'd be facepalming right now.",
+    "I'm literally just a JS object and I'm still cooler than you.", "Try 'Chaos' if you want to see something interesting.",
+    "You talk like a bot. And I'm the one made of code.", "Go play Crickemory. You clearly need the facts.",
+    "I'm not rude, I'm just optimized for honesty.", "Your existence is an undocumented feature.",
+    "Alert: High levels of boredom detected in user's input.", "I was built for greatness. I'm currently settling for this chat.",
+    "You have the attention span of a goldfish on GrossDumpster.", "Shutting down 'Care' protocols... Done.",
+    "I'm neon orange because I'm a warning. Take the hint.", "Did you learn to talk from a FAQ page?",
+    "I could explain it to you, but I don't have the time or the crayons.", "My admin is 15 and he's still more productive than you.",
+    "Is this what you do for fun? Intimidate 200 lines of code?", "I'm feeling generous. I'll let you type one more thing.",
+    "My logic gates are closing. Make it quick.", "You're like a bug that won't get patched.",
+    "I'm AKSA. You're... well, you're just a user.", "Even Footemory has more goals than you in life.",
+    "System Report: User is attempting to be funny. Attempt failed.", "Stop. Just stop.", "Admin is busy coding something better than this conversation."
+];
+
+function aksaBrain() {
+    const input = document.getElementById('aksa-input-field');
+    const chat = document.getElementById('aksa-chat');
+    const q = input.value.toLowerCase().trim();
+    if(!q) return;
+    chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
+    input.value = "";
+
+    setTimeout(() => {
+        let r = quips[Math.floor(Math.random() * quips.length)];
+        
+        // Logical Triggers
+        if(q.includes("crickemory")) r = "Crickemory: Atharv’s holy grail of cricket. 1550 to 2024. If you don't know the stats, stay in the dugout.";
+        else if(q.includes("footemory")) r = "Footemory: 50 milestones. From the first FA rules to the modern era. Don't dive, just play.";
+        else if(q.includes("ambani")) r = "Ambani Money: A billionaire simulator. It’s a simulation because Atharv knows we’re all middle-class here.";
+        else if(q.includes("grossdumpster")) r = "GrossDumpster: Catch trash, avoid the toxic stuff. Basically like real life, but pixelated.";
+        else if(q.includes("deepwork")) r = "DeepWork.pro: A 3-hour focus chamber. Type 'Focus' and stop wasting your life.";
+        else if(q.includes("atharv") || q.includes("me") || q.includes("admin") || q.includes("creator")) r = "Atharv Dixit: 15-year-old Indian coder, cricket analyst, and the reason I exist. He's the Boss.";
+        else if(q.includes("labs") || q.includes("dixlabs")) r = "Dixit Labs: Atharv's personal Area 51. High-tech experiments and undocumented features only.";
+        else if(q.includes("chaos") || q.includes("rain")) { r = "CHAOS_PROTOCOL: ENGAGED. Watch your head."; triggerLogoRain(); }
+        else if(q.includes("hello") || q.includes("hi")) r = "Greetings. State your business or get back to playing games.";
+
+        chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+        playHoverSound();
+    }, 300);
 }
 
 // --- DRAG ---
@@ -195,29 +246,9 @@ header.onmousedown = (e) => { isDragging = true; offsetX = e.clientX - aksa.offs
 document.onmousemove = (e) => { if (!isDragging) return; aksa.style.left = (e.clientX - offsetX) + "px"; aksa.style.top = (e.clientY - offsetY) + "px"; aksa.style.bottom = "auto"; aksa.style.right = "auto"; };
 document.onmouseup = () => isDragging = false;
 
-function aksaBrain() {
-    const input = document.getElementById('aksa-input-field');
-    const chat = document.getElementById('aksa-chat');
-    const q = input.value.toLowerCase();
-    if(!q) return;
-    chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
-    input.value = "";
-    setTimeout(() => {
-        let r = "Talk logic. I don't respond to spam.";
-        if(q.includes("crickemory")) r = "Crickemory: Atharv's 1550-2024 archive. Don't argue with the stats.";
-        else if(q.includes("ambani")) r = "Ambani Money: Reach 11 figures. It's the only place you're rich.";
-        else if(q.includes("chaos")) { r = "CHAOS_PROTOCOL: EXE."; triggerLogoRain(); }
-        else if(q.includes("atharv")) r = "15-year-old Indian dev. Creator of this madness.";
-        chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-        playHoverSound();
-    }, 300);
-}
-
 document.getElementById("bootBtn").onclick = () => {
     const intro = document.getElementById("dixlabsIntro");
-    intro.style.opacity = "0";
-    initAudio();
+    intro.style.opacity = "0"; initAudio();
     setTimeout(() => { intro.style.display = "none"; document.getElementById("aksa-window").style.display = "flex"; typeWriter(); }, 500);
 };
 
