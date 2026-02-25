@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FOOTEMORY // THE FULL 50</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #34d399; --dark: #020617; --dim: rgba(52, 211, 153, 0.1); }
+        body { margin: 0; background: var(--dark); color: #fff; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
+
+        /* HEADER */
+        .header {
+            position: fixed; top: 0; width: 100%; height: 60px; border-bottom: 2px solid var(--neon);
+            background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 500;
+        }
+        .header h1 { font-family: 'Orbitron'; color: var(--neon); letter-spacing: 8px; font-size: 1.4rem; margin: 0; }
+
+        /* PITCH TRACK */
+        #pitch-track {
+            position: fixed; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 100vh; border-left: 2px dashed var(--neon);
+            border-right: 2px dashed var(--neon); background: var(--dim); z-index: -1;
+        }
+        #progress-bar {
+            position: fixed; right: 0; top: 0; width: 6px; height: 100vh;
+            background: #111; z-index: 400;
+        }
+        #progress-fill { width: 100%; background: var(--neon); height: 0%; box-shadow: 0 0 15px var(--neon); transition: 0.1s; }
+
+        /* TIMELINE ENGINE */
+        .timeline { max-width: 650px; margin: 0 auto; padding: 45vh 20px; display: block; }
+        
+        .fact-node {
+            position: relative; margin-bottom: 450px; padding: 30px;
+            background: rgba(15, 23, 42, 0.9); border: 1px solid #222;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.1; transform: scale(0.85);
+        }
+        
+        /* THE AUTO-FOCUS HOVER UP */
+        .fact-node.active { 
+            opacity: 1; 
+            transform: scale(1.15) translateY(-10px); 
+            border-color: var(--neon); 
+            box-shadow: 0 20px 50px rgba(52, 211, 153, 0.3);
+            z-index: 100;
+        }
+
+        .icon-box {
+            position: absolute; left: -90px; top: 50%; transform: translateY(-50%);
+            font-size: 55px; opacity: 0; transition: 0.6s;
+        }
+        .fact-node.active .icon-box { 
+            opacity: 1; 
+            transform: translateY(-50%) rotateY(360deg); 
+        }
+
+        .node-year { font-family: 'Orbitron'; font-size: 3.5rem; color: var(--neon); margin: 0; line-height: 1; }
+        .node-title { font-weight: 800; font-size: 1.2rem; margin: 10px 0; color: #fff; text-transform: uppercase; border-left: 4px solid var(--neon); padding-left: 10px; }
+        .node-desc { font-size: 1rem; color: #cbd5e1; line-height: 1.6; }
+        
+        .footer-note { text-align: center; color: var(--neon); padding: 100px; font-family: 'Orbitron'; letter-spacing: 5px; opacity: 0.5; }
+
+    </style>
+</head>
+<body>
+
+<div class="header"><h1>FOOTEMORY</h1></div>
+<div id="pitch-track"></div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div class="timeline" id="container"></div>
+<div class="footer-note">FULL TIME // 50 YARDS CLEARED</div>
+
+<script>
+    const footballHistory = [
+        {y: "1863", t: "The FA Rules", d: "The Football Association is formed in London, creating the first official rulebook.", i: "📜"},
+        {y: "1872", t: "First International", d: "England vs Scotland at Hamilton Crescent. The birth of global rivalry.", i: "🏴󠁧󠁢󠁳󠁣󠁴󠁿"},
+        {y: "1888", t: "Football League", d: "William McGregor founds the world's first professional football league.", i: "⚽"},
+        {y: "1891", t: "The Penalty", d: "The penalty kick is introduced. Originally called 'the kick of death'.", i: "🥅"},
+        {y: "1904", t: "FIFA Born", d: "FIFA is established in Paris to govern world football.", i: "🌎"},
+        {y: "1930", t: "First World Cup", d: "Uruguay wins the inaugural trophy on home soil, beating Argentina 4-2.", i: "🏆"},
+        {y: "1938", t: "Live Broadcast", d: "The FA Cup Final becomes the first match ever televised live.", i: "📺"},
+        {y: "1950", t: "The Maracanazo", d: "Uruguay shocks 200,000 Brazilians to win the World Cup.", i: "🇧🇷"},
+        {y: "1954", t: "Bern Miracle", d: "West Germany defeats the 'Invincible' Hungarians in a historic upset.", i: "🇩🇪"},
+        {y: "1955", t: "European Cup", d: "Real Madrid starts their dominance in the new continental tournament.", i: "🇪🇺"},
+        {y: "1958", t: "Pelé Arrives", d: "A 17-year-old Pelé scores twice in the final to win Brazil's first title.", i: "👑"},
+        {y: "1960", t: "First Euros", d: "The Soviet Union wins the inaugural European Championship.", i: "🎖️"},
+        {y: "1966", t: "England's Glory", d: "Geoff Hurst hits a hat-trick to win the World Cup for England at Wembley.", i: "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
+        {y: "1970", t: "The Cards", d: "Red and yellow cards are used for the first time in a World Cup.", i: "🟨"},
+        {y: "1972", t: "Total Football", d: "Ajax and Cruyff dominate Europe with their revolutionary style.", i: "❌"},
+        {y: "1974", t: "The Cruyff Turn", d: "Johan Cruyff debuts his signature move against Sweden.", i: "🔄"},
+        {y: "1978", t: "confetti Final", d: "Argentina wins their first World Cup title in Buenos Aires.", i: "🇦🇷"},
+        {y: "1982", t: "Rossi's Return", d: "Paolo Rossi's hat-trick vs Brazil leads Italy to the title.", i: "🇮🇹"},
+        {y: "1986", t: "Maradona 86", d: "The Hand of God and the Goal of the Century in just four minutes.", i: "🌟"},
+        {y: "1989", t: "Hillsborough", d: "A tragic day that changed stadium safety and fan culture forever.", i: "🕯️"},
+        {y: "1990", t: "Milla's Dance", d: "Roger Milla leads Cameroon to a historic quarter-final run.", i: "🇨🇲"},
+        {y: "1992", t: "PL Launch", d: "The Premier League is formed, changing the money in the game forever.", i: "💸"},
+        {y: "1994", t: "USA 94", d: "Brazil wins the first-ever World Cup final decided by a penalty shootout.", i: "🧤"},
+        {y: "1995", t: "Bosman Ruling", d: "Players gain the right to free transfers, empowering the stars.", i: "⚖️"},
+        {y: "1998", t: "France 98", d: "Zidane's two headers win the World Cup for France on home soil.", i: "🇫🇷"},
+        {y: "1999", t: "The Treble", d: "Man Utd's late miracle in Barcelona wins them the UCL and Treble.", i: "🔴"},
+        {y: "2002", t: "R9 Redemption", d: "Ronaldo scores 8 goals to lead Brazil to their 5th World Cup.", i: "🇧🇷"},
+        {y: "2004", t: "The Invincibles", d: "Arsenal goes 49 games unbeaten, winning the Premier League.", i: "🛡️"},
+        {y: "2005", t: "Istanbul", d: "Liverpool recovers from 3-0 down to win the Champions League.", i: "🔴"},
+        {y: "2006", t: "The Headbutt", d: "Zidane's career ends with a red card in the World Cup final.", i: "🟥"},
+        {y: "2008", t: "CR7's First", d: "Cristiano Ronaldo wins his first Ballon d'Or and Champions League.", i: "🐐"},
+        {y: "2009", t: "The Sextuple", d: "Guardiola's Barca wins all 6 trophies in a single year.", i: "🔵"},
+        {y: "2010", t: "Spain 2010", d: "Tiki-Taka takes over as Spain wins their first World Cup.", i: "🇪🇸"},
+        {y: "2012", t: "Messi's 91", d: "Lionel Messi scores 91 goals in one year, breaking the world record.", i: "📈"},
+        {y: "2013", t: "Bayern's Treble", d: "Bayern Munich dominates Europe to win their first treble.", i: "🇩🇪"},
+        {y: "2014", t: "The 7-1", d: "Germany destroys Brazil in the most shocking WC semi-final.", i: "⚽"},
+        {y: "2015", t: "MSN Trio", d: "Messi, Suarez, and Neymar win another treble for Barcelona.", i: "🔱"},
+        {y: "2016", t: "Leicester City", d: "The 5000-1 underdogs win the Premier League. The greatest miracle.", i: "🦊"},
+        {y: "2017", t: "The Neymar Deal", d: "PSG breaks the transfer record, signing Neymar for €222M.", i: "💰"},
+        {y: "2018", t: "VAR WC", d: "VAR is used for the first time in a World Cup to change history.", i: "🖥️"},
+        {y: "2019", t: "Corner Taken Quickly", d: "Origi's goal completes Liverpool's 4-0 comeback vs Barca.", i: "🏟️"},
+        {y: "2020", t: "Locked Down", d: "Football stops for months, returning in empty stadiums.", i: "😷"},
+        {y: "2021", t: "Messi's Copa", d: "Messi finally wins a major trophy with Argentina in Brazil.", i: "🇦🇷"},
+        {y: "2022", t: "Messi's WC", d: "The GOAT completes football by winning the World Cup in Qatar.", i: "👑"},
+        {y: "2023", t: "City's First", d: "Man City completes the treble by winning the Champions League.", i: "🏙️"},
+        {y: "2024", t: "Yamal's Rise", d: "Lamine Yamal becomes the youngest scorer in Euros history.", i: "💎"},
+        {y: "2024", t: "Real's 15th", d: "The Kings of Europe extend their UCL record to 15 titles.", i: "⚪"},
+        {y: "2024", t: "Bayer Invincible", d: "Leverkusen goes a full domestic season unbeaten in Germany.", i: "🔴"},
+        {y: "2025", t: "Expanded CWC", d: "The new 32-team Club World Cup is officially announced.", i: "📅"},
+        {y: "2026", t: "The 48-Team Era", d: "The World Cup expands to 48 teams for the first time.", i: "🌎"}
+    ];
+
+    const container = document.getElementById('container');
+    footballHistory.forEach(fact => {
+        const div = document.createElement('div');
+        div.className = 'fact-node';
+        div.innerHTML = `
+            <div class="icon-box">${fact.i}</div>
+            <p class="node-year">${fact.y}</p>
+            <div class="node-title">${fact.t}</div>
+            <div class="node-desc">${fact.d}</div>
+        `;
+        container.appendChild(div);
+    });
+
+    window.onscroll = () => {
+        const nodes = document.querySelectorAll('.fact-node');
+        const trigger = window.innerHeight / 2;
+
+        nodes.forEach(node => {
+            const rect = node.getBoundingClientRect();
+            const nodeCenter = rect.top + (rect.height / 2);
+
+            if (Math.abs(nodeCenter - trigger) < 200) {
+                node.classList.add('active');
+            } else {
+                node.classList.remove('active');
+            }
+        });
+
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('progress-fill').style.height = scrollPercent + "%";
+    }
+</script>
+</body>
+</html>
