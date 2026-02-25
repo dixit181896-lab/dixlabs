@@ -120,6 +120,15 @@ color:var(--neon-blue);
 text-shadow:0 0 15px rgba(56,189,248,.4);
 }
 
+/* --- ENLARGED SUBHEADER --- */
+#subHeader {
+    font-family: 'JetBrains Mono';
+    color: var(--neon-pink);
+    font-size: 16px; /* Increased from 12px */
+    height: 1.2em;
+    font-weight: bold;
+}
+
 /* --- CARDS --- */
 .projects{
 display:flex;justify-content:center;
@@ -147,20 +156,12 @@ box-shadow:
 
 .card-icon{
 font-size:2.5rem;margin-bottom:15px;
-display:inline-block;transition:transform 0.6s;
+display:inline-block;transition:.6s;
 }
 
+/* Flip animation logic for all icons */
 .card:hover .card-icon{
 transform:rotateY(360deg);
-}
-
-/* Specific Spin Animation for Crickemory Gear */
-@keyframes gearSpin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-.card:hover .gear-spin {
-    animation: gearSpin 2s infinite linear;
 }
 
 .btn{
@@ -242,24 +243,18 @@ onclick="filterSelection('fact', this)">
 <header>
 <div class="logo-text">DIXLABS</div>
 
-<p id="subHeader"
-style="font-family:'JetBrains Mono';
-color:var(--neon-pink);
-font-size:12px;height:1.2em;">
-</p>
+<p id="subHeader"></p>
 </header>
 
 <div class="projects">
 
 <div class="card category-fact"
 style="border-top:4px solid var(--neon-green);"
-onmouseenter="playSmallClick()">
-<div class="card-icon gear-spin">🏏</div>
+onmouseenter="playFactHover()">
+<div class="card-icon">🏏</div>
 <h3>CRICKEMORY</h3>
 <p>
-Walk the 22-yard pitch of history. 
-50 legendary facts from 1550 to 2024.
-Featuring Kohli, Rohit, and the Don.
+Walk the 22-yard pitch of history. 50 legendary facts from 1550 to 2024. Featuring Kohli, Rohit, and the Don.
 </p>
 <button class="btn"
 style="border-color:var(--neon-green); color:var(--neon-green);"
@@ -273,8 +268,7 @@ style="border-top:4px solid var(--neon-blue);">
 <div class="card-icon">🗑️</div>
 <h3>GROSSDUMPSTER</h3>
 <p>
-Catching trash and dodging toxic waste because
-normal sports are too mainstream.(MUTED_SCHOOL)
+Catching trash and dodging toxic waste because normal sports are too mainstream.(MUTED_SCHOOL)
 </p>
 <button class="btn"
 onclick="location.href='gd.html'">
@@ -287,9 +281,7 @@ style="border-top:4px solid var(--neon-blue);">
 <div class="card-icon">💰</div>
 <h3>AMBANI_MONEY</h3>
 <p>
-Simulating billionaire life.
-Because your bank balance won't reach
-11 figures on its own.
+Simulating billionaire life. Because your bank balance won't reach 11 figures on its own.
 </p>
 <button class="btn"
 onclick="location.href='ambani.html'">
@@ -302,12 +294,10 @@ style="border-top:4px solid var(--neon-pink);">
 <div class="card-icon">🧘</div>
 <h3>DEEPWORK.PRO</h3>
 <p>
-A 3-hour focus terminal designed to keep you productive
-when your brain wants to scroll reels.
+A 3-hour focus terminal designed to keep you productive when your brain wants to scroll reels.
 </p>
 <button class="btn"
-style="border-color:var(--neon-pink);
-color:var(--neon-pink);"
+style="border-color:var(--neon-pink); color:var(--neon-pink);"
 onclick="location.href='deepwork.html'">
 RUN_MODULE
 </button>
@@ -318,14 +308,10 @@ style="border-top:4px solid var(--neon-green);">
 <div class="card-icon">🍳</div>
 <h3>COMING_SOON</h3>
 <p>
-Something big is cooking in the lab.
-Higher specs, better logic,
-and zero bugs (hopefully).
+Something big is cooking in the lab. Higher specs, better logic, and zero bugs (hopefully).
 </p>
 <button class="btn"
-style="border-color:var(--neon-green);
-color:var(--neon-green);
-cursor:default;">
+style="border-color:var(--neon-green); color:var(--neon-green); cursor:default;">
 UNDER_DEVELOPMENT
 </button>
 </div>
@@ -333,57 +319,40 @@ UNDER_DEVELOPMENT
 </div>
 
 <section class="about-section">
-
-<div style="color:var(--neon-green);
-letter-spacing:2px;margin-bottom:15px;">
+<div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">
 [🧬] WHO_IS_BEHIND_THIS?
 </div>
-
-<div style="font-family:'JetBrains Mono';
-font-size:14px;line-height:1.8;color:#cbd5e1;">
-I am <b style="color:var(--neon-blue);">Atharv Dixit</b>,
-a 15-year-old student from India who spends way too much time staring
-at code and test tubes.
+<div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
+I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who spends way too much time staring at code and test tubes.
 <br><br>
-Dixit Labs is my personal "Area 51"—
-a place where I experiment with web tech, design, and ideas that actually work.
-Constantly Watching Cricket, Memes and Codes.
+Dixit Labs is my personal "Area 51"— a place where I experiment with web tech, design, and ideas that actually work. Constantly Watching Cricket, Memes and Codes.
 <br><br>
-Basically, I’m a high-schooler trying to disrupt the web before my next exam. Relatives - Buy me a coffee.
-IF_A_BUG_CREEPS_IN_ITS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG
+Basically, I’m a high-schooler trying to disrupt the web before my next exam. Relatives - Buy me a coffee. IF_A_BUG_CREEPS_IN_ITS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG
 </div>
 </section>
 
 <footer>
 <p>DIXLABS 2026 // ATHARV DIXIT</p>
 <p>
-Contact:
-<a href="mailto:dixit181896@gmail.com"
-style="color:var(--neon-blue);
-text-decoration:none;">
-dixit181896@gmail.com
-</a>
+Contact: <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a>
 </p>
 </footer>
 
 </div>
 
 <script>
-// --- AUDIO SYSTEM ---
 let audioCtx;
 
 function initAudio() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
+    if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 }
 
-function playSmallClick() {
+function playFactHover() {
     if (!audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'sine';
-    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(500, audioCtx.currentTime);
     gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
     osc.connect(gain);
@@ -397,8 +366,7 @@ const introLayer=document.getElementById("dixlabsIntro");
 
 bootBtn.addEventListener("click",function(){
     introLayer.style.display="none";
-    initAudio(); // Initialize audio on boot
-
+    initAudio();
     try{
         const osc=audioCtx.createOscillator();
         const gain=audioCtx.createGain();
@@ -412,15 +380,13 @@ bootBtn.addEventListener("click",function(){
         osc.start();
         osc.stop(audioCtx.currentTime+.5);
     }catch(e){}
-
     typeWriter();
 });
 
 function typeWriter(){
     const el=document.getElementById("subHeader");
     const txt="> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-    let i=0;
-    el.innerHTML="";
+    let i=0; el.innerHTML="";
     function type(){
         if(i<txt.length){
             el.innerHTML+=txt.charAt(i);
@@ -436,14 +402,9 @@ function filterSelection(cat,el){
     const tabs=document.querySelectorAll(".tab-link");
     tabs.forEach(t=>t.classList.remove("active"));
     el.classList.add("active");
-
     cards.forEach(c=>{
-        if(cat==='all')
-            c.classList.remove("hidden");
-        else
-            c.classList.contains("category-"+cat)
-            ?c.classList.remove("hidden")
-            :c.classList.add("hidden");
+        if(cat==='all') c.classList.remove("hidden");
+        else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
     });
 }
 </script>
