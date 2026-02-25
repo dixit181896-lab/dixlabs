@@ -64,7 +64,7 @@
         .logo-text { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; letter-spacing: 10px; color: var(--neon-blue); text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
 
         /* --- CARDS --- */
-        .projects { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 40px 20px; }
+        .projects { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 40px 20px; min-height: 300px; }
         .card {
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.1);
             padding: 30px; border-radius: 4px; width: 280px; text-align: left;
@@ -78,7 +78,7 @@
         .card:hover .card-icon { transform: rotateY(360deg); }
 
         .btn {
-            margin-top: 20px; padding: 12px; border: 1px solid var(--neon-blue);
+            margin-top: auto; padding: 12px; border: 1px solid var(--neon-blue);
             background: transparent; color: var(--neon-blue); cursor: pointer;
             font-family: 'Orbitron'; font-size: 10px; font-weight: 900; width: 100%; transition: 0.3s;
         }
@@ -99,109 +99,4 @@
 
     <div id="dixlabsIntro">
         <img src="logo.png" style="width:180px; margin-bottom:30px;" onerror="this.style.display='none'">
-        <button class="intro-btn" onclick="boot()">INITIALIZE_CORE</button>
-    </div>
-
-    <div class="particles"></div>
-
-    <div id="mainContent">
-        <nav class="nav-tabs">
-            <div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
-            <div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
-            <div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
-            <div class="tab-link tab-facts" onclick="filterSelection('fact', this)">🧠 FACTS</div>
-        </nav>
-
-        <header>
-            <div class="logo-text">DIXLABS</div>
-            <p id="subHeader" style="font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 12px; height: 1.2em;"></p>
-        </header>
-
-        <div class="projects">
-            <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
-                <div class="card-icon">🗑️</div>
-                <h3>GROSSDUMPSTER</h3>
-                <p>Catch trash and survive the waste-land. Survival engine alpha.</p>
-                <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
-            </div>
-            <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
-                <div class="card-icon">💰</div>
-                <h3>AMBANI_MONEY</h3>
-                <p>Infinite billionaire fortune simulator. Test your consumer limits.</p>
-                <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
-            </div>
-
-            <div class="card category-focus" style="border-top: 4px solid var(--neon-pink);">
-                <div class="card-icon">🧘</div>
-                <h3>DEEPWORK.PRO</h3>
-                <p>Mission-critical focus terminal with integrated media bridges.</p>
-                <button class="btn" style="border-color: var(--neon-pink); color: var(--neon-pink);" onclick="location.href='deepwork.html'">RUN_MODULE</button>
-            </div>
-
-            <div class="card category-fact" style="border-top: 4px solid var(--neon-green);">
-                <div class="card-icon">🔬</div>
-                <h3>BIO_ARCHIVE</h3>
-                <p>Researching the intersection of Bio-Chem and Web Architecture.</p>
-                <button class="btn" style="border-color: var(--neon-green); color: var(--neon-green);">ACCESS_FILES</button>
-            </div>
-        </div>
-
-        <section class="about-section">
-            <div style="color: var(--neon-green); letter-spacing: 2px; margin-bottom: 10px;">[🧬] ABOUT_THE_DEV</div>
-            <div style="font-family: 'JetBrains Mono'; font-size: 14px; line-height: 1.6; color: #cbd5e1;">
-                I am <b style="color: var(--neon-blue);">Atharv Dixit</b>, 15, India. Bio-Chem enthusiast and web disruptor. Inspired by the drive of <b style="color: var(--neon-pink);">Virat Kohli</b>.
-            </div>
-        </section>
-
-        <footer>
-            <p>DIXLABS 2026 // ATHARV DIXIT</p>
-            <p>Contact: <a href="mailto:dixit181896@gmail.com" style="color: var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a></p>
-        </footer>
-    </div>
-
-    <script>
-        function boot() {
-            document.getElementById("dixlabsIntro").style.display = "none";
-            typeWriter();
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(40, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.5);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(); osc.stop(ctx.currentTime + 0.5);
-            } catch(e) {}
-        }
-
-        function typeWriter() {
-            const el = document.getElementById("subHeader");
-            const txt = "> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-            let i = 0;
-            el.innerHTML = "";
-            function type() {
-                if (i < txt.length) {
-                    el.innerHTML += txt.charAt(i);
-                    i++;
-                    setTimeout(type, 40);
-                }
-            }
-            type();
-        }
-
-        function filterSelection(cat, el) {
-            const cards = document.querySelectorAll(".card");
-            const tabs = document.querySelectorAll(".tab-link");
-            tabs.forEach(t => t.classList.remove("active"));
-            el.classList.add("active");
-            cards.forEach(c => {
-                if(cat === 'all') c.classList.remove("hidden");
-                else c.classList.contains("category-" + cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
-            });
-        }
-    </script>
-</body>
-</html>
+        <button class="intro-btn" onclick="boot()">INITIALIZE_CORE</button
