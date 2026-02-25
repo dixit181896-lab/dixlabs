@@ -120,7 +120,6 @@ color:var(--neon-blue);
 text-shadow:0 0 15px rgba(56,189,248,.4);
 }
 
-/* --- ENLARGED SUBHEADER --- */
 #subHeader {
     font-family: 'JetBrains Mono';
     color: var(--neon-pink);
@@ -159,7 +158,7 @@ font-size:2.5rem;margin-bottom:15px;
 display:inline-block;transition:.6s;
 }
 
-/* Flip animation logic for all icons */
+/* Flip animation for icons */
 .card:hover .card-icon{
 transform:rotateY(360deg);
 }
@@ -179,7 +178,19 @@ background:var(--neon-blue);
 color:#000;letter-spacing:2px;
 }
 
-/* --- ABOUT --- */
+/* --- EASTER EGG CSS --- */
+.falling-logo {
+    position: fixed;
+    top: -100px;
+    z-index: 999999;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); }
+}
+
 .about-section{
 max-width:800px;margin:80px auto;
 padding:40px;
@@ -201,17 +212,9 @@ font-size:12px;
 <body>
 
 <div id="dixlabsIntro">
-<img src="logo.png"
-style="width:120px;margin-bottom:30px;"
-onerror="this.style.display='none'">
-
-<button id="bootBtn" class="intro-btn">
-INITIALIZE_CORE
-</button>
-
-<div class="intro-contact">
-SYS_ADMIN: dixit181896@gmail.com
-</div>
+<img src="logo.png" style="width:120px;margin-bottom:30px;" onerror="this.style.display='none'">
+<button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+<div class="intro-contact">SYS_ADMIN: dixit181896@gmail.com</div>
 </div>
 
 <div class="particles"></div>
@@ -219,152 +222,89 @@ SYS_ADMIN: dixit181896@gmail.com
 <div id="mainContent">
 
 <nav class="nav-tabs">
-<div class="tab-link tab-home active"
-onclick="filterSelection('all', this)">
-🏠 ALL
-</div>
-
-<div class="tab-link tab-games"
-onclick="filterSelection('game', this)">
-🎮 GAMES
-</div>
-
-<div class="tab-link tab-focus"
-onclick="filterSelection('focus', this)">
-⚡ FOCUS
-</div>
-
-<div class="tab-link tab-facts"
-onclick="filterSelection('fact', this)">
-🧠 FACTS
-</div>
+<div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
+<div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
+<div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
+<div class="tab-link tab-facts" onclick="filterSelection('fact', this)">🧠 FACTS</div>
 </nav>
 
 <header>
 <div class="logo-text">DIXLABS</div>
-
 <p id="subHeader"></p>
 </header>
 
 <div class="projects">
 
-<div class="card category-fact"
-style="border-top:4px solid var(--neon-green);"
-onmouseenter="playHoverSound()">
-<div class="card-icon">🏏</div>
-<h3>CRICKEMORY</h3>
-<p>
-Walk the 22-yard pitch of history. 50 legendary facts from 1550 to 2024. Featuring Kohli, Rohit, and the Don.
-</p>
-<button class="btn"
-style="border-color:var(--neon-green); color:var(--neon-green);"
-onclick="location.href='c.html'">
-OPEN_ARCHIVES
-</button>
-</div>
+    <div class="card category-fact" style="border-top:4px solid var(--neon-green);" onmouseenter="playHoverSound()">
+        <div class="card-icon">🏏</div>
+        <h3>CRICKEMORY</h3>
+        <p>Walk the 22-yard pitch of history. 50 legendary facts from 1550 to 2024.</p>
+        <button class="btn" style="border-color:var(--neon-green); color:var(--neon-green);" onclick="location.href='c.html'">OPEN_ARCHIVES</button>
+    </div>
 
-<div class="card category-fact"
-style="border-top:4px solid #34d399;"
-onmouseenter="playHoverSound()">
-<div class="card-icon">⚽</div>
-<h3>FOOTEMORY</h3>
-<p>
-Sprint through 50 legendary football milestones. From the first FA rules to Messi's World Cup glory.
-</p>
-<button class="btn"
-style="border-color:#34d399; color:#34d399;"
-onclick="location.href='f.html'">
-KICK_OFF
-</button>
-</div>
+    <div class="card category-fact" style="border-top:4px solid #34d399;" onmouseenter="playHoverSound()">
+        <div class="card-icon">⚽</div>
+        <h3>FOOTEMORY</h3>
+        <p>Sprint through 50 legendary football milestones. From FA rules to World Cup glory.</p>
+        <button class="btn" style="border-color:#34d399; color:#34d399;" onclick="location.href='f.html'">KICK_OFF</button>
+    </div>
 
-<div class="card category-game"
-style="border-top:4px solid var(--neon-blue);"
-onmouseenter="playHoverSound()">
-<div class="card-icon">🗑️</div>
-<h3>GROSSDUMPSTER</h3>
-<p>
-Catching trash and dodging toxic waste because normal sports are too mainstream.(MUTED_SCHOOL)
-</p>
-<button class="btn"
-onclick="location.href='gd.html'">
-RUN_MODULE
-</button>
-</div>
+    <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
+        <div class="card-icon">🗑️</div>
+        <h3>GROSSDUMPSTER</h3>
+        <p>Catching trash and dodging toxic waste. (MUTED_SCHOOL)</p>
+        <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
+    </div>
 
-<div class="card category-game"
-style="border-top:4px solid var(--neon-blue);"
-onmouseenter="playHoverSound()">
-<div class="card-icon">💰</div>
-<h3>AMBANI_MONEY</h3>
-<p>
-Simulating billionaire life. Because your bank balance won't reach 11 figures on its own.
-</p>
-<button class="btn"
-onclick="location.href='ambani.html'">
-RUN_MODULE
-</button>
-</div>
+    <div class="card" style="border-top:4px solid #ff4444;" onmouseenter="playHoverSound()">
+        <div class="card-icon">⚠️</div>
+        <h3>DANGER_ZONE</h3>
+        <p>CRITICAL WARNING: Unauthorized access may cause severe logo displacement errors.</p>
+        <button class="btn" style="border-color:#ff4444; color:#ff4444;" onclick="triggerLogoRain()">DO_NOT_OPEN</button>
+    </div>
 
-<div class="card category-focus"
-style="border-top:4px solid var(--neon-pink);"
-onmouseenter="playHoverSound()">
-<div class="card-icon">🧘</div>
-<h3>DEEPWORK.PRO</h3>
-<p>
-A 3-hour focus terminal designed to keep you productive when your brain wants to scroll reels.
-</p>
-<button class="btn"
-style="border-color:var(--neon-pink); color:var(--neon-pink);"
-onclick="location.href='deepwork.html'">
-RUN_MODULE
-</button>
-</div>
+    <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
+        <div class="card-icon">💰</div>
+        <h3>AMBANI_MONEY</h3>
+        <p>Simulating billionaire life. Reach 11 figures.</p>
+        <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
+    </div>
 
-<div class="card category-fact"
-style="border-top:4px solid var(--neon-green);"
-onmouseenter="playHoverSound()">
-<div class="card-icon">🍳</div>
-<h3>COMING_SOON</h3>
-<p>
-Something big is cooking in the lab. Higher specs, better logic, and zero bugs (hopefully).
-</p>
-<button class="btn"
-style="border-color:var(--neon-green); color:var(--neon-green); cursor:default;">
-UNDER_DEVELOPMENT
-</button>
-</div>
+    <div class="card category-focus" style="border-top:4px solid var(--neon-pink);" onmouseenter="playHoverSound()">
+        <div class="card-icon">🧘</div>
+        <h3>DEEPWORK.PRO</h3>
+        <p>A 3-hour focus terminal designed for maximum productivity.</p>
+        <button class="btn" style="border-color:var(--neon-pink); color:var(--neon-pink);" onclick="location.href='deepwork.html'">RUN_MODULE</button>
+    </div>
+
+    <div class="card category-fact" style="border-top:4px solid var(--neon-green);" onmouseenter="playHoverSound()">
+        <div class="card-icon">🍳</div>
+        <h3>COMING_SOON</h3>
+        <p>Something big is cooking in the lab. Higher specs, better logic, and zero bugs.</p>
+        <button class="btn" style="border-color:var(--neon-green); color:var(--neon-green); cursor:default;">UNDER_DEVELOPMENT</button>
+    </div>
 
 </div>
 
 <section class="about-section">
-<div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">
-[🧬] WHO_IS_BEHIND_THIS?
-</div>
-<div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
-I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who spends way too much time staring at code and test tubes.
-<br><br>
-Dixit Labs is my personal "Area 51"— a place where I experiment with web tech, design, and ideas that actually work. Constantly Watching Cricket, Memes and Codes.
-<br><br>
-Basically, I’m a high-schooler trying to disrupt the web before my next exam. Relatives - Buy me a coffee. IF_A_BUG_CREEPS_IN_ITS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG
-</div>
+    <div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">[🧬] WHO_IS_BEHIND_THIS?</div>
+    <div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
+        I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who spends way too much time staring at code and test tubes.
+        <br><br>
+        Dixit Labs is my personal "Area 51"— a place where I experiment with web tech, design, and ideas that actually work.
+    </div>
 </section>
 
 <footer>
-<p>DIXLABS 2026 // ATHARV DIXIT</p>
-<p>
-Contact: <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a>
-</p>
+    <p>DIXLABS 2026 // ATHARV DIXIT</p>
+    <p>Contact: <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a></p>
 </footer>
 
 </div>
 
 <script>
 let audioCtx;
-
-function initAudio() {
-    if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-}
+function initAudio() { if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)(); }
 
 function playHoverSound() {
     if (!audioCtx) return;
@@ -380,25 +320,29 @@ function playHoverSound() {
     osc.stop(audioCtx.currentTime + 0.1);
 }
 
-const bootBtn=document.getElementById("bootBtn");
-const introLayer=document.getElementById("dixlabsIntro");
+function triggerLogoRain() {
+    // Generate 60 falling logos
+    for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+            const logo = document.createElement('img');
+            logo.src = 'logo.png';
+            logo.className = 'falling-logo';
+            logo.style.left = Math.random() * 100 + 'vw';
+            logo.style.width = (Math.random() * 35 + 20) + 'px';
+            logo.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            logo.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(logo);
+            
+            // Cleanup after fall
+            setTimeout(() => logo.remove(), 4000);
+        }, i * 50);
+    }
+}
 
+const bootBtn=document.getElementById("bootBtn");
 bootBtn.addEventListener("click",function(){
-    introLayer.style.display="none";
+    document.getElementById("dixlabsIntro").style.display="none";
     initAudio();
-    try{
-        const osc=audioCtx.createOscillator();
-        const gain=audioCtx.createGain();
-        osc.type='sawtooth';
-        osc.frequency.setValueAtTime(40,audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(800,audioCtx.currentTime+.5);
-        gain.gain.setValueAtTime(.1,audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(.01,audioCtx.currentTime+.5);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime+.5);
-    }catch(e){}
     typeWriter();
 });
 
@@ -407,11 +351,7 @@ function typeWriter(){
     const txt="> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
     let i=0; el.innerHTML="";
     function type(){
-        if(i<txt.length){
-            el.innerHTML+=txt.charAt(i);
-            i++;
-            setTimeout(type,40);
-        }
+        if(i<txt.length){ el.innerHTML+=txt.charAt(i); i++; setTimeout(type,40); }
     }
     type();
 }
