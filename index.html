@@ -23,17 +23,18 @@
             font-family: 'Orbitron', sans-serif; text-align: center; overflow-x: hidden;
         }
 
-        /* --- STATIC STARTUP SCREEN --- */
+        /* --- STARTUP SCREEN --- */
         #dixlabsIntro {
             position: fixed; inset: 0; background: #000;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; z-index: 999999;
+            pointer-events: all; /* Ensure it accepts clicks */
         }
 
         .intro-btn {
             background: none; border: 2px solid #fff; color: #fff; 
             padding: 15px 40px; cursor: pointer; font-family: 'Orbitron'; 
-            letter-spacing: 5px; font-weight: 900; transition: 0.2s;
+            letter-spacing: 5px; font-weight: 900; position: relative; z-index: 1000000;
         }
         .intro-btn:hover { background: #fff; color: #000; }
 
@@ -41,7 +42,8 @@
         .particles {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(circle, rgba(56, 189, 248, 0.15) 1px, transparent 1px);
-            background-size: 50px 50px; z-index: -1; animation: moveBackground 30s linear infinite;
+            background-size: 50px 50px; z-index: -10; /* Very far back */
+            animation: moveBackground 30s linear infinite;
         }
         @keyframes moveBackground { from { background-position: 0 0; } to { background-position: 100px 100px; } }
 
@@ -99,4 +101,114 @@
 
     <div id="dixlabsIntro">
         <img src="logo.png" style="width:180px; margin-bottom:30px;" onerror="this.style.display='none'">
-        <button class="intro-btn" onclick="boot()">INITIALIZE_CORE</button
+        <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+    </div>
+
+    <div class="particles"></div>
+
+    <div id="mainContent">
+        <nav class="nav-tabs">
+            <div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
+            <div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
+            <div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
+            <div class="tab-link tab-facts" onclick="filterSelection('fact', this)">🧠 FACTS</div>
+        </nav>
+
+        <header>
+            <div class="logo-text">DIXLABS</div>
+            <p id="subHeader" style="font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 12px; height: 1.2em;"></p>
+        </header>
+
+        <div class="projects">
+            <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
+                <div class="card-icon">🗑️</div>
+                <h3>GROSSDUMPSTER</h3>
+                <p>Catching trash and dodging toxic waste because normal sports are too mainstream.</p>
+                <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
+            </div>
+            <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
+                <div class="card-icon">💰</div>
+                <h3>AMBANI_MONEY</h3>
+                <p>Simulating billionaire life. Because your bank balance won't reach 11 figures on its own.</p>
+                <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
+            </div>
+            <div class="card category-focus" style="border-top: 4px solid var(--neon-pink);">
+                <div class="card-icon">🧘</div>
+                <h3>DEEPWORK.PRO</h3>
+                <p>A 3-hour focus terminal designed to keep you productive when your brain wants to scroll reels.</p>
+                <button class="btn" style="border-color: var(--neon-pink); color: var(--neon-pink);" onclick="location.href='deepwork.html'">RUN_MODULE</button>
+            </div>
+        </div>
+
+        <section class="about-section">
+            <div style="color: var(--neon-green); letter-spacing: 2px; margin-bottom: 15px;">[🧬] WHO_IS_BEHIND_THIS?</div>
+            <div style="font-family: 'JetBrains Mono'; font-size: 14px; line-height: 1.8; color: #cbd5e1;">
+                I am <b style="color: var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who spends way too much time staring at code and test tubes.
+                <br><br>
+                Dixit Labs is my personal "Area 51"—a place where I experiment with web tech, design, and ideas that actually work. When I'm not debugging something I broke five minutes ago, I'm usually channeling the aggression and focus of <b style="color: var(--neon-pink);">Virat Kohli</b> into my work. 
+                <br><br>
+                Basically, I’m a high-schooler trying to disrupt the web before my next chemistry exam. If the site breaks, it’s not a bug; it’s an <i>undocumented feature</i>.
+            </div>
+        </section>
+
+        <footer>
+            <p>DIXLABS 2026 // ATHARV DIXIT</p>
+            <p>Contact: <a href="mailto:dixit181896@gmail.com" style="color: var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // FORCED INITIALIZATION
+        const bootBtn = document.getElementById("bootBtn");
+        const introLayer = document.getElementById("dixlabsIntro");
+
+        bootBtn.addEventListener("click", function() {
+            // 1. Kill the layer instantly
+            introLayer.style.display = "none";
+            
+            // 2. Play sound
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(40, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.5);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.5);
+            } catch(e) { console.log("Audio issue"); }
+
+            // 3. Start typewriter
+            typeWriter();
+        });
+
+        function typeWriter() {
+            const el = document.getElementById("subHeader");
+            const txt = "> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
+            let i = 0;
+            el.innerHTML = "";
+            function type() {
+                if (i < txt.length) {
+                    el.innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(type, 40);
+                }
+            }
+            type();
+        }
+
+        function filterSelection(cat, el) {
+            const cards = document.querySelectorAll(".card");
+            const tabs = document.querySelectorAll(".tab-link");
+            tabs.forEach(t => t.classList.remove("active"));
+            el.classList.add("active");
+            cards.forEach(c => {
+                if(cat === 'all') c.classList.remove("hidden");
+                else c.classList.contains("category-" + cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
+            });
+        }
+    </script>
+</body>
+</html>
