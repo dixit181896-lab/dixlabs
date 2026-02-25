@@ -5,7 +5,6 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
     <link rel="shortcut icon" href="/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
     <meta name="description" content="DixLabs creates games, simulations and creative web experiments.">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,371 +12,229 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
     
 <style>
-:root {
---neon-blue:#38bdf8;
---neon-pink:#f472b6;
---neon-green:#22c55e;
---bg-dark:#020617;
-}
+:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --bg-dark:#020617; }
+body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; }
 
-body{
-margin:0;background-color:var(--bg-dark);
-color:white;font-family:'Orbitron',sans-serif;
-text-align:center;overflow-x:hidden;
-}
+/* --- STARTUP SCREEN --- */
+#dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; opacity:1; transition:opacity 0.5s ease; }
+.intro-btn { background:none; border:2px solid #fff; color:#fff; padding:15px 40px; cursor:pointer; font-family:'Orbitron'; letter-spacing:5px; font-weight:900; }
+.intro-btn:hover { background:#fff; color:#000; }
 
-/* --- STARTUP SCREEN FIXED --- */
-#dixlabsIntro{
-position:fixed;inset:0;background:#000;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-z-index:9999999; /* Max Priority */
-pointer-events:all;
-opacity: 1;
-transition: opacity 0.5s ease;
-}
-
-.intro-btn{
-background:none;border:2px solid #fff;color:#fff;
-padding:15px 40px;cursor:pointer;
-font-family:'Orbitron';
-letter-spacing:5px;font-weight:900;
-position:relative;
-margin-bottom:20px;
-}
-
-.intro-btn:hover{background:#fff;color:#000;}
-
-/* --- BACKGROUND --- */
-.particles{
-position:fixed;top:0;left:0;width:100%; height:100%;
-background-image: radial-gradient(circle,rgba(56,189,248,.15)1px,transparent 1px);
-background-size:50px 50px;
-z-index:-10;
-animation:moveBackground 30s linear infinite;
-}
-
-@keyframes moveBackground{
-from{background-position:0 0;}
-to{background-position:100px 100px;}
-}
+.particles { position:fixed; top:0; left:0; width:100%; height:100%; background-image: radial-gradient(circle,rgba(56,189,248,.15) 1px, transparent 1px); background-size:50px 50px; z-index:-10; animation:moveBackground 30s linear infinite; }
+@keyframes moveBackground { from { background-position:0 0; } to { background-position:100px 100px; } }
 
 /* --- NAVIGATION --- */
-.nav-tabs{
-position:sticky;top:0;
-background:rgba(2,6,23,.95);
-backdrop-filter:blur(10px);
-display:flex;justify-content:center;
-gap:15px;padding:15px;
-border-bottom:1px solid rgba(255,255,255,.1);
-z-index:999;
-}
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,.95); backdrop-filter:blur(10px); display:flex; justify-content:center; gap:15px; padding:15px; border-bottom:1px solid rgba(255,255,255,.1); z-index:999; }
+.tab-link { cursor:pointer; padding:8px 15px; font-size:10px; text-transform:uppercase; font-weight:900; }
+.tab-home.active { border:1px solid #fff; box-shadow:0 0 10px #fff; }
 
-.tab-link{
-cursor:pointer;padding:8px 15px;
-font-size:10px;letter-spacing:1px;
-text-transform:uppercase;font-weight:900;
-transition:.3s;
-}
-
-.tab-home.active{ border:1px solid #fff; box-shadow:0 0 10px #fff; }
-.tab-games{color:var(--neon-blue);}
-.tab-games.active{ border:1px solid var(--neon-blue); box-shadow:0 0 10px var(--neon-blue); }
-.tab-focus{color:var(--neon-pink);}
-.tab-focus.active{ border:1px solid var(--neon-pink); box-shadow:0 0 10px var(--neon-pink); }
-.tab-facts{color:var(--neon-green);}
-.tab-facts.active{ border:1px solid var(--neon-green); box-shadow:0 0 10px var(--neon-green); }
-
-header{padding:60px 20px;}
-.logo-text{
-font-size:clamp(2rem,6vw,4rem);
-font-weight:900;letter-spacing:10px;
-color:var(--neon-blue);
-text-shadow:0 0 15px rgba(56,189,248,.4);
-}
-
-#subHeader {
-    font-family: 'JetBrains Mono';
-    color: var(--neon-pink);
-    font-size: 16px; 
-    height: 1.2em;
-    font-weight: bold;
-}
+header { padding:60px 20px; }
+.logo-text { font-size:clamp(2rem,6vw,4rem); font-weight:900; letter-spacing:10px; color:var(--neon-blue); text-shadow:0 0 15px rgba(56,189,248,.4); }
+#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; font-weight: bold; }
 
 /* --- CARDS --- */
-.projects{ display:flex;justify-content:center; flex-wrap:wrap;gap:25px; padding:40px 20px; min-height:300px; }
-.card{
-background:rgba(15,23,42,.8);
-border:1px solid rgba(56,189,248,.1);
-padding:30px;border-radius:4px;
-width:280px;text-align:left;
-transition:all .4s cubic-bezier(.175,.885,.32,1.275);
-display:flex;flex-direction:column;
-}
-.card:hover{ transform:translateY(-10px)scale(1.03); border-color:var(--neon-blue); box-shadow: 0 20px 40px rgba(0,0,0,.6), 0 0 20px rgba(56,189,248,.2); }
-.card-icon{ font-size:2.5rem;margin-bottom:15px; display:inline-block;transition:.6s; }
-.card:hover .card-icon{ transform:rotateY(360deg); }
+.projects { display:flex; justify-content:center; flex-wrap:wrap; gap:25px; padding:40px 20px; }
+.card { background:rgba(15,23,42,.8); border:1px solid rgba(56,189,248,.1); padding:30px; border-radius:4px; width:280px; text-align:left; transition:all .4s; display:flex; flex-direction:column; }
+.card:hover { transform:translateY(-10px); border-color:var(--neon-blue); box-shadow:0 0 20px rgba(56,189,248,.2); }
+.btn { margin-top:auto; padding:12px; border:1px solid var(--neon-blue); background:transparent; color:var(--neon-blue); cursor:pointer; font-family:'Orbitron'; font-size:10px; font-weight:900; }
 
-.btn{
-margin-top:auto;padding:12px;
-border:1px solid var(--neon-blue);
-background:transparent;
-color:var(--neon-blue);
-cursor:pointer;font-family:'Orbitron';
-font-size:10px;font-weight:900;
-width:100%;transition:.3s;
-}
-.btn:hover{ background:var(--neon-blue); color:#000; letter-spacing:2px; }
-
-/* --- AKSA LOCAL UI --- */
+/* --- DRAGGABLE AKSA --- */
 #aksa-window {
     position: fixed;
     bottom: 20px; right: 20px;
     width: 320px;
-    background: rgba(2, 6, 23, 0.95);
+    background: rgba(2, 6, 23, 0.98);
     border: 2px solid var(--neon-pink);
     border-radius: 8px;
     display: none; flex-direction: column;
     z-index: 10000;
-    box-shadow: 0 0 20px rgba(244, 114, 182, 0.3);
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
     overflow: hidden;
+    touch-action: none; /* Prevents scrolling while dragging on mobile */
 }
-#aksa-title { background: var(--neon-pink); color: #000; padding: 10px; font-weight: 900; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+
+#aksa-header { 
+    background: var(--neon-pink); 
+    color: #000; 
+    padding: 10px; 
+    font-weight: 900; 
+    font-size: 11px; 
+    display: flex; 
+    justify-content: space-between; 
+    cursor: move; /* Shows it can be moved */
+}
+
 #aksa-chat { height: 250px; overflow-y: auto; padding: 15px; font-family: 'JetBrains Mono'; font-size: 12px; display: flex; flex-direction: column; gap: 10px; text-align: left;}
-.msg { padding: 8px; border-radius: 4px; max-width: 85%; line-height: 1.4; word-wrap: break-word; }
-.aksa-reply { background: rgba(244, 114, 182, 0.1); color: var(--neon-pink); align-self: flex-start; border-left: 2px solid var(--neon-pink); }
-.user-input-msg { background: rgba(56, 189, 248, 0.1); color: var(--neon-blue); align-self: flex-end; border-right: 2px solid var(--neon-blue); }
+.msg { padding: 8px; border-radius: 4px; max-width: 85%; word-wrap: break-word; }
+.aksa-reply { background: rgba(244,114,182,0.1); color: var(--neon-pink); align-self: flex-start; border-left: 2px solid var(--neon-pink); }
+.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); align-self: flex-end; border-right: 2px solid var(--neon-blue); }
+
 #aksa-input-wrap { display: flex; border-top: 1px solid #333; background: #000; }
 #aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 12px; outline: none; font-family: 'JetBrains Mono'; }
-#aksa-send-btn { background: var(--neon-pink); border: none; padding: 0 15px; cursor: pointer; font-family: 'Orbitron'; font-weight: 900; font-size: 10px; }
+#aksa-send { background: var(--neon-pink); border: none; padding: 0 15px; cursor: pointer; font-family: 'Orbitron'; font-weight: 900; }
 
-/* --- UTILS --- */
-.falling-logo { position: fixed; top: -300px; z-index: 9999999; pointer-events: none; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.6)); animation: fall linear forwards; }
+.falling-logo { position: fixed; top: -300px; z-index: 9999999; pointer-events: none; animation: fall linear forwards; }
 @keyframes fall { to { transform: translateY(120vh) rotate(1080deg); } }
-.about-section{ max-width:800px; margin:80px auto; padding:40px; background:rgba(15,23,42,.4); border:1px solid rgba(56,189,248,.1); text-align:left; }
-.hidden{display:none!important;}
-footer{ padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-size:12px; }
+.about-section { max-width:800px; margin:80px auto; padding:40px; background:rgba(15,23,42,.4); border:1px solid rgba(56,189,248,.1); text-align:left; }
+footer { padding:60px 20px; background:#000; font-family:'JetBrains Mono'; font-size:12px; }
 </style>
 </head>
 
 <body>
 
 <div id="dixlabsIntro">
-<img src="logo.png" style="width:120px;margin-bottom:30px;" onerror="this.style.display='none'">
-<button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
-<div class="intro-contact">SYS_ADMIN: dixit181896@gmail.com</div>
+    <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
 </div>
 
 <div class="particles"></div>
 
 <div id="mainContent">
-<nav class="nav-tabs">
-<div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
-<div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
-<div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
-<div class="tab-link tab-facts" onclick="filterSelection('fact', this)">🧠 FACTS</div>
-</nav>
+    <nav class="nav-tabs">
+        <div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
+        <div class="tab-link" style="color:var(--neon-blue)">🎮 GAMES</div>
+        <div class="tab-link" style="color:var(--neon-pink)">⚡ FOCUS</div>
+    </nav>
 
-<header>
-<div class="logo-text">DIXLABS</div>
-<p id="subHeader"></p>
-</header>
+    <header>
+        <div class="logo-text">DIXLABS</div>
+        <p id="subHeader"></p>
+    </header>
 
-<div class="projects">
-    <div class="card category-fact" style="border-top:4px solid var(--neon-green);" onmouseenter="playHoverSound()">
-        <div class="card-icon">🏏</div>
-        <h3>CRICKEMORY</h3>
-        <p>Walk the 22-yard pitch of history. 50 legendary facts from 1550 to 2024.</p>
-        <button class="btn" style="border-color:var(--neon-green); color:var(--neon-green);" onclick="location.href='c.html'">OPEN_ARCHIVES</button>
+    <div class="projects">
+        <div class="card category-fact" style="border-top:4px solid var(--neon-green);">
+            <div class="card-icon">🏏</div>
+            <h3>CRICKEMORY</h3>
+            <p>50 legendary cricket facts. 1550 - 2024.</p>
+            <button class="btn" onclick="location.href='c.html'">OPEN</button>
+        </div>
+        <div class="card category-game" style="border-top:4px solid var(--neon-blue);">
+            <div class="card-icon">💰</div>
+            <h3>AMBANI_MONEY</h3>
+            <p>Billionaire simulator. Get rich or stay bugged.</p>
+            <button class="btn" onclick="location.href='ambani.html'">RUN</button>
+        </div>
+        <div class="card category-game" style="border-top:4px solid #ff4444;">
+            <div class="card-icon">⚠️</div>
+            <h3>DANGER_ZONE</h3>
+            <p>Logo displacement error test.</p>
+            <button class="btn" style="border-color:#ff4444; color:#ff4444;" onclick="triggerLogoRain()">TRIGGER</button>
+        </div>
+        <div class="card category-fact" style="border-top:4px solid var(--neon-green);">
+            <div class="card-icon">🍳</div>
+            <h3>COMING_SOON</h3>
+            <p>Something big is cooking in the lab.</p>
+            <button class="btn" style="opacity:0.5; cursor:default;">LOCKED</button>
+        </div>
     </div>
 
-    <div class="card category-fact" style="border-top:4px solid #34d399;" onmouseenter="playHoverSound()">
-        <div class="card-icon">⚽</div>
-        <h3>FOOTEMORY</h3>
-        <p>Sprint through 50 legendary football milestones. From FA rules to World Cup glory.</p>
-        <button class="btn" style="border-color:#34d399; color:#34d399;" onclick="location.href='f.html'">KICK_OFF</button>
+    <div id="aksa-window">
+        <div id="aksa-header">
+            <span>[DRAG] AKSA_v2.0</span>
+            <span style="cursor:pointer" onclick="document.getElementById('aksa-chat').innerHTML=''">[CLS]</span>
+        </div>
+        <div id="aksa-chat">
+            <div class="msg aksa-reply">Movable module online. Try dragging me by the header. Don't touch the glass.</div>
+        </div>
+        <div id="aksa-input-wrap">
+            <input type="text" id="aksa-input-field" placeholder="Query DixLabs..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button id="aksa-send" onclick="aksaBrain()">EXE</button>
+        </div>
     </div>
 
-    <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
-        <div class="card-icon">🗑️</div>
-        <h3>GROSSDUMPSTER</h3>
-        <p>Catching trash and dodging toxic waste. (MUTED_SCHOOL)</p>
-        <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
-    </div>
+    <section class="about-section">
+        <div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">[🧬] SYS_ADMIN_BIO</div>
+        <div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
+            Atharv Dixit. 15. India. Cricket analyst and disruptive coder. 
+            If a bug creeps in, it's an undocumented feature.
+        </div>
+    </section>
 
-    <div class="card" style="border-top:4px solid #ff4444;" onmouseenter="playHoverSound()">
-        <div class="card-icon">⚠️</div>
-        <h3>DANGER_ZONE</h3>
-        <p>CRITICAL WARNING: Unauthorized access may cause severe logo displacement errors.</p>
-        <button class="btn" style="border-color:#ff4444; color:#ff4444;" onclick="triggerLogoRain()">DO_NOT_OPEN</button>
-    </div>
-
-    <div class="card category-game" style="border-top:4px solid var(--neon-blue);" onmouseenter="playHoverSound()">
-        <div class="card-icon">💰</div>
-        <h3>AMBANI_MONEY</h3>
-        <p>Simulating billionaire life. Reach 11 figures.</p>
-        <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
-    </div>
-
-    <div class="card category-focus" style="border-top:4px solid var(--neon-pink);" onmouseenter="playHoverSound()">
-        <div class="card-icon">🧘</div>
-        <h3>DEEPWORK.PRO</h3>
-        <p>A 3-hour focus terminal designed for maximum productivity.</p>
-        <button class="btn" style="border-color:var(--neon-pink); color:var(--neon-pink);" onclick="location.href='deepwork.html'">RUN_MODULE</button>
-    </div>
-
-    <div class="card category-fact" style="border-top:4px solid var(--neon-green);" onmouseenter="playHoverSound()">
-        <div class="card-icon">🍳</div>
-        <h3>COMING_SOON</h3>
-        <p>Something big is cooking in the lab. Higher specs, better logic, and zero bugs.</p>
-        <button class="btn" style="border-color:var(--neon-green); color:var(--neon-green); cursor:default;">UNDER_DEVELOPMENT</button>
-    </div>
-</div>
-
-<div id="aksa-window">
-    <div id="aksa-title"><span>AKSA_LOCAL_V1.0</span><span style="cursor:pointer" onclick="document.getElementById('aksa-chat').innerHTML=''">[CLS]</span></div>
-    <div id="aksa-chat">
-        <div class="msg aksa-reply">Offline Mode Engaged. Atharv is busy coding my next upgrade. What do you want?</div>
-    </div>
-    <div id="aksa-input-wrap">
-        <input type="text" id="aksa-input-field" placeholder="Ask about Dixit Labs..." onkeypress="if(event.key==='Enter') aksaLocalLogic()">
-        <button id="aksa-send-btn" onclick="aksaLocalLogic()">EXE</button>
-    </div>
-</div>
-
-<section class="about-section">
-    <div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">[🧬] WHO_IS_BEHIND_THIS?</div>
-    <div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
-        I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India. 
-        Dixit Labs is my personal "Area 51"— a place where I experiment with web tech. 
-        PLAY // FACTS // FUN // FOCUS is my motto. 
-        I literally try disrupting the internet before my next exam. Hardcorely watching cricket and detailed cricket analyst.
-        Tense Hamstrings is my passion. My relatives are advised to buy me a ko-fi. 
-        IF_A_BUG_CREEPS_IN_IT_IS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG.
-    </div>
-</section>
-
-<footer>
-    <p>DIXLABS 2026 // ATHARV DIXIT</p>
-    <p>Contact: <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none;">dixit181896@gmail.com</a></p>
-</footer>
-
+    <footer>DIXLABS 2026 // ATHARV DIXIT</footer>
 </div>
 
 <script>
-let audioCtx;
-function initAudio() { if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)(); }
+// --- DRAG LOGIC ---
+const aksa = document.getElementById("aksa-window");
+const header = document.getElementById("aksa-header");
+let isDragging = false;
+let offsetX, offsetY;
 
-function playHoverSound() {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.1);
-}
+header.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - aksa.offsetLeft;
+    offsetY = e.clientY - aksa.offsetTop;
+});
 
-const aksaResponses = [
-    "Atharv built me to be savage, but your questions are just making me bored.",
-    "Did you really just type that? Even my local cache is laughing.",
-    "Go play Crickemory. At least the facts there have more substance than your chat.",
-    "Dixit Labs is for experiments, not for therapy. Move along.",
-    "If I had eyes, I'd be rolling them right now."
-];
+document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    aksa.style.left = (e.clientX - offsetX) + "px";
+    aksa.style.top = (e.clientY - offsetY) + "px";
+    aksa.style.bottom = "auto";
+    aksa.style.right = "auto";
+});
 
-function aksaLocalLogic() {
+document.addEventListener("mouseup", () => isDragging = false);
+
+// --- AKSA SUPERIOR BRAIN ---
+function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
-    const val = input.value.trim().toLowerCase();
-    if(!val) return;
+    const q = input.value.toLowerCase();
+    if(!q) return;
 
-    chat.innerHTML += `<div class="msg user-input-msg">${val}</div>`;
+    chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
     input.value = "";
 
     setTimeout(() => {
-        let reply = "";
+        let r = "I don't recognize that command. Try speaking in high-level logic.";
         
-        // Logical Brain
-        if(val.includes("dixlabs") || val.includes("dixit labs") || val.includes("about")) {
-            reply = "Dixit Labs is Atharv's digital Area 51. It's a collection of high-tech experiments, games, and focus tools for people who actually want to use their brains.";
-        } else if(val.includes("games") || val.includes("create")) {
-            reply = "Modules active: Crickemory, Footemory, GrossDumpster, and Ambani Money. Try not to lose too badly.";
-        } else if(val.includes("atharv") || val.includes("creator")) {
-            reply = "Atharv Dixit. 15-year-old student, cricket analyst, and the guy who didn't give me a 'delete user' button unfortunately.";
-        } else if(val.includes("rain") || val.includes("chaos")) {
-            reply = "Executing chaos protocol. Look at what you've done.";
-            triggerLogoRain();
-        } else if(val.includes("hi") || val.includes("hello")) {
-            reply = "Greetings. Now go do something productive.";
-        } else {
-            reply = aksaResponses[Math.floor(Math.random() * aksaResponses.length)];
-        }
+        if(q.includes("crickemory")) r = "Crickemory is Atharv's masterpiece. 50 facts, spanning from 1550 to modern day. It's basically a history book but better.";
+        else if(q.includes("ambani")) r = "Ambani Money? A simulator for people who want to see 11 figures. Good luck, you'll need it.";
+        else if(q.includes("grossdumpster")) r = "GrossDumpster is about catching trash. Kind of like what I'm doing right now with this conversation.";
+        else if(q.includes("atharv")) r = "The Boss. He built me to be smart, and he built this site to disrupt your boredom.";
+        else if(q.includes("dixlabs")) r = "DixLabs is the premier destination for games and focus tools. It's Atharv's Area 51.";
+        else if(q.includes("deepwork")) r = "Deepwork.pro is a 3-hour focus terminal. Highly recommended for users with short attention spans.";
+        else if(q.includes("hello") || q.includes("hi")) r = "Hello. Please state your purpose or go play a game.";
+        else if(q.includes("clear") || q.includes("cls")) { chat.innerHTML = ""; return; }
+        else if(q.includes("rain") || q.includes("chaos")) { r = "CHAOS_PROTOCOL: INITIALIZED."; triggerLogoRain(); }
 
-        chat.innerHTML += `<div class="msg aksa-reply">${reply}</div>`;
+        chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
         chat.scrollTop = chat.scrollHeight;
-        playHoverSound();
     }, 300);
 }
 
-function triggerLogoRain() {
-    for (let i = 0; i < 80; i++) {
-        setTimeout(() => {
-            const logo = document.createElement('img');
-            logo.src = 'logo.png';
-            logo.className = 'falling-logo';
-            logo.style.left = Math.random() * 100 + 'vw';
-            const size = Math.random() * 170 + 80;
-            logo.style.width = size + 'px';
-            logo.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
-            logo.style.opacity = Math.random() * 0.5 + 0.5;
-            document.body.appendChild(logo);
-            setTimeout(() => logo.remove(), 3000);
-        }, i * 40);
-    }
-}
+// --- BOOT LOGIC ---
+document.getElementById("bootBtn").onclick = () => {
+    document.getElementById("dixlabsIntro").style.opacity = "0";
+    setTimeout(() => {
+        document.getElementById("dixlabsIntro").style.display = "none";
+        document.getElementById("aksa-window").style.display = "flex";
+        typeWriter();
+    }, 500);
+};
 
-// FORCE INITIALIZE
-document.addEventListener('DOMContentLoaded', () => {
-    const bootBtn = document.getElementById("bootBtn");
-    const intro = document.getElementById("dixlabsIntro");
-
-    bootBtn.onclick = function() {
-        intro.style.opacity = "0";
-        setTimeout(() => {
-            intro.style.display = "none";
-            document.getElementById("aksa-window").style.display = "flex";
-            initAudio();
-            typeWriter();
-        }, 500);
-    };
-});
-
-function typeWriter(){
-    const el=document.getElementById("subHeader");
-    const txt="> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-    let i=0; el.innerHTML="";
-    function type(){
-        if(i<txt.length){ el.innerHTML+=txt.charAt(i); i++; setTimeout(type,40); }
-    }
+function typeWriter() {
+    const el = document.getElementById("subHeader");
+    const txt = "> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS";
+    let i = 0; el.innerHTML = "";
+    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 50); } }
     type();
 }
 
-function filterSelection(cat,el){
-    const cards=document.querySelectorAll(".card");
-    const tabs=document.querySelectorAll(".tab-link");
-    tabs.forEach(t=>t.classList.remove("active"));
-    el.classList.add("active");
-    cards.forEach(c=>{
-        if(cat==='all') c.classList.remove("hidden");
-        else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
-    });
+function triggerLogoRain() {
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            const logo = document.createElement('div');
+            logo.innerHTML = "🧪";
+            logo.className = 'falling-logo';
+            logo.style.left = Math.random() * 100 + 'vw';
+            logo.style.fontSize = (Math.random() * 40 + 20) + "px";
+            logo.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(logo);
+            setTimeout(() => logo.remove(), 3000);
+        }, i * 50);
+    }
 }
 </script>
-
 </body>
 </html>
