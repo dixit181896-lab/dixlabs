@@ -3,14 +3,13 @@
 <head>
     <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
 
-    <!-- ✅ STRONG FAVICON SETUP -->
     <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
     <link rel="shortcut icon" href="/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
 
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
-<meta name="description" content="DixLabs creates games, simulations and creative web experiments.">
+    <meta name="description" content="DixLabs creates games, simulations and creative web experiments.">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +37,19 @@ position:fixed;inset:0;background:#000;
 display:flex;flex-direction:column;
 justify-content:center;align-items:center;
 z-index:999999;pointer-events:all;
+}
+
+/* Updated Logo Style with Size and Glow */
+.intro-logo {
+    width: 220px; 
+    margin-bottom: 30px; 
+    filter: drop-shadow(0 0 15px var(--neon-blue));
+    animation: neonPulse 2s infinite ease-in-out;
+}
+
+@keyframes neonPulse {
+    0%, 100% { filter: drop-shadow(0 0 10px var(--neon-blue)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 25px var(--neon-blue)); transform: scale(1.02); }
 }
 
 .intro-btn{
@@ -193,7 +205,7 @@ font-size:12px;
 
 <div id="dixlabsIntro">
 <img src="logo.png"
-style="width:120px;margin-bottom:30px;"
+class="intro-logo"
 onerror="this.style.display='none'">
 
 <button id="bootBtn" class="intro-btn">
@@ -215,268 +227,4 @@ onclick="filterSelection('all', this)">
 🏠 ALL
 </div>
 
-<div class="tab-link tab-games"
-onclick="filterSelection('game', this)">
-🎮 GAMES
-</div>
-
-<div class="tab-link tab-focus"
-onclick="filterSelection('focus', this)">
-⚡ FOCUS
-</div>
-
-<div class="tab-link tab-facts"
-onclick="filterSelection('fact', this)">
-🧠 FACTS
-</div>
-</nav>
-
-<header>
-<div class="logo-text">DIXLABS</div>
-
-<p id="subHeader"
-style="font-family:'JetBrains Mono';
-color:var(--neon-pink);
-font-size:12px;height:1.2em;">
-</p>
-</header>
-
-<div class="projects">
-
-<div class="card category-game"
-style="border-top:4px solid var(--neon-blue);">
-
-<div class="card-icon">🗑️</div>
-
-<h3>GROSSDUMPSTER</h3>
-
-<p>
-Catching trash and dodging toxic waste because
-normal sports are too mainstream.(MUTED_SCHOOL)
-</p>
-
-<button class="btn"
-onclick="location.href='gd.html'">
-RUN_MODULE
-</button>
-</div>
-
-<div class="card category-game"
-style="border-top:4px solid var(--neon-blue);">
-
-<div class="card-icon">💰</div>
-
-<h3>AMBANI_MONEY</h3>
-
-<p>
-Simulating billionaire life.
-Because your bank balance won't reach
-11 figures on its own.
-</p>
-
-<button class="btn"
-onclick="location.href='ambani.html'">
-RUN_MODULE
-</button>
-</div>
-
-<div class="card category-focus"
-style="border-top:4px solid var(--neon-pink);">
-
-<div class="card-icon">🧘</div>
-
-<h3>DEEPWORK.PRO</h3>
-
-<p>
-A 3-hour focus terminal designed to keep you productive
-when your brain wants to scroll reels.
-</p>
-
-<button class="btn"
-style="border-color:var(--neon-pink);
-color:var(--neon-pink);"
-onclick="location.href='deepwork.html'">
-
-RUN_MODULE
-</button>
-</div>
-
-<div class="card category-fact"
-style="border-top:4px solid var(--neon-green);">
-
-<div class="card-icon">🍳</div>
-
-<h3>COMING_SOON</h3>
-
-<p>
-Something big is cooking in the lab.
-Higher specs, better logic,
-and zero bugs (hopefully).
-</p>
-
-<button class="btn"
-style="border-color:var(--neon-green);
-color:var(--neon-green);
-cursor:default;">
-
-UNDER_DEVELOPMENT
-</button>
-</div>
-
-</div>
-
-<section class="about-section">
-
-<div style="color:var(--neon-green);
-letter-spacing:2px;margin-bottom:15px;">
-[🧬] WHO_IS_BEHIND_THIS?
-</div>
-
-<div style="font-family:'JetBrains Mono';
-font-size:14px;line-height:1.8;color:#cbd5e1;">
-
-I am <b style="color:var(--neon-blue);">
-Atharv Dixit
-</b>,
-a 15-year-old student from India
-who spends way too much time staring
-at code and test tubes.
-
-<br><br>
-
-Dixit Labs is my personal "Area 51"—
-a place where I experiment with web tech,
-design, and ideas that actually work.
-Constantly Watching Cricket, Memes and Codes.
-
-<br><br>
-
-Basically,
-I’m a high-schooler trying to disrupt the web
-before my next exam.Relatives - Buy me a coffee.
-IF_A_BUG_CREEPS_IN_ITS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG
-</div>
-</section>
-
-<footer>
-
-<p>DIXLABS 2026 // ATHARV DIXIT</p>
-
-<p>
-Contact:
-<a href="mailto:dixit181896@gmail.com"
-style="color:var(--neon-blue);
-text-decoration:none;">
-
-dixit181896@gmail.com
-</a>
-</p>
-
-</footer>
-
-</div>
-
-<script>
-const bootBtn=document.getElementById("bootBtn");
-const introLayer=document.getElementById("dixlabsIntro");
-
-bootBtn.addEventListener("click",function(){
-
-introLayer.style.display="none";
-
-try{
-
-const ctx=
-new(window.AudioContext||
-window.webkitAudioContext)();
-
-const osc=ctx.createOscillator();
-const gain=ctx.createGain();
-
-osc.type='sawtooth';
-
-osc.frequency.setValueAtTime(40,ctx.currentTime);
-
-osc.frequency
-.exponentialRampToValueAtTime(
-800,
-ctx.currentTime+.5
-);
-
-gain.gain.setValueAtTime(.1,ctx.currentTime);
-
-gain.gain
-.exponentialRampToValueAtTime(
-.01,
-ctx.currentTime+.5
-);
-
-osc.connect(gain);
-gain.connect(ctx.destination);
-
-osc.start();
-osc.stop(ctx.currentTime+.5);
-
-}catch(e){}
-
-typeWriter();
-
-});
-
-function typeWriter(){
-
-const el=document.getElementById("subHeader");
-
-const txt=
-"> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-
-let i=0;
-
-el.innerHTML="";
-
-function type(){
-
-if(i<txt.length){
-
-el.innerHTML+=txt.charAt(i);
-
-i++;
-
-setTimeout(type,40);
-
-}
-
-}
-
-type();
-
-}
-
-function filterSelection(cat,el){
-
-const cards=document.querySelectorAll(".card");
-
-const tabs=document.querySelectorAll(".tab-link");
-
-tabs.forEach(t=>t.classList.remove("active"));
-
-el.classList.add("active");
-
-cards.forEach(c=>{
-
-if(cat==='all')
-c.classList.remove("hidden");
-
-else
-c.classList.contains("category-"+cat)
-?c.classList.remove("hidden")
-:c.classList.add("hidden");
-
-});
-
-}
-</script>
-
-</body>
-</html> 
-
+<div class="tab
