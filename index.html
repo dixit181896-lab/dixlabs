@@ -1,120 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
 
-<meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    <!-- ✅ STRONG FAVICON SETUP -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+    <link rel="shortcut icon" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
 
-<!-- ✅ FAVICON -->
-<link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
-<link rel="shortcut icon" href="/logo.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
-
-<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
 
 <meta name="description" content="DixLabs creates games, simulations and creative web experiments.">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dixit Labs | Games // Focus // Facts</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dixit Labs | Games // Focus // Facts</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    
 <style>
-
-:root{
+:root {
 --neon-blue:#38bdf8;
 --neon-pink:#f472b6;
 --neon-green:#22c55e;
 --bg-dark:#020617;
 }
 
-/* ===========================
-🔥 LOGO SIZE CONTROL (EDIT HERE)
-change 220px → 260px etc anytime
-=========================== */
-
-.intro-logo{
-width:220px;
-max-width:70vw;
-margin-bottom:35px;
-animation:logoBoot 1.2s ease forwards;
-}
-
-/* small cinematic boot animation */
-@keyframes logoBoot{
-from{
-opacity:0;
-transform:scale(.8);
-}
-to{
-opacity:1;
-transform:scale(1);
-}
-}
-
 body{
-margin:0;
-background-color:var(--bg-dark);
-color:white;
-font-family:'Orbitron',sans-serif;
-text-align:center;
-overflow-x:hidden;
+margin:0;background-color:var(--bg-dark);
+color:white;font-family:'Orbitron',sans-serif;
+text-align:center;overflow-x:hidden;
 }
 
-/* INTRO */
+/* --- STARTUP SCREEN --- */
 #dixlabsIntro{
-position:fixed;
-inset:0;
-background:#000;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:999999;
-pointer-events:all;
+position:fixed;inset:0;background:#000;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+z-index:999999;pointer-events:all;
 }
 
 .intro-btn{
-background:none;
-border:2px solid #fff;
-color:#fff;
-padding:15px 40px;
-cursor:pointer;
+background:none;border:2px solid #fff;color:#fff;
+padding:15px 40px;cursor:pointer;
 font-family:'Orbitron';
-letter-spacing:5px;
-font-weight:900;
+letter-spacing:5px;font-weight:900;
+position:relative;z-index:1000000;
 margin-bottom:20px;
 }
 
-.intro-btn:hover{
-background:#fff;
-color:#000;
-}
+.intro-btn:hover{background:#fff;color:#000;}
 
 .intro-contact{
 font-family:'JetBrains Mono';
-font-size:10px;
-color:#444;
-margin-top:10px;
+font-size:10px;color:#444;margin-top:10px;
 }
 
-/* BACKGROUND */
-
+/* --- BACKGROUND PARTICLES --- */
 .particles{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
+position:fixed;top:0;left:0;width:100%;height:100%;
 background-image:
 radial-gradient(circle,rgba(56,189,248,.15)1px,transparent 1px);
-
 background-size:50px 50px;
-
 z-index:-10;
-
 animation:moveBackground 30s linear infinite;
 }
 
@@ -123,28 +71,21 @@ from{background-position:0 0;}
 to{background-position:100px 100px;}
 }
 
-/* NAV */
-
+/* --- NAVIGATION --- */
 .nav-tabs{
-position:sticky;
-top:0;
+position:sticky;top:0;
 background:rgba(2,6,23,.95);
 backdrop-filter:blur(10px);
-display:flex;
-justify-content:center;
-gap:15px;
-padding:15px;
+display:flex;justify-content:center;
+gap:15px;padding:15px;
 border-bottom:1px solid rgba(255,255,255,.1);
 z-index:999;
 }
 
 .tab-link{
-cursor:pointer;
-padding:8px 15px;
-font-size:10px;
-letter-spacing:1px;
-text-transform:uppercase;
-font-weight:900;
+cursor:pointer;padding:8px 15px;
+font-size:10px;letter-spacing:1px;
+text-transform:uppercase;font-weight:900;
 transition:.3s;
 }
 
@@ -154,45 +95,36 @@ box-shadow:0 0 10px #fff;
 }
 
 .tab-games{color:var(--neon-blue);}
-
 .tab-games.active{
 border:1px solid var(--neon-blue);
 box-shadow:0 0 10px var(--neon-blue);
 }
 
 .tab-focus{color:var(--neon-pink);}
-
 .tab-focus.active{
 border:1px solid var(--neon-pink);
 box-shadow:0 0 10px var(--neon-pink);
 }
 
 .tab-facts{color:var(--neon-green);}
-
 .tab-facts.active{
 border:1px solid var(--neon-green);
 box-shadow:0 0 10px var(--neon-green);
 }
 
-header{
-padding:60px 20px;
-}
+header{padding:60px 20px;}
 
 .logo-text{
 font-size:clamp(2rem,6vw,4rem);
-font-weight:900;
-letter-spacing:10px;
+font-weight:900;letter-spacing:10px;
 color:var(--neon-blue);
 text-shadow:0 0 15px rgba(56,189,248,.4);
 }
 
-/* CARDS */
-
+/* --- CARDS --- */
 .projects{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:25px;
+display:flex;justify-content:center;
+flex-wrap:wrap;gap:25px;
 padding:40px 20px;
 min-height:300px;
 }
@@ -200,29 +132,23 @@ min-height:300px;
 .card{
 background:rgba(15,23,42,.8);
 border:1px solid rgba(56,189,248,.1);
-padding:30px;
-border-radius:4px;
-width:280px;
-text-align:left;
-transition:.4s cubic-bezier(.175,.885,.32,1.275);
-display:flex;
-flex-direction:column;
+padding:30px;border-radius:4px;
+width:280px;text-align:left;
+transition:all .4s cubic-bezier(.175,.885,.32,1.275);
+display:flex;flex-direction:column;
 }
 
 .card:hover{
 transform:translateY(-10px)scale(1.03);
-
 border-color:var(--neon-blue);
-
 box-shadow:
 0 20px 40px rgba(0,0,0,.6),
 0 0 20px rgba(56,189,248,.2);
 }
 
 .card-icon{
-font-size:2.5rem;
-margin-bottom:15px;
-transition:.6s;
+font-size:2.5rem;margin-bottom:15px;
+display:inline-block;transition:.6s;
 }
 
 .card:hover .card-icon{
@@ -230,56 +156,44 @@ transform:rotateY(360deg);
 }
 
 .btn{
-margin-top:auto;
-padding:12px;
+margin-top:auto;padding:12px;
 border:1px solid var(--neon-blue);
 background:transparent;
 color:var(--neon-blue);
-cursor:pointer;
-font-family:'Orbitron';
-font-size:10px;
-font-weight:900;
-width:100%;
-transition:.3s;
+cursor:pointer;font-family:'Orbitron';
+font-size:10px;font-weight:900;
+width:100%;transition:.3s;
 }
 
 .btn:hover{
 background:var(--neon-blue);
-color:#000;
-letter-spacing:2px;
+color:#000;letter-spacing:2px;
 }
 
+/* --- ABOUT --- */
 .about-section{
-max-width:800px;
-margin:80px auto;
+max-width:800px;margin:80px auto;
 padding:40px;
 background:rgba(15,23,42,.4);
 border:1px solid rgba(56,189,248,.1);
 text-align:left;
 }
 
-.hidden{
-display:none!important;
-}
+.hidden{display:none!important;}
 
 footer{
-padding:60px 20px;
-background:#000;
+padding:60px 20px;background:#000;
 font-family:'JetBrains Mono';
 font-size:12px;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-
 <div id="dixlabsIntro">
-
 <img src="logo.png"
-class="intro-logo"
+style="width:120px;margin-bottom:30px;"
 onerror="this.style.display='none'">
 
 <button id="bootBtn" class="intro-btn">
@@ -289,7 +203,6 @@ INITIALIZE_CORE
 <div class="intro-contact">
 SYS_ADMIN: dixit181896@gmail.com
 </div>
-
 </div>
 
 <div class="particles"></div>
@@ -297,7 +210,6 @@ SYS_ADMIN: dixit181896@gmail.com
 <div id="mainContent">
 
 <nav class="nav-tabs">
-
 <div class="tab-link tab-home active"
 onclick="filterSelection('all', this)">
 🏠 ALL
@@ -317,25 +229,17 @@ onclick="filterSelection('focus', this)">
 onclick="filterSelection('fact', this)">
 🧠 FACTS
 </div>
-
 </nav>
 
 <header>
-
-<div class="logo-text">
-DIXLABS
-</div>
+<div class="logo-text">DIXLABS</div>
 
 <p id="subHeader"
 style="font-family:'JetBrains Mono';
 color:var(--neon-pink);
-font-size:12px;
-height:1.2em;">
+font-size:12px;height:1.2em;">
 </p>
-
 </header>
-
-<!-- PROJECTS -->
 
 <div class="projects">
 
@@ -347,14 +251,14 @@ style="border-top:4px solid var(--neon-blue);">
 <h3>GROSSDUMPSTER</h3>
 
 <p>
-Catching trash and dodging toxic waste because normal sports are too mainstream.(MUTED_SCHOOL)
+Catching trash and dodging toxic waste because
+normal sports are too mainstream.(MUTED_SCHOOL)
 </p>
 
 <button class="btn"
 onclick="location.href='gd.html'">
 RUN_MODULE
 </button>
-
 </div>
 
 <div class="card category-game"
@@ -366,14 +270,14 @@ style="border-top:4px solid var(--neon-blue);">
 
 <p>
 Simulating billionaire life.
-Because your bank balance won't reach 11 figures on its own.
+Because your bank balance won't reach
+11 figures on its own.
 </p>
 
 <button class="btn"
 onclick="location.href='ambani.html'">
 RUN_MODULE
 </button>
-
 </div>
 
 <div class="card category-focus"
@@ -384,36 +288,88 @@ style="border-top:4px solid var(--neon-pink);">
 <h3>DEEPWORK.PRO</h3>
 
 <p>
-A 3-hour focus terminal designed to keep you productive when your brain wants to scroll reels.
+A 3-hour focus terminal designed to keep you productive
+when your brain wants to scroll reels.
 </p>
 
 <button class="btn"
-style="border-color:var(--neon-pink);color:var(--neon-pink);"
+style="border-color:var(--neon-pink);
+color:var(--neon-pink);"
 onclick="location.href='deepwork.html'">
 
 RUN_MODULE
-
 </button>
+</div>
 
+<div class="card category-fact"
+style="border-top:4px solid var(--neon-green);">
+
+<div class="card-icon">🍳</div>
+
+<h3>COMING_SOON</h3>
+
+<p>
+Something big is cooking in the lab.
+Higher specs, better logic,
+and zero bugs (hopefully).
+</p>
+
+<button class="btn"
+style="border-color:var(--neon-green);
+color:var(--neon-green);
+cursor:default;">
+
+UNDER_DEVELOPMENT
+</button>
 </div>
 
 </div>
+
+<section class="about-section">
+
+<div style="color:var(--neon-green);
+letter-spacing:2px;margin-bottom:15px;">
+[🧬] WHO_IS_BEHIND_THIS?
+</div>
+
+<div style="font-family:'JetBrains Mono';
+font-size:14px;line-height:1.8;color:#cbd5e1;">
+
+I am <b style="color:var(--neon-blue);">
+Atharv Dixit
+</b>,
+a 15-year-old student from India
+who spends way too much time staring
+at code and test tubes.
+
+<br><br>
+
+Dixit Labs is my personal "Area 51"—
+a place where I experiment with web tech,
+design, and ideas that actually work.
+Constantly Watching Cricket, Memes and Codes.
+
+<br><br>
+
+Basically,
+I’m a high-schooler trying to disrupt the web
+before my next exam.Relatives - Buy me a coffee.
+IF_A_BUG_CREEPS_IN_ITS_A_UNDOCUMENTED_FEATURE_NOT_A_BUG
+</div>
+</section>
 
 <footer>
 
 <p>DIXLABS 2026 // ATHARV DIXIT</p>
 
 <p>
-
 Contact:
-
 <a href="mailto:dixit181896@gmail.com"
-style="color:var(--neon-blue);text-decoration:none;">
+style="color:var(--neon-blue);
+text-decoration:none;">
 
 dixit181896@gmail.com
-
 </a>
-
 </p>
 
 </footer>
@@ -421,7 +377,6 @@ dixit181896@gmail.com
 </div>
 
 <script>
-
 const bootBtn=document.getElementById("bootBtn");
 const introLayer=document.getElementById("dixlabsIntro");
 
@@ -431,34 +386,35 @@ introLayer.style.display="none";
 
 try{
 
-const ctx=new(window.AudioContext||window.webkitAudioContext)();
+const ctx=
+new(window.AudioContext||
+window.webkitAudioContext)();
 
 const osc=ctx.createOscillator();
-
 const gain=ctx.createGain();
 
 osc.type='sawtooth';
 
 osc.frequency.setValueAtTime(40,ctx.currentTime);
 
-osc.frequency.exponentialRampToValueAtTime(
+osc.frequency
+.exponentialRampToValueAtTime(
 800,
 ctx.currentTime+.5
 );
 
 gain.gain.setValueAtTime(.1,ctx.currentTime);
 
-gain.gain.exponentialRampToValueAtTime(
+gain.gain
+.exponentialRampToValueAtTime(
 .01,
 ctx.currentTime+.5
 );
 
 osc.connect(gain);
-
 gain.connect(ctx.destination);
 
 osc.start();
-
 osc.stop(ctx.currentTime+.5);
 
 }catch(e){}
@@ -471,7 +427,8 @@ function typeWriter(){
 
 const el=document.getElementById("subHeader");
 
-const txt="> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
+const txt=
+"> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
 
 let i=0;
 
@@ -518,8 +475,8 @@ c.classList.contains("category-"+cat)
 });
 
 }
-
 </script>
 
 </body>
-</html>
+</html> 
+
