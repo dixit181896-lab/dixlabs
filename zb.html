@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DixLabs // ZenBoard Infinite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --neon-blue: #38bdf8; --neon-pink: #f472b6; --bg-dark: #020617; --panel-bg: #0f172a;
+        }
+        
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 5px; }
+
+        body { 
+            margin: 0; background: var(--bg-dark); color: white; 
+            font-family: 'Orbitron', sans-serif; overflow-y: auto; 
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* STARTUP OVERLAY */
+        #startupOverlay {
+            position: fixed; inset: 0; background: #000;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; z-index: 10000; transition: opacity 0.5s;
+        }
+
+        /* LOGO SECTION */
+        .brand-header { text-align: center; padding: 80px 0 40px; width: 100%; }
+        .logo-main {
+            font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; letter-spacing: 20px;
+            color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0;
+        }
+
+        /* STICKY CONTROL CENTER */
+        .toolbar-sticky {
+            position: sticky; top: 0; width: 100%; 
+            background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(15px);
+            border-bottom: 2px solid var(--neon-blue);
+            padding: 20px 0; z-index: 1000;
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            background: transparent; border: 2px solid var(--neon-blue);
+            color: var(--neon-blue); padding: 12px 24px; font-family: 'Orbitron';
+            font-size: 14px; font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
+        .tool-btn:hover, .tool-btn.active { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px var(--neon-blue); }
+        .btn-pink { border-color: var(--neon-pink); color: var(--neon-pink); }
+        .btn-pink:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 15px var(--neon-pink); }
+
+        /* MULTI-PAGE STACK */
+        #boardStack { width: 95%; max-width: 1200px; display: flex; flex-direction: column; gap: 60px; padding-bottom: 100px; }
+        
+        .page-container {
+            background: #010409; border: 1px solid rgba(56,189,248,0.3);
+            position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+        }
+        
+        .page-label {
+            position: absolute; top: -35px; left: 0;
+            font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 14px; letter-spacing: 4px; font-weight: bold;
+        }
+
+        canvas { display: block; cursor: crosshair; touch-action: none; width: 100%; height: 700px; }
+
+        #colorPicker { width: 50px; height: 50px; border: 2px solid #fff; background: none; cursor: pointer; padding: 0; }
+        
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="startupOverlay">
+        <button class="tool-btn" style="font-size:24px; padding:40px 80px;" onclick="bootSystem()">BOOT_ZENBOARD</button>
+    </div>
+
+    <div class="brand-header">
+        <h1 class="logo-main">ZENBOARD</h1>
+        <div style="font-family:'JetBrains Mono'; color:var(--neon-pink); letter-spacing:8px; margin-top:15px; font-weight:bold;">
+            > INFINITE_CANVAS_SYSTEM // DIXLABS
+        </div>
+    </div>
+
+    <div class="toolbar-sticky">
+        <button class="tool-btn active" id="penBtn" onclick="setMode('pen')">MARKER</button>
+        <button class="tool-btn" id="glowBtn" onclick="setMode('glow')">NEON</button>
+        <button class="tool-btn btn-pink" id="eraserBtn" onclick="setMode('eraser')">SCRUB</button>
+        <input type="color" id="colorPicker" value="#38bdf8">
+        
+        <label class="tool-btn" style="border-color:var(--neon-green); color:var(--neon-green); cursor:pointer;">
+            INSERT_IMAGE <input type="file" id="imageInput" accept="image/*">
+        </label>
+        
+        <button class="tool-btn" onclick="addNewPage()">+ ADD_PAGE</button>
+        <button class="tool-btn btn-pink" onclick="dumpCurrent()">EXPORT_ALL</button>
+    </div>
+
+    <div id="boardStack">
+        </div>
+
+    <script>
+        let mode = 'pen';
+        let drawing = false;
+        let pageCount = 0;
+        const colorPicker = document.getElementById('colorPicker');
+        const boardStack = document.getElementById('boardStack');
+
+        function bootSystem() {
+            document.getElementById('startupOverlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('startupOverlay').style.display = 'none';
+                addNewPage();
+            }, 500);
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            if(newMode === 'pen') document.getElementById('penBtn').classList.add('active');
+            if(newMode === 'glow') document.getElementById('glowBtn').classList.add('active');
+            if(newMode === 'eraser') document.getElementById('eraserBtn').classList.add('active');
+        }
+
+        function addNewPage() {
+            pageCount++;
+            const container = document.createElement('div');
+            container.className = 'page-container';
+            
+            const label = document.createElement('div');
+            label.className = 'page-label';
+            label.innerText = `LAYER_NODE_00${pageCount}`;
+            
+            const canvas = document.createElement('canvas');
+            canvas.id = `canvas-${pageCount}`;
+            
+            container.appendChild(label);
+            container.appendChild(canvas);
+            boardStack.appendChild(container);
+
+            initCanvas(canvas);
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function initCanvas(canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 700;
+            
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            const getPos = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            };
+
+            const draw = (e) => {
+                if (!drawing) return;
+                const pos = getPos(e);
+                
+                ctx.globalAlpha = 1.0;
+                ctx.shadowBlur = 0;
+
+                if (mode === 'pen') { 
+                    ctx.lineWidth = 4; 
+                    ctx.strokeStyle = colorPicker.value; 
+                } else if (mode === 'glow') { 
+                    ctx.lineWidth = 30; 
+                    ctx.strokeStyle = colorPicker.value; 
+                    ctx.globalAlpha = 0.2; 
+                } else if (mode === 'eraser') { 
+                    ctx.lineWidth = 60; 
+                    ctx.strokeStyle = '#010409'; 
+                }
+
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+            };
+
+            canvas.addEventListener('mousedown', (e) => { drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); });
+            canvas.addEventListener('mousemove', draw);
+            window.addEventListener('mouseup', () => drawing = false);
+            
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); });
+            canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        }
+
+        // IMAGE INSERTION LOGIC
+        document.getElementById('imageInput').onchange = function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const activeCanvas = document.querySelector(`#canvas-${pageCount}`);
+                    const activeCtx = activeCanvas.getContext('2d');
+                    // Scale image to fit canvas width
+                    const scale = Math.min(activeCanvas.width / img.width, activeCanvas.height / img.height);
+                    const x = (activeCanvas.width / 2) - (img.width / 2) * scale;
+                    const y = (activeCanvas.height / 2) - (img.height / 2) * scale;
+                    activeCtx.drawImage(img, x, y, img.width * scale, img.height * scale);
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        };
+
+        function dumpCurrent() {
+            const canvas = document.querySelector(`#canvas-${pageCount}`);
+            const link = document.createElement('a');
+            link.download = `DIXLABS_LAYER_${pageCount}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>
