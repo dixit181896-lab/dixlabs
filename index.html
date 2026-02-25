@@ -100,6 +100,13 @@ header { padding: 120px 20px 60px; }
     </header>
 
     <div class="projects">
+        <div class="card category-focus" onmouseenter="playHoverSound()">
+            <div class="card-icon">🎨</div>
+            <h3>ZENBOARD</h3>
+            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Your thoughts are too big for one page.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
+        </div>
+
         <div class="card category-fact" onmouseenter="playHoverSound()">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
@@ -182,7 +189,6 @@ header { padding: 120px 20px 60px; }
 <script>
 let audioCtx;
 
-// --- FULL 50-LINE ROAST DATABASE ---
 const quips = [
     "Error 404: Logic not found in your query.", "Go play Crickemory, you clearly need the education.", 
     "Atharv is busy. I'm bored. This conversation is failing.", "Don't touch the orange glass, it's high voltage.",
