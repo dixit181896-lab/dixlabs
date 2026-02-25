@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRICKEMORY // 50 HISTORIC YARDS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon: #22c55e; --dark: #050505; --dim: rgba(34, 197, 94, 0.1); }
+        body { margin: 0; background: var(--dark); color: #fff; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
+
+        /* HEADER */
+        .header {
+            position: fixed; top: 0; width: 100%; height: 60px; border-bottom: 2px solid var(--neon);
+            background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; z-index: 500;
+        }
+        .header h1 { font-family: 'Orbitron'; color: var(--neon); letter-spacing: 8px; font-size: 1.4rem; margin: 0; }
+
+        /* PITCH VISUALS */
+        #pitch-track {
+            position: fixed; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 100vh; border-left: 2px dashed var(--neon);
+            border-right: 2px dashed var(--neon); background: var(--dim); z-index: -1;
+        }
+        #progress-bar {
+            position: fixed; right: 20px; top: 80px; bottom: 20px; width: 6px;
+            background: #111; border-radius: 5px; z-index: 400; border: 1px solid #222;
+        }
+        #progress-fill { width: 100%; background: var(--neon); height: 0%; box-shadow: 0 0 15px var(--neon); transition: 0.1s; }
+
+        /* TIMELINE ENGINE */
+        .timeline { max-width: 650px; margin: 0 auto; padding: 45vh 20px; }
+        .fact-node {
+            position: relative; margin-bottom: 400px; padding: 30px;
+            background: rgba(0,0,0,0.9); border: 1px solid #222;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            opacity: 0.1; transform: scale(0.8);
+        }
+        
+        /* THE AUTO-FOCUS HOVER */
+        .fact-node.active { 
+            opacity: 1; 
+            transform: scale(1.15); 
+            border-color: var(--neon); 
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.2);
+            z-index: 100;
+        }
+
+        .gear {
+            position: absolute; left: -85px; top: 50%; transform: translateY(-50%);
+            font-size: 50px; opacity: 0; transition: 0.3s;
+        }
+        .fact-node.active .gear { opacity: 1; animation: wobble 0.8s infinite ease-in-out; }
+
+        @keyframes wobble {
+            0%, 100% { transform: translateY(-50%) rotate(-10deg); }
+            50% { transform: translateY(-60%) rotate(10deg); }
+        }
+
+        .node-year { font-family: 'Orbitron'; font-size: 3rem; color: var(--neon); margin: 0; line-height: 1; }
+        .node-title { font-weight: 800; font-size: 1.1rem; margin: 10px 0; color: #fff; text-transform: uppercase; border-left: 4px solid var(--neon); padding-left: 10px; }
+        .node-desc { font-size: 0.95rem; color: #ccc; line-height: 1.6; }
+        
+        .footer-note { text-align: center; color: var(--neon); padding: 100px; font-family: 'Orbitron'; letter-spacing: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div class="header"><h1>CRICKEMORY</h1></div>
+<div id="pitch-track"></div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div class="timeline" id="container"></div>
+<div class="footer-note">PITCH COMPLETED // 22 YARDS OF GLORY</div>
+
+<script>
+    const history = [
+        {y: "1550", t: "Guildford Schoolboys", d: "First verified reference: John Derrick testifies playing 'creckett' as a schoolboy in Surrey.", i: "🧒"},
+        {y: "1598", t: "Italian Dictionary", d: "The word 'creckett' is officially defined in an Italian-English dictionary by John Florio.", i: "📜"},
+        {y: "1611", t: "Adult Cricket", d: "Two men in Sussex are prosecuted for playing cricket on Sunday instead of attending church.", i: "⛪"},
+        {y: "1624", t: "First Tragic Event", d: "Jasper Vinall becomes the first recorded person to die during a match, hit by a 'cricket batt'.", i: "⚠️"},
+        {y: "1697", t: "High Stakes Match", d: "A match in Sussex is played for 50 guineas, marking the beginning of professional cricket.", i: "💰"},
+        {y: "1706", t: "The 22 Yards", d: "The pitch length is officially set at 22 yards (one chain), a measurement used for land survey.", i: "📏"},
+        {y: "1744", t: "The First Laws", d: "Codified by the Star and Garter Club, introducing the LBW law and the first written rules.", i: "⚖️"},
+        {y: "1760", t: "Pitching the Ball", d: "Bowlers transition from rolling the ball on the ground to pitching it through the air.", i: "⚾"},
+        {y: "1771", t: "Bat Width Limit", d: "After a player used a bat as wide as the wickets, the law limited width to 4.25 inches.", i: "🏏"},
+        {y: "1774", t: "The Third Stump", d: "Introduced after a ball famously passed between the original two stumps without hitting them.", i: "🛡️"},
+        {y: "1787", t: "MCC Founded", d: "The Marylebone Cricket Club is formed, taking over the responsibility of guarding the Laws.", i: "🏛️"},
+        {y: "1814", t: "Lord's Home", d: "The current Lord's Cricket Ground in London opens; it is now known as the Home of Cricket.", i: "🏟️"},
+        {y: "1844", t: "First International", d: "USA vs Canada: The first-ever international match of any sport takes place in New York.", i: "🌎"},
+        {y: "1864", t: "Wisden Born", d: "The first Wisden Cricketers' Almanack is published, becoming the 'Bible of Cricket'.", i: "📖"},
+        {y: "1877", t: "First Test Match", d: "Australia beats England at the MCG. Charles Bannerman scores the first Test century.", i: "🇦🇺"},
+        {y: "1882", t: "Ashes Legend", d: "Australia beats England at The Oval. A mock obituary says English cricket has died.", i: "⚱️"},
+        {y: "1890", t: "County Championship", d: "Official domestic cricket competition begins in England, setting the professional standard.", i: "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
+        {y: "1900", t: "Olympic Cricket", d: "Cricket makes its only Olympic appearance in Paris; Great Britain wins the gold medal.", i: "🥇"},
+        {y: "1909", t: "ICC Formation", d: "England, Australia, and South Africa form the Imperial Cricket Conference.", i: "🤝"},
+        {y: "1930", t: "Bradman at Headingley", d: "Don Bradman scores 334 in a single Test innings, including 309 runs in one day.", i: "🐐"},
+        {y: "1932", t: "India Joins", d: "India plays its first official Test Match at Lord's under the captaincy of C.K. Nayudu.", i: "🇮🇳"},
+        {y: "1933", t: "The Bodyline Series", d: "England uses 'fast leg theory' to stop Bradman, causing a major diplomatic row.", i: "🧨"},
+        {y: "1934", t: "Women's Test Debut", d: "The first Women’s Test Match is played between England and Australia.", i: "👩"},
+        {y: "1939", t: "The Timeless Test", d: "South Africa vs England lasts 12 days. England has to leave mid-match to catch a boat home.", i: "⏳"},
+        {y: "1948", t: "The 99.94 Average", d: "Bradman is bowled for a duck in his final innings, finishing with a career average of 99.94.", i: "📉"},
+        {y: "1956", t: "Laker's 19 Wickets", d: "Jim Laker takes 19 wickets in a single Test match vs Australia—the most in history.", i: "🤲"},
+        {y: "1958", t: "Sobers' 365*", d: "Garry Sobers breaks the world record for the highest Test score, hitting 365* vs Pakistan.", i: "👑"},
+        {y: "1960", t: "The First Tied Test", d: "Australia and West Indies play out a historic tie at Brisbane in a thriller.", i: "👔"},
+        {y: "1971", t: "The First ODI", d: "A rain-abandoned Test leads to a 40-over match. Australia beats England in the first ODI.", i: "⚪"},
+        {y: "1973", t: "Women's World Cup", d: "The first-ever Cricket World Cup (Women's) is held, two years before the men's version.", i: "🏆"},
+        {y: "1975", t: "Men's World Cup", d: "Clive Lloyd leads West Indies to victory in the inaugural men's tournament at Lord's.", i: "🌴"},
+        {y: "1977", t: "World Series Cricket", d: "Kerry Packer introduces night cricket, white balls, and colored kits to the world.", i: "💡"},
+        {y: "1983", t: "India's Revolution", d: "Kapil Dev's Devils defeat West Indies at Lord's to win their first World Cup.", i: "🎆"},
+        {y: "1987", t: "World Cup Moves", d: "The World Cup leaves England for the first time, hosted by India and Pakistan.", i: "🌏"},
+        {y: "1992", t: "Rain Rule Drama", d: "South Africa needs 22 runs off 1 ball in the WC semi-final due to a rain rule error.", i: "🌧️"},
+        {y: "1994", t: "Lara's 501", d: "Brian Lara scores 501* for Warwickshire, the highest score in first-class history.", i: "📝"},
+        {y: "1996", t: "Sri Lanka's Rise", d: "Arjuna Ranatunga leads Sri Lanka to a World Cup win with revolutionary batting tactics.", i: "🦁"},
+        {y: "1999", t: "Kumble's 10-fer", d: "Anil Kumble takes all 10 wickets in an innings vs Pakistan at Feroz Shah Kotla.", i: "🧤"},
+        {y: "2003", t: "T20 Launch", d: "Domestic T20 cricket launches in England to bring crowds back to the ground.", i: "⚡"},
+        {y: "2004", t: "Lara's 400*", d: "Brian Lara hits the only quadruple century in Test history against England in Antigua.", i: "👸"},
+        {y: "2007", t: "Yuvraj's 6 Sixes", d: "Yuvraj Singh hits 6 sixes in an over vs Stuart Broad at the first T20 World Cup.", i: "🔥"},
+        {y: "2010", t: "Sachin's 200", d: "Sachin Tendulkar becomes the first man to score a double century in ODI history.", i: "💯"},
+        {y: "2011", t: "India's 28-Year Wait", d: "MS Dhoni's winning six brings the World Cup back to India on home soil.", i: "💙"},
+        {y: "2012", t: "Sachin's 100th 100", d: "Tendulkar reaches the impossible milestone: 100 international centuries.", i: "🥇"},
+        {y: "2013", t: "Gayle's 175*", d: "Chris Gayle destroys Pune Warriors in the IPL, scoring 175* off just 66 balls.", i: "🌦️"},
+        {y: "2014", t: "Rohit's 264", d: "Rohit Sharma records the highest ODI score ever (264 vs Sri Lanka) at Eden Gardens.", i: "💙"},
+        {y: "2015", t: "Pink Ball Test", d: "The first-ever Day/Night Test match is played between Australia and New Zealand.", i: "🎾"},
+        {y: "2019", t: "Boundary Count", d: "England wins the World Cup Final on 'boundary count' after a Super Over tie vs NZ.", i: "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
+        {y: "2022", t: "Kohli at the MCG", d: "Virat Kohli hits two back-to-back sixes vs Rauf to secure an impossible win vs Pakistan.", i: "🤴"},
+        {y: "2024", t: "T20 WC Champions", d: "India wins the T20 World Cup in Barbados. Rohit & Kohli retire from T20Is as kings.", i: "🌟"}
+    ];
+
+    const list = document.getElementById('container');
+    history.forEach((fact) => {
+        const div = document.createElement('div');
+        div.className = 'fact-node';
+        div.innerHTML = `
+            <div class="gear">${fact.i}</div>
+            <p class="node-year">${fact.y}</p>
+            <div class="node-title">${fact.t}</div>
+            <div class="node-desc">${fact.d}</div>
+        `;
+        list.appendChild(div);
+    });
+
+    window.onscroll = () => {
+        const nodes = document.querySelectorAll('.fact-node');
+        const center = window.innerHeight / 2;
+
+        nodes.forEach(node => {
+            const rect = node.getBoundingClientRect();
+            const nodeCenter = rect.top + (rect.height / 2);
+
+            if (Math.abs(nodeCenter - center) < 200) {
+                node.classList.add('active');
+            } else {
+                node.classList.remove('active');
+            }
+        });
+
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        document.getElementById('progress-fill').style.height = scrollPercent + "%";
+    }
+</script>
+</body>
+</html>
