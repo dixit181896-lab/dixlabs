@@ -124,7 +124,7 @@ text-shadow:0 0 15px rgba(56,189,248,.4);
 #subHeader {
     font-family: 'JetBrains Mono';
     color: var(--neon-pink);
-    font-size: 16px; /* Increased from 12px */
+    font-size: 16px; 
     height: 1.2em;
     font-weight: bold;
 }
@@ -250,7 +250,7 @@ onclick="filterSelection('fact', this)">
 
 <div class="card category-fact"
 style="border-top:4px solid var(--neon-green);"
-onmouseenter="playFactHover()">
+onmouseenter="playHoverSound()">
 <div class="card-icon">🏏</div>
 <h3>CRICKEMORY</h3>
 <p>
@@ -263,8 +263,24 @@ OPEN_ARCHIVES
 </button>
 </div>
 
+<div class="card category-fact"
+style="border-top:4px solid #34d399;"
+onmouseenter="playHoverSound()">
+<div class="card-icon">⚽</div>
+<h3>FOOTEMORY</h3>
+<p>
+Sprint through 50 legendary football milestones. From the first FA rules to Messi's World Cup glory.
+</p>
+<button class="btn"
+style="border-color:#34d399; color:#34d399;"
+onclick="location.href='f.html'">
+KICK_OFF
+</button>
+</div>
+
 <div class="card category-game"
-style="border-top:4px solid var(--neon-blue);">
+style="border-top:4px solid var(--neon-blue);"
+onmouseenter="playHoverSound()">
 <div class="card-icon">🗑️</div>
 <h3>GROSSDUMPSTER</h3>
 <p>
@@ -277,7 +293,8 @@ RUN_MODULE
 </div>
 
 <div class="card category-game"
-style="border-top:4px solid var(--neon-blue);">
+style="border-top:4px solid var(--neon-blue);"
+onmouseenter="playHoverSound()">
 <div class="card-icon">💰</div>
 <h3>AMBANI_MONEY</h3>
 <p>
@@ -290,7 +307,8 @@ RUN_MODULE
 </div>
 
 <div class="card category-focus"
-style="border-top:4px solid var(--neon-pink);">
+style="border-top:4px solid var(--neon-pink);"
+onmouseenter="playHoverSound()">
 <div class="card-icon">🧘</div>
 <h3>DEEPWORK.PRO</h3>
 <p>
@@ -304,7 +322,8 @@ RUN_MODULE
 </div>
 
 <div class="card category-fact"
-style="border-top:4px solid var(--neon-green);">
+style="border-top:4px solid var(--neon-green);"
+onmouseenter="playHoverSound()">
 <div class="card-icon">🍳</div>
 <h3>COMING_SOON</h3>
 <p>
@@ -347,7 +366,7 @@ function initAudio() {
     if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 }
 
-function playFactHover() {
+function playHoverSound() {
     if (!audioCtx) return;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
