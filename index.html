@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
     <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
-    
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
-    
     <link rel="icon" type="image/png" href="logo.png">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Cyber-Industrial Hub</title>
+    <title>Dixit Labs | Games // Focus // Facts</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
     
     <style>
@@ -24,6 +22,7 @@
             margin: 0; background: var(--bg-dark);
             color: white; font-family: 'Orbitron', sans-serif;
             text-align: center; overflow-x: hidden;
+            padding-bottom: 80px; /* Space for fixed tabs */
         }
 
         /* CRT Scanline Overlay */
@@ -64,6 +63,21 @@
             color: var(--neon-blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
         }
 
+        /* --- NAVIGATION TABS --- */
+        .nav-tabs {
+            position: sticky; top: 0; background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(10px); display: flex; justify-content: center;
+            gap: 20px; padding: 15px; border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            z-index: 100;
+        }
+
+        .tab-link {
+            text-decoration: none; color: #94a3b8; font-size: 10px;
+            letter-spacing: 2px; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+
+        .tab-link:hover, .tab-link.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+
         .projects {
             display: flex; justify-content: center; flex-wrap: wrap;
             gap: 30px; padding: 60px 20px;
@@ -73,12 +87,17 @@
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.1);
             padding: 35px; border-radius: 4px; width: 300px;
             display: flex; flex-direction: column; justify-content: space-between;
-            transition: 0.4s; position: relative;
+            transition: 0.4s; position: relative; text-align: left;
         }
 
         .card:hover {
             border-color: var(--neon-blue); transform: translateY(-10px);
             box-shadow: 0 10px 40px rgba(56, 189, 248, 0.2);
+        }
+
+        .card-icon {
+            font-size: 2.5rem; margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
         }
 
         h3 { font-size: 1.2rem; color: #fff; letter-spacing: 2px; margin-top: 0; }
@@ -110,31 +129,42 @@
         <button onclick="boot()" id="bootBtn" style="margin-top: 40px; background: none; border: 1px solid #fff; color: #fff; padding: 12px 40px; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 5px;">INITIALIZE_CORE</button>
     </div>
 
+    <nav class="nav-tabs">
+        <a href="#" class="tab-link active"><span>🏠</span> HOME</a>
+        <a href="#games" class="tab-link"><span>🎮</span> GAMES</a>
+        <a href="#focus" class="tab-link"><span>⚡</span> FOCUS</a>
+        <a href="#logs" class="tab-link"><span>📂</span> LOGS</a>
+    </nav>
+
     <header>
         <div class="logo-text">DIXLABS</div>
-        <p style="font-family: 'JetBrains Mono'; color: var(--neon-pink); margin-top: 15px; font-size: 12px;">> EXPERIMENTAL_PLAYGROUND // ATHARV_DIXIT // AGE-15 // INDIA </p>
+        <p style="font-family: 'JetBrains Mono'; color: var(--neon-pink); margin-top: 15px; font-size: 12px;">> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS </p>
     </header>
 
-    <div class="projects">
+    <div class="projects" id="games">
         <div class="card" style="border-top: 4px solid var(--neon-blue);">
+            <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
             <p>Catch trash, avoid toxins, and survive the waste-land. The definitive survival engine.</p>
             <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
         </div>
 
         <div class="card">
+            <div class="card-icon">💰</div>
             <h3>AMBANI_MONEY</h3>
             <p>Can you spend it all? Test your consumer limits with an infinite billionaire fortune.</p>
             <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
         </div>
 
         <div class="card" style="border-top: 4px solid var(--neon-pink);">
+            <div class="card-icon">🧠</div>
             <h3>DEEPWORK.PRO</h3>
             <p>Mission-critical 3-hour focus terminal with integrated media bridges.</p>
             <button class="btn btn-pink" onclick="location.href='deepwork.html'">RUN_MODULE</button>
         </div>
 
         <div class="card" style="opacity: 0.6; border-style: dotted; border-width: 2px;">
+            <div class="card-icon">🚀</div>
             <h3>NEXT_EXPERIMENT 👀</h3>
             <p>Something big is cooking in Dixit Labs. A new chaotic interactive project is arriving soon.</p>
             <button class="btn" style="border-color: #475569; color: #475569; cursor: not-allowed;">STAY_TUNED</button>
@@ -152,7 +182,6 @@
 
     <script>
         function boot() {
-            // Futuristic Sound
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = audioCtx.createOscillator();
@@ -160,23 +189,4 @@
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(80, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.6);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.6);
-            } catch(e) {}
-
-            const intro = document.getElementById("dixlabsIntro");
-            intro.style.transform = "scale(1.2)";
-            intro.style.opacity = "0";
-            
-            setTimeout(() => {
-                intro.style.display = "none";
-            }, 800);
-        }
-    </script>
-</body>
-</html>
-
+                gain.gain.setValueAtTime(
