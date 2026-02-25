@@ -178,17 +178,19 @@ background:var(--neon-blue);
 color:#000;letter-spacing:2px;
 }
 
-/* --- EASTER EGG CSS --- */
+/* --- TROUBLESOME EASTER EGG CSS --- */
 .falling-logo {
     position: fixed;
-    top: -100px;
+    top: -300px; /* Start higher for massive logos */
     z-index: 999999;
     pointer-events: none;
+    /* Glow effect for extra annoyance */
+    filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.6));
     animation: fall linear forwards;
 }
 
 @keyframes fall {
-    to { transform: translateY(110vh) rotate(720deg); }
+    to { transform: translateY(120vh) rotate(1080deg); } /* Faster, more spins */
 }
 
 .about-section{
@@ -289,9 +291,8 @@ font-size:12px;
 <section class="about-section">
     <div style="color:var(--neon-green); letter-spacing:2px;margin-bottom:15px;">[🧬] WHO_IS_BEHIND_THIS?</div>
     <div style="font-family:'JetBrains Mono'; font-size:14px;line-height:1.8;color:#cbd5e1;">
-        I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India who spends way too much time staring at code and test tubes.
-        <br><br>
-        Dixit Labs is my personal "Area 51"— a place where I experiment with web tech, design, and ideas that actually work.
+        I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student from India. 
+        Dixit Labs is my personal "Area 51"— a place where I experiment with web tech.
     </div>
 </section>
 
@@ -321,21 +322,31 @@ function playHoverSound() {
 }
 
 function triggerLogoRain() {
-    // Generate 60 falling logos
-    for (let i = 0; i < 60; i++) {
+    // Generate 80 MASSIVE logos for maximum trouble
+    for (let i = 0; i < 80; i++) {
         setTimeout(() => {
             const logo = document.createElement('img');
             logo.src = 'logo.png';
             logo.className = 'falling-logo';
+            
+            // Random horizontal position
             logo.style.left = Math.random() * 100 + 'vw';
-            logo.style.width = (Math.random() * 35 + 20) + 'px';
-            logo.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-            logo.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            // HUGE size variation (80px to 250px)
+            const size = Math.random() * 170 + 80;
+            logo.style.width = size + 'px';
+            
+            // Fast fall speeds
+            logo.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+            
+            // Varying opacity for depth
+            logo.style.opacity = Math.random() * 0.5 + 0.5;
+
             document.body.appendChild(logo);
             
             // Cleanup after fall
-            setTimeout(() => logo.remove(), 4000);
-        }, i * 50);
+            setTimeout(() => logo.remove(), 3000);
+        }, i * 40); // Fast deployment
     }
 }
 
