@@ -18,86 +18,78 @@
             --bg-dark: #020617;
         }
 
+        /* Base Body - Solid Color ensures no flicker */
         body {
-            margin: 0; background: var(--bg-dark);
-            color: white; font-family: 'Orbitron', sans-serif;
-            text-align: center; overflow-x: hidden;
+            margin: 0; 
+            background-color: #020617; 
+            color: white; 
+            font-family: 'Orbitron', sans-serif;
+            text-align: center; 
+            overflow-x: hidden;
         }
 
-        /* CRT Effect */
-        body::before {
-            content: " "; display: block; position: fixed;
-            inset: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-            z-index: 100001; background-size: 100% 2px; pointer-events: none;
-        }
-
-        /* FIXED: Background Particles Z-Index */
+        /* Particles - Kept very subtle and behind everything */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(56, 189, 248, 0.15) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: -1; /* Must stay behind everything */
-            animation: moveBackground 20s linear infinite;
+            z-index: 1; 
+            pointer-events: none;
         }
 
-        @keyframes moveBackground {
-            from { background-position: 0 0; }
-            to { background-position: 100px 100px; }
-        }
-
-        /* --- STARTUP SCREEN --- */
+        /* --- THE STARTUP SCREEN (The Fix) --- */
         #dixlabsIntro {
-            position: fixed; inset: 0; background: #000;
-            display: flex; flex-direction: column; justify-content: center;
+            position: fixed; 
+            inset: 0; 
+            background: #000000;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
             align-items: center; 
-            z-index: 200000; /* Highest priority */
-            transition: opacity 0.8s ease, visibility 0.8s;
+            z-index: 9999; /* Higher than particles */
+            transition: opacity 0.5s ease;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- MAIN CONTENT CONTAINER --- */
+        #mainContent {
+            position: relative;
+            z-index: 10; /* Content sits above particles */
+        }
+
         .nav-tabs {
             position: sticky; top: 0; background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(10px); display: flex; justify-content: center;
             gap: 15px; padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 999;
         }
 
         .tab-link {
-            cursor: pointer; padding: 8px 15px; border: 1px solid transparent;
-            font-size: 10px; letter-spacing: 1px; transition: 0.3s;
-            text-transform: uppercase; font-weight: 900;
+            cursor: pointer; padding: 8px 15px; font-size: 10px; 
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 900;
         }
-
-        .tab-home.active { border-color: #fff; box-shadow: 0 0 10px #fff; }
+        .tab-home.active { border: 1px solid #fff; box-shadow: 0 0 10px #fff; }
         .tab-games { color: var(--neon-blue); }
-        .tab-games.active { border-color: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
+        .tab-games.active { border: 1px solid var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
         .tab-focus { color: var(--neon-pink); }
-        .tab-focus.active { border-color: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); }
-        .tab-facts { color: var(--neon-green); }
-        .tab-facts.active { border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
+        .tab-focus.active { border: 1px solid var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink); }
 
-        header { padding: 80px 20px; background: radial-gradient(circle at top, #0f172a, #020617); }
-        .logo-text { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; letter-spacing: 10px; color: var(--neon-blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+        header { padding: 80px 20px; }
+        .logo-text { font-size: 3rem; font-weight: 900; letter-spacing: 10px; color: var(--neon-blue); }
 
-        /* --- PROJECT GRID --- */
-        .projects {
-            display: flex; justify-content: center; flex-wrap: wrap;
-            gap: 25px; padding: 40px 20px;
-        }
-
+        /* --- CARDS & HOVER EFFECTS --- */
+        .projects { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 40px 20px; }
+        
         .card {
             background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.1);
-            padding: 30px; border-radius: 4px; width: 280px;
-            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 30px; border-radius: 4px; width: 280px; text-align: left;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: left;
         }
 
+        /* Hover Animation */
         .card:hover { 
-            border-color: var(--neon-blue); 
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.2);
+            transform: translateY(-10px) scale(1.03); 
+            border-color: var(--neon-blue);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(56, 189, 248, 0.2);
         }
 
         .card-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; transition: 0.6s; }
@@ -106,6 +98,34 @@
         .btn {
             margin-top: 20px; padding: 12px; border: 1px solid var(--neon-blue);
             background: transparent; color: var(--neon-blue); cursor: pointer;
-            font-family: 'Orbitron'; font-size: 10px; font-weight: 900; transition: 0.3s;
+            font-family: 'Orbitron'; font-size: 10px; font-weight: 900; width: 100%;
         }
-        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0
+        .btn:hover { background: var(--neon-blue); color: #000; letter-spacing: 2px; }
+
+        .hidden { display: none !important; }
+        footer { padding: 60px 20px; background: #000; font-family: 'JetBrains Mono'; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div id="dixlabsIntro">
+        <img src="logo.png" style="width:200px; margin-bottom:30px;" onerror="this.style.display='none'">
+        <button onclick="boot()" style="background:none; border:2px solid #fff; color:#fff; padding:15px 40px; cursor:pointer; font-family:'Orbitron'; letter-spacing:5px; font-weight:900;">INITIALIZE_CORE</button>
+    </div>
+
+    <div class="particles"></div>
+
+    <div id="mainContent">
+        <nav class="nav-tabs">
+            <div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
+            <div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
+            <div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
+        </nav>
+
+        <header>
+            <div class="logo-text">DIXLABS</div>
+            <p id="subHeader" style="font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 12px; height: 1.2em;"></p>
+        </header>
+
+        <div class="projects">
+            <div class="card category-game" style="border-top:
