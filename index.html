@@ -37,19 +37,21 @@ position:fixed;inset:0;background:#000;
 display:flex;flex-direction:column;
 justify-content:center;align-items:center;
 z-index:999999;pointer-events:all;
+cursor: pointer; /* Feedback that the whole screen is clickable */
 }
 
-/* Updated Logo Style with Size and Glow */
+/* Bigger Logo (280px) + Stronger Neon Glow */
 .intro-logo {
-    width: 220px; 
+    width: 280px; 
     margin-bottom: 30px; 
-    filter: drop-shadow(0 0 15px var(--neon-blue));
+    filter: drop-shadow(0 0 20px var(--neon-blue));
     animation: neonPulse 2s infinite ease-in-out;
+    pointer-events: none;
 }
 
 @keyframes neonPulse {
-    0%, 100% { filter: drop-shadow(0 0 10px var(--neon-blue)); transform: scale(1); }
-    50% { filter: drop-shadow(0 0 25px var(--neon-blue)); transform: scale(1.02); }
+    0%, 100% { filter: drop-shadow(0 0 15px var(--neon-blue)); transform: scale(1); }
+    50% { filter: drop-shadow(0 0 35px var(--neon-blue)); transform: scale(1.03); }
 }
 
 .intro-btn{
@@ -59,6 +61,7 @@ font-family:'Orbitron';
 letter-spacing:5px;font-weight:900;
 position:relative;z-index:1000000;
 margin-bottom:20px;
+pointer-events: auto;
 }
 
 .intro-btn:hover{background:#fff;color:#000;}
@@ -154,77 +157,4 @@ display:flex;flex-direction:column;
 transform:translateY(-10px)scale(1.03);
 border-color:var(--neon-blue);
 box-shadow:
-0 20px 40px rgba(0,0,0,.6),
-0 0 20px rgba(56,189,248,.2);
-}
-
-.card-icon{
-font-size:2.5rem;margin-bottom:15px;
-display:inline-block;transition:.6s;
-}
-
-.card:hover .card-icon{
-transform:rotateY(360deg);
-}
-
-.btn{
-margin-top:auto;padding:12px;
-border:1px solid var(--neon-blue);
-background:transparent;
-color:var(--neon-blue);
-cursor:pointer;font-family:'Orbitron';
-font-size:10px;font-weight:900;
-width:100%;transition:.3s;
-}
-
-.btn:hover{
-background:var(--neon-blue);
-color:#000;letter-spacing:2px;
-}
-
-/* --- ABOUT --- */
-.about-section{
-max-width:800px;margin:80px auto;
-padding:40px;
-background:rgba(15,23,42,.4);
-border:1px solid rgba(56,189,248,.1);
-text-align:left;
-}
-
-.hidden{display:none!important;}
-
-footer{
-padding:60px 20px;background:#000;
-font-family:'JetBrains Mono';
-font-size:12px;
-}
-</style>
-</head>
-
-<body>
-
-<div id="dixlabsIntro">
-<img src="logo.png"
-class="intro-logo"
-onerror="this.style.display='none'">
-
-<button id="bootBtn" class="intro-btn">
-INITIALIZE_CORE
-</button>
-
-<div class="intro-contact">
-SYS_ADMIN: dixit181896@gmail.com
-</div>
-</div>
-
-<div class="particles"></div>
-
-<div id="mainContent">
-
-<nav class="nav-tabs">
-<div class="tab-link tab-home active"
-onclick="filterSelection('all', this)">
-🏠 ALL
-</div>
-
-<div class="tab
+0 20px
