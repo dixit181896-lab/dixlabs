@@ -24,20 +24,20 @@
             text-align: center; overflow-x: hidden;
         }
 
-        /* CRT Scanline Effect */
+        /* CRT Effect */
         body::before {
             content: " "; display: block; position: fixed;
             inset: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             z-index: 100001; background-size: 100% 2px; pointer-events: none;
         }
 
-        /* --- BACKGROUND PARTICLES --- */
+        /* FIXED: Background Particles Z-Index */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
-            z-index: -1;
+            z-index: -1; /* Must stay behind everything */
             animation: moveBackground 20s linear infinite;
         }
 
@@ -50,11 +50,12 @@
         #dixlabsIntro {
             position: fixed; inset: 0; background: #000;
             display: flex; flex-direction: column; justify-content: center;
-            align-items: center; z-index: 100000;
-            transition: 0.5s ease;
+            align-items: center; 
+            z-index: 200000; /* Highest priority */
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        /* --- NAVIGATION TABS --- */
+        /* --- NAVIGATION --- */
         .nav-tabs {
             position: sticky; top: 0; background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(10px); display: flex; justify-content: center;
@@ -68,7 +69,6 @@
             text-transform: uppercase; font-weight: 900;
         }
 
-        .tab-home { color: #fff; }
         .tab-home.active { border-color: #fff; box-shadow: 0 0 10px #fff; }
         .tab-games { color: var(--neon-blue); }
         .tab-games.active { border-color: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
@@ -77,15 +77,13 @@
         .tab-facts { color: var(--neon-green); }
         .tab-facts.active { border-color: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
 
-        .tab-link:hover { text-shadow: 0 0 8px currentColor; transform: translateY(-2px); }
-
         header { padding: 80px 20px; background: radial-gradient(circle at top, #0f172a, #020617); }
         .logo-text { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; letter-spacing: 10px; color: var(--neon-blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
 
         /* --- PROJECT GRID --- */
         .projects {
             display: flex; justify-content: center; flex-wrap: wrap;
-            gap: 25px; padding: 40px 20px; min-height: 400px;
+            gap: 25px; padding: 40px 20px;
         }
 
         .card {
@@ -93,163 +91,21 @@
             padding: 30px; border-radius: 4px; width: 280px;
             display: flex; flex-direction: column; justify-content: space-between;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: left; cursor: pointer;
+            text-align: left;
         }
 
         .card:hover { 
             border-color: var(--neon-blue); 
             transform: translateY(-10px) scale(1.02);
-            background: rgba(15, 23, 42, 0.95);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.2);
         }
 
-        .card-icon { 
-            font-size: 2.5rem; margin-bottom: 15px; 
-            display: inline-block; transition: transform 0.6s ease;
-        }
+        .card-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; transition: 0.6s; }
         .card:hover .card-icon { transform: rotateY(360deg); }
-
-        h3 { font-size: 1.1rem; margin: 0 0 10px 0; letter-spacing: 1px; color: #fff; }
-        p { font-family: 'JetBrains Mono'; font-size: 12px; color: #94a3b8; line-height: 1.6; }
 
         .btn {
             margin-top: 20px; padding: 12px; border: 1px solid var(--neon-blue);
             background: transparent; color: var(--neon-blue); cursor: pointer;
             font-family: 'Orbitron'; font-size: 10px; font-weight: 900; transition: 0.3s;
         }
-        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 15px var(--neon-blue); letter-spacing: 2px; }
-
-        .hidden { display: none !important; }
-
-        /* --- ABOUT SECTION --- */
-        .about-section {
-            max-width: 800px; margin: 80px auto; padding: 40px;
-            background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(56, 189, 248, 0.1);
-            text-align: left;
-        }
-
-        footer { padding: 60px 20px; background: #000; border-top: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono'; }
-        .email { color: var(--neon-blue); text-decoration: none; border-bottom: 1px dashed var(--neon-blue); }
-    </style>
-</head>
-<body>
-
-    <div id="dixlabsIntro">
-        <img src="logo.png" id="dixlabsLogo" style="width:200px; margin-bottom:30px;" onerror="this.style.display='none'">
-        <button onclick="boot()" style="background:none; border:1px solid #fff; color:#fff; padding:15px 40px; cursor:pointer; font-family:'Orbitron'; letter-spacing:5px; font-weight:900;">INITIALIZE_CORE</button>
-    </div>
-
-    <div class="particles"></div>
-
-    <nav class="nav-tabs">
-        <div class="tab-link tab-home active" onclick="filterSelection('all', this)">🏠 ALL</div>
-        <div class="tab-link tab-games" onclick="filterSelection('game', this)">🎮 GAMES</div>
-        <div class="tab-link tab-focus" onclick="filterSelection('focus', this)">⚡ FOCUS</div>
-        <div class="tab-link tab-facts" onclick="filterSelection('fact', this)">🧠 FACTS</div>
-    </nav>
-
-    <header>
-        <div class="logo-text">DIXLABS</div>
-        <p id="subHeader" style="font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 12px; margin-top:10px; min-height: 1.2em;"></p>
-    </header>
-
-    <div class="projects" id="projectContainer">
-        <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
-            <div class="card-icon">🗑️</div>
-            <h3>GROSSDUMPSTER</h3>
-            <p>Catch trash, avoid toxins, and survive the waste-land. The definitive survival engine.</p>
-            <button class="btn" onclick="location.href='gd.html'">RUN_MODULE</button>
-        </div>
-
-        <div class="card category-game" style="border-top: 4px solid var(--neon-blue);">
-            <div class="card-icon">💰</div>
-            <h3>AMBANI_MONEY</h3>
-            <p>Can you spend it all? Test your consumer limits with an infinite billionaire fortune.</p>
-            <button class="btn" onclick="location.href='ambani.html'">RUN_MODULE</button>
-        </div>
-
-        <div class="card category-focus" style="border-top: 4px solid var(--neon-pink);">
-            <div class="card-icon">🧠</div>
-            <h3>DEEPWORK.PRO</h3>
-            <p>Mission-critical 3-hour focus terminal with integrated media bridges.</p>
-            <button class="btn" style="border-color: var(--neon-pink); color: var(--neon-pink);" onclick="location.href='deepwork.html'">RUN_MODULE</button>
-        </div>
-    </div>
-
-    <section class="about-section">
-        <div style="color: var(--neon-green); letter-spacing: 2px; margin-bottom: 10px;">[🧬] ABOUT_THE_DEV</div>
-        <div style="font-family: 'JetBrains Mono'; font-size: 14px; line-height: 1.6; color: #cbd5e1;">
-            I am <b style="color: var(--neon-blue);">Atharv Dixit</b>, a 15-year-old developer based in India. 
-            Driven by pure passion and curiosity, I founded Dixit Labs as an experimental playground. 
-            By day, I dive deep into <b style="color: var(--neon-green);">Chemistry and Biology</b>; by night, I build digital architectures. 
-            Inspired by the drive of <b style="color: var(--neon-pink);">Virat Kohli</b>.
-        </div>
-    </section>
-
-    <footer>
-        <p style="letter-spacing: 3px; font-weight: bold;">ATHARV DIXIT // STUDENT DEVELOPER</p>
-        <p>Contact: <a href="mailto:dixit181896@gmail.com" class="email">dixit181896@gmail.com</a></p>
-        <div style="margin-top: 40px; opacity: 0.3; font-size: 10px;">
-            © 2026 DIXLABS CORE <br>
-            <a href="/sitemap.xml" style="color: white; text-decoration: none;">SITEMAP_INDEX</a>
-        </div>
-    </footer>
-
-    <script>
-        function boot() {
-            // SOUND ENGINE
-            try {
-                const context = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = context.createOscillator();
-                const gain = context.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(60, context.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, context.currentTime + 0.6);
-                gain.gain.setValueAtTime(0.1, context.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.6);
-                osc.connect(gain);
-                gain.connect(context.destination);
-                osc.start();
-                osc.stop(context.currentTime + 0.6);
-            } catch(e) {}
-
-            document.getElementById("dixlabsIntro").style.opacity = "0";
-            setTimeout(() => {
-                document.getElementById("dixlabsIntro").style.display = "none";
-                typeWriter();
-            }, 500);
-        }
-
-        function typeWriter() {
-            const el = document.getElementById("subHeader");
-            const txt = "> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-            let i = 0;
-            el.innerHTML = "";
-            function type() {
-                if (i < txt.length) {
-                    el.innerHTML += txt.charAt(i);
-                    i++;
-                    setTimeout(type, 35);
-                }
-            }
-            type();
-        }
-
-        function filterSelection(category, element) {
-            const cards = document.getElementsByClassName("card");
-            const tabs = document.getElementsByClassName("tab-link");
-            for (let tab of tabs) { tab.classList.remove("active"); }
-            element.classList.add("active");
-            for (let card of cards) {
-                if (category === 'all') {
-                    card.classList.remove("hidden");
-                } else {
-                    if (card.classList.contains("category-" + category)) {
-                        card.classList.remove("hidden");
-                    } else {
-                        card.classList.add("hidden");
-                    }
-                }
-            }
-        }
-    </script
+        .btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0
