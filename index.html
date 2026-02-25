@@ -4,12 +4,11 @@
 
 <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
 
-<!-- FAVICON -->
 <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
 <link rel="shortcut icon" href="/logo.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
 
-<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
 <meta name="description" content="DixLabs creates games, simulations and creative web experiments.">
 
@@ -29,68 +28,79 @@
 --bg-dark:#020617;
 }
 
-/* 🔥 LOGO SIZE CONTROL — CHANGE HERE ANYTIME */
-
+/* ⭐ BIG BOOT LOGO */
 .intro-logo{
 
-width:420px;        /* 👈 MAKE BIGGER OR SMALLER HERE */
+width:480px;
+
 max-width:85vw;
 
-height:auto;
+margin-bottom:35px;
 
-margin-bottom:40px;
+animation:bootGlow 1.2s ease forwards;
 
-display:block;
-
-animation:bootLogo 1s ease forwards;
+filter:drop-shadow(0 0 25px #38bdf8);
 
 }
 
-@keyframes bootLogo{
+@keyframes bootGlow{
+
 from{
 opacity:0;
-transform:scale(.8);
+transform:scale(.75);
+filter:blur(8px);
 }
+
 to{
 opacity:1;
 transform:scale(1);
+filter:drop-shadow(0 0 25px #38bdf8);
 }
+
 }
 
 body{
 margin:0;
-background:var(--bg-dark);
+background:#020617;
 color:white;
 font-family:'Orbitron',sans-serif;
 text-align:center;
 overflow-x:hidden;
 }
 
-/* INTRO SCREEN */
+/* INTRO */
 
 #dixlabsIntro{
+
 position:fixed;
 inset:0;
 background:#000;
+
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-z-index:999999;
-}
 
-/* BUTTON */
+z-index:999999;
+
+}
 
 .intro-btn{
 
 background:none;
 border:2px solid #fff;
 color:#fff;
+
 padding:15px 40px;
+
 cursor:pointer;
+
 font-family:'Orbitron';
+
 letter-spacing:5px;
+
 font-weight:900;
+
 margin-bottom:20px;
 
 }
@@ -105,9 +115,10 @@ color:#000;
 .intro-contact{
 
 font-family:'JetBrains Mono';
+
 font-size:10px;
+
 color:#444;
-margin-top:10px;
 
 }
 
@@ -118,6 +129,7 @@ margin-top:10px;
 position:fixed;
 top:0;
 left:0;
+
 width:100%;
 height:100%;
 
@@ -135,6 +147,7 @@ animation:moveBackground 30s linear infinite;
 @keyframes moveBackground{
 
 from{background-position:0 0;}
+
 to{background-position:100px 100px;}
 
 }
@@ -145,13 +158,16 @@ to{background-position:100px 100px;}
 
 position:sticky;
 top:0;
+
 background:rgba(2,6,23,.95);
+
 backdrop-filter:blur(10px);
 
 display:flex;
 justify-content:center;
 
 gap:15px;
+
 padding:15px;
 
 border-bottom:1px solid rgba(255,255,255,.1);
@@ -163,9 +179,11 @@ z-index:999;
 .tab-link{
 
 cursor:pointer;
+
 padding:8px 15px;
 
 font-size:10px;
+
 letter-spacing:1px;
 
 text-transform:uppercase;
@@ -177,30 +195,47 @@ transition:.3s;
 }
 
 .tab-home.active{
+
 border:1px solid #fff;
+
 box-shadow:0 0 10px #fff;
+
 }
 
-.tab-games{color:var(--neon-blue);}
+.tab-games{color:#38bdf8;}
+
 .tab-games.active{
-border:1px solid var(--neon-blue);
-box-shadow:0 0 10px var(--neon-blue);
+
+border:1px solid #38bdf8;
+
+box-shadow:0 0 10px #38bdf8;
+
 }
 
-.tab-focus{color:var(--neon-pink);}
+.tab-focus{color:#f472b6;}
+
 .tab-focus.active{
-border:1px solid var(--neon-pink);
-box-shadow:0 0 10px var(--neon-pink);
+
+border:1px solid #f472b6;
+
+box-shadow:0 0 10px #f472b6;
+
 }
 
-.tab-facts{color:var(--neon-green);}
+.tab-facts{color:#22c55e;}
+
 .tab-facts.active{
-border:1px solid var(--neon-green);
-box-shadow:0 0 10px var(--neon-green);
+
+border:1px solid #22c55e;
+
+box-shadow:0 0 10px #22c55e;
+
 }
 
 header{
+
 padding:60px 20px;
+
 }
 
 .logo-text{
@@ -211,7 +246,7 @@ font-weight:900;
 
 letter-spacing:10px;
 
-color:var(--neon-blue);
+color:#38bdf8;
 
 text-shadow:0 0 15px rgba(56,189,248,.4);
 
@@ -230,6 +265,8 @@ gap:25px;
 
 padding:40px 20px;
 
+min-height:300px;
+
 }
 
 .card{
@@ -240,6 +277,8 @@ border:1px solid rgba(56,189,248,.1);
 
 padding:30px;
 
+border-radius:4px;
+
 width:280px;
 
 text-align:left;
@@ -247,6 +286,7 @@ text-align:left;
 transition:.4s;
 
 display:flex;
+
 flex-direction:column;
 
 }
@@ -255,7 +295,7 @@ flex-direction:column;
 
 transform:translateY(-10px)scale(1.03);
 
-border-color:var(--neon-blue);
+border-color:#38bdf8;
 
 box-shadow:
 
@@ -287,11 +327,11 @@ margin-top:auto;
 
 padding:12px;
 
-border:1px solid var(--neon-blue);
+border:1px solid #38bdf8;
 
 background:transparent;
 
-color:var(--neon-blue);
+color:#38bdf8;
 
 cursor:pointer;
 
@@ -307,7 +347,7 @@ width:100%;
 
 .btn:hover{
 
-background:var(--neon-blue);
+background:#38bdf8;
 
 color:#000;
 
@@ -331,9 +371,7 @@ text-align:left;
 
 }
 
-.hidden{
-display:none!important;
-}
+.hidden{display:none!important;}
 
 footer{
 
@@ -348,17 +386,14 @@ font-size:12px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- INTRO -->
-
 <div id="dixlabsIntro">
 
-<!-- cache refresh added ?v=5 -->
-
-<img src="logo.png?v=5"
+<img src="logo.png?v=10"
 class="intro-logo"
 onerror="this.style.display='none'">
 
@@ -379,187 +414,3 @@ SYS_ADMIN: dixit181896@gmail.com
 <div class="particles"></div>
 
 <div id="mainContent">
-
-<nav class="nav-tabs">
-
-<div class="tab-link tab-home active"
-onclick="filterSelection('all',this)">
-🏠 ALL
-</div>
-
-<div class="tab-link tab-games"
-onclick="filterSelection('game',this)">
-🎮 GAMES
-</div>
-
-<div class="tab-link tab-focus"
-onclick="filterSelection('focus',this)">
-⚡ FOCUS
-</div>
-
-<div class="tab-link tab-facts"
-onclick="filterSelection('fact',this)">
-🧠 FACTS
-</div>
-
-</nav>
-
-<header>
-
-<div class="logo-text">
-DIXLABS
-</div>
-
-<p id="subHeader"
-style="font-family:'JetBrains Mono';color:var(--neon-pink);font-size:12px;height:1.2em;">
-</p>
-
-</header>
-
-<div class="projects">
-
-<div class="card category-game" style="border-top:4px solid var(--neon-blue);">
-
-<div class="card-icon">🗑️</div>
-
-<h3>GROSSDUMPSTER</h3>
-
-<p>
-Catching trash and dodging toxic waste because normal sports are too mainstream.
-</p>
-
-<button class="btn"
-onclick="location.href='gd.html'">
-RUN_MODULE
-</button>
-
-</div>
-
-<div class="card category-game" style="border-top:4px solid var(--neon-blue);">
-
-<div class="card-icon">💰</div>
-
-<h3>AMBANI_MONEY</h3>
-
-<p>
-Simulating billionaire life.
-Because your bank balance won't reach 11 figures on its own.
-</p>
-
-<button class="btn"
-onclick="location.href='ambani.html'">
-RUN_MODULE
-</button>
-
-</div>
-
-</div>
-
-<footer>
-
-<p>DIXLABS 2026 // ATHARV DIXIT</p>
-
-</footer>
-
-</div>
-
-<script>
-
-const bootBtn=document.getElementById("bootBtn");
-
-const introLayer=document.getElementById("dixlabsIntro");
-
-bootBtn.addEventListener("click",function(){
-
-introLayer.style.display="none";
-
-try{
-
-const ctx=new(window.AudioContext||window.webkitAudioContext)();
-
-const osc=ctx.createOscillator();
-
-const gain=ctx.createGain();
-
-osc.type='sawtooth';
-
-osc.frequency.setValueAtTime(40,ctx.currentTime);
-
-osc.frequency.exponentialRampToValueAtTime(
-800,
-ctx.currentTime+.5
-);
-
-gain.gain.setValueAtTime(.1,ctx.currentTime);
-
-gain.gain.exponentialRampToValueAtTime(
-.01,
-ctx.currentTime+.5
-);
-
-osc.connect(gain);
-
-gain.connect(ctx.destination);
-
-osc.start();
-
-osc.stop(ctx.currentTime+.5);
-
-}catch(e){}
-
-typeWriter();
-
-});
-
-function typeWriter(){
-
-const el=document.getElementById("subHeader");
-
-const txt="> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
-
-let i=0;
-
-function type(){
-
-if(i<txt.length){
-
-el.innerHTML+=txt.charAt(i);
-
-i++;
-
-setTimeout(type,40);
-
-}
-
-}
-
-type();
-
-}
-
-function filterSelection(cat,el){
-
-document.querySelectorAll(".tab-link")
-.forEach(t=>t.classList.remove("active"));
-
-el.classList.add("active");
-
-document.querySelectorAll(".card")
-.forEach(c=>{
-
-if(cat==="all")
-c.classList.remove("hidden");
-
-else
-c.classList.contains("category-"+cat)
-?c.classList.remove("hidden")
-:c.classList.add("hidden");
-
-});
-
-}
-
-</script>
-
-</body>
-</html>
