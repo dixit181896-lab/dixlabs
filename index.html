@@ -381,31 +381,15 @@
             }
             type();
         }
-
-        // TAB FILTERING
-        function filterSelection(category, element) {
-            const cards = document.getElementsByClassName("card");
-            const tabs = document.getElementsByClassName("tab-link");
-
-            for (let tab of tabs) { tab.classList.remove("active"); }
-            element.classList.add("active");
-
-            for (let card of cards) {
-                if (category === 'all') {
-                    card.classList.remove("hidden");
-                } else {
-                    if (card.classList.contains("category-" + category)) {
-                        card.classList.remove("hidden");
-                    } else {
-                        card.classList.add("hidden");
+        
                     }
                 }
             }
         }
-    </script>
         
     </script>
 </body>
 </html>
+
 
 
