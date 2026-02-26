@@ -61,6 +61,7 @@ body {
 /* ACTIVE TAB DEFAULT */
 .tab-link.active{
   text-shadow:0 0 12px currentColor;
+    animation:activePulse 1.8s infinite ease-in-out;
 }
 
 /* HOME */
@@ -147,6 +148,25 @@ header { padding: 100px 20px 40px; }
 .dancing-logo { width: 350px; animation: logoDance 0.4s infinite; filter: drop-shadow(0 0 50px white); }
 
 .hidden { display: none !important; }
+
+@keyframes activePulse{
+
+ 0%{
+  text-shadow:0 0 5px currentColor;
+ }
+
+ 50%{
+  text-shadow:
+   0 0 10px currentColor,
+   0 0 18px currentColor,
+   0 0 25px currentColor;
+ }
+
+ 100%{
+  text-shadow:0 0 5px currentColor;
+ }
+}
+    
 </style>
 </head>
 <body onmouseenter="initAudio()">
@@ -348,4 +368,5 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
 
