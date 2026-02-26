@@ -1,383 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="YOUR_ACTUAL_CODE_HERE" />
-    
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    <meta name="description" content="Dixit Labs - Experimental Playground by Atharv Dixit. Games, Focus Tools, and Cricket Facts.">
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+    <link rel="shortcut icon" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Games and Fun</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+    <title>Dixit Labs | Games // Focus // Facts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
     
 <style>
-:root { 
-    --neon-blue: #38bdf8; --neon-pink: #f472b6; --neon-green: #22c55e; 
-    --neon-orange: #fb923c; --neon-red: #ff0000; --bg-dark: #020617; 
-}
+:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --neon-orange:#fb923c; --bg-dark:#020617; }
+body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; min-height: 100vh; }
 
-* { box-sizing: border-box; scroll-behavior: smooth; }
-body { 
-    margin:0; background-color:var(--bg-dark); color:white; 
-    font-family:'Orbitron', sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 250vh; 
-}
+/* --- DISCO PARTY ENGINE --- */
+#partyOverlay { position: fixed; inset: 0; display: none; background: rgba(0,0,0,0.98); z-index: 1000000; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; }
+#dancingLogo { width: 350px; filter: drop-shadow(0 0 50px var(--neon-blue)); animation: dance 0.35s infinite alternate ease-in-out; }
+@keyframes dance { 0% { transform: scale(1) rotate(-20deg) translateY(0); } 100% { transform: scale(1.6) rotate(20deg) translateY(-30px); } }
+.strobe { animation: strobeBG 0.1s infinite; }
+@keyframes strobeBG { 0% { background: #ff0000; } 20% { background: #00ff00; } 40% { background: #0000ff; } 60% { background: #ffff00; } 80% { background: #ff00ff; } 100% { background: #00ffff; } }
 
-/* --- LOGO ANIMATIONS --- */
-@keyframes megaGlow {
-    0% { filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1); }
-    100% { filter: drop-shadow(0 0 100px var(--neon-blue)); transform: scale(1.05); }
-}
-@keyframes logoDance {
-    0% { transform: scale(1.2) rotate(0deg); filter: hue-rotate(0deg); }
-    50% { transform: scale(2) rotate(180deg); filter: hue-rotate(180deg); }
-    100% { transform: scale(1.2) rotate(360deg); filter: hue-rotate(360deg); }
-}
+/* --- INTRO SCREEN (ENHANCED) --- */
+#dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
+.intro-logo { width:350px; margin-bottom:40px; filter: drop-shadow(0 0 25px var(--neon-blue)); }
+.intro-btn { background:none; border:2px solid #fff; color:#fff; padding:20px 50px; cursor:pointer; font-family:'Orbitron'; font-weight:900; letter-spacing:5px; transition: 0.3s; }
+.intro-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
 
-/* --- INTRO SCREEN --- */
-#dixlabsIntro { 
-    position:fixed; inset:0; background:#000; display:flex; flex-direction:column; 
-    justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; 
-}
-.intro-logo { width: 450px; animation: megaGlow 2s infinite alternate ease-in-out; }
-.boot-btn { 
-    background:none; border:2px solid #fff; color:#fff; padding:20px 50px; 
-    margin-top:40px; font-family:'Orbitron'; font-weight:900; cursor:pointer; 
-    letter-spacing:5px; transition: 0.3s;
-}
-.boot-btn:hover { background:#fff; color:#000; box-shadow: 0 0 50px #fff; }
+/* --- HEADER --- */
+header { padding: 120px 20px 60px; }
+.logo-text { font-size: 9rem; font-weight: 900; letter-spacing: 30px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; }
+#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 18px; margin-top: 25px; font-weight: bold; letter-spacing: 4px; }
 
-/* --- NAVIGATION --- */
-.nav-tabs { 
-    position:sticky; top:0; background:rgba(2,6,23,0.95); backdrop-filter:blur(15px); 
-    display:flex; justify-content:center; align-items:center; gap:30px; padding:20px; 
-    border-bottom:1px solid rgba(255,255,255,0.1); z-index:999; 
-}
-.tab-link { 
-    cursor:pointer; font-size:11px; font-weight:900; color: #64748b; 
-    letter-spacing:2px; transition: 0.3s; text-transform: uppercase;
-}
-/* ACTIVE TAB DEFAULT */
-.tab-link.active{
-  text-shadow:0 0 12px currentColor;
-    animation:activePulse 1.8s infinite ease-in-out;
-}
-    body::after{
- content:"";
- position:fixed;
- width:400px;
- height:400px;
+/* --- NAV BAR --- */
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:30px; padding:25px; border-bottom:1px solid rgba(56,189,248,0.2); z-index:999; }
+.tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
+.tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
 
- background:radial-gradient(circle,
- rgba(56,189,248,.15),
- transparent 60%);
+/* --- PROJECT GRID --- */
+.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 30px; padding: 60px 20px; }
+.card { background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.1); padding:35px; border-radius:4px; width: 300px; text-align:left; transition:0.4s cubic-bezier(.175, .885, .32, 1.275); display:flex; flex-direction:column; border-top: 5px solid transparent; }
+.card:hover { transform:translateY(-15px); border-color:var(--neon-blue); box-shadow:0 20px 50px rgba(0,0,0,0.7); }
+.card-icon { font-size: 3.2rem; margin-bottom: 20px; display: inline-block; transition: 0.6s; }
+.card:hover .card-icon { transform: rotateY(360deg); }
+.btn { margin-top:auto; padding:12px; border:2px solid var(--neon-blue); background:transparent; color:var(--neon-blue); cursor:pointer; font-family:'Orbitron'; font-size:10px; font-weight:900; transition:0.3s; }
+.btn:hover { background:var(--neon-blue); color:#000; }
 
- pointer-events:none;
- transform:translate(-50%,-50%);
- left:var(--x);
- top:var(--y);
+.category-game { border-top-color: var(--neon-blue); }
+.category-focus { border-top-color: var(--neon-pink); }
+.category-fact { border-top-color: var(--neon-green); }
+.category-danger { border-top-color: #ff0000; }
 
- z-index:-1;
-}
+/* --- AKSA INTEGRATED TAB MODE --- */
+#aksa-tab-content { width: 100%; max-width: 800px; margin: 0 auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 4px; box-shadow: 0 0 40px rgba(251, 146, 60, 0.2); }
+#aksa-chat { height: 450px; overflow-y: auto; padding: 25px; font-family: 'JetBrains Mono'; font-size: 14px; display: flex; flex-direction: column; gap: 15px; text-align: left; }
+.aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); border-left: 4px solid var(--neon-orange); padding: 12px; }
+.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); align-self: flex-end; border-right: 4px solid var(--neon-blue); padding: 12px; }
+#aksa-input-wrap { display: flex; border-top: 1px solid #222; }
+#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 20px; outline: none; font-family: 'JetBrains Mono'; }
+#aksa-send { background: var(--neon-orange); border: none; padding: 0 35px; cursor: pointer; font-weight: 900; font-family: 'Orbitron'; color: #000; }
 
-/* HOME */
-.nav-tabs .tab-link:nth-child(1).active{
-  color:white;
-  border-bottom:2px solid white;
-}
-
-/* GAMES — BLUE */
-.nav-tabs .tab-link:nth-child(2).active{
-  color:var(--neon-blue);
-  border-bottom:2px solid var(--neon-blue);
-}
-
-/* FOCUS — PINK */
-.nav-tabs .tab-link:nth-child(3).active{
-  color:var(--neon-pink);
-  border-bottom:2px solid var(--neon-pink);
-}
-
-/* FACTS — GREEN */
-.nav-tabs .tab-link:nth-child(4).active{
-  color:var(--neon-green);
-  border-bottom:2px solid var(--neon-green);
-}
-    .card{
- animation:fadeUp .5s ease;
-}
-
-@keyframes fadeUp{
-
- from{
-  opacity:0;
-  transform:translateY(20px);
- }
-
- to{
-  opacity:1;
-  transform:translateY(0);
- }
-}
-
-/* AKSA — ORANGE */
-.nav-tabs .tab-link:nth-child(5).active{
-  color:var(--neon-orange);
-  border-bottom:2px solid var(--neon-orange);
-}
-    /* DEV TAB — RED */
-.nav-tabs .tab-link:nth-child(6).active{
-
- color:#ff0000;
-
- border-bottom:2px solid #ff0000;
-
- text-shadow:
- 0 0 10px #ff0000,
- 0 0 20px #ff0000;
-
-}
-/* --- CLOCK --- */
-.global-clock { font-family: 'JetBrains Mono'; color: var(--neon-blue); font-weight: bold; letter-spacing: 2px; }
-
-/* --- DYNAMIC HEADER --- */
-header { padding: 100px 20px 40px; }
-.logo-text { 
-    font-size: 8rem; font-weight: 900; letter-spacing: 20px; color: var(--neon-blue); 
-    text-transform: uppercase; margin: 0; transition: 0.4s; text-shadow: 0 0 30px rgba(56,189,248,0.5);
-}
-#subHeader { font-family: 'JetBrains Mono'; font-size: 18px; margin-top: 20px; font-weight: bold; min-height: 1.5em; letter-spacing: 2px; }
-
-/* --- 3D CARD GRID --- */
-.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1500px; margin: 0 auto; gap: 40px; padding: 60px 20px; perspective: 1000px; }
-.card { 
-    background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:40px; border-radius:12px; 
-    width: 320px; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d;
-    display: flex; flex-direction: column; text-align: left; border-top: 6px solid transparent;
-}
-.card:hover { transform: rotateY(15deg) rotateX(5deg) translateY(-15px); border-color: inherit; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
-
-/* --- PITCH BLACK BUTTON FIX --- */
-.btn { 
-    margin-top:auto; padding:15px; border:2px solid; background:rgba(255,255,255,0.05); 
-    font-family:'Orbitron'; font-weight:900; cursor:pointer; transition:0.3s; 
-    font-size: 11px; letter-spacing: 2px; color: white;
-}
-.btn:hover { background: white !important; color: black !important; box-shadow: 0 0 25px rgba(255,255,255,0.8); }
-
-.category-game { border-top-color: var(--neon-blue); color: var(--neon-blue); border-color: var(--neon-blue); }
-.category-game .btn { border-color: var(--neon-blue); color: var(--neon-blue); }
-.category-game .btn:hover { box-shadow: 0 0 30px var(--neon-blue); }
-
-.category-focus { border-top-color: var(--neon-pink); color: var(--neon-pink); border-color: var(--neon-pink); }
-.category-focus .btn { border-color: var(--neon-pink); color: var(--neon-pink); }
-.category-focus .btn:hover { box-shadow: 0 0 30px var(--neon-pink); }
-
-.category-fact { border-top-color: var(--neon-green); color: var(--neon-green); border-color: var(--neon-green); }
-.category-fact .btn { border-color: var(--neon-green); color: var(--neon-green); }
-.category-fact .btn:hover { box-shadow: 0 0 30px var(--neon-green); }
-
-/* --- TABS --- */
-#aksa-tab, #dev-tab { display: none; max-width: 1100px; margin: 0 auto 100px; background: #000; border-radius: 15px; border: 3px solid; }
-#aksa-tab { border-color: var(--neon-orange); }
-#aksa-chat { height: 500px; overflow-y: auto; padding: 40px; font-family: 'JetBrains Mono'; display: flex; flex-direction: column; gap: 20px; }
-
-#dev-tab { border-color: var(--neon-red); padding: 60px; text-align: left; background: rgba(15,0,0,0.95); }
-.hindi-bio { font-family: 'Tiro Devanagari Hindi'; font-size: 22px; color: #f87171; line-height: 1.8; margin-top: 25px; border-left: 5px solid var(--neon-red); padding-left: 20px; }
-
-/* --- PARTY OVERLAY --- */
-#partyOverlay { position: fixed; inset: 0; display: none; z-index: 1000000; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; }
-.strobe-mode { animation: strobeEffect 0.1s infinite; }
-@keyframes strobeEffect { 0% { background: red; } 33% { background: blue; } 66% { background: green; } }
-.dancing-logo { width: 350px; animation: logoDance 0.4s infinite; filter: drop-shadow(0 0 50px white); }
+/* --- EXTENDED BIO --- */
+.about-section { max-width: 900px; margin: 100px auto; padding: 60px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); text-align: left; border-radius: 12px; }
+.about-header { color: var(--neon-green); font-size: 24px; font-weight: 900; margin-bottom: 30px; letter-spacing: 3px; }
+.bio-text { font-family: 'JetBrains Mono'; color: #cbd5e1; font-size: 16px; line-height: 2; }
+.about-email { display: inline-block; margin-top: 40px; color: var(--neon-blue); font-weight: bold; text-decoration: none; border-bottom: 2px solid var(--neon-blue); }
 
 .hidden { display: none !important; }
-
-@keyframes activePulse{
-
- 0%{
-  text-shadow:0 0 5px currentColor;
- }
-
- 50%{
-  text-shadow:
-   0 0 10px currentColor,
-   0 0 18px currentColor,
-   0 0 25px currentColor;
- }
-
- 100%{
-  text-shadow:0 0 5px currentColor;
- }
-}
-    
+@media (max-width: 768px) { .logo-text { font-size: 3rem; letter-spacing: 10px; } }
 </style>
 </head>
-<!-- ... keep your <head> CSS the same, no changes needed there ... -->
 
-<body onmouseenter="initAudio()">
+<body>
 
-<!-- ... your intro, party overlay, nav tabs same ... -->
-
-<nav class="nav-tabs">
-    <div class="tab-link active" onclick="filterSelection('all', this)">HOME</div>
-    <div class="tab-link" onclick="filterSelection('game', this)">GAMES</div>
-    <div class="tab-link" onclick="filterSelection('focus', this)">FOCUS</div>
-    <div class="tab-link" onclick="filterSelection('fact', this)">FACTS</div>
-    <div class="tab-link" onclick="filterSelection('aksa', this)">AKSA</div>
-    <div class="tab-link" onclick="filterSelection('dev', this)">DEV</div>
-    <div class="global-clock" id="navClock" style="margin-left: auto;">00:00:00</div>
-</nav>
-
-<header>
-    <h1 class="logo-text" id="mainHeader">DIXLABS</h1>
-    <p id="subHeader"></p>
-</header>
-
-<div id="dev-tab">
-    <!-- DEV content stays the same -->
+<div id="partyOverlay">
+    <img src="logo.png" id="dancingLogo" onerror="this.src='https://via.placeholder.com/350/fb923c/000?text=DIXIT+LABS'">
+    <h1 style="color:white; font-size:4rem; margin-top:50px; text-shadow: 0 0 30px #fff;">[ SYSTEM_MELTDOWN ]</h1>
 </div>
 
-<div id="aksa-tab"> <!-- unified ID -->
-    <div id="aksa-chat">
-        <div class="msg aksa-reply">
-            Data synced. SEO restored. AKSA Integrated Mode active. Input logic.
+<div id="dixlabsIntro">
+    <img src="logo.png" class="intro-logo">
+    <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+</div>
+
+<div id="mainContent">
+    <nav class="nav-tabs">
+        <div class="tab-link active" onclick="filterSelection('all', this)">🏠 HOME</div>
+        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 GAMES</div>
+        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">⚡ FOCUS</div>
+        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 FACTS</div>
+        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 AKSA</div>
+    </nav>
+
+    <header>
+        <h1 class="logo-text">DIXLABS</h1>
+        <p id="subHeader"></p>
+    </header>
+
+    <div id="aksa-tab-content">
+        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. SEO restored. AKSA Integrated Mode active. Input logic.</div></div>
+        <div id="aksa-input-wrap">
+            <input type="text" id="aksa-input-field" placeholder="Challenge the AI..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button id="aksa-send" onclick="aksaBrain()">EXE</button>
         </div>
     </div>
-    <div id="aksa-input-wrap">
-        <input type="text" id="aksa-input-field" placeholder="Challenge the AI..." 
-               onkeydown="if(event.key==='Enter'){ aksaBrain(); event.preventDefault(); }">
-        <button id="aksa-send" onclick="aksaBrain()">EXE</button>
+
+    <div class="projects" id="projectsGrid">
+        <div class="card category-focus" onmouseenter="playHoverSound()">
+            <div class="card-icon">🎨</div>
+            <h3>ZENBOARD</h3>
+            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Your thoughts are too big for one page.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
+        </div>
+
+        <div class="card category-fact" onmouseenter="playHoverSound()">
+            <div class="card-icon">🏏</div>
+            <h3>CRICKEMORY</h3>
+            <p>Atharv's master archive. 1550-2024. 50 facts that define the game. Don't debate the data.</p>
+            <button class="btn" onclick="location.href='c.html'">ENTER_STADIUM</button>
+        </div>
+
+        <div class="card category-fact" onmouseenter="playHoverSound()">
+            <div class="card-icon">⚽</div>
+            <h3>FOOTEMORY</h3>
+            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here.</p>
+            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
+        </div>
+
+        <div class="card category-game" onmouseenter="playHoverSound()">
+            <div class="card-icon">💰</div>
+            <h3>AMBANI_MONEY</h3>
+            <p>Fake it till you make it. Reach 11 figures. The only place you're richer than the admin.</p>
+            <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
+        </div>
+
+        <div class="card category-game" onmouseenter="playHoverSound()">
+            <div class="card-icon">🗑️</div>
+            <h3>GROSSDUMPSTER</h3>
+            <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival.</p>
+            <button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button>
+        </div>
+
+        <div class="card category-focus" onmouseenter="playHoverSound()">
+            <div class="card-icon">🧘</div>
+            <h3>DEEPWORK.PRO</h3>
+            <p>Zero distractions. 3-hour focus loops. Built for those who actually want to produce.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
+        </div>
+
+        <div class="card category-danger" onmouseenter="playHoverSound()">
+            <div class="card-icon">⚠️</div>
+            <h3>DANGER_ZONE</h3>
+            <p>CRITICAL: High intensity disco protocols detected. Click to initiate party.exe.</p>
+            <button class="btn" style="color:#ff0000; border-color:#ff0000;" onclick="triggerDiscoMode()">PARTY_EXE</button>
+        </div>
+
+        <div class="card category-fact" onmouseenter="playHoverSound()">
+            <div class="card-icon">🍳</div>
+            <h3>COOKING...</h3>
+            <p>Something massive is bubbling in the backend. More logic, zero mercy. Stay tuned.</p>
+            <button class="btn" style="opacity:0.4; cursor:default;">COMING_SOON</button>
+        </div>
     </div>
+
+    <section class="about-section" id="bioSection">
+        <div class="about-header">[🧬] SYSTEM_ADMIN: Atharv Dixit</div>
+        <div class="bio-text">
+            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student and developer from India. 
+            While most are scrolling, I'm building. Dixit Labs is my Area 51—a place for experimental games, deep focus, and elite facts.
+            <br><br>
+            मैं एक साधारण छात्र हूँ (I'm a simple student), but my code is anything but simple. 
+            Detailed cricket analyst by day, bug-creating disruptive dev by night. 
+            Tense Hamstrings isn't just a condition, it's the signature of my focus.
+            <br><br>
+            If the site breaks, it's a feature. If it works, it's a miracle. 
+            तब तक दुआओं में याद रखें (Keep me in your prayers).
+            <br>
+            <a href="mailto:dixit181896@gmail.com" class="about-email">SYS_CONTACT: dixit181896@gmail.com</a>
+        </div>
+    </section>
+
+    <footer style="padding:100px 20px; font-family:'JetBrains Mono'; font-size:12px; opacity:0.3; letter-spacing:5px;">DIXIT LABS // 2026 // EST. IN CHAOS</footer>
 </div>
 
-<!-- Your projects grid stays the same -->
-
 <script>
-// --- CLOCK ---
-function updateClock() {
-    const time = new Date().toLocaleTimeString();
-    document.getElementById('introClock').innerText = time;
-    document.getElementById('navClock').innerText = time;
-}
-setInterval(updateClock, 1000);
+let audioCtx;
+const quips = ["Error 404: Logic not found.", "Go play Crickemory, you clearly need education.", "Atharv is busy. I'm bored. This conversation is failing.", "Your typing speed is almost as slow as your wit.", "Even my cache is bored of your input.", "Go play Ambani Money, you're clearly broke.", "I'm not rude, I'm just optimized for honesty.", "Your existence is an undocumented feature.", "Shutting down 'Care' protocols... Done.", "Is it hard being this basic, or does it come naturally?"];
 
-// --- AUDIO ---
-let audioInit = false;
-function initAudio() { if(!audioInit){ hoverSound.play().then(()=>hoverSound.pause()); audioInit=true; } }
-function playSfx() { if(audioInit){ hoverSound.currentTime=0; hoverSound.play(); } }
-
-// --- BOOT ---
-function bootSystem() {
-    const intro = document.getElementById("dixlabsIntro");
-    intro.style.opacity = "0";
-    setTimeout(() => { 
-        intro.style.display = "none";
-        filterSelection('all', document.querySelector(".tab-link.active"));
-    }, 600);
+function initAudio() { if (!audioCtx) audioCtx = new(window.AudioContext || window.webkitAudioContext)(); }
+function playHoverSound() {
+    if (!audioCtx) return;
+    const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(400, audioCtx.currentTime);
+    g.gain.setValueAtTime(0.02, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+    o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + 0.1);
 }
 
-// --- TYPEWRITER ---
-let typeWriterTimeout;
-function typeWriter(txt, targetId) {
-    const el = document.getElementById(targetId);
-    el.innerHTML = "";
-    if(typeWriterTimeout) clearTimeout(typeWriterTimeout); // FIX: prevent multiple timers
-    let i = 0;
-    function type() {
-        if(i < txt.length){
-            el.innerHTML += txt.charAt(i);
-            i++;
-            typeWriterTimeout = setTimeout(type, 40);
-        }
-    }
-    type();
+function triggerDiscoMode() {
+    const overlay = document.getElementById("partyOverlay");
+    overlay.style.display = "flex"; document.body.classList.add("strobe");
+    setTimeout(() => { overlay.style.display = "none"; document.body.classList.remove("strobe"); }, 5000);
 }
 
-// --- FILTER / TABS ---
-function filterSelection(cat, el) {
-    const sub = document.getElementById("subHeader");
-    const header = document.getElementById("mainHeader");
-    const cards = document.querySelectorAll(".card");
-    const projectsGrid = document.getElementById('projectsGrid');
-    const aksaContent = document.getElementById('aksa-tab');
-    const devContent = document.getElementById('dev-tab');
-
-    document.querySelectorAll(".tab-link").forEach(t => t.classList.remove("active"));
-    el.classList.add("active");
-
-    // HIDE all content by default
-    projectsGrid.classList.add('hidden');
-    aksaContent.style.display = 'none';
-    devContent.style.display = 'none';
-    cards.forEach(c => c.classList.add("hidden"));
-
-    switch(cat){
-        case 'all':
-            header.innerText = "DIXLABS";
-            sub.style.color = "var(--neon-pink)";
-            typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader");
-            projectsGrid.classList.remove('hidden');
-            cards.forEach(c => c.classList.remove("hidden"));
-            break;
-        case 'game':
-            header.innerText = "GAMES";
-            sub.style.color = "white";
-            typeWriter("> to cure boredom (and your lack of a life)", "subHeader");
-            projectsGrid.classList.remove('hidden');
-            cards.forEach(c => c.classList.contains("category-game") ? c.classList.remove("hidden") : c.classList.add("hidden"));
-            break;
-        case 'focus':
-            header.innerText = "FOCUS";
-            sub.style.color = "var(--neon-pink)";
-            typeWriter("> Deep work mode activated", "subHeader");
-            projectsGrid.classList.remove('hidden');
-            cards.forEach(c => c.classList.contains("category-focus") ? c.classList.remove("hidden") : c.classList.add("hidden"));
-            break;
-        case 'fact':
-            header.innerText = "FACTS";
-            sub.style.color = "var(--neon-green)";
-            typeWriter("> Elite sports & knowledge archive", "subHeader");
-            projectsGrid.classList.remove('hidden');
-            cards.forEach(c => c.classList.contains("category-fact") ? c.classList.remove("hidden") : c.classList.add("hidden"));
-            break;
-        case 'aksa':
-            header.innerText = "AKSA";
-            sub.style.color = "var(--neon-orange)";
-            typeWriter("> AI Mode Engaged", "subHeader");
-            aksaContent.style.display = 'flex';
-            break;
-        case 'dev':
-            header.innerText = "DEV";
-            sub.style.color = "var(--neon-red)";
-            typeWriter("> Core development mode", "subHeader");
-            devContent.style.display = 'block';
-            break;
-    }
-}
-
-// --- AKSA ---
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
-    const query = input.value.trim();
-    if(!query) return;
-
-    chat.innerHTML += `<div class="msg user-msg">${query}</div>`;
-    input.value="";
-    chat.scrollTop = chat.scrollHeight;
-
-    setTimeout(()=>{
-        let reply = quips[Math.floor(Math.random()*quips.length)];
-        if(query.toLowerCase().includes("party")) triggerDisco();
-        chat.innerHTML += `<div class="msg aksa-reply">${reply}</div>`;
+    const q = input.value.toLowerCase().trim();
+    if(!q) return;
+    chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
+    input.value = "";
+    setTimeout(() => {
+        let r = quips[Math.floor(Math.random() * quips.length)];
+        if(q.includes("party")) triggerDiscoMode();
+        chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
         chat.scrollTop = chat.scrollHeight;
-    }, 400);
+    }, 300);
+}
+
+document.getElementById("bootBtn").onclick = () => {
+    initAudio(); 
+    document.getElementById("dixlabsIntro").style.opacity = "0";
+    setTimeout(() => { 
+        document.getElementById("dixlabsIntro").style.display = "none"; 
+        typeWriter(); 
+    }, 500);
+};
+
+function typeWriter() {
+    const el = document.getElementById("subHeader");
+    const txt = "> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS";
+    let i = 0; el.innerHTML = "";
+    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 50); } }
+    type();
+}
+
+function filterSelection(cat, el) {
+    const cards = document.querySelectorAll(".card");
+    const tabs = document.querySelectorAll(".tab-link");
+    const projectsGrid = document.getElementById('projectsGrid');
+    const bioSection = document.getElementById('bioSection');
+    const aksaContent = document.getElementById('aksa-tab-content');
+    
+    tabs.forEach(t => t.classList.remove("active")); el.classList.add("active");
+
+    if (cat === 'aksa') {
+        projectsGrid.classList.add('hidden');
+        bioSection.classList.add('hidden');
+        aksaContent.style.display = 'flex';
+    } else {
+        projectsGrid.classList.remove('hidden');
+        bioSection.classList.remove('hidden');
+        aksaContent.style.display = 'none';
+        
+        cards.forEach(c => {
+            if(cat === 'all') c.classList.remove("hidden");
+            else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
+        });
+    }
 }
 </script>
 </body>
 </html>
-
-
-
