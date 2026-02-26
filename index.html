@@ -63,6 +63,23 @@ body {
   text-shadow:0 0 12px currentColor;
     animation:activePulse 1.8s infinite ease-in-out;
 }
+    body::after{
+ content:"";
+ position:fixed;
+ width:400px;
+ height:400px;
+
+ background:radial-gradient(circle,
+ rgba(56,189,248,.15),
+ transparent 60%);
+
+ pointer-events:none;
+ transform:translate(-50%,-50%);
+ left:var(--x);
+ top:var(--y);
+
+ z-index:-1;
+}
 
 /* HOME */
 .nav-tabs .tab-link:nth-child(1).active{
@@ -86,6 +103,22 @@ body {
 .nav-tabs .tab-link:nth-child(4).active{
   color:var(--neon-green);
   border-bottom:2px solid var(--neon-green);
+}
+    .card{
+ animation:fadeUp .5s ease;
+}
+
+@keyframes fadeUp{
+
+ from{
+  opacity:0;
+  transform:translateY(20px);
+ }
+
+ to{
+  opacity:1;
+  transform:translateY(0);
+ }
 }
 
 /* AKSA — ORANGE */
@@ -309,6 +342,10 @@ function bootSystem() {
         filterSelection('all');
     }, 600);
 }
+    document.addEventListener("mousemove",e=>{
+ document.body.style.setProperty("--x",e.clientX+"px");
+ document.body.style.setProperty("--y",e.clientY+"px");
+});
 
 function triggerDisco() {
     const overlay = document.getElementById('partyOverlay');
@@ -326,6 +363,11 @@ function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
     if(!input.value.trim()) return;
+    if(q.includes("hello"))
+ r="System acknowledges your existence.";
+
+if(q.includes("atharv"))
+ r="Administrator detected. Switching to respect mode.";
     chat.innerHTML += `<div class="user-msg">${input.value}</div>`;
     setTimeout(() => {
         chat.innerHTML += `<div class="aksa-reply">${quips[Math.floor(Math.random()*quips.length)]}</div>`;
@@ -333,6 +375,9 @@ function aksaBrain() {
     }, 400);
     input.value = "";
 }
+    tabs.forEach(t=>{
+ t.addEventListener("click",playHoverSound);
+});
 
 let typingTimeout;   // GLOBAL STOP BUTTON
 
@@ -401,6 +446,7 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
 
 
 
