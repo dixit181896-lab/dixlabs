@@ -334,13 +334,34 @@ function aksaBrain() {
     input.value = "";
 }
 
-function typeWriter(txt, targetId, color) {
-    const el = document.getElementById(targetId);
-    el.style.color = color; el.innerHTML = ""; let i = 0;
-    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 30); } }
-    type();
-}
+let typingTimeout;   // GLOBAL STOP BUTTON
 
+function typeWriter(text){
+
+ const el = document.getElementById("subHeader");
+
+ /* STOP OLD TYPING */
+ clearTimeout(typingTimeout);
+
+ el.innerHTML="";
+
+ let i = 0;
+
+ function type(){
+
+   if(i < text.length){
+
+     el.innerHTML += text.charAt(i);
+
+     i++;
+
+     typingTimeout = setTimeout(type,50);
+   }
+
+ }
+
+ type();
+}
 function filterSelection(cat, el) {
     const cards = document.querySelectorAll(".card");
     const tabs = document.querySelectorAll(".tab-link");
@@ -380,6 +401,7 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
 
 
 
