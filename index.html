@@ -8,7 +8,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Senior Architect Build</title>
+    <title>Dixit Labs | Games and Fun</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
     
 <style>
@@ -58,8 +58,40 @@ body {
     cursor:pointer; font-size:11px; font-weight:900; color: #64748b; 
     letter-spacing:2px; transition: 0.3s; text-transform: uppercase;
 }
-.tab-link.active { color: #fff; border-bottom: 2px solid var(--neon-blue); text-shadow: 0 0 10px #fff; }
+/* ACTIVE TAB DEFAULT */
+.tab-link.active{
+  text-shadow:0 0 12px currentColor;
+}
 
+/* HOME */
+.nav-tabs .tab-link:nth-child(1).active{
+  color:white;
+  border-bottom:2px solid white;
+}
+
+/* GAMES — BLUE */
+.nav-tabs .tab-link:nth-child(2).active{
+  color:var(--neon-blue);
+  border-bottom:2px solid var(--neon-blue);
+}
+
+/* FOCUS — PINK */
+.nav-tabs .tab-link:nth-child(3).active{
+  color:var(--neon-pink);
+  border-bottom:2px solid var(--neon-pink);
+}
+
+/* FACTS — GREEN */
+.nav-tabs .tab-link:nth-child(4).active{
+  color:var(--neon-green);
+  border-bottom:2px solid var(--neon-green);
+}
+
+/* AKSA — ORANGE */
+.nav-tabs .tab-link:nth-child(5).active{
+  color:var(--neon-orange);
+  border-bottom:2px solid var(--neon-orange);
+}
 /* --- CLOCK --- */
 .global-clock { font-family: 'JetBrains Mono'; color: var(--neon-blue); font-weight: bold; letter-spacing: 2px; }
 
@@ -316,3 +348,4 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
