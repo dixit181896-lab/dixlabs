@@ -1,237 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DixLabs</title>
-
-<!-- ✅ Fixed favicon -->
-<link rel="icon" href="logo.png">
-<link rel="shortcut icon" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dixit Labs | Games // Focus // Facts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    
 <style>
-:root{
---bg:#05070f;
---neon:#00eaff;
---card:#0c1022;
+:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --neon-orange:#fb923c; --neon-red:#ff0000; --bg-dark:#020617; }
+body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; min-height: 100vh; }
+
+/* --- STARTUP LOGO (BIG & GLOWING) --- */
+#dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
+.intro-logo { 
+    width: 450px; 
+    filter: drop-shadow(0 0 40px var(--neon-blue));
+    animation: megaGlow 2.5s infinite alternate ease-in-out;
 }
-body{
-margin:0;
-background:var(--bg);
-color:white;
-font-family:system-ui;
+@keyframes megaGlow {
+    0% { filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1); }
+    100% { filter: drop-shadow(0 0 100px var(--neon-blue)); transform: scale(1.05); }
 }
-header{
-padding:20px;
-text-align:center;
-border-bottom:1px solid #1b1f36;
+
+/* --- DYNAMIC HEADER --- */
+header { padding: 100px 20px 40px; }
+.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 20px; color: var(--neon-blue); text-transform: uppercase; margin: 0; transition: 0.4s; }
+#subHeader { font-family: 'JetBrains Mono'; font-size: 18px; margin-top: 20px; font-weight: bold; min-height: 1.5em; letter-spacing: 2px; }
+
+/* --- NAV --- */
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.9); backdrop-filter:blur(10px); display:flex; justify-content:center; gap:20px; padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); z-index:999; }
+.tab-link { cursor:pointer; font-size:11px; font-weight:900; color: #64748b; letter-spacing: 2px; transition: 0.3s; }
+.tab-link.active { color: #fff; border-bottom: 2px solid var(--neon-blue); }
+
+/* --- 3D CARD EFFECTS --- */
+.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 30px; padding: 40px; perspective: 1000px; }
+.card { 
+    background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:30px; border-radius:8px; 
+    width: 300px; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d;
+    display: flex; flex-direction: column; text-align: left; border-top: 5px solid transparent;
 }
-#subHeader{min-height:1.5em;opacity:.8}
-.tabs{
-display:flex;
-justify-content:center;
-gap:10px;
-padding:10px;
-}
-.tab-link{
-background:#0c1022;
-border:1px solid #1b1f36;
-color:white;
-padding:10px 14px;
-cursor:pointer;
-}
-.tab-link.active{border-color:var(--neon)}
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
-padding:20px;
-}
-.card{
-background:var(--card);
-padding:20px;
-border-radius:12px;
-transition:.2s;
-}
-.card.hidden{display:none}
-.hidden{display:none}
-#bioSection{padding:30px;max-width:900px;margin:auto;line-height:1.6}
-#aksa-tab-content{
-display:none;
-flex-direction:column;
-max-width:800px;
-margin:auto;
-padding:20px;
-}
-#aksaOutput{
-background:#0c1022;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
-}
-.party{
-position:fixed;
-top:0;left:0;width:100%;height:100%;
-pointer-events:none;
-display:none;
-align-items:center;
-justify-content:center;
-}
-.party img{width:120px;animation:spin 2s linear infinite}
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.card:hover { transform: rotateY(10deg) rotateX(5deg) translateY(-10px); border-color: inherit; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+.card-icon { font-size: 3rem; margin-bottom: 15px; transition: 0.5s; }
+.card:hover .card-icon { transform: translateZ(50px) scale(1.2); }
+.btn { margin-top:auto; padding:10px; border:2px solid; background:transparent; font-family:'Orbitron'; font-weight:900; cursor:pointer; transition:0.3s; font-size: 10px; }
+
+.category-game { border-top-color: var(--neon-blue); color: var(--neon-blue); }
+.category-focus { border-top-color: var(--neon-pink); color: var(--neon-pink); }
+.category-fact { border-top-color: var(--neon-green); color: var(--neon-green); }
+
+/* --- AKSA & DEV TABS --- */
+#aksa-tab, #dev-tab { display: none; max-width: 1000px; margin: 0 auto 100px; background: #000; border-radius: 12px; overflow: hidden; }
+#aksa-tab { border: 3px solid var(--neon-orange); }
+#dev-tab { border: 3px solid var(--neon-red); padding: 50px; text-align: left; background: rgba(15,0,0,0.95); }
+#aksa-chat { height: 450px; overflow-y: auto; padding: 30px; font-family: 'JetBrains Mono'; display: flex; flex-direction: column; gap: 15px; }
+.aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); padding: 15px; border-left: 4px solid var(--neon-orange); }
+.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); padding: 15px; align-self: flex-end; border-right: 4px solid var(--neon-blue); }
+#aksa-input-wrap { display: flex; border-top: 1px solid #222; }
+#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 20px; outline: none; font-size: 16px; }
+#aksa-send { background: var(--neon-orange); border: none; padding: 0 30px; font-weight: 900; cursor: pointer; }
+
+/* --- PARTY EASTER EGG --- */
+#partyOverlay { position: fixed; inset: 0; display: none; z-index: 1000000; justify-content: center; align-items: center; pointer-events: none; }
+.strobe { animation: strobeEffect 0.1s infinite; }
+@keyframes strobeEffect { 0% { background: red; } 33% { background: blue; } 66% { background: green; } }
+
+.hidden { display: none !important; }
 </style>
 </head>
 <body>
 
-<header>
-<h1>DixLabs</h1>
-<div id="subHeader">Something big is cooking.</div>
-</header>
-
-<!-- ✅ Tabs -->
-<div class="tabs">
-<button class="tab-link active" onclick="filterSelection('all',this)">Projects</button>
-<button class="tab-link" onclick="filterSelection('focus',this)">Focus</button>
-<button class="tab-link" onclick="filterSelection('facts',this)">Facts</button>
-<button class="tab-link" onclick="filterSelection('dev',this)">Dev</button>
-<button class="tab-link" onclick="filterSelection('aksa',this)">AKSA</button>
+<div id="partyOverlay">
+    <h1 style="color:white; font-size:4rem; text-shadow: 0 0 20px #000;">DANGER: SYSTEM_PARTY</h1>
 </div>
 
-<!-- ✅ Project Grid -->
-<div id="projectsGrid" class="grid">
-<div class="card category-games">Game Project</div>
-<div class="card category-focus">DeepWork App</div>
-<div class="card category-facts">Random Facts</div>
+<div id="dixlabsIntro">
+    <img src="logo.png" class="intro-logo" onerror="this.src='https://via.placeholder.com/450/38bdf8/000?text=DIXLABS+LOGO'">
+    <button onclick="bootSystem()" style="background:none; border:2px solid #fff; color:#fff; padding:15px 40px; margin-top:30px; font-family:'Orbitron'; cursor:pointer;">INITIALIZE_CORE</button>
 </div>
 
-<!-- ✅ BIO DEV TAB -->
-<div id="bioSection" class="hidden">
-<h2>About Developer</h2>
-<p>
-I am <b style="color:var(--neon);">Atharv Dixit</b>, a 15-year-old experimental developer from India.
-While most people scroll endlessly, I build endlessly.<br><br>
+<div id="mainContent">
+    <nav class="nav-tabs">
+        <div class="tab-link active" onclick="filterSelection('all', this)">HOME</div>
+        <div class="tab-link" onclick="filterSelection('game', this)">GAMES</div>
+        <div class="tab-link" onclick="filterSelection('focus', this)">FOCUS</div>
+        <div class="tab-link" onclick="filterSelection('fact', this)">FACTS</div>
+        <div class="tab-link" onclick="filterSelection('aksa', this)">AKSA</div>
+        <div class="tab-link" onclick="filterSelection('dev', this)">DEV</div>
+    </nav>
 
-Dixit Labs is not a portfolio.
-It is a playground — part laboratory, part chaos engine.<br><br>
+    <header>
+        <h1 class="logo-text" id="mainHeader">DIXLABS</h1>
+        <p id="subHeader"></p>
+    </header>
 
-दिन में क्रिकेट का विश्लेषक,
-रात में कोड का पागल वैज्ञानिक।<br><br>
+    <div id="aksa-tab">
+        <div id="aksa-chat"><div class="aksa-reply">Aksa System Online. Roasting protocols ready.</div></div>
+        <div id="aksa-input-wrap">
+            <input type="text" id="aksa-input-field" placeholder="Enter logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button id="aksa-send" onclick="aksaBrain()">EXE</button>
+        </div>
+    </div>
 
-Every project here exists because curiosity refused to sleep.
-Games to escape boredom.
-Focus tools to defeat distraction.
-Facts to win arguments nobody asked for.<br><br>
+    <div id="dev-tab">
+        <h2 style="color:var(--neon-red); letter-spacing: 5px;">[☣️] ADMIN_CORE</h2>
+        <p style="font-family:'JetBrains Mono'; line-height: 1.8; font-size: 16px;">
+            <b style="color:var(--neon-red)">Atharv Dixit</b> // 15 // Indian Developer.<br>
+            Building experimental chaos in Area 51. Cricket analyst. Disruptive dev.
+          IF_A_BUG_CREEPS_IN_ITS_A_FEATURE
+        </p>
+        <div style="border: 2px dashed var(--neon-red); padding: 20px; margin-top: 30px;">
+            <h4 style="color:var(--neon-red); margin:0;">DANGER: DISCO_PROTOCOL</h4>
+            <button class="btn" style="color:var(--neon-red); border-color:var(--neon-red); margin-top:15px;" onclick="triggerDisco()">START_EASTER_EGG</button>
+        </div>
+    </div>
 
-If something crashes — experiment successful.
-If everything works — miracle confirmed.<br><br>
+    <div class="projects" id="projectsGrid">
+        <div class="card category-game">
+            <div class="card-icon">💰</div>
+            <h3>AMBANI_MONEY</h3>
+            <p style="color:white; opacity:0.8;">Simulate extreme wealth. Become richer than the admin.</p>
+            <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
+        </div>
+        <div class="card category-game">
+            <div class="card-icon">🗑️</div>
+            <h3>GROSSDUMPSTER</h3>
+            <p style="color:white; opacity:0.8;">Catch the scrap, avoid the sludge. Pixel survival.</p>
+            <button class="btn" onclick="location.href='gd.html'">PLAY_NOW</button>
+        </div>
 
-कभी कभी लगता है कि ये सब सिर्फ शुरुआत है।
-The real systems are still cooking.
-</p>
-</div>
+        <div class="card category-focus">
+            <div class="card-icon">🧘</div>
+            <h3>DEEPWORK.PRO</h3>
+            <p style="color:white; opacity:0.8;">Zero distraction focus loops. Built for producers.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
+        </div>
 
-<!-- ✅ AKSA TAB -->
-<div id="aksa-tab-content">
-<h2>AKSA AI</h2>
-<input id="aksaInput" placeholder="Ask something...">
-<button onclick="talkAksa()">Ask</button>
-<div id="aksaOutput"></div>
-</div>
-
-<!-- ✅ PARTY SYSTEM -->
-<div class="party" id="party">
-<img src="logo.png" id="dancingLogo" onerror="this.style.display='none'">
+        <div class="card category-fact">
+            <div class="card-icon">🏏</div>
+            <h3>CRICKEMORY</h3>
+            <p style="color:white; opacity:0.8;">The master archive. 50 facts that define the game.</p>
+            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='c.html'">OPEN_STADIUM</button>
+        </div>
+        <div class="card category-fact">
+            <div class="card-icon">⚽</div>
+            <h3>FOOTEMORY</h3>
+            <p style="color:white; opacity:0.8;">Football milestones for the elite. Pele to Messi.</p>
+            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
+        </div>
+        <div class="card category-fact">
+            <div class="card-icon">🍳</div>
+            <h3>COOKING...</h3>
+            <p style="color:white; opacity:0.8;">Something massive is bubbling. Stay tuned.</p>
+            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green); opacity:0.5; cursor:default;">WAITING</button>
+        </div>
+    </div>
 </div>
 
 <script>
+const quips = ["Error 404: Logic not found.", "Go play Crickemory, you need education.", "Atharv is busy. I'm bored.", "System Update: User IQ stuck in dial-up era.", "I'd agree with you but then we'd both be wrong.", "Even my cache is bored of you.", "My admin is 15 and still more productive than you.", "I'm not rude, I'm just optimized for honesty."];
 
-// ✅ AUDIO FIX
-let audioCtx;
-function initAudio(){
-audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+function bootSystem() {
+    document.getElementById("dixlabsIntro").style.opacity = "0";
+    setTimeout(() => { 
+        document.getElementById("dixlabsIntro").style.display = "none";
+        filterSelection('all');
+    }, 600);
 }
 
-// unlock audio
-window.addEventListener('click',()=>{
-if(audioCtx)audioCtx.resume();
-});
-
-// ✅ TAB FILTER
-function filterSelection(cat,el){
-const cards=document.querySelectorAll('.card');
-const tabs=document.querySelectorAll('.tab-link');
-const grid=document.getElementById('projectsGrid');
-const bio=document.getElementById('bioSection');
-const aksa=document.getElementById('aksa-tab-content');
-
-tabs.forEach(t=>t.classList.remove('active'));
-el.classList.add('active');
-
-if(cat==='aksa'){
-grid.classList.add('hidden');
-bio.classList.add('hidden');
-aksa.style.display='flex';
-return;
+function triggerDisco() {
+    const overlay = document.getElementById("partyOverlay");
+    overlay.style.display = "flex";
+    document.body.classList.add("strobe");
+    setTimeout(() => {
+        overlay.style.display = "none";
+        document.body.classList.remove("strobe");
+    }, 4000);
 }
 
-if(cat==='dev'){
-
-aksa.style.display='none';
-grid.classList.add('hidden');
-bio.classList.remove('hidden');
-return;
+function aksaBrain() {
+    const input = document.getElementById('aksa-input-field');
+    const chat = document.getElementById('aksa-chat');
+    if(!input.value.trim()) return;
+    chat.innerHTML += `<div class="user-msg">${input.value}</div>`;
+    setTimeout(() => {
+        chat.innerHTML += `<div class="aksa-reply">${quips[Math.floor(Math.random()*quips.length)]}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+    }, 400);
+    input.value = "";
 }
 
-aksa.style.display='none';
-bio.classList.add('hidden');
-grid.classList.remove('hidden');
-
-cards.forEach(card=>{
-if(cat==='all'){
-card.classList.remove('hidden');
-}else{
-card.classList.contains('category-'+cat)
-?card.classList.remove('hidden')
-:card.classList.add('hidden');
-}
-});
+function typeWriter(txt, targetId, color) {
+    const el = document.getElementById(targetId);
+    el.style.color = color;
+    el.innerHTML = ""; let i = 0;
+    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 30); } }
+    type();
 }
 
-// ✅ AKSA ROAST DATABASE
-const quips=[
-"Error 404: Logic not found.",
-"Go touch grass.exe failed.",
-"Confidence detected. Accuracy missing.",
-"I respect effort. That wasn't effort.",
-"Brain.exe not responding.",
-"Typing detected. Thinking optional.",
-"You unlocked disappointment DLC.",
-"Admin watching silently.",
-"Conversation downgraded."
-];
+function filterSelection(cat, el) {
+    const cards = document.querySelectorAll(".card");
+    const tabs = document.querySelectorAll(".tab-link");
+    const header = document.getElementById("mainHeader");
+    const grid = document.getElementById('projectsGrid');
+    const aksa = document.getElementById('aksa-tab');
+    const dev = document.getElementById('dev-tab');
 
-function talkAksa(){
-const input=document.getElementById('aksaInput').value;
-const out=document.getElementById('aksaOutput');
-if(!input)return;
+    if(el) { tabs.forEach(t => t.classList.remove("active")); el.classList.add("active"); }
 
-const reply=quips[Math.floor(Math.random()*quips.length)];
-out.innerText=reply;
+    grid.style.display = 'none'; aksa.style.display = 'none'; dev.style.display = 'none';
 
-partyMode();
+    if(cat === 'all') {
+        grid.style.display = 'flex';
+        header.innerText = "DIXLABS"; header.style.color = "var(--neon-blue)";
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader", "var(--neon-pink)");
+        cards.forEach(c => c.classList.remove("hidden"));
+    } else if(cat === 'game') {
+        grid.style.display = 'flex';
+        header.innerText = "GAMES"; header.style.color = "var(--neon-blue)";
+        typeWriter("> to cure boredom (and your lack of a life)", "subHeader", "white");
+        cards.forEach(c => c.classList.contains("category-game") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    } else if(cat === 'focus') {
+        grid.style.display = 'flex';
+        header.innerText = "FOCUS"; header.style.color = "var(--neon-pink)";
+        typeWriter("> put the phone down, you're falling behind", "subHeader", "white");
+        cards.forEach(c => c.classList.contains("category-focus") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    } else if(cat === 'fact') {
+        grid.style.display = 'flex';
+        header.innerText = "FACTS"; header.style.color = "var(--neon-green)";
+        typeWriter("> knowledge for people who actually read", "subHeader", "white");
+        cards.forEach(c => c.classList.contains("category-fact") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    } else if(cat === 'aksa') {
+        aksa.style.display = 'flex';
+        header.innerText = "AKSA"; header.style.color = "var(--neon-orange)";
+        typeWriter("> Warning: Severe BBQ (Beware)", "subHeader", "#ff4400");
+    } else if(cat === 'dev') {
+        dev.style.display = 'flex';
+        header.innerText = "SYSTEM"; header.style.color = "var(--neon-red)";
+        typeWriter("> ACCESSING_ADMIN_CORE", "subHeader", "var(--neon-red)");
+    }
 }
-
-// ✅ PARTY MODE
-function partyMode(){
-const p=document.getElementById('party');
-p.style.display='flex';
-setTimeout(()=>p.style.display='none',2000);
-}
-
-initAudio();
 </script>
-
 </body>
 </html>
-
