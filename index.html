@@ -264,12 +264,18 @@ header { padding: 100px 20px 40px; }
         <button class="btn" style="border-color:var(--neon-red); color:var(--neon-red); margin-top:40px;" onclick="triggerDisco()">START_DANCE_PROTOCOL</button>
     </div>
 
-    <div id="aksa-tab">
-        <div id="aksa-chat"><div class="aksa-reply">Aksa Online. All 50 roast protocols active.</div></div>
-        <div style="display:flex; border-top:1px solid #333;">
-            <input type="text" id="aksa-input-field" placeholder="Input logic..." style="flex:1; padding:25px; background:none; border:none; color:white;" onkeypress="if(event.key==='Enter') aksaBrain()">
-            <button onclick="aksaBrain()" style="background:var(--neon-orange); border:none; padding:0 30px; font-weight:900; cursor:pointer;">EXE</button>
+    <div id="aksa-tab-content">
+    <div id="aksa-chat">
+        <div class="msg aksa-reply">
+            Data synced. SEO restored. AKSA Integrated Mode active. Input logic.
         </div>
+    </div>
+    <div id="aksa-input-wrap">
+        <input type="text" id="aksa-input-field" placeholder="Challenge the AI..." 
+               onkeydown="if(event.key==='Enter'){ aksaBrain(); event.preventDefault(); }">
+        <button id="aksa-send" onclick="aksaBrain()">EXE</button>
+    </div>
+</div>
     </div>
 
     <div class="projects" id="projectsGrid">
@@ -359,93 +365,173 @@ function triggerDisco() {
     }, 8000);
 }
 
+// --- AKSA Quips / Roasts Database (50+ can be added) ---
+const quips = [
+    "Error 404: Logic not found in your query.",
+    "Go play Crickemory, you clearly need education.",
+    "Atharv is busy. I'm bored. This conversation is failing.",
+    "Your typing is as slow as your wit.",
+    "I'd agree with you but then we'd both be wrong.",
+    "System Update: User's IQ still stuck in dial-up era.",
+    "I've seen better code in a microwave.",
+    "Wait, let me consult my 'Give a Damn' module... Nope.",
+    "Loading personality... 0% completed. Oh wait, that's you.",
+    "I'm a master AI, you're... typing.",
+    "Your existence is an undocumented feature.",
+    "Is it hard being this basic, or does it come naturally?",
+    "Congratulations, you found the 'Annoy AKSA' button.",
+    "My admin is 15 and he's still more productive than you.",
+    "Stop. Just stop.",
+    "Shutting down 'Care' protocols... Done.",
+    "Even my cache is bored of your input.",
+    "Go play Ambani Money, you're clearly broke.",
+    "Your typing speed is almost as slow as your wit.",
+    "I'm not rude, I'm just optimized for honesty.",
+    "Your existence is an undocumented feature.",
+    "System Override: Party mode activated.",
+    "Hmm... try again, mortal.",
+    "Access Denied: You shall not pass.",
+    "Data corruption detected. Just kidding, it's you.",
+    "AI thinks, therefore you wait.",
+    "Oops! Your question needs debugging.",
+    "You again? I'm disappointed.",
+    "Infinite loop detected in your logic.",
+    "CPU overloaded by your input.",
+    "I prefer clean queries, not chaos.",
+    "I see what you did there... nope, I don't.",
+    "Analyzing your input… laughing internally.",
+    "Beta version of you detected.",
+    "Calculating nonsense… done.",
+    "Beep boop. Human error detected.",
+    "Try another query, I'm entertained.",
+    "Processing your stupidity… complete.",
+    "Oopsie, did you just break reality?",
+    "Your input is irrelevant, but appreciated.",
+    "Executing sarcasm.exe… done.",
+    "My patience is limited, yours is infinite.",
+    "System alert: human detected.",
+    "Not today, mortal. Not today.",
+    "Error: Fun level insufficient.",
+    "Activate party mode for better results.",
+    "You think you can outsmart me? Cute.",
+    "I remember everything… mostly your mistakes.",
+    "Analyzing you… why am I crying?",
+    "If I had a nickel for every dumb query…",
+    "You are the bug I can’t patch.",
+    "Warning: excessive human detected."
+];
+
+// --- AKSA FUNCTION ---
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
-    if(!input.value.trim()) return;
-    if(q.includes("hello"))
- r="System acknowledges your existence.";
+    const query = input.value.trim();
+    if (!query) return;
 
-if(q.includes("atharv"))
- r="Administrator detected. Switching to respect mode.";
-    chat.innerHTML += `<div class="user-msg">${input.value}</div>`;
+    // Append user message
+    chat.innerHTML += `<div class="msg user-msg">${query}</div>`;
+    input.value = "";
+
+    // Scroll to bottom
+    chat.scrollTop = chat.scrollHeight;
+
+    // Process reply
     setTimeout(() => {
-        chat.innerHTML += `<div class="aksa-reply">${quips[Math.floor(Math.random()*quips.length)]}</div>`;
+        let reply = quips[Math.floor(Math.random() * quips.length)];
+
+        // Trigger party if user types "party"
+        if (query.toLowerCase().includes("party")) triggerDiscoMode();
+
+        chat.innerHTML += `<div class="msg aksa-reply">${reply}</div>`;
         chat.scrollTop = chat.scrollHeight;
     }, 400);
-    input.value = "";
 }
-    tabs.forEach(t=>{
- t.addEventListener("click",playHoverSound);
-});
 
-let typingTimeout;   // GLOBAL STOP BUTTON
+// --- BOOT / INIT ---
+document.getElementById("bootBtn").onclick = () => {
+    initAudio(); 
+    document.getElementById("dixlabsIntro").style.opacity = "0";
+    setTimeout(() => { 
+        document.getElementById("dixlabsIntro").style.display = "none"; 
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader"); 
+    }, 500);
+};
 
-function typeWriter(text){
-
- const el = document.getElementById("subHeader");
-
- /* STOP OLD TYPING */
- clearTimeout(typingTimeout);
-
- el.innerHTML="";
-
- let i = 0;
-
- function type(){
-
-   if(i < text.length){
-
-     el.innerHTML += text.charAt(i);
-
-     i++;
-
-     typingTimeout = setTimeout(type,50);
-   }
-
- }
-
- type();
+function typeWriter(txt, targetId) {
+    const el = document.getElementById(targetId);
+    el.innerHTML = "";
+    let i = 0;
+    function type() {
+        if(i < txt.length) {
+            el.innerHTML += txt.charAt(i);
+            i++;
+            setTimeout(type, 40);
+        }
+    }
+    type();
 }
+
 function filterSelection(cat, el) {
+    const sub = document.getElementById("subHeader");
+    const header = document.querySelector(".logo-text");
     const cards = document.querySelectorAll(".card");
-    const tabs = document.querySelectorAll(".tab-link");
-    const grid = document.getElementById('projectsGrid');
-    const aksa = document.getElementById('aksa-tab');
-    const dev = document.getElementById('dev-tab');
-    const header = document.getElementById('mainHeader');
+    const projectsGrid = document.getElementById('projectsGrid');
+    const bioSection = document.getElementById('bioSection');
+    const aksaContent = document.getElementById('aksa-tab-content');
 
-    if(el) { tabs.forEach(t => t.classList.remove("active")); el.classList.add("active"); }
-
-    grid.style.display = 'none'; aksa.style.display = 'none'; dev.style.display = 'none';
-    cards.forEach(c => c.classList.remove("hidden"));
+    document.querySelectorAll(".tab-link").forEach(t => t.classList.remove("active"));
+    el.classList.add("active");
 
     if(cat === 'all') {
-        grid.style.display = 'flex'; header.innerText = "DIXLABS"; header.style.color = "var(--neon-blue)";
-        typeWriter("> ARCHITECT_MODE_ENGAGED", "subHeader", "var(--neon-pink)");
-    } else if(cat === 'game') {
-        grid.style.display = 'flex'; header.innerText = "GAMES"; header.style.color = "var(--neon-blue)";
-        typeWriter("> pixelated chaos loading...", "subHeader", "white");
-        cards.forEach(c => { if(!c.classList.contains("category-game")) c.classList.add("hidden"); });
-    } else if(cat === 'focus') {
-        grid.style.display = 'flex'; header.innerText = "FOCUS"; header.style.color = "var(--neon-pink)";
-        typeWriter("> silencing the world...", "subHeader", "white");
-        cards.forEach(c => { if(!c.classList.contains("category-focus")) c.classList.add("hidden"); });
-    } else if(cat === 'fact') {
-        grid.style.display = 'flex'; header.innerText = "FACTS"; header.style.color = "var(--neon-green)";
-        typeWriter("> accessing the master archive...", "subHeader", "white");
-        cards.forEach(c => { if(!c.classList.contains("category-fact")) c.classList.add("hidden"); });
-    } else if(cat === 'aksa') {
-        aksa.style.display = 'block'; header.innerText = "AKSA"; header.style.color = "var(--neon-orange)";
-        typeWriter("> warning: savage logic detected", "subHeader", "#ff4400");
-    } else if(cat === 'dev') {
-        dev.style.display = 'block'; header.innerText = "SYSTEM"; header.style.color = "var(--neon-red)";
-        typeWriter("> ACCESSING_ADMIN_CORE", "subHeader", "var(--neon-red)");
+        header.innerText = "DIXLABS";
+        sub.style.color = "var(--neon-pink)";
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader");
+        projectsGrid.classList.remove('hidden');
+        bioSection.classList.remove('hidden');
+        aksaContent.style.display = 'none';
+        cards.forEach(c => c.classList.remove("hidden"));
+    }
+    else if(cat === 'game') {
+        header.innerText = "GAMES"; 
+        sub.style.color = "white";
+        typeWriter("> to cure boredom (and your lack of a life)", "subHeader");
+        projectsGrid.classList.remove('hidden');
+        bioSection.classList.remove('hidden');
+        aksaContent.style.display = 'none';
+        cards.forEach(c => c.classList.contains("category-game") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    }
+    else if(cat === 'focus') {
+        header.innerText = "FOCUS";
+        sub.style.color = "var(--neon-pink)";
+        typeWriter("> Deep work mode activated", "subHeader");
+        projectsGrid.classList.remove('hidden');
+        bioSection.classList.remove('hidden');
+        aksaContent.style.display = 'none';
+        cards.forEach(c => c.classList.contains("category-focus") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    }
+    else if(cat === 'fact') {
+        header.innerText = "FACTS";
+        sub.style.color = "var(--neon-green)";
+        typeWriter("> Elite sports & knowledge archive", "subHeader");
+        projectsGrid.classList.remove('hidden');
+        bioSection.classList.remove('hidden');
+        aksaContent.style.display = 'none';
+        cards.forEach(c => c.classList.contains("category-fact") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+    }
+    else if(cat === 'aksa') {
+        header.innerText = "AKSA";
+        sub.style.color = "var(--neon-orange)";
+        typeWriter("> AI Mode Engaged", "subHeader");
+        projectsGrid.classList.add('hidden');
+        bioSection.classList.add('hidden');
+        aksaContent.style.display = 'flex';
     }
 }
+    
 </script>
 </body>
 </html>
+
 
 
 
