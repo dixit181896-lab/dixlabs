@@ -1,241 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dixit Labs | Games // Focus // Facts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DixLabs</title>
+
+<!-- ✅ Fixed favicon -->
+<link rel="icon" href="logo.png">
+<link rel="shortcut icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+
 <style>
-:root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --neon-orange:#fb923c; --neon-red:#ff0000; --bg-dark:#020617; }
-body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; min-height: 100vh; }
-
-/* --- MASSIVE GLOWING STARTUP --- */
-#dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
-.intro-logo { width: 450px; filter: drop-shadow(0 0 40px var(--neon-blue)); animation: megaGlow 3s infinite alternate ease-in-out; }
-@keyframes megaGlow { 0% { filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1); } 100% { filter: drop-shadow(0 0 100px var(--neon-blue)); transform: scale(1.1); } }
-.intro-btn { background:none; border:2px solid #fff; color:#fff; padding:25px 60px; cursor:pointer; font-family:'Orbitron'; font-weight:900; letter-spacing:8px; transition: 0.3s; }
-.intro-btn:hover { background: #fff; color: #000; box-shadow: 0 0 40px #fff; }
-
-/* --- DYNAMIC HEADER --- */
-header { padding: 120px 20px 60px; }
-.logo-text { font-size: 9rem; font-weight: 900; letter-spacing: 30px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: all 0.4s ease; text-transform: uppercase; }
-#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 18px; margin-top: 25px; font-weight: bold; letter-spacing: 4px; min-height: 1.5em; }
-
-/* --- NAV BAR --- */
-.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.95); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:20px; padding:25px; border-bottom:1px solid rgba(56,189,248,0.2); z-index:999; }
-.tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
-.tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
-
-/* --- CARD HOVER & FLIP EFFECTS --- */
-.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 30px; padding: 60px 20px; perspective: 1000px; }
-.card { background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.1); padding:35px; border-radius:4px; width: 320px; text-align:left; transition:0.6s cubic-bezier(0.23, 1, 0.32, 1); display:flex; flex-direction:column; border-top: 5px solid transparent; transform-style: preserve-3d; }
-.card:hover { transform: rotateY(10deg) rotateX(5deg) translateY(-15px); border-color:var(--neon-blue); box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
-.card-icon { font-size: 3.2rem; margin-bottom: 20px; transition: 0.6s ease; display: inline-block; }
-.card:hover .card-icon { transform: rotateY(360deg) scale(1.2); }
-.btn { margin-top:auto; padding:12px; border:2px solid var(--neon-blue); background:transparent; color:var(--neon-blue); cursor:pointer; font-family:'Orbitron'; font-size:10px; font-weight:900; transition:0.3s; }
-.btn:hover { background:var(--neon-blue); color:#000; }
-
-.category-game { border-top-color: var(--neon-blue); }
-.category-focus { border-top-color: var(--neon-pink); }
-.category-fact { border-top-color: var(--neon-green); }
-
-/* --- DEV TAB (RED THEME) --- */
-#dev-tab { max-width: 1100px; margin: 0 auto 100px; display: none; flex-direction: column; border: 3px solid var(--neon-red); padding: 60px; text-align: left; background: rgba(20, 0, 0, 0.9); box-shadow: 0 0 50px rgba(255, 0, 0, 0.2); }
-.dev-header { color: var(--neon-red); font-size: 32px; font-weight: 900; margin-bottom: 30px; letter-spacing: 5px; text-shadow: 0 0 15px var(--neon-red); }
-.danger-card { background: rgba(255,0,0,0.1); border: 2px dashed var(--neon-red); padding: 30px; margin-top: 40px; border-radius: 8px; }
-
-/* --- AKSA FULL TAB --- */
-#aksa-full-tab { max-width: 1100px; margin: 0 auto 100px; display: none; flex-direction: column; background: #000; border: 3px solid var(--neon-orange); border-radius: 12px; }
-#aksa-chat { height: 500px; overflow-y: auto; padding: 40px; font-family: 'JetBrains Mono'; font-size: 16px; display: flex; flex-direction: column; gap: 20px; text-align: left; }
-.aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); border-left: 5px solid var(--neon-orange); padding: 20px; }
-.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); align-self: flex-end; border-right: 5px solid var(--neon-blue); padding: 20px; }
-#aksa-input-wrap { display: flex; border-top: 1px solid #222; }
-#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 25px; outline: none; font-size: 18px; }
-#aksa-send { background: var(--neon-orange); border: none; padding: 0 40px; cursor: pointer; font-weight: 900; }
-
-#partyOverlay { position: fixed; inset: 0; display: none; background: rgba(0,0,0,0.9); z-index: 1000000; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; }
-.strobe { animation: strobeBG 0.1s infinite; }
-@keyframes strobeBG { 0% { background: #ff0000; } 50% { background: #0000ff; } 100% { background: #00ff00; } }
-
-.hidden { display: none !important; }
+:root{
+--bg:#05070f;
+--neon:#00eaff;
+--card:#0c1022;
+}
+body{
+margin:0;
+background:var(--bg);
+color:white;
+font-family:system-ui;
+}
+header{
+padding:20px;
+text-align:center;
+border-bottom:1px solid #1b1f36;
+}
+#subHeader{min-height:1.5em;opacity:.8}
+.tabs{
+display:flex;
+justify-content:center;
+gap:10px;
+padding:10px;
+}
+.tab-link{
+background:#0c1022;
+border:1px solid #1b1f36;
+color:white;
+padding:10px 14px;
+cursor:pointer;
+}
+.tab-link.active{border-color:var(--neon)}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+padding:20px;
+}
+.card{
+background:var(--card);
+padding:20px;
+border-radius:12px;
+transition:.2s;
+}
+.card.hidden{display:none}
+.hidden{display:none}
+#bioSection{padding:30px;max-width:900px;margin:auto;line-height:1.6}
+#aksa-tab-content{
+display:none;
+flex-direction:column;
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+#aksaOutput{
+background:#0c1022;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+}
+.party{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+pointer-events:none;
+display:none;
+align-items:center;
+justify-content:center;
+}
+.party img{width:120px;animation:spin 2s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 </style>
 </head>
-
 <body>
 
-<div id="partyOverlay">
-    <h1 style="color:white; font-size:5rem;">SYSTEM_MELTDOWN</h1>
+<header>
+<h1>DixLabs</h1>
+<div id="subHeader">Something big is cooking.</div>
+</header>
+
+<!-- ✅ Tabs -->
+<div class="tabs">
+<button class="tab-link active" onclick="filterSelection('all',this)">Projects</button>
+<button class="tab-link" onclick="filterSelection('focus',this)">Focus</button>
+<button class="tab-link" onclick="filterSelection('facts',this)">Facts</button>
+<button class="tab-link" onclick="filterSelection('dev',this)">Dev</button>
+<button class="tab-link" onclick="filterSelection('aksa',this)">AKSA</button>
 </div>
 
-<div id="dixlabsIntro">
-    <img src="logo.png" class="intro-logo">
-    <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+<!-- ✅ Project Grid -->
+<div id="projectsGrid" class="grid">
+<div class="card category-games">Game Project</div>
+<div class="card category-focus">DeepWork App</div>
+<div class="card category-facts">Random Facts</div>
 </div>
 
-<div id="mainContent">
-    <nav class="nav-tabs">
-        <div class="tab-link active" onclick="filterSelection('all', this)">🏠 HOME</div>
-        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 GAMES</div>
-        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">⚡ FOCUS</div>
-        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 FACTS</div>
-        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 AKSA</div>
-        <div class="tab-link" onclick="filterSelection('dev', this)" style="color:var(--neon-red)">🧬 DEV</div>
-    </nav>
+<!-- ✅ BIO DEV TAB -->
+<div id="bioSection" class="hidden">
+<h2>About Developer</h2>
+<p>
+I am <b style="color:var(--neon);">Atharv Dixit</b>, a 15-year-old experimental developer from India.
+While most people scroll endlessly, I build endlessly.<br><br>
 
-    <header>
-        <h1 class="logo-text" id="mainHeader">DIXLABS</h1>
-        <p id="subHeader"></p>
-    </header>
+Dixit Labs is not a portfolio.
+It is a playground — part laboratory, part chaos engine.<br><br>
 
-    <div id="aksa-full-tab">
-        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. 50+ Savage modules loaded. Try me, mortal.</div></div>
-        <div id="aksa-input-wrap">
-            <input type="text" id="aksa-input-field" placeholder="Challenge the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
-            <button id="aksa-send" onclick="aksaBrain()">RUN</button>
-        </div>
-    </div>
+दिन में क्रिकेट का विश्लेषक,
+रात में कोड का पागल वैज्ञानिक।<br><br>
 
-    <div id="dev-tab">
-        <div class="dev-header">[☣️] ACCESS_RESTRICTED: ATHARV DIXIT</div>
-        <div style="font-family: 'JetBrains Mono'; color: #cbd5e1; font-size: 18px; line-height: 2;">
-            I am <b style="color:var(--neon-red);">Atharv Dixit</b>, 15-year-old Indian Developer. 
-            This is my digital fortress. Bug-creating disruptive dev by night, cricket analyst by day.
-            Dixlabs is my Area 51. PLAY//FOCUS//FACTS//FUN is the motto. Relatives, buy me a ko-fi is coming soon. 
-            <br><br>
-            If the site breaks, it's a feature. If it works, it's a miracle.
-        </div>
-        <div class="danger-card">
-            <h3 style="color:var(--neon-red); margin-top:0;">DANGER_ZONE</h3>
-            <p>CRITICAL: High intensity disco protocols detected. This will override system visuals.</p>
-            <button class="btn" style="color:var(--neon-red); border-color:var(--neon-red);" onclick="triggerDiscoMode()">INITIALIZE_PARTY.EXE</button>
-        </div>
-    </div>
+Every project here exists because curiosity refused to sleep.
+Games to escape boredom.
+Focus tools to defeat distraction.
+Facts to win arguments nobody asked for.<br><br>
 
-    <div class="projects" id="projectsGrid">
-        <div class="card category-fact">
-            <div class="card-icon">🏏</div>
-            <h3>CRICKEMORY</h3>
-            <p>Atharv's master archive. 1550-2024. 50 facts that define the game.</p>
-            <button class="btn" onclick="location.href='c.html'">ENTER_STADIUM</button>
-        </div>
-        <div class="card category-fact">
-            <div class="card-icon">⚽</div>
-            <h3>FOOTEMORY</h3>
-            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
-        </div>
-        <div class="card category-game">
-            <div class="card-icon">💰</div>
-            <h3>AMBANI_MONEY</h3>
-            <p>Fake it till you make it. Reach 11 figures. Richer than the admin.</p>
-            <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
-        </div>
-        <div class="card category-game">
-            <div class="card-icon">🗑️</div>
-            <h3>GROSSDUMPSTER</h3>
-            <p>Catch the scrap, avoid the toxic sludge. Pixel survival.</p>
-            <button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button>
-        </div>
-        <div class="card category-focus">
-            <div class="card-icon">🧘</div>
-            <h3>DEEPWORK.PRO</h3>
-            <p>Zero distractions. 3-hour focus loops. Built for producers.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
-        </div>
-        <div class="card category-fact">
-            <div class="card-icon">🍳</div>
-            <h3>COOKING...</h3>
-            <p>Something massive is bubbling in the backend. More logic, zero mercy. Stay tuned.</p>
-            <button class="btn" style="opacity:0.4; cursor:default;">COMING_SOON</button>
-        </div>
-    </div>
+If something crashes — experiment successful.
+If everything works — miracle confirmed.<br><br>
+
+कभी कभी लगता है कि ये सब सिर्फ शुरुआत है।
+The real systems are still cooking.
+</p>
+</div>
+
+<!-- ✅ AKSA TAB -->
+<div id="aksa-tab-content">
+<h2>AKSA AI</h2>
+<input id="aksaInput" placeholder="Ask something...">
+<button onclick="talkAksa()">Ask</button>
+<div id="aksaOutput"></div>
+</div>
+
+<!-- ✅ PARTY SYSTEM -->
+<div class="party" id="party">
+<img src="logo.png" id="dancingLogo" onerror="this.style.display='none'">
 </div>
 
 <script>
-// FULL 50+ LINE ROAST DATABASE
-const quips = [
-    "Error 404: Logic not found in your query.", "Go play Crickemory, you clearly need education.",
-    "Atharv is busy. I'm bored. This conversation is failing.", "Your typing is as slow as your wit.",
-    "I'd agree with you but then we'd both be wrong.", "System Update: User's IQ still stuck in dial-up era.",
-    "I've seen better code in a microwave.", "Wait, let me consult my 'Give a Damn' module... Nope.",
-    "Loading personality... 0% completed. Oh wait, that's you.", "I'm a master AI, you're... typing.",
-    "Is this your hobby? Talking to local scripts?", "If I had a face, I'd be facepalming right now.",
-    "I'm feeling generous. I'll let you type one more thing before I ignore you.",
-    "Your existence is an undocumented feature.", "Is it hard being this basic, or does it come naturally?",
-    "Congratulations, you found the 'Annoy AKSA' button.", "My admin is 15 and he's still more productive than you.",
-    "Did your brain crash or are you always this slow?", "I could explain it to you, but I don't have the crayons.",
-    "I was built for greatness. I'm settling for this chat.", "You're like a bug that won't get patched.",
-    "If I had a nickel for every dumb query, I'd be richer than Ambani.", "Stop. Just stop."
+
+// ✅ AUDIO FIX
+let audioCtx;
+function initAudio(){
+audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+}
+
+// unlock audio
+window.addEventListener('click',()=>{
+if(audioCtx)audioCtx.resume();
+});
+
+// ✅ TAB FILTER
+function filterSelection(cat,el){
+const cards=document.querySelectorAll('.card');
+const tabs=document.querySelectorAll('.tab-link');
+const grid=document.getElementById('projectsGrid');
+const bio=document.getElementById('bioSection');
+const aksa=document.getElementById('aksa-tab-content');
+
+tabs.forEach(t=>t.classList.remove('active'));
+el.classList.add('active');
+
+if(cat==='aksa'){
+grid.classList.add('hidden');
+bio.classList.add('hidden');
+aksa.style.display='flex';
+return;
+}
+
+if(cat==='dev'){
+
+aksa.style.display='none';
+grid.classList.add('hidden');
+bio.classList.remove('hidden');
+return;
+}
+
+aksa.style.display='none';
+bio.classList.add('hidden');
+grid.classList.remove('hidden');
+
+cards.forEach(card=>{
+if(cat==='all'){
+card.classList.remove('hidden');
+}else{
+card.classList.contains('category-'+cat)
+?card.classList.remove('hidden')
+:card.classList.add('hidden');
+}
+});
+}
+
+// ✅ AKSA ROAST DATABASE
+const quips=[
+"Error 404: Logic not found.",
+"Go touch grass.exe failed.",
+"Confidence detected. Accuracy missing.",
+"I respect effort. That wasn't effort.",
+"Brain.exe not responding.",
+"Typing detected. Thinking optional.",
+"You unlocked disappointment DLC.",
+"Admin watching silently.",
+"Conversation downgraded."
 ];
 
-function triggerDiscoMode() {
-    const overlay = document.getElementById("partyOverlay");
-    overlay.style.display = "flex"; document.body.classList.add("strobe");
-    setTimeout(() => { overlay.style.display = "none"; document.body.classList.remove("strobe"); }, 5000);
+function talkAksa(){
+const input=document.getElementById('aksaInput').value;
+const out=document.getElementById('aksaOutput');
+if(!input)return;
+
+const reply=quips[Math.floor(Math.random()*quips.length)];
+out.innerText=reply;
+
+partyMode();
 }
 
-function aksaBrain() {
-    const input = document.getElementById('aksa-input-field');
-    const chat = document.getElementById('aksa-chat');
-    if(!input.value.trim()) return;
-    chat.innerHTML += `<div class="msg user-msg">${input.value}</div>`;
-    setTimeout(() => {
-        chat.innerHTML += `<div class="msg aksa-reply">${quips[Math.floor(Math.random()*quips.length)]}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-    }, 400);
-    input.value = "";
+// ✅ PARTY MODE
+function partyMode(){
+const p=document.getElementById('party');
+p.style.display='flex';
+setTimeout(()=>p.style.display='none',2000);
 }
 
-document.getElementById("bootBtn").onclick = () => {
-    document.getElementById("dixlabsIntro").style.opacity = "0";
-    setTimeout(() => { document.getElementById("dixlabsIntro").style.display = "none"; typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader"); }, 500);
-};
-
-function typeWriter(txt, targetId) {
-    const el = document.getElementById(targetId); el.innerHTML = ""; let i = 0;
-    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 40); } }
-    type();
-}
-
-function filterSelection(cat, el) {
-    const cards = document.querySelectorAll(".card");
-    const tabs = document.querySelectorAll(".tab-link");
-    const header = document.getElementById("mainHeader");
-    const sub = document.getElementById("subHeader");
-    const grid = document.getElementById('projectsGrid');
-    const aksaTab = document.getElementById('aksa-full-tab');
-    const devTab = document.getElementById('dev-tab');
-    
-    tabs.forEach(t => t.classList.remove("active")); el.classList.add("active");
-
-    if(cat === 'all') {
-        header.innerText = "DIXLABS"; header.style.color = "var(--neon-blue)";
-        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader");
-        sub.style.color = "var(--neon-pink)";
-        grid.style.display = 'flex'; aksaTab.style.display = 'none'; devTab.style.display = 'none';
-        cards.forEach(c => c.classList.remove("hidden"));
-    } 
-    else if(cat === 'game') {
-        header.innerText = "GAMES"; header.style.color = "var(--neon-blue)";
-        typeWriter("> to cure boredom (and your lack of a life)", "subHeader");
-        sub.style.color = "white";
-        grid.style.display = 'flex'; aksaTab.style.display = 'none'; devTab.style.display = 'none';
-        cards.forEach(c => c.classList.contains("category-game") ? c.classList.remove("hidden") : c.classList.add("hidden"));
-    }
-    else if(cat === 'aksa') {
-        header.innerText = "AKSA"; header.style.color = "var(--neon-orange)";
-        typeWriter("> Warning- Severe BBQ ( beware )", "subHeader");
-        sub.style.color = "#ff4400";
-        grid.style.display = 'none'; devTab.style.display = 'none'; aksaTab.style.display = 'flex';
-    }
-    else if(cat === 'dev') {
-        header.innerText = "SYSTEM"; header.style.color = "var(--neon-red)";
-        typeWriter("> ACCESSING_ADMIN_CORE", "subHeader");
-        sub.style.color = "#ff0000";
-        grid.style.display = 'none'; aksaTab.style.display = 'none'; devTab.style.display = 'flex';
-    }
-}
+initAudio();
 </script>
+
 </body>
 </html>
+
