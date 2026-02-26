@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    <meta name="description" content="Dixit Labs - Experimental Playground by Atharv Dixit. Games, Focus Tools, and Cricket Facts.">
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dixit Labs | Games // Focus // Facts</title>
@@ -10,82 +14,87 @@
 :root { --neon-blue:#38bdf8; --neon-pink:#f472b6; --neon-green:#22c55e; --neon-orange:#fb923c; --neon-red:#ff0000; --bg-dark:#020617; }
 body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbitron',sans-serif; text-align:center; overflow-x:hidden; min-height: 100vh; }
 
-/* --- STARTUP LOGO (BIG & GLOWING) --- */
+/* --- MASSIVE NEON LOGO STARTUP --- */
 #dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
 .intro-logo { 
     width: 450px; 
-    filter: drop-shadow(0 0 40px var(--neon-blue));
-    animation: megaGlow 2.5s infinite alternate ease-in-out;
+    filter: drop-shadow(0 0 45px var(--neon-blue));
+    animation: megaPulse 2s infinite alternate ease-in-out;
 }
-@keyframes megaGlow {
+@keyframes megaPulse {
     0% { filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1); }
-    100% { filter: drop-shadow(0 0 100px var(--neon-blue)); transform: scale(1.05); }
+    100% { filter: drop-shadow(0 0 110px var(--neon-blue)); transform: scale(1.08); }
 }
 
-/* --- DYNAMIC HEADER --- */
-header { padding: 100px 20px 40px; }
-.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 20px; color: var(--neon-blue); text-transform: uppercase; margin: 0; transition: 0.4s; }
-#subHeader { font-family: 'JetBrains Mono'; font-size: 18px; margin-top: 20px; font-weight: bold; min-height: 1.5em; letter-spacing: 2px; }
+/* --- DYNAMIC HEADER SYSTEM --- */
+header { padding: 120px 20px 60px; }
+.logo-text { font-size: 8.5rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-transform: uppercase; margin: 0; transition: 0.5s ease; text-shadow: 0 0 30px rgba(56,189,248,0.5); }
+#subHeader { font-family: 'JetBrains Mono'; font-size: 20px; margin-top: 25px; font-weight: bold; min-height: 1.5em; letter-spacing: 3px; }
 
-/* --- NAV --- */
-.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.9); backdrop-filter:blur(10px); display:flex; justify-content:center; gap:20px; padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); z-index:999; }
-.tab-link { cursor:pointer; font-size:11px; font-weight:900; color: #64748b; letter-spacing: 2px; transition: 0.3s; }
-.tab-link.active { color: #fff; border-bottom: 2px solid var(--neon-blue); }
+/* --- NAVIGATION --- */
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:25px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.1); z-index:999; }
+.tab-link { cursor:pointer; font-size:13px; font-weight:900; color: #64748b; letter-spacing: 2px; transition: 0.3s; text-transform: uppercase; }
+.tab-link:hover { color: #fff; }
+.tab-link.active { color: #fff; border-bottom: 2px solid var(--neon-blue); text-shadow: 0 0 10px #fff; }
 
-/* --- 3D CARD EFFECTS --- */
-.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 30px; padding: 40px; perspective: 1000px; }
+/* --- 3D CARD GRID & EFFECTS --- */
+.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1500px; margin: 0 auto; gap: 40px; padding: 60px 20px; perspective: 1200px; }
 .card { 
-    background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:30px; border-radius:8px; 
-    width: 300px; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); transform-style: preserve-3d;
-    display: flex; flex-direction: column; text-align: left; border-top: 5px solid transparent;
+    background:rgba(15,23,42,0.85); border: 1px solid rgba(255,255,255,0.1); padding:40px; border-radius:12px; 
+    width: 320px; transition: 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style: preserve-3d;
+    display: flex; flex-direction: column; text-align: left; border-top: 6px solid transparent;
 }
-.card:hover { transform: rotateY(10deg) rotateX(5deg) translateY(-10px); border-color: inherit; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-.card-icon { font-size: 3rem; margin-bottom: 15px; transition: 0.5s; }
-.card:hover .card-icon { transform: translateZ(50px) scale(1.2); }
-.btn { margin-top:auto; padding:10px; border:2px solid; background:transparent; font-family:'Orbitron'; font-weight:900; cursor:pointer; transition:0.3s; font-size: 10px; }
+.card:hover { transform: rotateY(15deg) rotateX(5deg) translateY(-15px); border-color: inherit; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
+.card-icon { font-size: 3.5rem; margin-bottom: 20px; transition: 0.5s ease; }
+.card:hover .card-icon { transform: translateZ(60px) rotate(10deg); }
+.btn { margin-top:auto; padding:14px; border:2px solid; background:transparent; font-family:'Orbitron'; font-weight:900; cursor:pointer; transition:0.3s; font-size: 11px; letter-spacing: 1px; }
+.btn:hover { background: white; color: black; border-color: white; }
 
 .category-game { border-top-color: var(--neon-blue); color: var(--neon-blue); }
 .category-focus { border-top-color: var(--neon-pink); color: var(--neon-pink); }
 .category-fact { border-top-color: var(--neon-green); color: var(--neon-green); }
 
-/* --- AKSA & DEV TABS --- */
-#aksa-tab, #dev-tab { display: none; max-width: 1000px; margin: 0 auto 100px; background: #000; border-radius: 12px; overflow: hidden; }
-#aksa-tab { border: 3px solid var(--neon-orange); }
-#dev-tab { border: 3px solid var(--neon-red); padding: 50px; text-align: left; background: rgba(15,0,0,0.95); }
-#aksa-chat { height: 450px; overflow-y: auto; padding: 30px; font-family: 'JetBrains Mono'; display: flex; flex-direction: column; gap: 15px; }
-.aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); padding: 15px; border-left: 4px solid var(--neon-orange); }
-.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); padding: 15px; align-self: flex-end; border-right: 4px solid var(--neon-blue); }
-#aksa-input-wrap { display: flex; border-top: 1px solid #222; }
-#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 20px; outline: none; font-size: 16px; }
-#aksa-send { background: var(--neon-orange); border: none; padding: 0 30px; font-weight: 900; cursor: pointer; }
+/* --- AKSA TERMINAL --- */
+#aksa-tab, #dev-tab { display: none; max-width: 1100px; margin: 0 auto 100px; background: #000; border-radius: 15px; overflow: hidden; }
+#aksa-tab { border: 3px solid var(--neon-orange); box-shadow: 0 0 50px rgba(251,146,60,0.2); }
+#aksa-chat { height: 550px; overflow-y: auto; padding: 40px; font-family: 'JetBrains Mono'; display: flex; flex-direction: column; gap: 20px; }
+.aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); padding: 20px; border-left: 5px solid var(--neon-orange); font-size: 16px; }
+.user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); padding: 20px; align-self: flex-end; border-right: 5px solid var(--neon-blue); font-size: 16px; }
+#aksa-input-wrap { display: flex; border-top: 1px solid #333; background: #0a0a0a; }
+#aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 25px; outline: none; font-size: 18px; font-family: 'JetBrains Mono'; }
+#aksa-send { background: var(--neon-orange); border: none; padding: 0 40px; font-weight: 900; font-family: 'Orbitron'; cursor: pointer; color: #000; }
 
-/* --- PARTY EASTER EGG --- */
+/* --- DEV TAB (CRITICAL RED) --- */
+#dev-tab { border: 3px solid var(--neon-red); padding: 60px; text-align: left; background: linear-gradient(145deg, #1a0000, #000); box-shadow: 0 0 60px rgba(255,0,0,0.2); }
+.dev-header { color: var(--neon-red); font-size: 35px; font-weight: 900; margin-bottom: 30px; letter-spacing: 6px; text-shadow: 0 0 15px var(--neon-red); }
+.danger-zone { border: 2px dashed var(--neon-red); padding: 30px; margin-top: 40px; border-radius: 10px; background: rgba(255,0,0,0.05); }
+
+/* --- PARTY OVERLAY --- */
 #partyOverlay { position: fixed; inset: 0; display: none; z-index: 1000000; justify-content: center; align-items: center; pointer-events: none; }
-.strobe { animation: strobeEffect 0.1s infinite; }
-@keyframes strobeEffect { 0% { background: red; } 33% { background: blue; } 66% { background: green; } }
+.strobe-mode { animation: strobe 0.12s infinite; }
+@keyframes strobe { 0% { background: #ff0000; } 33% { background: #0000ff; } 66% { background: #00ff00; } 100% { background: #ff00ff; } }
 
 .hidden { display: none !important; }
+@media (max-width: 768px) { .logo-text { font-size: 3.5rem; letter-spacing: 10px; } .intro-logo { width: 300px; } }
 </style>
 </head>
 <body>
 
-<div id="partyOverlay">
-    <h1 style="color:white; font-size:4rem; text-shadow: 0 0 20px #000;">DANGER: SYSTEM_PARTY</h1>
-</div>
+<div id="partyOverlay"><h1 style="color:white; font-size:5rem; font-weight:900;">SYSTEM_PARTY</h1></div>
 
 <div id="dixlabsIntro">
-    <img src="logo.png" class="intro-logo" onerror="this.src='https://via.placeholder.com/450/38bdf8/000?text=DIXLABS+LOGO'">
-    <button onclick="bootSystem()" style="background:none; border:2px solid #fff; color:#fff; padding:15px 40px; margin-top:30px; font-family:'Orbitron'; cursor:pointer;">INITIALIZE_CORE</button>
+    <img src="logo.png" class="intro-logo" onerror="this.src='https://via.placeholder.com/450/38bdf8/000?text=DIXLABS'">
+    <button onclick="bootSystem()" style="background:none; border:2px solid #fff; color:#fff; padding:20px 50px; margin-top:40px; font-family:'Orbitron'; font-weight:900; cursor:pointer; letter-spacing:5px;">INITIALIZE_CORE</button>
 </div>
 
 <div id="mainContent">
     <nav class="nav-tabs">
-        <div class="tab-link active" onclick="filterSelection('all', this)">HOME</div>
-        <div class="tab-link" onclick="filterSelection('game', this)">GAMES</div>
-        <div class="tab-link" onclick="filterSelection('focus', this)">FOCUS</div>
-        <div class="tab-link" onclick="filterSelection('fact', this)">FACTS</div>
-        <div class="tab-link" onclick="filterSelection('aksa', this)">AKSA</div>
-        <div class="tab-link" onclick="filterSelection('dev', this)">DEV</div>
+        <div class="tab-link active" onclick="filterSelection('all', this)">🏠 Home</div>
+        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 Games</div>
+        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">⚡ Focus</div>
+        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 Facts</div>
+        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 Aksa</div>
+        <div class="tab-link" onclick="filterSelection('dev', this)" style="color:var(--neon-red)">🧬 Dev</div>
     </nav>
 
     <header>
@@ -94,70 +103,91 @@ header { padding: 100px 20px 40px; }
     </header>
 
     <div id="aksa-tab">
-        <div id="aksa-chat"><div class="aksa-reply">Aksa System Online. Roasting protocols ready.</div></div>
+        <div id="aksa-chat"><div class="aksa-reply">Aksa v2.0 Online. 50+ Roast lines indexed. I'm waiting for a stupid question.</div></div>
         <div id="aksa-input-wrap">
-            <input type="text" id="aksa-input-field" placeholder="Enter logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
-            <button id="aksa-send" onclick="aksaBrain()">EXE</button>
+            <input type="text" id="aksa-input-field" placeholder="Input logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button id="aksa-send" onclick="aksaBrain()">RUN</button>
         </div>
     </div>
 
     <div id="dev-tab">
-        <h2 style="color:var(--neon-red); letter-spacing: 5px;">[☣️] ADMIN_CORE</h2>
-        <p style="font-family:'JetBrains Mono'; line-height: 1.8; font-size: 16px;">
-            <b style="color:var(--neon-red)">Atharv Dixit</b> // 15 // Indian Developer.<br>
-            Building experimental chaos in Area 51. Cricket analyst. Disruptive dev.
-          IF_A_BUG_CREEPS_IN_ITS_A_FEATURE
-        </p>
-        <div style="border: 2px dashed var(--neon-red); padding: 20px; margin-top: 30px;">
-            <h4 style="color:var(--neon-red); margin:0;">DANGER: DISCO_PROTOCOL</h4>
-            <button class="btn" style="color:var(--neon-red); border-color:var(--neon-red); margin-top:15px;" onclick="triggerDisco()">START_EASTER_EGG</button>
+        <h2 class="dev-header">[☣️] ADMIN_CORE: ATHARV DIXIT</h2>
+        <div style="font-family:'JetBrains Mono'; line-height: 2; font-size: 18px; color: #cbd5e1;">
+            I am <b style="color:var(--neon-red)">Atharv Dixit</b>, 15-year-old developer from India. 
+            Detailed cricket analyst by day, disruptive coder by night. 
+            This is Area 51—where the bugs are features and the features are miracles.
+            <br><br>
+            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-red); text-decoration:none; border-bottom: 1px solid;">SYS_CONTACT: dixit181896@gmail.com</a>
+        </div>
+        <div class="danger-zone">
+            <h3 style="color:var(--neon-red); margin-top:0;">DANGER: PARTY_PROTOCOL</h3>
+            <p>Override system visuals for high-intensity disco mode.</p>
+            <button class="btn" style="color:var(--neon-red); border-color:var(--neon-red);" onclick="triggerDisco()">START_EASTER_EGG</button>
         </div>
     </div>
 
     <div class="projects" id="projectsGrid">
+        
+        <div class="card category-focus">
+            <div class="card-icon">🎨</div>
+            <h3>ZENBOARD</h3>
+            <p style="color:#fff; opacity:0.8;">Infinite digital canvas. Sketch, import, and dump your brain. Pure focus.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_ZEN</button>
+        </div>
+        <div class="card category-focus">
+            <div class="card-icon">🧘</div>
+            <h3>DEEPWORK.PRO</h3>
+            <p style="color:#fff; opacity:0.8;">Zero distraction focus loops. Built for producers. No phone allowed.</p>
+            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
+        </div>
+
         <div class="card category-game">
             <div class="card-icon">💰</div>
             <h3>AMBANI_MONEY</h3>
-            <p style="color:white; opacity:0.8;">Simulate extreme wealth. Become richer than the admin.</p>
+            <p style="color:#fff; opacity:0.8;">Reach 11 figures. Simulate extreme wealth. Don't go broke.</p>
             <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
         </div>
         <div class="card category-game">
             <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
-            <p style="color:white; opacity:0.8;">Catch the scrap, avoid the sludge. Pixel survival.</p>
+            <p style="color:#fff; opacity:0.8;">Catch the scrap, avoid the toxic sludge. Survival of the quickest.</p>
             <button class="btn" onclick="location.href='gd.html'">PLAY_NOW</button>
-        </div>
-
-        <div class="card category-focus">
-            <div class="card-icon">🧘</div>
-            <h3>DEEPWORK.PRO</h3>
-            <p style="color:white; opacity:0.8;">Zero distraction focus loops. Built for producers.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
         </div>
 
         <div class="card category-fact">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
-            <p style="color:white; opacity:0.8;">The master archive. 50 facts that define the game.</p>
+            <p style="color:#fff; opacity:0.8;">The ultimate archive. 50 facts that define cricket history.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='c.html'">OPEN_STADIUM</button>
         </div>
         <div class="card category-fact">
             <div class="card-icon">⚽</div>
             <h3>FOOTEMORY</h3>
-            <p style="color:white; opacity:0.8;">Football milestones for the elite. Pele to Messi.</p>
+            <p style="color:#fff; opacity:0.8;">Football milestones for the elite. From Pele to the GOATs.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
         </div>
         <div class="card category-fact">
             <div class="card-icon">🍳</div>
             <h3>COOKING...</h3>
-            <p style="color:white; opacity:0.8;">Something massive is bubbling. Stay tuned.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green); opacity:0.5; cursor:default;">WAITING</button>
+            <p style="color:#fff; opacity:0.8;">Something massive is bubbling in the backend. Stay tuned.</p>
+            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green); opacity:0.4; cursor:default;">WAITING</button>
         </div>
     </div>
+    
+    <footer style="padding:100px 20px; font-family:'JetBrains Mono'; font-size:12px; opacity:0.3; letter-spacing:8px;">DIXIT LABS // 2026 // EST. IN CHAOS</footer>
 </div>
 
 <script>
-const quips = ["Error 404: Logic not found.", "Go play Crickemory, you need education.", "Atharv is busy. I'm bored.", "System Update: User IQ stuck in dial-up era.", "I'd agree with you but then we'd both be wrong.", "Even my cache is bored of you.", "My admin is 15 and still more productive than you.", "I'm not rude, I'm just optimized for honesty."];
+const quips = [
+    "Error 404: Logic not found.", "Go play Crickemory, you need education.",
+    "Atharv is busy. I'm bored. This conversation is failing.", "Your typing is as slow as your wit.",
+    "I'd agree with you but then we'd both be wrong.", "System Update: User's IQ still stuck in dial-up era.",
+    "I've seen better code in a microwave.", "Wait, let me consult my 'Give a Damn' module... Nope.",
+    "Loading personality... 0% completed. Oh wait, that's you.", "I'm a master AI, you're... typing.",
+    "Is this your hobby? Talking to local scripts?", "If I had a face, I'd be facepalming right now.",
+    "I'm not rude, I'm just optimized for honesty.", "If I had a nickel for every dumb query, I'd be richer than Ambani.",
+    "Shutting down 'Care' protocols... Done.", "Is it hard being this basic, or does it come naturally?"
+];
 
 function bootSystem() {
     document.getElementById("dixlabsIntro").style.opacity = "0";
@@ -170,11 +200,11 @@ function bootSystem() {
 function triggerDisco() {
     const overlay = document.getElementById("partyOverlay");
     overlay.style.display = "flex";
-    document.body.classList.add("strobe");
+    document.body.classList.add("strobe-mode");
     setTimeout(() => {
         overlay.style.display = "none";
-        document.body.classList.remove("strobe");
-    }, 4000);
+        document.body.classList.remove("strobe-mode");
+    }, 5000);
 }
 
 function aksaBrain() {
@@ -191,9 +221,8 @@ function aksaBrain() {
 
 function typeWriter(txt, targetId, color) {
     const el = document.getElementById(targetId);
-    el.style.color = color;
-    el.innerHTML = ""; let i = 0;
-    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 30); } }
+    el.style.color = color; el.innerHTML = ""; let i = 0;
+    function type() { if(i < txt.length) { el.innerHTML += txt.charAt(i); i++; setTimeout(type, 35); } }
     type();
 }
 
@@ -207,28 +236,29 @@ function filterSelection(cat, el) {
 
     if(el) { tabs.forEach(t => t.classList.remove("active")); el.classList.add("active"); }
 
+    // RESET VISIBILITY SYSTEM
     grid.style.display = 'none'; aksa.style.display = 'none'; dev.style.display = 'none';
+    cards.forEach(c => c.classList.remove("hidden"));
 
     if(cat === 'all') {
         grid.style.display = 'flex';
         header.innerText = "DIXLABS"; header.style.color = "var(--neon-blue)";
         typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader", "var(--neon-pink)");
-        cards.forEach(c => c.classList.remove("hidden"));
     } else if(cat === 'game') {
         grid.style.display = 'flex';
         header.innerText = "GAMES"; header.style.color = "var(--neon-blue)";
         typeWriter("> to cure boredom (and your lack of a life)", "subHeader", "white");
-        cards.forEach(c => c.classList.contains("category-game") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+        cards.forEach(c => { if(!c.classList.contains("category-game")) c.classList.add("hidden"); });
     } else if(cat === 'focus') {
         grid.style.display = 'flex';
         header.innerText = "FOCUS"; header.style.color = "var(--neon-pink)";
         typeWriter("> put the phone down, you're falling behind", "subHeader", "white");
-        cards.forEach(c => c.classList.contains("category-focus") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+        cards.forEach(c => { if(!c.classList.contains("category-focus")) c.classList.add("hidden"); });
     } else if(cat === 'fact') {
         grid.style.display = 'flex';
         header.innerText = "FACTS"; header.style.color = "var(--neon-green)";
         typeWriter("> knowledge for people who actually read", "subHeader", "white");
-        cards.forEach(c => c.classList.contains("category-fact") ? c.classList.remove("hidden") : c.classList.add("hidden"));
+        cards.forEach(c => { if(!c.classList.contains("category-fact")) c.classList.add("hidden"); });
     } else if(cat === 'aksa') {
         aksa.style.display = 'flex';
         header.innerText = "AKSA"; header.style.color = "var(--neon-orange)";
