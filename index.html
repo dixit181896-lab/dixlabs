@@ -348,6 +348,17 @@ function bootSystem() {
         filterSelection('all');
     }, 600);
 }
+    document.getElementById("bootBtn").onclick = () => {
+    try { initAudio(); } catch(e){ console.warn("Audio init blocked"); }
+
+    const intro = document.getElementById("dixlabsIntro");
+    intro.style.opacity = "0";
+
+    setTimeout(() => { 
+        intro.style.display = "none"; 
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS", "subHeader"); 
+    }, 500);
+};
     document.addEventListener("mousemove",e=>{
  document.body.style.setProperty("--x",e.clientX+"px");
  document.body.style.setProperty("--y",e.clientY+"px");
@@ -531,6 +542,7 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
 
 
 
