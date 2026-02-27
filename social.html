@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MouseBreaker Social | The 1% Club</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffcc00; --bg: #030305; --card: #0d0d10;
+            --royal: #7000ff; --success: #00ff88; --danger: #ff0055;
+            --text: #ffffff; --border: #1a1a20;
+        }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { 
+            margin: 0; background: var(--bg); color: var(--text); 
+            overflow-y: auto; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, #0a0a15 0%, #030305 100%);
+        }
+
+        /* Ascension Screen */
+        #ascension-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; color: #000; z-index: 10000; display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; animation: flash 2s ease-out;
+        }
+        @keyframes flash { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Navigation HUD */
+        .social-hud {
+            position: sticky; top: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--gold); padding: 25px 60px; display: flex;
+            justify-content: space-between; align-items: center; z-index: 2000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+        .stat-group { display: flex; flex-direction: column; align-items: flex-start; }
+        .stat-label { font-size: 0.75rem; color: #666; font-weight: 900; letter-spacing: 2px; }
+        .stat-val { font-family: 'Orbitron'; font-size: 1.8rem; color: var(--gold); text-shadow: 0 0 10px rgba(255,204,0,0.3); }
+
+        /* Main Container */
+        .container { max-width: 1600px; margin: 50px auto; padding: 0 40px; padding-bottom: 200px; }
+        
+        .tab-wrapper { 
+            display: flex; gap: 15px; margin-bottom: 60px; justify-content: center; 
+            flex-wrap: wrap; position: sticky; top: 120px; z-index: 1900;
+        }
+        .tab-btn {
+            background: #111; border: 1px solid var(--border); color: #555; padding: 15px 35px;
+            cursor: pointer; font-family: 'Orbitron'; font-weight: 900; transition: 0.4s; 
+            border-radius: 8px; font-size: 0.9rem; text-transform: uppercase;
+        }
+        .tab-btn:hover { color: #fff; border-color: var(--royal); }
+        .tab-btn.active { 
+            background: var(--royal); color: white; border-color: var(--royal); 
+            box-shadow: 0 0 30px rgba(112, 0, 255, 0.4); transform: translateY(-3px);
+        }
+
+        /* The Grid */
+        .view { display: none; }
+        .view.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 35px; animation: slideIn 0.6s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .item-card {
+            background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 25px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; 
+            display: flex; flex-direction: column; min-height: 450px;
+        }
+        .item-card:hover { transform: scale(1.03); border-color: var(--gold); background: #121218; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        
+        .emoji-box { font-size: 4.5rem; margin-bottom: 20px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
+        .item-card h3 { margin: 10px 0; font-family: 'Orbitron'; font-size: 1.5rem; color: #fff; }
+        .item-card p { color: #888; line-height: 1.6; font-size: 1rem; flex-grow: 1; }
+        
+        .perk-tag { 
+            background: rgba(0, 255, 136, 0.1); color: var(--success); 
+            padding: 8px 15px; border-radius: 5px; font-size: 0.85rem; 
+            font-weight: 900; margin: 15px 0; border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .buy-btn {
+            width: 100%; padding: 22px; margin-top: 10px; border: none; font-family: 'Orbitron';
+            font-weight: 900; cursor: pointer; border-radius: 12px; text-transform: uppercase; 
+            font-size: 1rem; letter-spacing: 1px; transition: 0.2s;
+        }
+        .can-afford { background: var(--gold); color: black; box-shadow: 0 5px 15px rgba(255,204,0,0.2); }
+        .can-afford:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .cant-afford { background: #1a1a20; color: #444; cursor: not-allowed; }
+
+        .owned-badge { 
+            position: absolute; top: 25px; right: 25px; background: var(--success); 
+            color: black; font-size: 0.7rem; padding: 6px 15px; border-radius: 50px; 
+            font-weight: 900; font-family: 'Orbitron'; box-shadow: 0 0 15px rgba(0,255,136,0.3);
+        }
+
+        .back-nav { 
+            position: fixed; bottom: 40px; left: 40px; background: #111; color: #fff; 
+            padding: 18px 40px; border-radius: 100px; text-decoration: none; 
+            font-family: 'Orbitron'; font-weight: 900; border: 1px solid #333; z-index: 2000;
+            transition: 0.3s;
+        }
+        .back-nav:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+    </style>
+</head>
+<body>
+
+<div id="ascension-overlay">
+    <div class="emoji-box">🌌</div>
+    <h1 style="font-size: 5rem; margin: 0;">ASCENDED</h1>
+    <p style="font-size: 1.4rem; max-width: 700px; color: #444;">Your legacy score has reached 1 Quintillion. You have moved beyond money, politics, and flesh. Your name is now a fundamental constant of the universe.</p>
+    <div id="final-stats" style="margin: 30px 0; font-weight: 900;"></div>
+    <button class="buy-btn can-afford" style="width: 350px;" onclick="restartGame()">RESTART ETERNITY</button>
+</div>
+
+<div class="social-hud">
+    <div class="stat-group">
+        <span class="stat-label">VAULT BALANCE</span>
+        <div class="stat-val" id="ui-money">$0</div>
+    </div>
+    <div style="text-align:center">
+        <div id="ui-ceo" style="font-family:'Orbitron'; font-size:1.2rem; color:var(--royal); letter-spacing:5px; margin-bottom:5px;">CEO</div>
+        <div style="font-size:0.7rem; color:#444;">SOCIAL & LEGACY SIMULATOR v4.0</div>
+    </div>
+    <div class="stat-group" style="align-items: flex-end;">
+        <span class="stat-label">LEGACY PROGRESS</span>
+        <div class="stat-val" id="ui-legacy">0</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="tab-wrapper">
+        <button class="tab-btn active" onclick="tab('marr')">💍 Marriage</button>
+        <button class="tab-btn" onclick="tab('pol')">🏛️ Politics</button>
+        <button class="tab-btn" onclick="tab('estate')">🏰 Estates</button>
+        <button class="tab-btn" onclick="tab('garage')">🏎️ Garage</button>
+        <button class="tab-btn" onclick="tab('lux')">💎 Luxury</button>
+    </div>
+
+    <div id="marr" class="view active"></div>
+    <div id="pol" class="view"></div>
+    <div id="estate" class="view"></div>
+    <div id="garage" class="view"></div>
+    <div id="lux" class="view"></div>
+</div>
+
+<a href="empire.html" class="back-nav">← RETURN TO BOARDROOM</a>
+
+<script>
+    let money = parseInt(localStorage.getItem('grindMoney')) || 0;
+    let legacy = parseInt(localStorage.getItem('legacyScore')) || 0;
+    let owned = JSON.parse(localStorage.getItem('ownedSocial')) || [];
+
+    // CUSTOM FORMATTER: No scientific language allowed
+    function nfmt(n) {
+        if (n < 1e3) return n.toFixed(0);
+        if (n < 1e6) return (n/1e3).toFixed(2) + "k";
+        if (n < 1e9) return (n/1e6).toFixed(2) + "m";
+        if (n < 1e12) return (n/1e9).toFixed(2) + "b";
+        if (n < 1e15) return (n/1e12).toFixed(2) + "t";
+        if (n < 1e18) return (n/1e15).toFixed(2) + "q";
+        if (n < 1e21) return (n/1e18).toFixed(2) + "Q";
+        if (n < 1e24) return (n/1e21).toFixed(2) + "s";
+        if (n < 1e27) return (n/1e24).toFixed(2) + "S";
+        if (n < 1e30) return (n/1e27).toFixed(2) + "o";
+        if (n < 1e33) return (n/1e30).toFixed(2) + "n";
+        if (n < 1e36) return (n/1e33).toFixed(2) + "d";
+        return "INFINITY";
+    }
+
+    const data = {
+        marr: [
+            { id: 'ma1', e: '🥂', n: "Local Celeb", c: 5e5, l: 2000, p: "+10% Status", d: "A simple wedding with 500 paparazzi." },
+            { id: 'ma2', e: '📸', n: "Supermodel", c: 2e6, l: 10000, p: "Publicity Boost", d: "Your wedding is on the cover of every magazine." },
+            { id: 'ma3', e: '💎', n: "Diamond Heiress", c: 5e7, l: 150000, p: "Wealth Fusion", d: "Merge your empire with a gemstone monopoly." },
+            { id: 'ma4', e: '👑', n: "European Royalty", c: 1e9, l: 1e6, p: "Bloodline Merit", d: "Your children are now 4th in line for the throne." },
+            { id: 'ma5', e: '🏛️', n: "Political Dynasty", c: 1e11, l: 2e7, p: "Law Immunity", d: "Marry into a family that has ruled for 100 years." },
+            { id: 'ma6', e: '🛰️', n: "Silicon Visionary", c: 5e12, l: 1e8, p: "AI Integration", d: "A tech-union that secures the digital future." },
+            { id: 'ma7', e: '🌑', n: "Lunar Governor", c: 1e14, l: 1e9, p: "Low-G Perks", d: "The first wedding held in the Sea of Tranquility." },
+            { id: 'ma8', e: '🪐', n: "Martian Baroness", c: 5e15, l: 1e10, p: "Planet Control", d: "Red planet loyalty is now guaranteed." },
+            { id: 'ma9', e: '🛸', n: "Interstellar Diplomat", c: 1e18, l: 1e12, p: "Star Access", d: "A spouse from a civilization 1000 years ahead." },
+            { id: 'ma10', e: '☄️', n: "Void Traveler", c: 5e20, l: 5e13, p: "Time Resistance", d: "Wed a being that exists outside the timeline." },
+            { id: 'ma11', e: '🎭', n: "Concept of Beauty", c: 1e23, l: 1e15, p: "Divine Form", d: "Marry the abstract idea of perfection itself." },
+            { id: 'ma12', e: '🌌', n: "Galactic Matriarch", c: 1e26, l: 1e16, p: "Sector Mastery", d: "Control an entire arm of the Milky Way." },
+            { id: 'ma13', e: '✨', n: "Stellar Entity", c: 1e29, l: 1e17, p: "Fusion Energy", d: "Your partner is literally a sentient sun." },
+            { id: 'ma14', e: '🌀', n: "Singularity Bride", c: 1e32, l: 5e17, p: "Total Unity", d: "Merging consciousness at the event horizon." },
+            { id: 'ma15', e: '👁️', n: "Ancient Deity", c: 5e35, l: 1e18, p: "ASCENSION", d: "The final union before godhood." }
+        ],
+        pol: [
+            { id: 'po1', e: '📜', n: "Bribe Mayor", c: 1e6, l: 5000, p: "Permit Control", d: "Build whatever you want, wherever you want." },
+            { id: 'po2', e: '🗳️', n: "Rig State Election", c: 1e8, l: 40000, p: "Tax Shelter", d: "State taxes drop to 0% for your corps." },
+            { id: 'po3', e: '🏛️', n: "Fund Senator", c: 5e9, l: 250000, p: "Federal Favor", d: "Get government bailouts whenever you click." },
+            { id: 'po4', e: '🎖️', n: "Military Contract", c: 5e10, l: 1e6, p: "Defense Force", d: "Private drones protect your assets." },
+            { id: 'po5', e: '🏳️', n: "Buy Small Nation", c: 1e12, l: 5e7, p: "Sovereign Power", d: "Print your own currency with your face on it." },
+            { id: 'po6', e: '🌍', n: "UN Seat", c: 5e13, l: 2e8, p: "Global Say", d: "Veto any law that hurts your profits." },
+            { id: 'po7', e: '🛰️', n: "Satellite Network", c: 1e15, l: 1e9, p: "Mind Control", d: "Subliminal ads beamed to every brain." },
+            { id: 'po8', e: '🏳️‍🌈', n: "Continental Rule", c: 5e16, l: 1e10, p: "Unified Revenue", d: "One continent, one CEO, one vision." },
+            { id: 'po9', e: '🌑', n: "Lunar Sovereignty", c: 1e18, l: 1e12, p: "Space Tax", d: "Anyone leaving Earth pays you a fee." },
+            { id: 'po10', e: '☄️', n: "Asteroid Mining Law", c: 1e20, l: 5e13, p: "Mineral Rights", d: "All gold in the galaxy is legally yours." },
+            { id: 'po11', e: '🛸', n: "Galactic Senate", c: 1e23, l: 1e15, p: "Alien Trade", d: "Open routes to Andromeda." },
+            { id: 'po12', e: '🪐', n: "Solar Dictator", c: 1e26, l: 5e16, p: "Sun Control", d: "You decide who gets daylight." },
+            { id: 'po13', e: '🌀', n: "Void Governance", c: 1e30, l: 1e17, p: "Entropy Delay", d: "Legislating the laws of physics." },
+            { id: 'po14', e: '🌌', n: "Reality Admin", c: 1e33, l: 5e17, p: "God Mode", d: "Rewriting the source code of the world." },
+            { id: 'po15', e: '👑', n: "The One King", c: 1e36, l: 1e18, p: "ABSOLUTE", d: "The end of politics." }
+        ],
+        estate: [
+            { id: 'es1', e: '🏙️', n: "Glass Penthouse", c: 5e6, l: 500, p: "View", d: "Look down on everyone." },
+            { id: 'es2', e: '🏰', n: "French Chateau", c: 2e7, l: 5000, p: "History", d: "Wine cellars and secret tunnels." },
+            { id: 'es3', e: '🏝️', n: "Billionaire Island", c: 1e8, l: 20000, p: "Privacy", d: "Airspace is restricted." },
+            { id: 'es4', e: '🏔️', n: "Alpine Bunker", c: 5e9, l: 100000, p: "Safety", d: "Nuclear proof luxury." },
+            { id: 'es5', e: '🌊', n: "Underwater Dome", c: 2e10, l: 500000, p: "Exotic", d: "Sleep with the sharks." },
+            { id: 'es6', e: '☁️', n: "Cloud Palace", c: 5e11, l: 2e6, p: "Height", d: "Literally above the weather." },
+            { id: 'es7', e: '🌑', n: "Moon Mansion", c: 1e13, l: 5e7, p: "Gravity", d: "Bounce through your hallway." },
+            { id: 'es8', e: '🌋', n: "Volcano Base", c: 5e14, l: 1e9, p: "Evil Aura", d: "Standard for every top CEO." },
+            { id: 'es9', e: '🪐', n: "Saturn Rings Resort", c: 1e16, l: 1e10, p: "Scenery", d: "The best view in the system." },
+            { id: 'es10', e: '🌌', n: "Dyson Villa", c: 1e19, l: 5e12, p: "Energy", d: "Powering your toaster with a star." },
+            { id: 'es11', e: '🛸', n: "Warp Estate", c: 1e22, l: 1e14, p: "Mobile Home", d: "Your house travels at light speed." },
+            { id: 'es12', e: '🌀', n: "Black Hole Edge", c: 1e25, l: 5e15, p: "Time Dilation", d: "Live 1000 years in one hour." },
+            { id: 'es13', e: '✨', n: "Nebula Cradle", c: 1e28, l: 1e17, p: "Creation", d: "Build your garden from star dust." },
+            { id: 'es14', e: '👁️', n: "The Third Eye", c: 1e31, l: 5e17, p: "Sight", d: "A home that sees all timelines." },
+            { id: 'es15', e: '👑', n: "Final Dimension", c: 1e35, l: 1e18, p: "END GAME", d: "The last house you'll ever need." }
+        ],
+        garage: [
+            { id: 'ga1', e: '🏎️', n: "Hypercar", c: 1e6, l: 200, p: "Speed", d: "0-60 in 1 second." },
+            { id: 'ga2', e: '🚁', n: "Personal Chopper", c: 5e6, l: 1000, p: "Air", d: "Skip the traffic." },
+            { id: 'ga3', e: '🛥️', n: "Super Yacht", c: 1e8, l: 15000, p: "Ocean", d: "300 feet of pure ego." },
+            { id: 'ga4', e: '✈️', n: "Executive Jet", c: 5e8, l: 80000, p: "Range", d: "Fly anywhere, anytime." },
+            { id: 'ga5', e: '🚀', n: "Space Shuttle", c: 1e10, l: 500000, p: "Orbit", d: "Weekend trips to the ISS." },
+            { id: 'ga6', e: '🚢', n: "Aircraft Carrier", c: 5e11, l: 2e6, p: "Military", d: "Your own floating airbase." },
+            { id: 'ga7', e: '☄️', n: "Asteroid Hopper", c: 2e13, l: 1e8, p: "Mining", d: "Zip through the belt." },
+            { id: 'ga8', e: '🛸', n: "Alien Saucer", c: 1e15, l: 5e9, p: "Tech", d: "Reverse engineered speed." },
+            { id: 'ga9', e: '🪐', n: "Solar Cruiser", c: 1e18, l: 1e12, p: "Luxury", d: "A cruise ship for the stars." },
+            { id: 'ga10', e: '✨', n: "Warp Fighter", c: 1e21, l: 5e13, p: "Combat", d: "Protect your space lanes." },
+            { id: 'ga11', e: '🌀', n: "Fold Ship", c: 1e24, l: 1e15, p: "Teleport", d: "Don't travel, just arrive." },
+            { id: 'ga12', e: '🌌', n: "Galactic Ark", c: 1e27, l: 1e16, p: "Colony", d: "Carry 1 million people." },
+            { id: 'ga13', e: '🎭', n: "Ego Vessel", c: 1e30, l: 1e17, p: "Aura", d: "Powered by your own legacy." },
+            { id: 'ga14', e: '👁️', n: "Time Drifter", c: 1e33, l: 5e17, p: "Chronos", d: "Drive through the 1920s." },
+            { id: 'ga15', e: '👑', n: "Omega Throne", c: 1e36, l: 1e18, p: "OMNI", d: "The vehicle of a god." }
+        ],
+        lux: [
+            { id: 'lu1', e: '⌚', n: "Diamond Watch", c: 1e5, l: 50, p: "Flex", d: "Heavy on the wrist." },
+            { id: 'lu2', e: '🍷', n: "1780 Vintage", c: 5e5, l: 300, p: "Taste", d: "Tastes like history." },
+            { id: 'lu3', e: '🧥', n: "Tiger Coat", c: 1e6, l: 1000, p: "Style", d: "Synthetic, but feels real." },
+            { id: 'lu4', e: '🖼️', n: "The Lost Vinci", c: 5e8, l: 50000, p: "Art", d: "The only one left." },
+            { id: 'lu5', e: '🦁', n: "Robot Pet", c: 2e9, l: 150000, p: "Loyalty", d: "Never needs food." },
+            { id: 'lu6', e: '🧬', n: "Youth Serum", c: 1e11, l: 1e6, p: "Life", d: "Stay 25 forever." },
+            { id: 'lu7', e: '🧠', n: "IQ Implant", c: 5e12, l: 1e8, p: "Mind", d: "Think at 1000x speed." },
+            { id: 'lu8', e: '💎', n: "Moon Diamond", c: 1e15, l: 1e10, p: "Rare", d: "Size of a basketball." },
+            { id: 'lu9', e: '🌈', n: "Atmosphere Tint", c: 5e17, l: 5e12, p: "Sky", d: "Make the sky purple." },
+            { id: 'lu10', e: '🌀', n: "Gravity Shoes", c: 1e20, l: 1e14, p: "Walk", d: "Walk on the ceiling." },
+            { id: 'lu11', e: '✨', n: "Star Jar", c: 1e24, l: 1e16, p: "Light", d: "A captured sun on your desk." },
+            { id: 'lu12', e: '🎭', n: "Persona Swapper", c: 1e27, l: 5e16, p: "Identity", d: "Be anyone for a day." },
+            { id: 'lu13', e: '🌀', n: "Pocket Universe", c: 1e30, l: 1e17, p: "Space", d: "A world in your pocket." },
+            { id: 'lu14', e: '👁️', n: "Omni-Sight", c: 1e33, l: 5e17, p: "Truth", d: "See through the simulation." },
+            { id: 'lu15', e: '👑', n: "The Final Gem", c: 1e36, l: 1e18, p: "GOD", d: "The last piece of the puzzle." }
+        ]
+    };
+
+    function render() {
+        document.getElementById('ui-money').innerText = "$" + nfmt(money);
+        document.getElementById('ui-legacy').innerText = nfmt(legacy);
+        
+        // CHECK END GAME: 1 Quintillion
+        if (legacy >= 1e18) {
+            document.getElementById('ascension-overlay').style.display = 'flex';
+            document.getElementById('final-stats').innerText = "FINAL LEGACY: " + nfmt(legacy) + " | CEO: " + (localStorage.getItem('corpName') || "UNKNOWN");
+        }
+
+        for (let cat in data) {
+            const container = document.getElementById(cat);
+            if(!container) continue;
+            container.innerHTML = data[cat].map(item => {
+                const isOwned = owned.includes(item.id);
+                const aff = money >= item.c && !isOwned;
+                return `
+                    <div class="item-card">
+                        ${isOwned ? '<div class="owned-badge">COLLECTED</div>' : ''}
+                        <div class="emoji-box">${item.e}</div>
+                        <h3>${item.n}</h3>
+                        <p>${item.d}</p>
+                        <div class="perk-tag">PERK: ${item.p}</div>
+                        <div style="font-family:'Orbitron'; font-size:1.1rem; color:var(--gold); margin-bottom:15px;">+${nfmt(item.l)} LEGACY</div>
+                        <button class="buy-btn ${isOwned ? 'cant-afford' : (aff ? 'can-afford' : 'cant-afford')}" 
+                                onclick="buy('${item.id}', ${item.c}, ${item.l})"
+                                ${isOwned || !aff ? 'disabled' : ''}>
+                            ${isOwned ? 'ACTIVE' : 'PURCHASE: $' + nfmt(item.c)}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    function buy(id, cost, leg) {
+        if (money >= cost && !owned.includes(id)) {
+            money -= cost;
+            legacy += leg;
+            owned.push(id);
+            localStorage.setItem('grindMoney', money);
+            localStorage.setItem('legacyScore', legacy);
+            localStorage.setItem('ownedSocial', JSON.stringify(owned));
+            render();
+        }
+    }
+
+    function tab(id) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    function restartGame() {
+        localStorage.clear();
+        window.location.href = 'empire.html';
+    }
+
+    document.getElementById('ui-ceo').innerText = localStorage.getItem('ceoName') || "CEO";
+    render();
+</script>
+</body>
+</html>

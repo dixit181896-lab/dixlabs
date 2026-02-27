@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MouseBreaker Empire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon: #cd7f32; --bg: #050505; --panel: #0f0f0f;
+            --accent: #ffab40; --success: #2ecc71; --locked: #ff0055;
+            --heat: #ff4500;
+        }
+        body.tier-1 { --neon: #cd7f32; --glow: rgba(205, 127, 50, 0.5); }
+        body.tier-2 { --neon: #00f2ff; --glow: rgba(0, 242, 255, 0.5); }
+        body.tier-3 { --neon: #ff00ff; --glow: rgba(255, 0, 255, 0.5); }
+
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { margin: 0; background: var(--bg); color: #fff; overflow-x: hidden; transition: 0.5s; }
+
+        /* STARTUP SCREEN */
+        #startup-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 5000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            border: 10px solid var(--neon);
+        }
+        .startup-title { font-family: 'Orbitron'; font-size: 4rem; color: var(--neon); text-shadow: 0 0 20px var(--glow); margin-bottom: 20px; }
+        .tutorial-box { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; max-width: 600px; margin-bottom: 30px; }
+        .tutorial-point { font-family: 'Orbitron'; font-size: 1rem; color: #fff; margin: 15px 0; text-align: left; line-height: 1.5; }
+        .tutorial-point span { color: var(--accent); font-weight: 900; }
+        .start-btn { background: var(--neon); color: #000; padding: 20px 60px; font-family: 'Orbitron'; font-size: 1.5rem; font-weight: 900; border: none; cursor: pointer; border-radius: 50px; transition: 0.3s; }
+        .start-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--glow); }
+
+        /* HUD & BARS */
+        .hud {
+            position: sticky; top: 0; width: 100%; background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px); border-bottom: 4px solid var(--neon);
+            z-index: 1000; padding: 15px 50px;
+        }
+        .hud-main { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .vault-display { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; color: var(--success); }
+        
+        .bar-label { font-family: 'Orbitron'; font-size: 0.7rem; color: #888; margin-bottom: 4px; display: block; }
+        .progress-container { width: 100%; height: 10px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #444; margin-bottom: 10px; }
+        #job-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), #fff); transition: 0.2s; }
+        #tier-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--neon), #fff); transition: 0.4s; }
+
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(15px);
+        }
+        .modal-content {
+            background: #111; margin: 5% auto; padding: 40px; border: 2px solid var(--neon);
+            width: 60%; border-radius: 30px; box-shadow: 0 0 50px var(--glow);
+            max-height: 80vh; overflow-y: auto;
+        }
+        .close-modal { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .work-zone {
+            background: var(--panel); border: 2px solid var(--neon); border-radius: 40px;
+            padding: 50px; text-align: center; margin-bottom: 50px; box-shadow: 0 0 50px var(--glow);
+        }
+        #main-balance { font-family: 'Orbitron'; font-size: 6rem; margin: 15px 0; color: var(--neon); font-weight: 900; }
+        
+        .clicker {
+            width: 280px; height: 280px; border-radius: 50%; border: 15px solid var(--neon);
+            background: transparent; color: var(--neon); font-family: 'Orbitron';
+            font-size: 2.2rem; font-weight: 900; cursor: pointer; transition: 0.1s; outline: none;
+        }
+        .clicker.active { transform: scale(0.95); background: rgba(255,255,255,0.05); box-shadow: inset 0 0 20px var(--glow), 0 0 40px var(--glow); }
+        .clicker.overheated { border-color: var(--locked); color: var(--locked); filter: drop-shadow(0 0 10px var(--locked)); }
+
+        .heat-wrapper { margin: 20px auto; width: 280px; text-align: center; }
+        .heat-container { width: 100%; height: 10px; background: #111; border-radius: 5px; overflow: hidden; border: 1px solid #333; margin-top: 5px; }
+        #heat-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #00ff88, #ffff00, var(--heat)); transition: 0.1s linear; }
+
+        .gate-status { background: rgba(255,0,85,0.05); border: 2px solid var(--locked); padding: 25px; border-radius: 20px; text-align: left; max-width: 450px; margin: 30px auto; }
+        .req { font-family: 'Orbitron'; font-size: 1.1rem; margin: 8px 0; color: var(--locked); }
+        .req.done { color: var(--success); }
+
+        .btn-ach { background: #222; color: #fff; border: 1px solid var(--neon); padding: 10px 20px; cursor: pointer; font-family: 'Orbitron'; border-radius: 5px; margin-bottom: 20px; }
+
+        .section-title { font-family: 'Orbitron'; font-size: 2.5rem; border-left: 10px solid var(--neon); padding-left: 20px; margin: 60px 0 30px; color: #fff; }
+        .grid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+
+        .card { background: #121212; padding: 30px; border-radius: 20px; border: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .card.active { border-color: var(--neon); background: #1a1a1a; box-shadow: 0 0 20px var(--glow); }
+        
+        button.buy-btn { background: var(--accent); border: none; padding: 15px 30px; border-radius: 10px; font-weight: 900; font-size: 1.2rem; cursor: pointer; color: #000; }
+        button:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+        #found-btn { display: none; width: 100%; padding: 40px; margin-top: 40px; background: var(--success); color: #000; font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; text-decoration: none; text-align: center; border-radius: 20px; cursor: pointer; }
+
+        .pop { position: absolute; pointer-events: none; font-family: 'Orbitron'; font-weight: 900; font-size: 3rem; animation: fly 0.8s ease-out forwards; color: var(--neon); z-index: 2000; }
+        @keyframes fly { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-150px); } }
+    </style>
+</head>
+<body class="tier-1">
+
+<div id="startup-screen">
+    <h1 class="startup-title">MOUSEBREAKER<br>EMPIRE</h1>
+    <div class="tutorial-box">
+        <div class="tutorial-point">1. <span>TAP OR SPAM:</span> Click the button or hold <span>SPACEBAR</span> to work. Spacebar is 10x faster but can overheat!</div>
+        <div class="tutorial-point">2. <span>PROMOTIONS:</span> Fill the Job Bar via clicks to get better jobs with higher base pay.</div>
+        <div class="tutorial-point">3. <span>SOCIAL STATUS:</span> Buy items in the <span>LIFESTYLE SHOP</span> to increase your Tier and base click power.</div>
+    </div>
+    <button class="start-btn" onclick="startGame()">START GRINDING</button>
+</div>
+
+<div id="achModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeAchs()">&times;</span>
+        <h2 style="font-family: 'Orbitron'; color: var(--neon);">ACHIEVEMENTS</h2>
+        <div id="ach-list-modal"></div>
+    </div>
+</div>
+
+<div class="hud">
+    <div class="hud-main">
+        <div class="tier-tag" id="tier-label" style="font-family: 'Orbitron';">JOB 01 | TIER 1</div>
+        <div class="vault-display" id="hud-vault">VAULT: $0</div>
+        <div id="live-clock" style="font-family: 'Orbitron'; font-size: 1.2rem;">00:00:00</div>
+    </div>
+    
+    <span class="bar-label">PROMOTION PROGRESS (CLICKS)</span>
+    <div class="progress-container"><div id="job-fill"></div></div>
+    
+    <span class="bar-label">SOCIAL STATUS (LIFESTYLE)</span>
+    <div class="progress-container"><div id="tier-fill"></div></div>
+</div>
+
+<div class="container">
+    <div class="work-zone">
+        <button class="btn-ach" onclick="openAchs()">🏆 VIEW ACHIEVEMENTS</button>
+        <div id="main-balance">$0</div>
+        <button id="main-clicker" class="clicker" onclick="work(event)">TAP</button>
+        <div id="cooldown-timer" style="display:none; color:var(--locked); font-family:'Orbitron'; font-weight:900; margin-top:10px;">TURBO COOLING: 120s</div>
+        
+        <div class="heat-wrapper">
+            <div style="font-size:0.7rem; color:#888; font-family:'Orbitron';">TURBO TEMP (45s MAX)</div>
+            <div class="heat-container"><div id="heat-fill"></div></div>
+        </div>
+
+        <div id="tap-bonus" class="bonus-text" style="font-family:'Orbitron'; color:var(--success);">+ $0 LIFESTYLE BONUS</div>
+        <h2 id="job-name" style="margin-top:25px; letter-spacing:10px; color: var(--accent); font-family:'Orbitron';">SHOE SHINER</h2>
+        
+        <div class="gate-status">
+            <h3 style="font-family:'Orbitron'; font-size:1rem; margin-top:0; color:#fff; border-bottom: 1px solid #333; padding-bottom:10px;">EMPIRE FOUNDATION REQS:</h3>
+            <div id="r1" class="req">✖ VAULT: $1M</div>
+            <div id="r2" class="req">✖ ROLE: CHIEF STRATEGIST</div>
+            <div id="r3" class="req">✖ STATUS: ELITE (TIER 3)</div>
+        </div>
+        
+        <div id="found-btn" onclick="goToEmpire()">FOUND EMPIRE</div>
+    </div>
+
+    <div class="section-title">CAREER PATH</div>
+    <div id="job-list" class="grid-list"></div>
+
+    <div class="section-title">LIFESTYLE SHOP</div>
+    <div id="shop-list" class="grid-list"></div>
+</div>
+
+<script>
+    let state = { money: 0, totalClicks: 0, jobClicks: 0, jobIdx: 0, tier: 1, tierProgress: 0, lifestyleBonus: 0, heat: 0, isTurboLocked: false, claimed: [] };
+    let spaceInterval = null;
+
+    const jobs = [
+        { name: "Shoe Shiner", pay: 2, req: 40 },
+        { name: "Tea Seller", pay: 30, req: 80 },
+        { name: "Market Porter", pay: 250, req: 150 },
+        { name: "Junior Clerk", pay: 3000, req: 300 },
+        { name: "Stock Broker", pay: 25000, req: 600 },
+        { name: "Venture Capitalist", pay: 500000, req: 1200 },
+        { name: "Chief Strategist", pay: 5000000, req: 2500 }
+    ];
+
+    const shop = Array.from({length: 25}, (_, i) => ({
+        name: ["Street Snack", "Formal Wear", "Smartphone", "Used Scooter", "Economy Car", "Luxury Suite", "Sports Car", "Private Jet", "Private Island", "Space Yacht"][Math.floor(i/2.5)] || "Elite Asset "+(i+1),
+        cost: Math.pow(10, i + 2),
+        boost: 5 + (i * 2),
+        moneyBonus: Math.pow(10, i) * 1.5 
+    }));
+
+    const achs = [
+        { id: 'a1', n: "Hustler", r: s => s.totalClicks >= 100, p: 500 },
+        { id: 'a2', n: "First Grand", r: s => s.money >= 1000, p: 200 },
+        { id: 'a3', n: "Corporate King", r: s => s.jobIdx >= 3, p: 10000 },
+        { id: 'a4', n: "One Percent", r: s => s.tier >= 3, p: 100000 }
+    ];
+
+    function startGame() {
+        document.getElementById('startup-screen').style.display = 'none';
+    }
+
+    function fmt(n) {
+        if (n < 1e3) return "$" + n.toFixed(0);
+        if (n < 1e6) return "$" + (n/1e3).toFixed(2) + "K";
+        if (n < 1e9) return "$" + (n/1e6).toFixed(2) + "M";
+        return "$" + (n/1e9).toFixed(2) + "B";
+    }
+
+    function openAchs() { document.getElementById('achModal').style.display = 'block'; }
+    function closeAchs() { document.getElementById('achModal').style.display = 'none'; }
+
+    function work(e, isMacro = false) {
+        if(isMacro && state.isTurboLocked) return;
+        let j = jobs[state.jobIdx];
+        let totalPay = j.pay + state.lifestyleBonus;
+        state.money += totalPay;
+        state.totalClicks++;
+        state.jobClicks++;
+        
+        if (e && e.pageX) {
+            const p = document.createElement('div');
+            p.className = 'pop'; p.style.left = e.pageX+'px'; p.style.top = e.pageY+'px';
+            p.innerText = fmt(totalPay); document.body.appendChild(p);
+            setTimeout(() => p.remove(), 800);
+        }
+
+        if(state.jobClicks >= j.req && state.jobIdx < jobs.length - 1) {
+            state.jobIdx++; 
+            state.jobClicks = 0; 
+        }
+        update();
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && !spaceInterval && !state.isTurboLocked) {
+            e.preventDefault();
+            document.getElementById('main-clicker').classList.add('active');
+            spaceInterval = setInterval(() => {
+                state.heat += 0.222; 
+                if (state.heat >= 100) triggerOverheat();
+                work(null, true); 
+                updateHeatBar();
+            }, 100);
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (e.code === 'Space') {
+            clearInterval(spaceInterval);
+            spaceInterval = null;
+            document.getElementById('main-clicker').classList.remove('active');
+        }
+    });
+
+    setInterval(() => {
+        if (!spaceInterval && state.heat > 0 && !state.isTurboLocked) {
+            state.heat = Math.max(0, state.heat - 0.111);
+            updateHeatBar();
+        }
+    }, 100);
+
+    function triggerOverheat() {
+        state.isTurboLocked = true;
+        state.heat = 100;
+        clearInterval(spaceInterval);
+        spaceInterval = null;
+        document.getElementById('main-clicker').classList.add('overheated');
+        document.getElementById('cooldown-timer').style.display = 'block';
+        let timeLeft = 120;
+        const cd = setInterval(() => {
+            timeLeft--;
+            document.getElementById('cooldown-timer').innerText = `TURBO COOLING: ${timeLeft}s`;
+            if (timeLeft <= 0) {
+                clearInterval(cd);
+                state.isTurboLocked = false;
+                state.heat = 0;
+                document.getElementById('main-clicker').classList.remove('overheated');
+                document.getElementById('cooldown-timer').style.display = 'none';
+                update();
+            }
+        }, 1000);
+    }
+
+    function updateHeatBar() { document.getElementById('heat-fill').style.width = state.heat + "%"; }
+
+    function buy(i) {
+        if(state.money >= shop[i].cost) {
+            state.money -= shop[i].cost;
+            state.lifestyleBonus += shop[i].moneyBonus;
+            state.tierProgress += shop[i].boost;
+            if(state.tierProgress >= 100 && state.tier < 3) {
+                state.tier++; 
+                state.tierProgress = 0;
+            }
+            update();
+        }
+    }
+
+    function claim(id) {
+        let a = achs.find(x => x.id === id);
+        state.money += a.p;
+        state.claimed.push(id);
+        update();
+    }
+
+    function goToEmpire() {
+        localStorage.setItem('grindMoney', state.money);
+        window.location.href = 'empire.html'; 
+    }
+
+    function update() {
+        document.body.className = "tier-" + state.tier;
+        document.getElementById('hud-vault').innerText = "VAULT: " + fmt(state.money);
+        document.getElementById('main-balance').innerText = fmt(state.money);
+        let jobProg = (state.jobClicks / jobs[state.jobIdx].req) * 100;
+        document.getElementById('job-fill').style.width = jobProg + "%";
+        document.getElementById('tier-fill').style.width = Math.min(100, state.tierProgress) + "%";
+        document.getElementById('job-name').innerText = jobs[state.jobIdx].name.toUpperCase();
+        document.getElementById('tier-label').innerText = `JOB 0${state.jobIdx + 1} | TIER ${state.tier}`;
+        document.getElementById('tap-bonus').innerText = `+ ${fmt(state.lifestyleBonus)} LIFESTYLE BONUS`;
+
+        const c1 = state.money >= 1000000, c2 = state.jobIdx >= 6, c3 = state.tier >= 3;
+        document.getElementById('r1').className = "req " + (c1?'done':'');
+        document.getElementById('r2').className = "req " + (c2?'done':'');
+        document.getElementById('r3').className = "req " + (c3?'done':'');
+        if(c1 && c2 && c3) document.getElementById('found-btn').style.display = 'block';
+
+        document.getElementById('shop-list').innerHTML = shop.map((it, i) => `
+            <div class="card">
+                <div><h4>${it.name}</h4><p>${fmt(it.cost)}</p><p style="color:var(--success); font-size:0.8rem">+${fmt(it.moneyBonus)}/CLICK</p></div>
+                <button class="buy-btn" onclick="buy(${i})" ${state.money < it.cost ? 'disabled' : ''}>BUY</button>
+            </div>`).join('');
+
+        document.getElementById('job-list').innerHTML = jobs.map((j, i) => {
+            let progText = (i < state.jobIdx) ? "COMPLETE" : (i === state.jobIdx) ? `${state.jobClicks} / ${j.req} CLICKS` : `LOCKED`;
+            return `<div class="card ${i === state.jobIdx ? 'active' : ''}">
+                <div><h4>LVL 0${i+1}</h4><p>${j.name}</p><div class="click-stat">${progText}</div></div>
+                <span>${state.jobIdx >= i ? '✔' : '🔒'}</span></div>`;
+        }).join('');
+
+        document.getElementById('ach-list-modal').innerHTML = achs.map(a => {
+            let met = a.r(state), got = state.claimed.includes(a.id);
+            return `<div class="card" style="margin-bottom: 10px; border-color:${met?'#2ecc71':'#333'}">
+                <div><h4>${a.n}</h4><p>REWARD: +${fmt(a.p)}</p></div>
+                ${met && !got ? `<button class="buy-btn" onclick="claim('${a.id}')">CLAIM</button>` : (got ? '✅' : '🔒')}
+            </div>`;
+        }).join('');
+    }
+
+    setInterval(() => document.getElementById('live-clock').innerText = new Date().toLocaleTimeString(), 1000);
+    update();
+</script>
+</body>
+</html>
