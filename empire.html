@@ -99,11 +99,19 @@
             box-shadow: 0 15px 40px rgba(112, 0, 255, 0.4);
         }
         .social-link:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+        /* Sync Notification */
+        #sync-notif {
+            position: fixed; bottom: 20px; left: 20px; font-family: 'Orbitron';
+            font-size: 10px; color: var(--success); opacity: 0; transition: 0.5s;
+            background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid var(--success);
+        }
     </style>
 </head>
 <body>
 
 <div id="news-ticker"><div class="ticker-wrap" id="ticker-text">MARKET STABLE... NO RECENT HOSTILE ACTIONS... WELCOME CEO...</div></div>
+<div id="sync-notif">CLOUD_SYNC_SUCCESSFUL</div>
 
 <div id="startup-overlay">
     <div class="startup-box">
@@ -135,7 +143,10 @@
         <div class="capital-display" id="val-money">$0</div>
         <div id="val-pps" style="color:var(--success); font-family:'Orbitron'; font-size: 0.9rem; font-weight: 700;">NET REVENUE: $0/S</div>
     </div>
-    <button class="buy-btn can-afford" style="width:auto; padding:15px 45px; margin-top:0;" onclick="manualTap()">TAP REVENUE</button>
+    <div style="display:flex; gap:10px;">
+        <button class="buy-btn can-afford" style="width:auto; padding:15px 45px; margin-top:0;" onclick="manualTap()">TAP REVENUE</button>
+        <button class="buy-btn" style="width:auto; padding:15px; margin-top:0; background:#111; border:1px solid #333; color:#555;" onclick="forceSave()">💾</button>
+    </div>
 </div>
 
 <div class="main-layout">
@@ -149,29 +160,52 @@
         <div id="biz" class="view active"><div class="grid-list" id="list-biz"></div></div>
         <div id="stocks" class="view"><div class="grid-list" id="list-stocks"></div></div>
         <div id="staff" class="view"><div class="grid-list" id="list-staff"></div></div>
+
+        <div style="margin-top:100px; padding:40px; border-top:1px solid #222; opacity:0.3; font-family:'Orbitron'; font-size:0.7rem;">
+            <h3>BOARDROOM_SYSTEM_LOGS_V4.02</h3>
+            <p>> Initializing secure handshake with local_storage...</p>
+            <p>> Encrypting financial assets under MOUSEBREAKER protocol...</p>
+            <p>> All transactions are final and recorded in the permanent ledger.</p>
+        </div>
     </div>
 
     <div class="enemy-sidebar">
         <h3 style="font-family:'Orbitron'; color:var(--danger); font-size: 1rem; border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 25px;">THREAT PROFILES</h3>
         <div id="list-enemies"></div>
+        
+        <div style="margin-top:50px; padding:20px; background:rgba(255,0,0,0.05); border-radius:10px; border:1px solid rgba(255,0,0,0.1);">
+            <h4 style="font-family:'Orbitron'; color:var(--danger); font-size:0.7rem; margin:0;">INTELLIGENCE_REPORT</h4>
+            <p style="font-size:0.65rem; color:#666; line-height:1.6; margin-top:10px;">
+                Our satellites indicate increased activity in the Volkov sector. 
+                Hostile takeovers are trending upward by 14.2% this quarter. 
+                Ensure your staff is loyal and your cash reserves are diversified into stocks.
+            </p>
+        </div>
     </div>
 </div>
 
 <button class="social-link" onclick="exitToSocial()">GO TO SOCIAL LIFE →</button>
 
 <script>
+    // --- PERSISTENCE ENGINE CONFIG ---
+    const SAVE_KEY = 'mb_empire_save';
+
+    // Base Data structure
     let state = {
-        money: 1000000,
+        money: 10,
         pps: 0,
-        tap: 5000,
+        tap: 1,
         timer: 600,
         isCrisis: false,
         tapsNeeded: 0,
         corp: "MOUSEBREAKER",
-        portfolio: {}
+        ceo: "ADMIN",
+        portfolio: {},
+        boughtAssets: [], // Tracks index of bought assets to calculate costs
+        staffLevels: []   // Tracks how many times staff were hired
     };
 
-    // 25+ Assets
+    // --- GAME DATA ARRAYS ---
     const assets = [
         { n: "Luxury Hotel", c: 5e6, i: 1.5e5 }, { n: "Cargo Port", c: 8e7, i: 2.5e6 },
         { n: "AI Server Farm", c: 1e9, i: 4e7 }, { n: "Bio-Gen Lab", c: 1e10, i: 5e8 },
@@ -188,7 +222,6 @@
         { n: "The Creator Asset", c: 1e45, i: 1e43 }
     ];
 
-    // 20+ Stocks
     const stocks = [
         { id: "MBRK", n: "MouseBreaker", p: 150, v: 0.4 }, { id: "GOLD", n: "Gold Reserves", p: 2500, v: 0.1 },
         { id: "CRUDE", n: "Global Oil", p: 85, v: 0.25 }, { id: "AIXX", n: "Neural AI", p: 1e5, v: 0.6 },
@@ -198,7 +231,6 @@
         { id: "INF", n: "Infinity Share", p: 1e25, v: 0.15 }, { id: "END", n: "The Omega", p: 1e30, v: 0.8 }
     ];
 
-    // 20+ Staff
     const staff = [
         { n: "Intern", c: 1e5, p: "+2k Tap", v: 2000, type: 'tap' },
         { n: "Junior Dev", c: 5e6, p: "+10k Tap", v: 10000, type: 'tap' },
@@ -222,10 +254,43 @@
         { n: "The Architect", t: 100, msg: "Is erasing your reality." }
     ];
 
+    // --- CORE SAVE/LOAD FUNCTIONS ---
+    function forceSave() {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+        
+        // Show sync notification
+        const notif = document.getElementById('sync-notif');
+        notif.style.opacity = '1';
+        setTimeout(() => { notif.style.opacity = '0'; }, 2000);
+    }
+
+    function loadGame() {
+        const savedData = localStorage.getItem(SAVE_KEY);
+        if (savedData) {
+            const parsed = JSON.parse(savedData);
+            // Deep merge to ensure compatibility with new game updates
+            state = { ...state, ...parsed };
+            
+            // Recalculate dynamic costs based on purchase history
+            state.boughtAssets.forEach(index => {
+                assets[index].c *= 1.4;
+            });
+            state.staffLevels.forEach(index => {
+                staff[index].c *= 10;
+            });
+
+            document.getElementById('startup-overlay').style.display = 'none';
+            document.getElementById('hud-corp').innerText = state.corp;
+            updateUI();
+        }
+    }
+
     function startGame() {
         state.corp = document.getElementById('input-corp').value || "CORP INC";
+        state.ceo = document.getElementById('input-ceo').value || "CEO";
         document.getElementById('hud-corp').innerText = state.corp;
         document.getElementById('startup-overlay').style.display = 'none';
+        forceSave();
         updateUI();
     }
 
@@ -274,19 +339,37 @@
             </div>`).join('');
     }
 
-    function buyAsset(i) { state.money -= assets[i].c; state.pps += assets[i].i; assets[i].c *= 1.4; updateUI(); }
-    function buyStock(i) { state.money -= stocks[i].p; state.portfolio[stocks[i].id] = (state.portfolio[stocks[i].id] || 0) + 1; updateUI(); }
+    function buyAsset(i) { 
+        state.money -= assets[i].c; 
+        state.pps += assets[i].i; 
+        assets[i].c *= 1.4; 
+        state.boughtAssets.push(i); // Record purchase for save
+        forceSave();
+        updateUI(); 
+    }
+
+    function buyStock(i) { 
+        state.money -= stocks[i].p; 
+        state.portfolio[stocks[i].id] = (state.portfolio[stocks[i].id] || 0) + 1; 
+        forceSave();
+        updateUI(); 
+    }
+
     function sellStock(i) { 
         let amt = state.portfolio[stocks[i].id] || 0;
         state.money += (amt * stocks[i].p);
         state.portfolio[stocks[i].id] = 0;
+        forceSave();
         updateUI();
     }
+
     function buyStaff(i) { 
         state.money -= staff[i].c;
         if(staff[i].type === 'pps') state.pps *= (1 + staff[i].v);
         if(staff[i].type === 'tap') state.tap += staff[i].v;
         staff[i].c *= 10;
+        state.staffLevels.push(i); // Record purchase for save
+        forceSave();
         updateUI();
     }
 
@@ -300,6 +383,9 @@
         }
         updateUI();
     }
+
+    // Auto-save every 10 seconds
+    setInterval(forceSave, 10000);
 
     // 10 Min Timer Loop
     setInterval(() => {
@@ -320,6 +406,7 @@
         let ri = enemies[Math.floor(Math.random()*enemies.length)];
         document.getElementById('rival-title').innerText = ri.n + " ATTACK";
         document.getElementById('crisis-overlay').style.display = 'flex';
+        forceSave();
     }
 
     function resolveCrisis(type) {
@@ -331,6 +418,7 @@
         state.isCrisis = false;
         state.timer = 600;
         document.getElementById('crisis-overlay').style.display = 'none';
+        forceSave();
         updateUI();
     }
 
@@ -342,8 +430,7 @@
     }
 
     function exitToSocial() {
-        localStorage.setItem('grindMoney', state.money);
-        localStorage.setItem('corpName', state.corp);
+        forceSave(); // Crucial: Save everything before jumping
         window.location.href = 'social.html';
     }
 
@@ -367,7 +454,8 @@
         updateUI();
     }, 2500);
 
-    updateUI();
+    // Run Load check on startup
+    window.onload = loadGame;
 </script>
 </body>
 </html>
