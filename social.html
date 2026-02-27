@@ -141,16 +141,65 @@
     <div id="estate" class="view"></div>
     <div id="garage" class="view"></div>
     <div id="lux" class="view"></div>
+
+    <div style="margin-top:150px; border-top:1px solid #222; padding-top:60px; text-align:center;">
+        <h2 style="font-family:'Orbitron'; color:var(--gold); letter-spacing:10px;">THE LEGACY HALL</h2>
+        <p style="color:#444; margin-bottom:40px;">HISTORY WILL REMEMBER THE CHOICES OF THE 1%</p>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; opacity:0.5;">
+            <div style="background:#0a0a0c; padding:30px; border-radius:15px; border:1px solid #1a1a20;">
+                <h4 style="color:var(--royal); margin:0;">CULTURAL IMPACT</h4>
+                <p style="font-size:0.8rem;">Your lifestyle choices influence 82% of global fashion trends.</p>
+            </div>
+            <div style="background:#0a0a0c; padding:30px; border-radius:15px; border:1px solid #1a1a20;">
+                <h4 style="color:var(--success); margin:0;">POLITICAL WEIGHT</h4>
+                <p style="font-size:0.8rem;">34 Sovereign nations currently adapt their laws to fit your needs.</p>
+            </div>
+            <div style="background:#0a0a0c; padding:30px; border-radius:15px; border:1px solid #1a1a20;">
+                <h4 style="color:var(--gold); margin:0;">DIVINE STANDING</h4>
+                <p style="font-size:0.8rem;">Existence itself is beginning to recognize your signature.</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <a href="empire.html" class="back-nav">← RETURN TO BOARDROOM</a>
 
 <script>
-    let money = parseInt(localStorage.getItem('grindMoney')) || 0;
-    let legacy = parseInt(localStorage.getItem('legacyScore')) || 0;
-    let owned = JSON.parse(localStorage.getItem('ownedSocial')) || [];
+    // --- PERSISTENCE ENGINE SYNC ---
+    const SAVE_KEY = 'mb_empire_save';
+    let gameState = {
+        money: 0,
+        legacy: 0,
+        ownedSocial: [],
+        corp: "MOUSEBREAKER",
+        ceo: "ADMIN"
+    };
 
-    // CUSTOM FORMATTER: No scientific language allowed
+    function loadSync() {
+        const savedData = localStorage.getItem(SAVE_KEY);
+        if (savedData) {
+            const parsed = JSON.parse(savedData);
+            // Sync local variables to the master state
+            gameState.money = parsed.money || 0;
+            gameState.legacy = parsed.legacyScore || 0; // Legacy is stored inside the main save now
+            gameState.ownedSocial = parsed.ownedSocial || [];
+            gameState.corp = parsed.corp || "CORP";
+            gameState.ceo = parsed.ceo || "CEO";
+        }
+        render();
+    }
+
+    function forceSaveSync() {
+        // We load the existing save first to make sure we don't overwrite empire data
+        const currentSave = JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
+        currentSave.money = gameState.money;
+        currentSave.legacyScore = gameState.legacy;
+        currentSave.ownedSocial = gameState.ownedSocial;
+        
+        localStorage.setItem(SAVE_KEY, JSON.stringify(currentSave));
+    }
+
+    // CUSTOM FORMATTER
     function nfmt(n) {
         if (n < 1e3) return n.toFixed(0);
         if (n < 1e6) return (n/1e3).toFixed(2) + "k";
@@ -256,21 +305,22 @@
     };
 
     function render() {
-        document.getElementById('ui-money').innerText = "$" + nfmt(money);
-        document.getElementById('ui-legacy').innerText = nfmt(legacy);
+        document.getElementById('ui-money').innerText = "$" + nfmt(gameState.money);
+        document.getElementById('ui-legacy').innerText = nfmt(gameState.legacy);
+        document.getElementById('ui-ceo').innerText = gameState.ceo.toUpperCase();
         
-        // CHECK END GAME: 1 Quintillion
-        if (legacy >= 1e18) {
+        // CHECK END GAME: 1 Quintillion (1e18)
+        if (gameState.legacy >= 1e18) {
             document.getElementById('ascension-overlay').style.display = 'flex';
-            document.getElementById('final-stats').innerText = "FINAL LEGACY: " + nfmt(legacy) + " | CEO: " + (localStorage.getItem('corpName') || "UNKNOWN");
+            document.getElementById('final-stats').innerText = "FINAL LEGACY: " + nfmt(gameState.legacy) + " | CEO: " + gameState.ceo;
         }
 
         for (let cat in data) {
             const container = document.getElementById(cat);
             if(!container) continue;
             container.innerHTML = data[cat].map(item => {
-                const isOwned = owned.includes(item.id);
-                const aff = money >= item.c && !isOwned;
+                const isOwned = gameState.ownedSocial.includes(item.id);
+                const aff = gameState.money >= item.c && !isOwned;
                 return `
                     <div class="item-card">
                         ${isOwned ? '<div class="owned-badge">COLLECTED</div>' : ''}
@@ -291,13 +341,11 @@
     }
 
     function buy(id, cost, leg) {
-        if (money >= cost && !owned.includes(id)) {
-            money -= cost;
-            legacy += leg;
-            owned.push(id);
-            localStorage.setItem('grindMoney', money);
-            localStorage.setItem('legacyScore', legacy);
-            localStorage.setItem('ownedSocial', JSON.stringify(owned));
+        if (gameState.money >= cost && !gameState.ownedSocial.includes(id)) {
+            gameState.money -= cost;
+            gameState.legacy += leg;
+            gameState.ownedSocial.push(id);
+            forceSaveSync();
             render();
         }
     }
@@ -310,12 +358,22 @@
     }
 
     function restartGame() {
-        localStorage.clear();
+        localStorage.removeItem(SAVE_KEY);
         window.location.href = 'empire.html';
     }
 
-    document.getElementById('ui-ceo').innerText = localStorage.getItem('ceoName') || "CEO";
-    render();
+    // Auto-Sync PPS from Empire (if we want the money to grow while on social page)
+    setInterval(() => {
+        const savedData = JSON.parse(localStorage.getItem(SAVE_KEY));
+        if (savedData && savedData.pps > 0) {
+            gameState.money += savedData.pps;
+            forceSaveSync();
+            render();
+        }
+    }, 1000);
+
+    // Initial Load
+    window.onload = loadSync;
 </script>
 </body>
 </html>
