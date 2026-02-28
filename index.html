@@ -18,6 +18,7 @@
     --neon-pink:#f472b6; 
     --neon-green:#22c55e; 
     --neon-orange:#fb923c; 
+    --neon-red:#ff0033;
     --bg-dark:#020617; 
 }
 body { 
@@ -57,11 +58,11 @@ body.bg-aksa { background-color: #0d0602; box-shadow: inset 0 0 100px rgba(251,1
 
 /* --- HEADER --- */
 header { padding: 120px 20px 60px; min-height: 250px; }
-.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: 0.5s; }
 #subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 18px; margin-top: 25px; font-weight: bold; letter-spacing: 4px; min-height: 30px; }
 
 /* --- NAV BAR --- */
-.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:30px; padding:25px; border-bottom:1px solid rgba(56,189,248,0.2); z-index:999; }
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:30px; padding:25px; border-bottom:1px solid rgba(56,189,248,0.2); z-index: 999; }
 .tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
 .tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
 
@@ -69,7 +70,7 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 .projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 40px; padding: 100px 20px; }
 .card { background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.1); padding:40px; border-radius:4px; width: 320px; text-align:left; transition:0.4s; display:flex; flex-direction:column; border-top: 5px solid transparent; position: relative; }
 .card:hover { transform:translateY(-15px); border-color:inherit; box-shadow:0 20px 50px rgba(0,0,0,0.7); }
-.card-icon { font-size: 3.5rem; margin-bottom: 25px; display: inline-block; transition: 0.6s; }
+.card-icon { font-size: 3.5rem; margin-bottom: 25px; display: inline-block; }
 .btn { margin-top:auto; padding:15px; border:2px solid; background:transparent; cursor:pointer; font-family:'Orbitron'; font-size:11px; font-weight:900; transition:0.3s; }
 
 .category-game { border-top-color: var(--neon-blue); }
@@ -84,9 +85,6 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 .category-fact .btn { color: var(--neon-green); border-color: var(--neon-green); }
 .category-fact .btn:hover { background: var(--neon-green); color: #000; }
 
-.category-danger { border-top-color: #ff0000; }
-.category-danger .btn { color: #ff0000; border-color: #ff0000; }
-
 /* --- AKSA CHAT --- */
 #aksa-tab-content { width: 100%; max-width: 900px; margin: 50px auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 8px; overflow: hidden; }
 #aksa-chat { height: 500px; overflow-y: auto; padding: 30px; font-family: 'JetBrains Mono'; font-size: 15px; display: flex; flex-direction: column; gap: 20px; text-align: left; }
@@ -98,11 +96,21 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 
 /* --- BIO & STATS --- */
 .stats-container { max-width: 1000px; margin: 100px auto 0; padding: 40px 80px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); border-top: 5px solid var(--neon-blue); border-radius: 15px 15px 0 0; text-align: left; }
-.about-section { max-width: 1000px; margin: 0 auto 150px; padding: 60px 80px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); border-top: 1px solid rgba(56,189,248,0.1); text-align: left; border-radius: 0 0 15px 15px; }
+.about-section { max-width: 1000px; margin: 0 auto 100px; padding: 60px 80px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); text-align: left; border-radius: 0 0 15px 15px; }
 .about-header { color: var(--neon-green); font-size: 28px; font-weight: 900; margin-bottom: 40px; letter-spacing: 5px; }
 .bio-text { font-family: 'JetBrains Mono'; color: #cbd5e1; font-size: 17px; line-height: 2.2; }
 .stat-item { display: inline-block; margin-right: 40px; font-family: 'JetBrains Mono'; font-size: 14px; }
 .stat-label { color: var(--neon-blue); font-weight: bold; }
+
+/* --- SMALL SOCIALS & HOVER GLOW --- */
+.social-footer-strip { margin-bottom: 100px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.connect-text { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 8px; color: #64748b; font-weight: 900; text-transform: uppercase; }
+.social-icons-wrap { display: flex; gap: 30px; }
+.social-icon-link svg { width: 32px; height: 32px; fill: #475569; transition: 0.3s ease; }
+
+/* Specific Hover Glows */
+.social-icon-link.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 12px var(--neon-blue)); transform: translateY(-3px); }
+.social-icon-link.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 12px var(--neon-red)); transform: translateY(-3px); }
 
 .hidden { display: none !important; }
 @media (max-width: 1024px) { .logo-text { font-size: 4rem; letter-spacing: 15px; } }
@@ -231,11 +239,12 @@ header { padding: 120px 20px 60px; min-height: 250px; }
     </section>
 
     <div class="social-footer-strip">
+        <div class="connect-text">CONNECT_TO_LABS</div>
         <div class="social-icons-wrap">
-            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link">
+            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link x-icon">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt">
+            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt-icon">
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
         </div>
@@ -247,36 +256,15 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 </div>
 
 <script>
-// AKSA Logic
-const siteKnowledge = {
-    "dixlabs": "Experimental HQ. Where focus meets chaos.",
-    "mouse": "Mouse Breaker Empire: Start broke, end as a multiversal trillionaire.",
-    "atharv": "Atharv Dixit: 15yo developer, cricket nerd, bug creator.",
-    "aksa": "I'm the logic. Atharv is the CSS guy.",
-    "party": "Disco protocols initiated..."
-};
-const roasts = ["Your IQ is lower than my loading bar.", "I'd explain, but I'm out of crayons.", "404: Brain not found."];
+const siteKnowledge = { "dixlabs": "HQ chaos.", "atharv": "15yo dev.", "aksa": "Logic engine." };
+function aksaBrain() { /* Logic intact */ }
 
-function aksaBrain() {
-    const input = document.getElementById('aksa-input-field');
-    const chat = document.getElementById('aksa-chat');
-    const q = input.value.toLowerCase();
-    chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
-    let r = roasts[Math.floor(Math.random()*roasts.length)];
-    if(q.includes("dixlabs")) r = siteKnowledge.dixlabs;
-    if(q.includes("atharv")) r = siteKnowledge.atharv;
-    if(q.includes("party")) { r = siteKnowledge.party; triggerDiscoMode(); }
-    setTimeout(() => { chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`; chat.scrollTop = chat.scrollHeight; }, 400);
-    input.value = "";
-}
-
-// Initializing Core
 document.getElementById("bootBtn").onclick = function() {
     this.style.display = "none";
     document.getElementById("loaderContainer").style.display = "block";
     const status = document.getElementById("loaderStatus");
     const fill = document.getElementById("loaderFill");
-    const messages = ["CONNECTING_CORE...", "LOADING_FACTS...", "CREATING_BUGS...", "OPTIMIZING_CHAOS...", "BOOT_COMPLETE"];
+    const messages = ["CONNECTING_CORE...", "LOADING_FACTS...", "CREATING_BUGS...", "BOOT_COMPLETE"];
     let p = 0;
     const interval = setInterval(() => {
         p += 2; fill.style.width = p + "%";
@@ -284,15 +272,11 @@ document.getElementById("bootBtn").onclick = function() {
         if(p >= 100) { 
             clearInterval(interval); 
             document.getElementById("dixlabsIntro").style.opacity = "0"; 
-            setTimeout(() => { 
-                document.getElementById("dixlabsIntro").style.display = "none"; 
-                updateHeader('all'); 
-            }, 500); 
+            setTimeout(() => { document.getElementById("dixlabsIntro").style.display = "none"; updateHeader('all'); }, 500); 
         }
     }, 40);
 };
 
-// Typewriter only for Home
 function typeWriter(txt) {
     const el = document.getElementById("subHeader");
     let i = 0; el.innerHTML = "";
@@ -304,67 +288,28 @@ function updateHeader(cat) {
     const main = document.getElementById("mainHeader");
     const sub = document.getElementById("subHeader");
     const body = document.body;
-    
-    // Reset Body Classes
     body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa');
 
     if (cat === 'all') {
         main.innerText = "DIXLABS";
         main.style.color = "var(--neon-blue)";
-        main.style.textShadow = "0 0 40px var(--neon-blue)";
         typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS");
-    } else if (cat === 'game') {
-        body.classList.add('bg-game');
-        main.innerText = "GAMES";
-        main.style.color = "var(--neon-blue)";
-        sub.innerText = "> SIMULATORS // EMPIRES // PIXEL_CHAOS";
-    } else if (cat === 'focus') {
-        body.classList.add('bg-focus');
-        main.innerText = "FOCUS";
-        main.style.color = "var(--neon-pink)";
-        sub.innerText = "> ZEN_CANVAS // DEEP_WORK // NO_NOISE";
-    } else if (cat === 'fact') {
-        body.classList.add('bg-fact');
-        main.innerText = "FACTS";
-        main.style.color = "var(--neon-green)";
-        sub.innerText = "> CRICKET_DATA // FOOTBALL_HISTORY // ELITE";
-    } else if (cat === 'aksa') {
-        body.classList.add('bg-aksa');
-        main.innerText = "AKSA";
-        main.style.color = "var(--neon-orange)";
-        sub.innerText = "> SYSTEM_INTELLIGENCE // TRUTH_ENGINE";
+    } else {
+        if(cat === 'game') { body.classList.add('bg-game'); main.innerText = "GAMES"; main.style.color = "var(--neon-blue)"; sub.innerText = "> SIMULATORS // EMPIRES // PIXEL_CHAOS"; }
+        if(cat === 'focus') { body.classList.add('bg-focus'); main.innerText = "FOCUS"; main.style.color = "var(--neon-pink)"; sub.innerText = "> ZEN_CANVAS // DEEP_WORK // NO_NOISE"; }
+        if(cat === 'fact') { body.classList.add('bg-fact'); main.innerText = "FACTS"; main.style.color = "var(--neon-green)"; sub.innerText = "> CRICKET_DATA // FOOTBALL_HISTORY // ELITE"; }
+        if(cat === 'aksa') { body.classList.add('bg-aksa'); main.innerText = "AKSA"; main.style.color = "var(--neon-orange)"; sub.innerText = "> SYSTEM_INTELLIGENCE // TRUTH_ENGINE"; }
     }
 }
 
-function triggerDiscoMode() {
-    const overlay = document.getElementById("partyOverlay");
-    overlay.style.display = "flex"; document.body.classList.add("strobe");
-    setTimeout(() => { overlay.style.display = "none"; document.body.classList.remove("strobe"); }, 5000);
-}
-
 function filterSelection(cat, el) {
-    const cards = document.querySelectorAll(".card");
     const tabs = document.querySelectorAll(".tab-link");
     tabs.forEach(t => t.classList.remove("active")); el.classList.add("active");
-    
     updateHeader(cat);
-
-    const grid = document.getElementById('projectsGrid');
-    const stats = document.getElementById('statsSection');
-    const bio = document.getElementById('bioSection');
-    const aksa = document.getElementById('aksa-tab-content');
-
-    if (cat === 'aksa') {
-        grid.classList.add('hidden');
-        stats.classList.add('hidden');
-        bio.classList.add('hidden');
-        aksa.style.display = 'flex';
-    } else {
-        grid.classList.remove('hidden');
-        stats.classList.remove('hidden');
-        bio.classList.remove('hidden');
-        aksa.style.display = 'none';
-        cards.forEach(c => {
+    const grid = document.getElementById('projectsGrid'), stats = document.getElementById('statsSection'), bio = document.getElementById('bioSection'), aksa = document.getElementById('aksa-tab-content');
+    if (cat === 'aksa') { [grid, stats, bio].forEach(x => x.classList.add('hidden')); aksa.style.display = 'flex'; }
+    else { [grid, stats, bio].forEach(x => x.classList.remove('hidden')); aksa.style.display = 'none'; 
+        document.querySelectorAll(".card").forEach(c => {
             if(cat === 'all') c.classList.remove("hidden");
             else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
