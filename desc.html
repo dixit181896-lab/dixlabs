@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dixit Labs | Official Descriptions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #38bdf8;
+            --neon-pink: #f472b6;
+            --neon-green: #22c55e;
+            --neon-orange: #fb923c;
+            --neon-purple: #a855f7;
+            --neon-red: #ff0033;
+            --bg-dark: #020617;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+        }
+
+        /* --- BACKGROUND DECOR --- */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 100px 20px 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo-text {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 15px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 30px rgba(56,189,248,0.4);
+            margin: 0;
+        }
+
+        .sub-text {
+            font-family: 'JetBrains Mono';
+            color: #64748b;
+            font-size: 14px;
+            letter-spacing: 5px;
+            margin-top: 15px;
+        }
+
+        /* --- CONTENT CONTAINER --- */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 100px; 
+        }
+
+        .section {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+            position: relative;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono';
+            font-size: 12px;
+            color: var(--neon-purple);
+            letter-spacing: 3px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding-top: 8px;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 5px solid var(--neon-blue);
+            padding: 40px;
+            border-radius: 0 15px 15px 0;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            background: rgba(15, 23, 42, 0.6);
+            border-left-width: 10px;
+            box-shadow: -10px 0 30px rgba(56, 189, 248, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .description-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            color: #cbd5e1;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 100px 20px;
+            font-family: 'JetBrains Mono';
+            font-size: 12px;
+            color: #475569;
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 850px) {
+            .section { grid-template-columns: 1fr; gap: 10px; }
+            .logo-text { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-overlay"></div>
+
+    <header>
+        <h1 class="logo-text">DIXIT LABS</h1>
+        <div class="sub-text">OFFICIAL_DOCUMENTATION</div>
+    </header>
+
+    <div class="content-container">
+
+        <div class="section">
+            <div class="section-label">The Developer</div>
+            <div class="card" style="border-color: var(--neon-green);">
+                <h2>Atharv Dixit</h2>
+                <div class="description-text">
+                    Atharv Dixit is a 15-year-old independent developer and student based in India. He focuses on creating high-performance web applications that merge creative aesthetics with technical precision. Atharv is known for his ability to build complex systems, ranging from interactive gaming simulators to professional productivity tools. His work at Dixit Labs is a reflection of his dedication to consistent building and self-taught programming. Beyond code, he is a meticulous analyst of international sports, specifically cricket and football, often integrating his data-driven insights into the projects he develops.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">The Platform</div>
+            <div class="card">
+                <h2>Dixit Labs</h2>
+                <div class="description-text">
+                    Dixit Labs is a comprehensive digital portfolio and experimental playground designed to showcase a variety of software projects. The platform serves as a centralized hub for users to interact with high-quality web applications, focus-enhancing utilities, and deep data archives. Built with a signature neon-inspired aesthetic, Dixit Labs prioritizes user immersion and interface speed. Each module within the lab is developed to solve a specific problem or provide a unique entertainment experience. From sports historians to gaming enthusiasts, the platform offers something for everyone who appreciates well-crafted software.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Gaming Module</div>
+            <div class="card" style="border-color: var(--neon-blue);">
+                <h2>Mouse Breaker Empire</h2>
+                <div class="description-text">
+                    Mouse Breaker Empire is an advanced incremental strategy game that places players in charge of a growing economic superpower. The game focuses on resource management, strategic upgrades, and long-term wealth accumulation. Players start with basic assets and work their way up to owning vast market sectors and rare planetary properties. The game features a unique "Ascension" mechanic that allows players to reset their progress in exchange for powerful, permanent multipliers that speed up future growth. It offers a challenging yet rewarding experience for fans of the idle gaming genre.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Focus Module</div>
+            <div class="card" style="border-color: var(--neon-pink);">
+                <h2>Zenboard</h2>
+                <div class="description-text">
+                    Zenboard is a minimalist productivity application that provides an infinite digital canvas for brainstorming, sketching, and organization. By removing the constraints of traditional fixed-size pages, Zenboard allows users to let their ideas flow freely in any direction. It is designed for students, designers, and developers who need a quiet, distraction-free environment to visualize complex concepts or store quick notes. The tool supports high-quality drawing tools and image imports, making it a versatile companion for creative projects and intensive brainstorming sessions.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Data Archive</div>
+            <div class="card" style="border-color: var(--neon-green);">
+                <h2>Crickemory</h2>
+                <div class="description-text">
+                    Crickemory is an elite data archive dedicated to the history and milestones of international cricket. Spanning from the earliest records in 1550 to the modern era of 2024, this application provides a curated list of 50 facts that have shaped the game. It is designed for cricket enthusiasts who appreciate the statistics and historical turning points of the sport. Crickemory combines educational value with an interactive interface, allowing users to navigate through centuries of cricketing heritage. Each fact is verified and presented with clarity, making it a reliable resource for fans looking to deepen their knowledge.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Data Archive</div>
+            <div class="card" style="border-color: var(--neon-red);">
+                <h2>Footemory</h2>
+                <div class="description-text">
+                    Footemory is a specialized sports archive focused on the world’s most popular game: football. This module documents the essential milestones and legendary moments that have defined the sport's history, from the era of Pelé to the contemporary dominance of Messi. It provides a clean and engaging way for football fans to revisit the goals, trophies, and players that changed the game forever. Like its cricket counterpart, Footemory is built for those who value data and historical accuracy. The interface is optimized for quick browsing, ensuring that users can easily find the information they need while enjoying the high-performance design.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Satire Module</div>
+            <div class="card" style="border-color: var(--neon-orange);">
+                <h2>Ambani Money</h2>
+                <div class="description-text">
+                    Ambani Money is a satirical wealth simulator that allows users to experience the thrill of reaching massive fictional net worths. The application is designed as a fun, lighthearted take on extreme wealth accumulation, providing a unique clicking experience that outpaces traditional money games. It serves as an entertaining distraction, allowing users to "spend" and "earn" massive amounts of virtual currency at high speeds. While simple in concept, Ambani Money is built with the same attention to detail and responsiveness as the lab’s more serious tools, ensuring a smooth and enjoyable user experience.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Arcade Module</div>
+            <div class="card" style="border-color: var(--neon-blue);">
+                <h2>Gross Dumpster</h2>
+                <div class="description-text">
+                    Gross Dumpster is a high-speed survival arcade game that tests player reflexes and coordination. In this survival challenge, players must collect valuable scrap metal while dodging toxic waste and hazardous obstacles. The game is designed to be fast-paced and addictive, offering a perfect way to test reaction times in short bursts. Beyond the gameplay, Gross Dumpster serves as a technical showcase for high-speed object rendering and collision detection within a web browser. Its retro-inspired graphics and intense difficulty curve make it a standout title for fans of classic arcade survival games.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Focus Module</div>
+            <div class="card" style="border-color: var(--neon-pink);">
+                <h2>Deepwork.pro</h2>
+                <div class="description-text">
+                    Deepwork.pro is a professional-grade focus tool built for heavy production and long-term concentration. The application uses timed loops and environmental cues to help users enter a state of deep work without interruptions. It eliminates standard web distractions by providing a dedicated interface where the only priority is the task at hand. This tool is especially effective for developers, writers, and students who struggle with the noise of modern digital life. By integrating a disciplined approach to time management, Deepwork.pro empowers users to reclaim their productivity and focus on high-priority goals.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">AI Module</div>
+            <div class="card" style="border-color: var(--neon-purple);">
+                <h2>Aksa</h2>
+                <div class="description-text">
+                    Aksa is a dual-purpose detection tool designed to analyze both text and images for signs of artificial intelligence generation. For text, the tool examines linguistic patterns and structural consistency to determine if content was likely produced by a Large Language Model. For images, the application analyzes pixel data for common AI-generated artifacts. This module is built for users who need an accessible way to verify the authenticity of digital content. AI Sentinel showcases the lab’s interest in neural network analysis and provides a functional utility for navigating modern, AI-influenced media.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        DIXIT LABS // 2026 // EST. IN INDIA
+    </footer>
+
+</body>
+</html>
