@@ -25,21 +25,26 @@ body {
     transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
+/* --- HUD: DATE & TIME --- */
+#liveHUD {
+    position: fixed; top: 100px; right: 30px; 
+    font-family: 'JetBrains Mono'; font-size: 12px; color: rgba(255,255,255,0.4);
+    text-align: right; pointer-events: none; z-index: 1000; display: none;
+    letter-spacing: 2px; line-height: 1.5;
+}
+
 /* --- DYNAMIC BACKGROUND ENVIRONMENTS --- */
 #env-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5; transition: 1s; }
 
-/* Sakura Petals */
 .petal { position: absolute; background: #ffb7c5; border-radius: 150% 0 150% 0; animation: drift 10s infinite linear; opacity: 0.8; }
 @keyframes drift {
     0% { transform: translateY(-10vh) rotate(0deg); left: var(--l); }
     100% { transform: translateY(110vh) rotate(360deg); left: calc(var(--l) + 100px); }
 }
 
-/* Matrix Rain */
 .matrix-column { position: absolute; top: -100px; color: var(--neon-green); font-family: 'JetBrains Mono'; font-size: 14px; writing-mode: vertical-rl; text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.6; }
 @keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
 
-/* Body Glows */
 body.bg-game { background-color: #020c1b; box-shadow: inset 0 0 150px rgba(56,189,248,0.15); }
 body.bg-focus { background-color: #0d020d; box-shadow: inset 0 0 150px rgba(244,114,182,0.15); }
 body.bg-fact { background-color: #020d05; box-shadow: inset 0 0 150px rgba(34,197,94,0.15); }
@@ -58,7 +63,8 @@ body.bg-aksa { background-color: #0d0602; box-shadow: inset 0 0 150px rgba(251,1
 /* --- HEADER & NAV --- */
 header { padding: 120px 20px 60px; min-height: 250px; }
 .logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: 0.5s; }
-#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 18px; margin-top: 25px; font-weight: bold; letter-spacing: 4px; min-height: 30px; }
+#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; margin-top: 25px; font-weight: bold; letter-spacing: 3px; min-height: 40px; padding: 0 10%; line-height: 1.6; }
+
 .nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:30px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.1); z-index: 999; }
 .tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
 .tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
@@ -101,6 +107,12 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 
 <body>
 
+<div id="liveHUD">
+    <div id="hudDate"></div>
+    <div id="hudTime"></div>
+    <div style="color:var(--neon-blue)">LOCAL_NODE: ONLINE</div>
+</div>
+
 <div id="env-layer"></div>
 
 <div id="dixlabsIntro">
@@ -115,10 +127,10 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 <div id="mainContent">
     <nav class="nav-tabs">
         <div class="tab-link active" onclick="filterSelection('all', this)">🏠 HOME</div>
-        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)"> G_DEV</div>
-        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)"> FOCUS</div>
-        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)"> FACTS</div>
-        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)"> AKSA</div>
+        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 GAMES</div>
+        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">⚡ FOCUS</div>
+        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 FACTS</div>
+        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 AKSA</div>
     </nav>
 
     <header>
@@ -241,6 +253,13 @@ function aksaBrain() {
     input.value = "";
 }
 
+function updateHUD() {
+    const now = new Date();
+    document.getElementById('hudDate').innerText = now.toLocaleDateString('en-GB');
+    document.getElementById('hudTime').innerText = now.toLocaleTimeString();
+}
+setInterval(updateHUD, 1000);
+
 function typeWriter(txt) {
     const el = document.getElementById("subHeader");
     let i = 0; el.innerHTML = "";
@@ -252,20 +271,25 @@ function updateHeader(cat) {
     const main = document.getElementById("mainHeader");
     const sub = document.getElementById("subHeader");
     const body = document.body;
+    const hud = document.getElementById('liveHUD');
     env.innerHTML = '';
     body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa');
 
     if (cat === 'all') {
+        hud.style.display = 'none';
         main.innerText = "DIXLABS"; main.style.color = "var(--neon-blue)";
-        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS");
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS // v2.0.4_STABLE");
     } else {
+        hud.style.display = 'block';
         if(cat === 'game') { 
             body.classList.add('bg-game'); main.innerText = "GAMES"; 
-            main.style.color = "var(--neon-blue)"; sub.innerText = "> SIMULATORS // PIXEL_CHAOS";
+            main.style.color = "var(--neon-blue)"; 
+            sub.innerText = "> INITIALIZING_GRAPHICS_ENGINE // CORE_SIMULATORS // MULTIVERSAL_ECONOMY_ACTIVE // RENDER_MODE: NEON";
         }
         if(cat === 'focus') { 
             body.classList.add('bg-focus'); main.innerText = "FOCUS"; 
-            main.style.color = "var(--neon-pink)"; sub.innerText = "> ZEN_CANVAS // DEEP_WORK";
+            main.style.color = "var(--neon-pink)"; 
+            sub.innerText = "> ACTIVATING_ZEN_PROTOCOLS // DEEP_WORK_MODULE_01 // MINIMALIST_OVERRIDE_ACTIVE // NO_NOISE_ZONE";
             for(let i=0; i<15; i++) {
                 let p = document.createElement('div'); p.className = 'petal';
                 p.style.setProperty('--l', Math.random()*100 + 'vw');
@@ -276,7 +300,8 @@ function updateHeader(cat) {
         }
         if(cat === 'fact') { 
             body.classList.add('bg-fact'); main.innerText = "FACTS"; 
-            main.style.color = "var(--neon-green)"; sub.innerText = "> CRICKET // FOOTBALL // DATA";
+            main.style.color = "var(--neon-green)"; 
+            sub.innerText = "> PARSING_HISTORICAL_DATABASE // CRICKET_LOGS_LOADED // FOOTBALL_ARCHIVES_SYNCED // DATA_INTEGRITY: 100%";
             for(let i=0; i<25; i++) {
                 let m = document.createElement('div'); m.className = 'matrix-column';
                 m.style.left = (i*4) + 'vw'; m.style.setProperty('--d', (Math.random()*3+2)+'s');
@@ -285,7 +310,8 @@ function updateHeader(cat) {
         }
         if(cat === 'aksa') { 
             body.classList.add('bg-aksa'); main.innerText = "AKSA"; 
-            main.style.color = "var(--neon-orange)"; sub.innerText = "> TRUTH_ENGINE // AI_LOGIC";
+            main.style.color = "var(--neon-orange)"; 
+            sub.innerText = "> TRUTH_ENGINE_BOOT_SEQUENCE // NEURAL_NET_ACTIVE // LOGIC_GATES_OPEN // CHALLENGE_ACCEPTED";
         }
     }
 }
@@ -316,8 +342,9 @@ function filterSelection(cat, el) {
     if (cat === 'aksa') { [grid, stats, bio].forEach(x => x.classList.add('hidden')); aksa.style.display = 'flex'; }
     else { [grid, stats, bio].forEach(x => x.classList.remove('hidden')); aksa.style.display = 'none'; 
         document.querySelectorAll(".card").forEach(c => {
-            const isMatch = c.querySelector('h3').innerText.includes("BREAKER") || c.querySelector('h3').innerText.includes("AMBANI") || c.querySelector('h3').innerText.includes("DUMPSTER") ? 'game' : 
-                            c.querySelector('h3').innerText.includes("ZEN") || c.querySelector('h3').innerText.includes("DEEP") ? 'focus' : 'fact';
+            const h = c.querySelector('h3').innerText;
+            const isMatch = h.includes("BREAKER") || h.includes("AMBANI") || h.includes("DUMPSTER") ? 'game' : 
+                            h.includes("ZEN") || h.includes("DEEP") ? 'focus' : 'fact';
             (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
     }
