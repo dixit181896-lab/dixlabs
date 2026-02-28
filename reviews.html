@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dixit Labs | System_Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-purple: #a855f7;
+            --neon-blue: #38bdf8;
+            --bg-dark: #020617;
+            --card-bg: rgba(15, 23, 42, 0.9);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header { padding: 60px 20px; text-align: center; }
+        .logo-text { font-size: 3rem; font-weight: 900; letter-spacing: 15px; color: var(--neon-purple); text-shadow: 0 0 20px rgba(168, 85, 247, 0.6); margin: 0; }
+        .status-bar { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--neon-blue); margin-top: 10px; letter-spacing: 2px; }
+
+        .container {
+            max-width: 900px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-bottom: 100px;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-top: 4px solid var(--neon-purple);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .label {
+            font-family: 'JetBrains Mono';
+            font-size: 13px;
+            color: var(--neon-purple);
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        /* --- THE CROP LOGIC --- */
+        .crop-container {
+            width: 100%;
+            height: 350px; /* Adjust this height to show more or less of the image */
+            overflow: hidden; /* This hides the bottom half */
+            border: 1px solid #1e293b;
+            border-radius: 4px;
+            background: #000;
+        }
+
+        .crop-container img {
+            width: 100%;
+            height: 200%; /* Makes image twice the height of container */
+            object-fit: cover;
+            object-position: top; /* Anchors the image to the top, cutting off the bottom */
+            filter: contrast(110%);
+            transition: 0.5s ease;
+        }
+
+        .review-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .back-nav { margin-top: 40px; font-family: 'JetBrains Mono'; }
+        .back-link { color: #64748b; text-decoration: none; font-size: 12px; letter-spacing: 2px; }
+        .back-link:hover { color: white; text-shadow: 0 0 10px white; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo-text">REVIEWS</h1>
+        <div class="status-bar">> ASSET_FILTER: ACTIVE // BOTTOM_CROP: ENABLED</div>
+    </header>
+
+    <div class="container">
+        <div class="review-card">
+            <span class="label">[LOG_DATA: rev.png]</span>
+            <div class="crop-container">
+                <img src="rev.png" alt="Review 01">
+            </div>
+        </div>
+
+        <div class="review-card">
+            <span class="label">[LOG_DATA: rev2.png]</span>
+            <div class="crop-container">
+                <img src="rev2.png" alt="Review 02">
+            </div>
+        </div>
+
+        <div class="back-nav">
+            <a href="index.html" class="back-link">< RETURN_TO_CORE</a>
+        </div>
+    </div>
+
+</body>
+</html>
