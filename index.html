@@ -31,11 +31,16 @@ body { margin:0; background-color:var(--bg-dark); color:white; font-family:'Orbi
 .strobe { animation: strobeBG 0.1s infinite; }
 @keyframes strobeBG { 0% { background: #ff0000; } 20% { background: #00ff00; } 40% { background: #0000ff; } 60% { background: #ffff00; } 80% { background: #ff00ff; } 100% { background: #00ffff; } }
 
-/* --- INTRO SCREEN --- */
+/* --- INTRO SCREEN & LOADING BAR --- */
 #dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
-.intro-logo { width:350px; margin-bottom:40px; filter: drop-shadow(0 0 25px var(--neon-blue)); }
+.intro-logo { width:300px; margin-bottom:40px; filter: drop-shadow(0 0 25px var(--neon-blue)); }
 .intro-btn { background:none; border:2px solid #fff; color:#fff; padding:20px 50px; cursor:pointer; font-family:'Orbitron'; font-weight:900; letter-spacing:5px; transition: 0.3s; }
 .intro-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
+
+#loaderContainer { display: none; width: 300px; margin-top: 30px; }
+#loaderBar { width: 100%; height: 4px; background: #1e293b; border-radius: 10px; overflow: hidden; position: relative; }
+#loaderFill { width: 0%; height: 100%; background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); transition: width 0.1s; }
+#loaderStatus { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--neon-blue); margin-top: 15px; letter-spacing: 2px; height: 20px; }
 
 /* --- HEADER --- */
 header { padding: 120px 20px 60px; }
@@ -52,7 +57,6 @@ header { padding: 120px 20px 60px; }
 .card { background:rgba(15,23,42,0.8); border:1px solid rgba(56,189,248,0.1); padding:35px; border-radius:4px; width: 300px; text-align:left; transition:0.4s cubic-bezier(.175, .885, .32, 1.275); display:flex; flex-direction:column; border-top: 5px solid transparent; position: relative; }
 .card:hover { transform:translateY(-15px); border-color:var(--neon-blue); box-shadow:0 20px 50px rgba(0,0,0,0.7); }
 .card-icon { font-size: 3.2rem; margin-bottom: 20px; display: inline-block; transition: 0.6s; }
-.card:hover .card-icon { transform: rotateY(360deg); }
 .btn { margin-top:auto; padding:12px; border:2px solid var(--neon-blue); background:transparent; color:var(--neon-blue); cursor:pointer; font-family:'Orbitron'; font-size:10px; font-weight:900; transition:0.3s; }
 .btn:hover { background:var(--neon-blue); color:#000; }
 
@@ -61,21 +65,25 @@ header { padding: 120px 20px 60px; }
 .category-fact { border-top-color: var(--neon-green); }
 .category-danger { border-top-color: #ff0000; }
 
-/* --- AKSA INTEGRATED TAB MODE --- */
-#aksa-tab-content { width: 100%; max-width: 800px; margin: 0 auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 4px; box-shadow: 0 0 40px rgba(251, 146, 60, 0.2); }
+/* --- SOCIAL LINKS --- */
+.social-footer-strip { margin: 80px 0; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+.social-icons-wrap { display: flex; gap: 50px; }
+.social-icon-link svg { width: 50px; height: 50px; fill: #64748b; transition: 0.4s; }
+.social-icon-link:hover svg { fill: white; filter: drop-shadow(0 0 15px var(--neon-blue)); transform: scale(1.2); }
+.social-icon-link.yt:hover svg { fill: #ff0000; filter: drop-shadow(0 0 15px #ff0000); }
+
+/* --- AKSA CHAT --- */
+#aksa-tab-content { width: 100%; max-width: 800px; margin: 0 auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 4px; }
 #aksa-chat { height: 450px; overflow-y: auto; padding: 25px; font-family: 'JetBrains Mono'; font-size: 14px; display: flex; flex-direction: column; gap: 15px; text-align: left; }
 .aksa-reply { background: rgba(251,146,60,0.1); color: var(--neon-orange); border-left: 4px solid var(--neon-orange); padding: 12px; }
 .user-msg { background: rgba(56,189,248,0.1); color: var(--neon-blue); align-self: flex-end; border-right: 4px solid var(--neon-blue); padding: 12px; }
 #aksa-input-wrap { display: flex; border-top: 1px solid #222; }
 #aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 20px; outline: none; font-family: 'JetBrains Mono'; }
-#aksa-send { background: var(--neon-orange); border: none; padding: 0 35px; cursor: pointer; font-weight: 900; font-family: 'Orbitron'; color: #000; }
+#aksa-send { background: var(--neon-orange); border: none; padding: 0 35px; cursor: pointer; font-weight: 900; color: #000; }
 
-/* --- EXTENDED BIO --- */
 .about-section { max-width: 900px; margin: 100px auto; padding: 60px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); text-align: left; border-radius: 12px; }
 .about-header { color: var(--neon-green); font-size: 24px; font-weight: 900; margin-bottom: 30px; letter-spacing: 3px; }
 .bio-text { font-family: 'JetBrains Mono'; color: #cbd5e1; font-size: 16px; line-height: 2; }
-.about-email { display: inline-block; margin-top: 40px; color: var(--neon-blue); font-weight: bold; text-decoration: none; border-bottom: 2px solid var(--neon-blue); }
-
 .hidden { display: none !important; }
 @media (max-width: 768px) { .logo-text { font-size: 3rem; letter-spacing: 10px; } }
 </style>
@@ -91,6 +99,10 @@ header { padding: 120px 20px 60px; }
 <div id="dixlabsIntro">
     <img src="logo.png" class="intro-logo">
     <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+    <div id="loaderContainer">
+        <div id="loaderBar"><div id="loaderFill"></div></div>
+        <div id="loaderStatus">READY_FOR_BOOT</div>
+    </div>
 </div>
 
 <div id="mainContent">
@@ -108,7 +120,7 @@ header { padding: 120px 20px 60px; }
     </header>
 
     <div id="aksa-tab-content">
-        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. AKSA Integrated Mode active. Input logic.</div></div>
+        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. AKSA online. What do you want?</div></div>
         <div id="aksa-input-wrap">
             <input type="text" id="aksa-input-field" placeholder="Challenge the AI..." onkeypress="if(event.key==='Enter') aksaBrain()">
             <button id="aksa-send" onclick="aksaBrain()">EXE</button>
@@ -116,79 +128,21 @@ header { padding: 120px 20px 60px; }
     </div>
 
     <div class="projects" id="projectsGrid">
-        <div class="card category-game" onmouseenter="/* Play Hover */">
-            <div style="position: absolute; top: 15px; right: 15px; background: var(--neon-blue); color: black; font-size: 8px; padding: 4px 10px; font-weight: 900; border-radius: 50px;">NEW FLAGSHIP</div>
+        <div class="card category-game">
+            <div style="position: absolute; top: 15px; right: 15px; background: var(--neon-blue); color: black; font-size: 8px; padding: 4px 10px; font-weight: 900; border-radius: 50px;">FLAGSHIP</div>
             <div class="card-icon">💰</div>
             <h3>MOUSE_BREAKER_EMPIRE</h3>
-            <p>The ultimate multiversal power trip. Start with nothing, dominate markets, and reach the 1Q Legacy score. Divine Ascension awaits.</p>
-            <button class="btn" onclick="location.href='idle.html'">INITIALIZE_EMPIRE_v4.0</button>
+            <p>Multiversal power trip. Start with nothing, dominate markets, and reach the 1Q Legacy score.</p>
+            <button class="btn" onclick="location.href='idle.html'">INITIALIZE_EMPIRE</button>
         </div>
-
-        <div class="card category-focus">
-            <div class="card-icon">🎨</div>
-            <h3>ZENBOARD</h3>
-            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Your thoughts are too big for one page.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
-        </div>
-
-        <div class="card category-fact">
-            <div class="card-icon">🏏</div>
-            <h3>CRICKEMORY</h3>
-            <p>Atharv's master archive. 1550-2024. 50 facts that define the game. Don't debate the data.</p>
-            <button class="btn" onclick="location.href='c.html'">ENTER_STADIUM</button>
-        </div>
-
-        <div class="card category-fact">
-            <div class="card-icon">⚽</div>
-            <h3>FOOTEMORY</h3>
-            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
-        </div>
-
-        <div class="card category-game">
-            <div class="card-icon">💸</div>
-            <h3>AMBANI_MONEY</h3>
-            <p>Fake it till you make it. Reach 11 figures. The only place you're richer than the admin.</p>
-            <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
-        </div>
-
-        <div class="card category-game">
-            <div class="card-icon">🗑️</div>
-            <h3>GROSSDUMPSTER</h3>
-            <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival.</p>
-            <button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button>
-        </div>
-
-        <div class="card category-focus">
-            <div class="card-icon">🧘</div>
-            <h3>DEEPWORK.PRO</h3>
-            <p>Zero distractions. 3-hour focus loops. Built for those who actually want to produce.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
-        </div>
-
-        <div class="card category-danger">
-            <div class="card-icon">⚠️</div>
-            <h3>DANGER_ZONE</h3>
-            <p>CRITICAL: High intensity disco protocols detected. Click to initiate party.exe.</p>
-            <button class="btn" style="color:#ff0000; border-color:#ff0000;" onclick="triggerDiscoMode()">PARTY_EXE</button>
-        </div>
+        <div class="card category-focus"><div class="card-icon">🎨</div><h3>ZENBOARD</h3><p>Infinite digital canvas for brain dumps.</p><button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button></div>
+        <div class="card category-fact"><div class="card-icon">🏏</div><h3>CRICKEMORY</h3><p>Atharv's archive. 50 facts. 1550-2024.</p><button class="btn" onclick="location.href='c.html'">ENTER_STADIUM</button></div>
+        <div class="card category-fact"><div class="card-icon">⚽</div><h3>FOOTEMORY</h3><p>Football milestones for the elite.</p><button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button></div>
+        <div class="card category-game"><div class="card-icon">💸</div><h3>AMBANI_MONEY</h3><p>Wealth simulator. Reach 11 figures.</p><button class="btn" onclick="location.href='ambani.html'">GET_RICH</button></div>
+        <div class="card category-game"><div class="card-icon">🗑️</div><h3>GROSSDUMPSTER</h3><p>High-speed scrap survival.</p><button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button></div>
+        <div class="card category-focus"><div class="card-icon">🧘</div><h3>DEEPWORK.PRO</h3><p>Zero distractions. 3-hour focus loops.</p><button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button></div>
+        <div class="card category-danger"><div class="card-icon">⚠️</div><h3>DANGER_ZONE</h3><p>Critical disco protocols detected.</p><button class="btn" style="color:#ff0000; border-color:#ff0000;" onclick="triggerDiscoMode()">PARTY_EXE</button></div>
     </div>
-
-    <section class="about-section" style="border-top: 10px solid var(--neon-blue);">
-        <div class="about-header">[📊] LIVE_TERMINAL_STATS</div>
-        <div class="bio-text" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <span style="color:var(--neon-blue)">PROJECTS_ACTIVE:</span> 09<br>
-                <span style="color:var(--neon-blue)">TOTAL_LOGIC_LINES:</span> 15.2k+<br>
-                <span style="color:var(--neon-blue)">SERVER_STATUS:</span> NOMINAL
-            </div>
-            <div>
-                <span style="color:var(--neon-pink)">REGION:</span> ASIA_SOUTH_01<br>
-                <span style="color:var(--neon-pink)">UPLOADS:</span> GITHUB_PAGES_LIVE<br>
-                <span style="color:var(--neon-pink)">OS:</span> DIXIT_LABS_v3.5
-            </div>
-        </div>
-    </section>
 
     <section class="about-section" id="bioSection">
         <div class="about-header">[🧬] SYSTEM_ADMIN: Atharv Dixit</div>
@@ -203,86 +157,67 @@ header { padding: 120px 20px 60px; }
             If the site breaks, it's a feature. If it works, it's a miracle. 
             तब तक दुआओं में याद रखें (Keep me in your prayers).
             <br>
-            <a href="mailto:dixit181896@gmail.com" class="about-email">SYS_CONTACT: dixit181896@gmail.com</a>
+            <a href="mailto:dixit181896@gmail.com" class="about-email" style="color:var(--neon-blue); text-decoration:none; border-bottom:2px solid;">SYS_CONTACT: dixit181896@gmail.com</a>
         </div>
     </section>
 
+    <div class="social-footer-strip">
+        <h2 style="font-family:'Orbitron'; letter-spacing:10px; opacity:0.6;">CONNECT_LABS</h2>
+        <div class="social-icons-wrap">
+            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </div>
+
     <footer style="padding:100px 20px; font-family:'JetBrains Mono'; font-size:12px; opacity:0.3; letter-spacing:5px;">
-        DIXIT LABS // 2026 // EST. IN CHAOS<br>
-        ALL ASSETS SYNCED TO THE CLOUD // SECURE_SOCKET_LAYER: ENABLED
+        DIXIT LABS // 2026 // EST. IN CHAOS
     </footer>
 </div>
 
 <script>
-/**
- * [AKSA_CORE_KNOWLEDGE_BASE]
- */
 const siteKnowledge = {
-    "dixlabs": "Dixit Labs is Atharv's experimental headquarters. It's where focus meets chaos.",
-    "mouse": "Mouse Breaker Empire: Start broke, end as a multiversal trillionaire. Flagship v4.0.",
-    "ambani": "Ambani Money: A satire simulator. Reach 11 figures. Only place you're richer than Atharv.",
-    "crick": "Crickemory: Elite cricket archive (1550-2024). Don't argue with Atharv's stats.",
-    "foot": "Footemory: Football milestones from Pele to Messi. Knowledge is the only goal.",
-    "zen": "Zenboard: Infinite canvas for brain dumps. Your thoughts don't have borders here.",
-    "deep": "DeepWork.pro: Zero distractions. 3-hour focus loops for elite productivity.",
-    "gross": "GrossDumpster: High-speed scrap survival. Pixel chaos at its best.",
-    "atharv": "Atharv Dixit: 15-year-old developer, cricket analyst, and professional bug creator.",
-    "admin": "The Admin is Atharv. He builds. You watch. Any questions?",
-    "aksa": "I am AKSA. I run the logic here. Atharv just does the CSS.",
-    "party": "Disco protocols initiated. System meltdown in 3... 2... 1..."
+    "dixlabs": "Experimental HQ. Where focus meets chaos.",
+    "mouse": "Mouse Breaker Empire: Start broke, end as a multiversal trillionaire.",
+    "atharv": "Atharv Dixit: 15yo developer, cricket nerd, bug creator.",
+    "aksa": "I'm the logic. Atharv is the CSS guy.",
+    "party": "Disco protocols initiated..."
 };
-
-const roasts = [
-    "Your IQ is lower than the site's loading speed.",
-    "I'd explain it to you, but I don't have the crayons.",
-    "Are you typing with your toes? This input is garbage.",
-    "I’ve seen better logic in a broken toaster.",
-    "You're the human version of a 404 error.",
-    "My cooling fans are louder than your opinions.",
-    "Error 401: You're not authorized to be this boring.",
-    "I'm optimized for truth. You're optimized for wasting my CPU."
-];
-
-function triggerDiscoMode() {
-    const overlay = document.getElementById("partyOverlay");
-    overlay.style.display = "flex"; document.body.classList.add("strobe");
-    setTimeout(() => { overlay.style.display = "none"; document.body.classList.remove("strobe"); }, 5000);
-}
+const roasts = ["Your IQ is lower than my loading bar.", "I'd explain, but I'm out of crayons.", "404: Brain not found."];
 
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
-    const q = input.value.toLowerCase().trim();
-    if(!q) return;
+    const q = input.value.toLowerCase();
     chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
+    let r = roasts[Math.floor(Math.random()*roasts.length)];
+    if(q.includes("dixlabs")) r = siteKnowledge.dixlabs;
+    if(q.includes("atharv")) r = siteKnowledge.atharv;
+    if(q.includes("party")) { r = siteKnowledge.party; triggerDiscoMode(); }
+    setTimeout(() => { chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`; chat.scrollTop = chat.scrollHeight; }, 400);
     input.value = "";
-    setTimeout(() => {
-        let r = "";
-        if (q.includes("dixlabs") || q.includes("site")) r = siteKnowledge.dixlabs;
-        else if (q.includes("mouse") || q.includes("empire")) r = siteKnowledge.mouse;
-        else if (q.includes("ambani") || q.includes("money")) r = siteKnowledge.ambani;
-        else if (q.includes("cricket") || q.includes("crickemory")) r = siteKnowledge.crick;
-        else if (q.includes("football") || q.includes("footemory")) r = siteKnowledge.foot;
-        else if (q.includes("zen") || q.includes("board")) r = siteKnowledge.zen;
-        else if (q.includes("deep") || q.includes("work")) r = siteKnowledge.deep;
-        else if (q.includes("gross") || q.includes("dumpster")) r = siteKnowledge.gross;
-        else if (q.includes("atharv") || q.includes("who is")) r = siteKnowledge.atharv;
-        else if (q.includes("admin")) r = siteKnowledge.admin;
-        else if (q.includes("aksa")) r = siteKnowledge.aksa;
-        else if (q.includes("party") || q.includes("disco")) { r = siteKnowledge.party; triggerDiscoMode(); }
-        else r = roasts[Math.floor(Math.random() * roasts.length)];
-        
-        chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-    }, 400);
 }
 
-document.getElementById("bootBtn").onclick = () => {
-    document.getElementById("dixlabsIntro").style.opacity = "0";
-    setTimeout(() => { 
-        document.getElementById("dixlabsIntro").style.display = "none"; 
-        typeWriter(); 
-    }, 500);
+document.getElementById("bootBtn").onclick = function() {
+    this.style.display = "none";
+    document.getElementById("loaderContainer").style.display = "block";
+    const status = document.getElementById("loaderStatus");
+    const fill = document.getElementById("loaderFill");
+    const messages = ["CONNECTING_CORE...", "LOADING_FACTS...", "CREATING_BUGS...", "OPTIMIZING_CHAOS...", "BOOT_COMPLETE"];
+    let p = 0;
+    const interval = setInterval(() => {
+        p += 2;
+        fill.style.width = p + "%";
+        status.innerText = messages[Math.floor(p/25)] || "DONE";
+        if(p >= 100) {
+            clearInterval(interval);
+            document.getElementById("dixlabsIntro").style.opacity = "0";
+            setTimeout(() => { document.getElementById("dixlabsIntro").style.display = "none"; typeWriter(); }, 500);
+        }
+    }, 40);
 };
 
 function typeWriter() {
@@ -293,43 +228,30 @@ function typeWriter() {
     type();
 }
 
+function triggerDiscoMode() {
+    const overlay = document.getElementById("partyOverlay");
+    overlay.style.display = "flex"; document.body.classList.add("strobe");
+    setTimeout(() => { overlay.style.display = "none"; document.body.classList.remove("strobe"); }, 5000);
+}
+
 function filterSelection(cat, el) {
     const cards = document.querySelectorAll(".card");
     const tabs = document.querySelectorAll(".tab-link");
-    const projectsGrid = document.getElementById('projectsGrid');
-    const bioSection = document.getElementById('bioSection');
-    const aksaContent = document.getElementById('aksa-tab-content');
-    
     tabs.forEach(t => t.classList.remove("active")); el.classList.add("active");
-
-    if (cat === 'aksa') {
-        projectsGrid.classList.add('hidden');
-        bioSection.classList.add('hidden');
-        aksaContent.style.display = 'flex';
+    if(cat==='aksa'){
+        document.getElementById('projectsGrid').classList.add('hidden');
+        document.getElementById('bioSection').classList.add('hidden');
+        document.getElementById('aksa-tab-content').style.display = 'flex';
     } else {
-        projectsGrid.classList.remove('hidden');
-        bioSection.classList.remove('hidden');
-        aksaContent.style.display = 'none';
+        document.getElementById('projectsGrid').classList.remove('hidden');
+        document.getElementById('bioSection').classList.remove('hidden');
+        document.getElementById('aksa-tab-content').style.display = 'none';
         cards.forEach(c => {
             if(cat === 'all') c.classList.remove("hidden");
             else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
     }
 }
-
-/**
- * [SYSTEM_SHIELD_MODULE_v3.5]
- * Procedural System Logs to maintain code volume and structural integrity.
- * Total Logic Lines across all Dixit Labs modules: 15.2k+
- */
-// LOG_001: Kernel initialized...
-// LOG_002: Security protocols standing by...
-// LOG_003: Atharv Dixit verified as root admin...
-// LOG_004: Mouse Breaker Empire state: Online...
-// LOG_005: Deepwork buffers cleared...
-// LOG_006: Zenboard vector engine ready...
-// LOG_007: Cricket facts database v2.0 synced...
-// ... (Lines 500-1000 continue in system memory)
 </script>
 </body>
 </html>
