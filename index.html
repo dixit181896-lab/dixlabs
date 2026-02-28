@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
-    <meta name="description" content="Dixit Labs - Experimental Playground by Atharv Dixit. Games, Focus Tools, and Cricket Facts.">
-    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
-    <link rel="shortcut icon" href="/logo.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dixit Labs | Games // Focus // Facts</title>
+    <meta name="description" content="Dixit Labs - The experimental playground of Atharv Dixit. High-performance games, deep focus tools, and elite sports data archives. Built in India.">
+    <meta name="keywords" content="Dixit Labs, Atharv Dixit, Mouse Breaker, Zenboard, Cricket Facts, Coding, India Developer">
+    <meta name="author" content="Atharv Dixit">
+    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dixitlabs.pages.dev/">
+    <meta property="og:title" content="Dixit Labs | Games // Focus // Facts">
+    <meta property="og:description" content="Step into the lab. Explore experimental sims, productivity tools, and the ultimate cricket & football archives.">
+    <meta property="og:image" content="/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dixitlabs.pages.dev/">
+    <meta property="twitter:title" content="Dixit Labs | Atharv Dixit">
+    <meta property="twitter:description" content="Experimental projects and data archives by Atharv Dixit.">
+    <meta property="twitter:image" content="/logo.png">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
+    <link rel="shortcut icon" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
     
 <style>
@@ -21,7 +35,7 @@
 body { 
     margin:0; background-color:var(--bg-dark); color:white; 
     font-family:'Orbitron',sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 250vh; 
+    overflow-x:hidden; min-height: 280vh; /* Elongated further */
     transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
@@ -93,13 +107,13 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 .stat-item { display: inline-block; margin-right: 40px; font-family: 'JetBrains Mono'; font-size: 14px; }
 .stat-label { color: var(--neon-blue); font-weight: bold; }
 
-/* --- SOCIALS --- */
-.social-footer-strip { margin-bottom: 150px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.connect-text { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 8px; color: #475569; font-weight: 900; text-transform: uppercase; }
-.social-icons-wrap { display: flex; gap: 30px; }
-.social-icon-link svg { width: 32px; height: 32px; fill: #475569; transition: 0.3s; }
-.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 15px var(--neon-blue)); transform: translateY(-5px); }
-.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 15px var(--neon-red)); transform: translateY(-5px); }
+/* --- SOCIALS - UPSCALED --- */
+.social-footer-strip { margin-bottom: 150px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+.connect-text { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 10px; color: #ffffff; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+.social-icons-wrap { display: flex; gap: 40px; }
+.social-icon-link svg { width: 42px; height: 42px; fill: #475569; transition: 0.3s; }
+.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 15px var(--neon-blue)); transform: scale(1.15); }
+.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 15px var(--neon-red)); transform: scale(1.15); }
 
 .hidden { display: none !important; }
 </style>
