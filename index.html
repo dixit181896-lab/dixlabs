@@ -35,7 +35,7 @@
 body { 
     margin:0; background-color:var(--bg-dark); color:white; 
     font-family:'Orbitron',sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 280vh; /* Elongated further */
+    overflow-x:hidden; min-height: 350vh; /* Elongated even further */
     transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
@@ -59,10 +59,19 @@ body {
 .matrix-column { position: absolute; top: -100px; color: var(--neon-green); font-family: 'JetBrains Mono'; font-size: 14px; writing-mode: vertical-rl; text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.6; }
 @keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
 
+/* Red Glitch Particles for DESC */
+.red-particle { position: absolute; background: var(--neon-red); width: 2px; height: 10px; animation: glitch-drift 3s infinite linear; opacity: 0.7; }
+@keyframes glitch-drift {
+    0% { transform: translateY(-10vh); left: var(--l); }
+    50% { opacity: 1; }
+    100% { transform: translateY(110vh); left: var(--l); }
+}
+
 body.bg-game { background-color: #020c1b; box-shadow: inset 0 0 150px rgba(56,189,248,0.15); }
 body.bg-focus { background-color: #0d020d; box-shadow: inset 0 0 150px rgba(244,114,182,0.15); }
 body.bg-fact { background-color: #020d05; box-shadow: inset 0 0 150px rgba(34,197,94,0.15); }
 body.bg-aksa { background-color: #0d0602; box-shadow: inset 0 0 150px rgba(251,146,60,0.15); }
+body.bg-desc { background-color: #1a0202; box-shadow: inset 0 0 150px rgba(255,0,51,0.2); }
 
 /* --- INTRO & BOOT --- */
 #dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
@@ -145,6 +154,7 @@ header { padding: 120px 20px 60px; min-height: 250px; }
         <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">⚡ FOCUS</div>
         <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 FACTS</div>
         <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 AKSA</div>
+        <div class="tab-link" onclick="filterSelection('desc', this)" style="color:var(--neon-red)">📄 DESC</div>
     </nav>
 
     <header>
@@ -212,8 +222,8 @@ header { padding: 120px 20px 60px; min-height: 250px; }
     </div>
 
     <section class="stats-container" id="statsSection">
-        <div class="stat-item"><span class="stat-label">PROJECTS_ACTIVE:</span> 09</div>
-        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 15.2k+</div>
+        <div class="stat-item"><span class="stat-label">PROJECTS_ACTIVE:</span> 10</div>
+        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 16.8k+</div>
         <div class="stat-item"><span class="stat-label">SERVER:</span> ASIA_SOUTH_01</div>
         <div class="stat-item"><span class="stat-label">STATUS:</span> NOMINAL</div>
     </section>
@@ -263,7 +273,7 @@ function aksaBrain() {
     chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
     let r = "I'm still calculating how you thought that was a good question.";
     if(q.includes("atharv")) r = "Atharv Dixit: 15yo dev, loves cricket, hates bugs (but creates them).";
-    if(q.includes("dixlabs")) r = "Experimental HQ. 15.2k lines of code and counting.";
+    if(q.includes("dixlabs")) r = "Experimental HQ. 16.8k lines of code and counting.";
     setTimeout(() => { chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`; chat.scrollTop = chat.scrollHeight; }, 400);
     input.value = "";
 }
@@ -288,7 +298,7 @@ function updateHeader(cat) {
     const body = document.body;
     const hud = document.getElementById('liveHUD');
     env.innerHTML = '';
-    body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa');
+    body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa', 'bg-desc');
 
     if (cat === 'all') {
         hud.style.display = 'none';
@@ -328,6 +338,19 @@ function updateHeader(cat) {
             main.style.color = "var(--neon-orange)"; 
             sub.innerText = "> TRUTH_ENGINE_BOOT_SEQUENCE // NEURAL_NET_ACTIVE // LOGIC_GATES_OPEN // CHALLENGE_ACCEPTED";
         }
+        if(cat === 'desc') {
+            body.classList.add('bg-desc'); main.innerText = "DESC";
+            main.style.color = "var(--neon-red)";
+            sub.innerText = "> REDIRECTING_TO_DOCUMENTATION // ANALYZING_SYSTEM_DATA // PREPARING_DESC_MODULE...";
+            for(let i=0; i<30; i++) {
+                let m = document.createElement('div'); m.className = 'red-particle';
+                m.style.left = Math.random()*100 + 'vw';
+                m.style.animationDelay = Math.random()*5+'s';
+                env.appendChild(m);
+            }
+            // Execute redirect after 1.5 seconds to let the theme show
+            setTimeout(() => { window.location.href = 'desc.html'; }, 1500);
+        }
     }
 }
 
@@ -353,6 +376,10 @@ function filterSelection(cat, el) {
     document.querySelectorAll(".tab-link").forEach(t => t.classList.remove("active"));
     el.classList.add("active");
     updateHeader(cat);
+    
+    // If it's the description tab, we handle the transition in updateHeader and then redirect.
+    if(cat === 'desc') return;
+
     const grid = document.getElementById('projectsGrid'), stats = document.getElementById('statsSection'), bio = document.getElementById('bioSection'), aksa = document.getElementById('aksa-tab-content');
     if (cat === 'aksa') { [grid, stats, bio].forEach(x => x.classList.add('hidden')); aksa.style.display = 'flex'; }
     else { [grid, stats, bio].forEach(x => x.classList.remove('hidden')); aksa.style.display = 'none'; 
@@ -367,4 +394,3 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
-
