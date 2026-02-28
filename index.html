@@ -35,7 +35,7 @@
 body { 
     margin:0; background-color:var(--bg-dark); color:white; 
     font-family:'Orbitron',sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 400vh;
+    overflow-x:hidden; min-height: 450vh; /* Elongated for deep scroll */
     transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
@@ -50,23 +50,27 @@ body {
 /* --- DYNAMIC BACKGROUND ENVIRONMENTS --- */
 #env-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5; transition: 1s; }
 
+/* Sakura Petals Animation */
 .petal { position: absolute; background: #ffb7c5; border-radius: 150% 0 150% 0; animation: drift 10s infinite linear; opacity: 0.8; }
 @keyframes drift {
     0% { transform: translateY(-10vh) rotate(0deg); left: var(--l); }
     100% { transform: translateY(110vh) rotate(360deg); left: calc(var(--l) + 100px); }
 }
 
+/* Matrix Animation */
 .matrix-column { position: absolute; top: -100px; color: var(--neon-green); font-family: 'JetBrains Mono'; font-size: 14px; writing-mode: vertical-rl; text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.6; }
 @keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
 
+/* Red Glitch Particles for DESC */
 .red-particle { position: absolute; background: var(--neon-red); width: 2px; height: 10px; animation: glitch-drift 3s infinite linear; opacity: 0.7; }
-.gold-particle { position: absolute; background: var(--neon-gold); border-radius: 50%; width: 4px; height: 4px; animation: shine-drift 4s infinite ease-in-out; opacity: 0.8; box-shadow: 0 0 10px var(--neon-gold); }
-
 @keyframes glitch-drift {
     0% { transform: translateY(-10vh); left: var(--l); }
     50% { opacity: 1; }
     100% { transform: translateY(110vh); left: var(--l); }
 }
+
+/* Gold Particles for WORK */
+.gold-particle { position: absolute; background: var(--neon-gold); border-radius: 50%; width: 4px; height: 4px; animation: shine-drift 4s infinite ease-in-out; opacity: 0.8; box-shadow: 0 0 10px var(--neon-gold); }
 @keyframes shine-drift {
     0% { transform: translateY(110vh) scale(0); opacity: 0; }
     50% { opacity: 1; transform: translateY(50vh) scale(1.5); }
@@ -95,28 +99,15 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 .logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: 0.5s; }
 #subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; margin-top: 25px; font-weight: bold; letter-spacing: 3px; min-height: 40px; padding: 0 10%; line-height: 1.6; }
 
-.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:30px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.1); z-index: 999; flex-wrap: wrap; }
+.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:20px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.1); z-index: 999; flex-wrap: wrap; }
 .tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
 .tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
 
-/* --- CARDS ENHANCED COLORING --- */
+/* --- CARDS --- */
 .projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 40px; padding: 100px 20px; }
 .card { background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:40px; border-radius:4px; width: 320px; text-align:left; transition:0.4s; display:flex; flex-direction:column; border-top: 5px solid transparent; position: relative; }
-.card:hover { transform:translateY(-15px); box-shadow:0 20px 50px rgba(0,0,0,0.7); }
-
-/* Specific category glows */
-.category-game { border-top-color: var(--neon-blue); }
-.category-game:hover { box-shadow: 0 10px 40px rgba(56,189,248,0.2); border-color: var(--neon-blue); }
-
-.category-focus { border-top-color: var(--neon-pink); }
-.category-focus:hover { box-shadow: 0 10px 40px rgba(244,114,182,0.2); border-color: var(--neon-pink); }
-
-.category-fact { border-top-color: var(--neon-green); }
-.category-fact:hover { box-shadow: 0 10px 40px rgba(34,197,94,0.2); border-color: var(--neon-green); }
-
+.card:hover { transform:translateY(-15px); box-shadow:0 20px 50px rgba(0,0,0,0.7); border-color: inherit; }
 .card-icon { font-size: 3.5rem; margin-bottom: 25px; }
-.card h3 { letter-spacing: 2px; font-size: 1.2rem; margin-bottom: 15px; }
-.card p { font-family: 'JetBrains Mono'; font-size: 14px; color: #94a3b8; line-height: 1.6; }
 .btn { margin-top:auto; padding:15px; border:2px solid; background:transparent; cursor:pointer; font-family:'Orbitron'; font-size:11px; font-weight:900; transition:0.3s; }
 
 /* --- AKSA CHAT --- */
@@ -136,6 +127,7 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 .stat-item { display: inline-block; margin-right: 40px; font-family: 'JetBrains Mono'; font-size: 14px; }
 .stat-label { color: var(--neon-blue); font-weight: bold; }
 
+/* --- SOCIALS - RESTORED --- */
 .social-footer-strip { margin-bottom: 150px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
 .connect-text { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 10px; color: #ffffff; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
 .social-icons-wrap { display: flex; gap: 40px; }
@@ -191,59 +183,59 @@ header { padding: 120px 20px 60px; min-height: 250px; }
     </div>
 
     <div class="projects" id="projectsGrid">
-        <div class="card category-game">
+        <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💰</div>
             <h3>MOUSE_BREAKER_EMPIRE</h3>
-            <p>The ultimate multiversal power trip. Start with nothing, dominate markets, buy planets, and reach the 1Q Legacy score. Divine Ascension awaits those who click enough.</p>
+            <p>The ultimate multiversal power trip. Start with nothing, dominate markets, buy planets, and reach the 1Q Legacy score.</p>
             <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='idle.html'">INITIALIZE</button>
         </div>
 
-        <div class="card category-focus">
+        <div class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🎨</div>
             <h3>ZENBOARD</h3>
-            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Built because thoughts are too big for one page and messy ideas deserve an infinite space.</p>
+            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Built because thoughts are too big for one page.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
         </div>
 
-        <div class="card category-fact">
+        <div class="card" style="border-top-color: var(--neon-green);">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
-            <p>Atharv's master archive. Covering 1550 to 2024. 50 facts that define the history of the game. Pure data for those who think they know cricket.</p>
+            <p>Atharv's master archive. Covering 1550 to 2024. 50 facts that define the history of the game. Pure data.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='c.html'">ENTER_STADIUM</button>
         </div>
 
-        <div class="card category-fact">
+        <div class="card" style="border-top-color: var(--neon-green);">
             <div class="card-icon">⚽</div>
             <h3>FOOTEMORY</h3>
-            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here. A curated list of moments that changed the beautiful game forever.</p>
+            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here. Curated moments.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
         </div>
 
-        <div class="card category-game">
+        <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💸</div>
             <h3>AMBANI_MONEY</h3>
-            <p>Fake it till you make it. Reach 11 figures in this satire wealth simulator. The only place on the internet where you're richer than the admin.</p>
+            <p>Reach 11 figures in this satire wealth simulator. The only place where you're richer than the admin.</p>
             <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='ambani.html'">GET_RICH</button>
         </div>
 
-        <div class="card category-game">
+        <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
-            <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival game. It’s messy, it’s fast, and it’s a total metaphor for modern social media.</p>
+            <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival game. Messy and fast.</p>
             <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='gd.html'">SCRAP_METAL</button>
         </div>
 
-        <div class="card category-focus">
+        <div class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🧘</div>
             <h3>DEEPWORK.PRO</h3>
-            <p>Zero distractions. 3-hour focus loops. Built for heavy production sessions. No notifications, no fluff—just you and the work you're supposed to be doing.</p>
+            <p>Zero distractions. 3-hour focus loops. Built for heavy production sessions. No notifications.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
         </div>
     </div>
 
     <section class="stats-container" id="statsSection">
         <div class="stat-item"><span class="stat-label">PROJECTS_ACTIVE:</span> 10</div>
-        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 17.5k+</div>
+        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 18.2k+</div>
         <div class="stat-item"><span class="stat-label">SERVER:</span> ASIA_SOUTH_01</div>
         <div class="stat-item"><span class="stat-label">STATUS:</span> NOMINAL</div>
     </section>
@@ -251,20 +243,28 @@ header { padding: 120px 20px 60px; min-height: 250px; }
     <section class="about-section" id="bioSection">
         <div class="about-header">[🧬] SYSTEM_ADMIN: Atharv Dixit</div>
         <div class="bio-text">
-            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student and developer from India. 
-            Dixit Labs is my Area 51—a place for experimental games, deep focus, and elite facts.
+            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student and developer from India. Dixit Labs is my Area 51—a place for experimental games, deep focus, and elite facts.
             <br><br>
-            मैं एक साधारण छात्र हूँ (I'm a simple student), but my code is anything but simple. 
+            मैं एक साधारण छात्र हूँ (I'm a simple student). If the site breaks, it's a feature. If it works, it's a miracle. 
             <br><br>
-            If the site breaks, it's a feature. If it works, it's a miracle. 
-            <br>
             <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:2px solid;">SYS_CONTACT: dixit181896@gmail.com</a>
         </div>
     </section>
 
+    <div class="social-footer-strip">
+        <div class="connect-text">CONNECT_TO_LABS</div>
+        <div class="social-icons-wrap">
+            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link x-icon">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt-icon">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </div>
+
     <footer style="padding:100px 20px; font-family:'JetBrains Mono'; font-size:12px; opacity:0.3; letter-spacing:5px;">
-        DIXIT LABS // 2026 // EST. IN CHAOS |||  Dixlabs Builds interactive games, focus apps, fun chatbots and apps showing factts.
-        MADE BY A TEEN DEVELOPER
+        DIXIT LABS // 2026 // EST. IN CHAOS
     </footer>
 </div>
 
@@ -278,6 +278,7 @@ function aksaBrain() {
     chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
     let r = "I'm still calculating how you thought that was a good question.";
     if(q.includes("atharv")) r = "Atharv Dixit: 15yo dev, loves cricket, hates bugs.";
+    if(q.includes("dixlabs")) r = "Experimental HQ. 18.2k lines of code and counting.";
     setTimeout(() => { chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`; chat.scrollTop = chat.scrollHeight; }, 400);
     input.value = "";
 }
@@ -301,7 +302,7 @@ function updateHeader(cat) {
     const sub = document.getElementById("subHeader");
     const body = document.body;
     const hud = document.getElementById('liveHUD');
-    env.innerHTML = '';
+    env.innerHTML = ''; // Clear animations
     body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa', 'bg-desc', 'bg-work');
 
     if (cat === 'all') {
@@ -311,11 +312,54 @@ function updateHeader(cat) {
     } else {
         hud.style.display = 'block';
         if(cat === 'game') { body.classList.add('bg-game'); main.innerText = "GAMES"; main.style.color = "var(--neon-blue)"; }
-        if(cat === 'focus') { body.classList.add('bg-focus'); main.innerText = "FOCUS"; main.style.color = "var(--neon-pink)"; }
-        if(cat === 'fact') { body.classList.add('bg-fact'); main.innerText = "FACTS"; main.style.color = "var(--neon-green)"; }
+        
+        if(cat === 'focus') { 
+            body.classList.add('bg-focus'); main.innerText = "FOCUS"; main.style.color = "var(--neon-pink)"; 
+            sub.innerText = "> ACTIVATING_ZEN_PROTOCOLS // NO_NOISE_ZONE";
+            // RESTORE SAKURA
+            for(let i=0; i<15; i++) {
+                let p = document.createElement('div'); p.className = 'petal';
+                p.style.setProperty('--l', Math.random()*100 + 'vw');
+                p.style.width = p.style.height = (Math.random()*10+5)+'px';
+                p.style.animationDelay = Math.random()*10+'s';
+                env.appendChild(p);
+            }
+        }
+
+        if(cat === 'fact') { 
+            body.classList.add('bg-fact'); main.innerText = "FACTS"; main.style.color = "var(--neon-green)"; 
+            sub.innerText = "> PARSING_HISTORICAL_DATABASE // DATA_INTEGRITY: 100%";
+            // RESTORE MATRIX
+            for(let i=0; i<25; i++) {
+                let m = document.createElement('div'); m.className = 'matrix-column';
+                m.style.left = (i*4) + 'vw'; m.style.setProperty('--d', (Math.random()*3+2)+'s');
+                m.innerText = "101011001010110"; env.appendChild(m);
+            }
+        }
+
         if(cat === 'aksa') { body.classList.add('bg-aksa'); main.innerText = "AKSA"; main.style.color = "var(--neon-orange)"; }
-        if(cat === 'desc') { setTimeout(() => { window.location.href = 'desc.html'; }, 1000); }
-        if(cat === 'work') { setTimeout(() => { window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdnd7DuK0GozsKc4NNmjHJQZVuOiNEoZu0gOWo8rl5BmbbrBQ/viewform?usp=dialog'; }, 1000); }
+        
+        if(cat === 'desc') {
+            body.classList.add('bg-desc'); main.innerText = "DESC"; main.style.color = "var(--neon-red)";
+            for(let i=0; i<30; i++) {
+                let m = document.createElement('div'); m.className = 'red-particle';
+                m.style.left = Math.random()*100 + 'vw';
+                m.style.animationDelay = Math.random()*5+'s';
+                env.appendChild(m);
+            }
+            setTimeout(() => { window.location.href = 'desc.html'; }, 1500); 
+        }
+
+        if(cat === 'work') {
+            body.classList.add('bg-work'); main.innerText = "JOIN_US"; main.style.color = "var(--neon-gold)";
+            for(let i=0; i<40; i++) {
+                let m = document.createElement('div'); m.className = 'gold-particle';
+                m.style.left = Math.random()*100 + 'vw';
+                m.style.animationDelay = Math.random()*4+'s';
+                env.appendChild(m);
+            }
+            setTimeout(() => { window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdnd7DuK0GozsKc4NNmjHJQZVuOiNEoZu0gOWo8rl5BmbbrBQ/viewform?usp=dialog'; }, 1500);
+        }
     }
 }
 
@@ -346,12 +390,13 @@ function filterSelection(cat, el) {
     else { 
         [grid, stats, bio].forEach(x => x.classList.remove('hidden')); aksa.style.display = 'none'; 
         document.querySelectorAll(".card").forEach(c => {
-            const isMatch = c.classList.contains(`category-${cat}`);
-            (cat === 'all' || isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
+            const h = c.querySelector('h3').innerText;
+            const isMatch = (h.includes("BREAKER") || h.includes("AMBANI") || h.includes("DUMPSTER")) ? 'game' : 
+                            (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
+            (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
     }
 }
 </script>
 </body>
 </html>
-
