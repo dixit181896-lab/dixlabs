@@ -60,16 +60,6 @@ header { padding: 120px 20px 60px; }
 .category-focus { border-top-color: var(--neon-pink); }
 .category-fact { border-top-color: var(--neon-green); }
 .category-danger { border-top-color: #ff0000; }
-.category-premium { border-top-color: var(--gold); }
-
-/* --- SOCIAL LINKS SECTION --- */
-.social-footer-strip { margin: 80px 0; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-.social-icons-wrap { display: flex; gap: 50px; }
-.social-icon-link { transition: 0.4s; position: relative; display: flex; align-items: center; justify-content: center; }
-.social-icon-link svg { width: 50px; height: 50px; fill: #64748b; transition: 0.4s; }
-.social-icon-link:hover svg { fill: #white; filter: drop-shadow(0 0 15px var(--neon-blue)); transform: scale(1.2); }
-.social-icon-link.yt:hover svg { fill: #ff0000; filter: drop-shadow(0 0 15px #ff0000); }
-.social-icon-link.x:hover svg { fill: white; filter: drop-shadow(0 0 15px white); }
 
 /* --- AKSA INTEGRATED TAB MODE --- */
 #aksa-tab-content { width: 100%; max-width: 800px; margin: 0 auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 4px; box-shadow: 0 0 40px rgba(251, 146, 60, 0.2); }
@@ -118,7 +108,7 @@ header { padding: 120px 20px 60px; }
     </header>
 
     <div id="aksa-tab-content">
-        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. SEO restored. AKSA Integrated Mode active. Input logic.</div></div>
+        <div id="aksa-chat"><div class="msg aksa-reply">Data synced. AKSA Integrated Mode active. Input logic.</div></div>
         <div id="aksa-input-wrap">
             <input type="text" id="aksa-input-field" placeholder="Challenge the AI..." onkeypress="if(event.key==='Enter') aksaBrain()">
             <button id="aksa-send" onclick="aksaBrain()">EXE</button>
@@ -126,58 +116,57 @@ header { padding: 120px 20px 60px; }
     </div>
 
     <div class="projects" id="projectsGrid">
-        
         <div class="card category-game" onmouseenter="/* Play Hover */">
-            <div style="position: absolute; top: 15px; right: 15px; background: var(--neon-blue); color: black; font-size: 8px; padding: 4px 10px; font-weight: 900; border-radius: 50px;">FLAGSHIP</div>
+            <div style="position: absolute; top: 15px; right: 15px; background: var(--neon-blue); color: black; font-size: 8px; padding: 4px 10px; font-weight: 900; border-radius: 50px;">NEW FLAGSHIP</div>
             <div class="card-icon">💰</div>
             <h3>MOUSE_BREAKER_EMPIRE</h3>
-            <p>Multiversal power trip. Start with nothing, dominate markets, and reach the 1Q Legacy score. Divine Ascension awaits CEOs.</p>
+            <p>The ultimate multiversal power trip. Start with nothing, dominate markets, and reach the 1Q Legacy score. Divine Ascension awaits.</p>
             <button class="btn" onclick="location.href='idle.html'">INITIALIZE_EMPIRE_v4.0</button>
         </div>
 
-        <div class="card category-focus" onmouseenter="/* Play Hover */">
+        <div class="card category-focus">
             <div class="card-icon">🎨</div>
             <h3>ZENBOARD</h3>
             <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Your thoughts are too big for one page.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
         </div>
 
-        <div class="card category-fact" onmouseenter="/* Play Hover */">
+        <div class="card category-fact">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
             <p>Atharv's master archive. 1550-2024. 50 facts that define the game. Don't debate the data.</p>
             <button class="btn" onclick="location.href='c.html'">ENTER_STADIUM</button>
         </div>
 
-        <div class="card category-fact" onmouseenter="/* Play Hover */">
+        <div class="card category-fact">
             <div class="card-icon">⚽</div>
             <h3>FOOTEMORY</h3>
             <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
         </div>
 
-        <div class="card category-game" onmouseenter="/* Play Hover */">
+        <div class="card category-game">
             <div class="card-icon">💸</div>
             <h3>AMBANI_MONEY</h3>
             <p>Fake it till you make it. Reach 11 figures. The only place you're richer than the admin.</p>
             <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
         </div>
 
-        <div class="card category-game" onmouseenter="/* Play Hover */">
+        <div class="card category-game">
             <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
             <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival.</p>
             <button class="btn" onclick="location.href='gd.html'">SCRAP_METAL</button>
         </div>
 
-        <div class="card category-focus" onmouseenter="/* Play Hover */">
+        <div class="card category-focus">
             <div class="card-icon">🧘</div>
             <h3>DEEPWORK.PRO</h3>
             <p>Zero distractions. 3-hour focus loops. Built for those who actually want to produce.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
         </div>
 
-        <div class="card category-danger" onmouseenter="/* Play Hover */">
+        <div class="card category-danger">
             <div class="card-icon">⚠️</div>
             <h3>DANGER_ZONE</h3>
             <p>CRITICAL: High intensity disco protocols detected. Click to initiate party.exe.</p>
@@ -200,18 +189,6 @@ header { padding: 120px 20px 60px; }
             </div>
         </div>
     </section>
-
-    <div class="social-footer-strip">
-        <h2 style="font-family:'Orbitron'; letter-spacing:10px; opacity:0.6;">CONNECT_LABS</h2>
-        <div class="social-icons-wrap">
-            <a href="https://x.com/dixlabsOFF/status/2026905204072001768?s=20" target="_blank" class="social-icon-link x">
-                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="https://www.youtube.com/channel/UC2atq1Dz93Ge30UgNYLMECQ" target="_blank" class="social-icon-link yt">
-                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </a>
-        </div>
-    </div>
 
     <section class="about-section" id="bioSection">
         <div class="about-header">[🧬] SYSTEM_ADMIN: Atharv Dixit</div>
@@ -237,34 +214,35 @@ header { padding: 120px 20px 60px; }
 </div>
 
 <script>
-/* -------------------------------------------------------------------------------------------
-   [ CORE_LOGIC_MATRIX ] :: DIXIT_LABS ENGINE v3.5
-   EXTENDED SYSTEM FILE: 1000 LINES OF PROCEDURAL SYSTEM INFRASTRUCTURE
-   AUTHOR: ATHARV DIXIT
-   -------------------------------------------------------------------------------------------
-*/
+/**
+ * [AKSA_CORE_KNOWLEDGE_BASE]
+ */
+const siteKnowledge = {
+    "dixlabs": "Dixit Labs is Atharv's experimental headquarters. It's where focus meets chaos.",
+    "mouse": "Mouse Breaker Empire: Start broke, end as a multiversal trillionaire. Flagship v4.0.",
+    "ambani": "Ambani Money: A satire simulator. Reach 11 figures. Only place you're richer than Atharv.",
+    "crick": "Crickemory: Elite cricket archive (1550-2024). Don't argue with Atharv's stats.",
+    "foot": "Footemory: Football milestones from Pele to Messi. Knowledge is the only goal.",
+    "zen": "Zenboard: Infinite canvas for brain dumps. Your thoughts don't have borders here.",
+    "deep": "DeepWork.pro: Zero distractions. 3-hour focus loops for elite productivity.",
+    "gross": "GrossDumpster: High-speed scrap survival. Pixel chaos at its best.",
+    "atharv": "Atharv Dixit: 15-year-old developer, cricket analyst, and professional bug creator.",
+    "admin": "The Admin is Atharv. He builds. You watch. Any questions?",
+    "aksa": "I am AKSA. I run the logic here. Atharv just does the CSS.",
+    "party": "Disco protocols initiated. System meltdown in 3... 2... 1..."
+};
 
-// [001] SYSTEM INITIALIZATION CONSTANTS
-const SYSTEM_BUILD = "2026.02.28";
-const ADMIN_ACCESS = "ATHARV_DIXIT";
-const LATENCY_BUFFER = 15.2;
-const CORE_HEARTBEAT_INTERVAL = 1000;
-
-// [005] QUIPS MODULE
-const quips = [
-    "Error 404: Logic not found.", 
-    "Go play Crickemory, you clearly need education.", 
-    "Atharv is busy. I'm bored. This conversation is failing.", 
-    "Your typing speed is almost as slow as your wit.", 
-    "Even my cache is bored of your input.", 
-    "Go play Mouse Breaker, you're clearly broke.", 
-    "I'm not rude, I'm just optimized for honesty.", 
-    "Your existence is an undocumented feature.", 
-    "Shutting down 'Care' protocols... Done.", 
-    "Is it hard being this basic, or does it come naturally?"
+const roasts = [
+    "Your IQ is lower than the site's loading speed.",
+    "I'd explain it to you, but I don't have the crayons.",
+    "Are you typing with your toes? This input is garbage.",
+    "I’ve seen better logic in a broken toaster.",
+    "You're the human version of a 404 error.",
+    "My cooling fans are louder than your opinions.",
+    "Error 401: You're not authorized to be this boring.",
+    "I'm optimized for truth. You're optimized for wasting my CPU."
 ];
 
-// [020] UI INTERACTION WRAPPERS
 function triggerDiscoMode() {
     const overlay = document.getElementById("partyOverlay");
     overlay.style.display = "flex"; document.body.classList.add("strobe");
@@ -279,12 +257,24 @@ function aksaBrain() {
     chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
     input.value = "";
     setTimeout(() => {
-        let r = quips[Math.floor(Math.random() * quips.length)];
-        if(q.includes("party")) triggerDiscoMode();
-        if(q.includes("money") || q.includes("mouse")) r = "Start with idle.html. Only then can you talk money.";
+        let r = "";
+        if (q.includes("dixlabs") || q.includes("site")) r = siteKnowledge.dixlabs;
+        else if (q.includes("mouse") || q.includes("empire")) r = siteKnowledge.mouse;
+        else if (q.includes("ambani") || q.includes("money")) r = siteKnowledge.ambani;
+        else if (q.includes("cricket") || q.includes("crickemory")) r = siteKnowledge.crick;
+        else if (q.includes("football") || q.includes("footemory")) r = siteKnowledge.foot;
+        else if (q.includes("zen") || q.includes("board")) r = siteKnowledge.zen;
+        else if (q.includes("deep") || q.includes("work")) r = siteKnowledge.deep;
+        else if (q.includes("gross") || q.includes("dumpster")) r = siteKnowledge.gross;
+        else if (q.includes("atharv") || q.includes("who is")) r = siteKnowledge.atharv;
+        else if (q.includes("admin")) r = siteKnowledge.admin;
+        else if (q.includes("aksa")) r = siteKnowledge.aksa;
+        else if (q.includes("party") || q.includes("disco")) { r = siteKnowledge.party; triggerDiscoMode(); }
+        else r = roasts[Math.floor(Math.random() * roasts.length)];
+        
         chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`;
         chat.scrollTop = chat.scrollHeight;
-    }, 300);
+    }, 400);
 }
 
 document.getElementById("bootBtn").onclick = () => {
@@ -320,7 +310,6 @@ function filterSelection(cat, el) {
         projectsGrid.classList.remove('hidden');
         bioSection.classList.remove('hidden');
         aksaContent.style.display = 'none';
-        
         cards.forEach(c => {
             if(cat === 'all') c.classList.remove("hidden");
             else c.classList.contains("category-"+cat) ? c.classList.remove("hidden") : c.classList.add("hidden");
@@ -328,77 +317,19 @@ function filterSelection(cat, el) {
     }
 }
 
-// [080] CORE SYSTEM LOGS & PROCEDURAL EXPANSION
-// This section simulates the 15.2k lines of logic required by the Dixit Labs infrastructure.
-// ---------------------------------------------------------------------------------------
-
-const SYSLOG = {
-    init: () => console.log("%c[SYSTEM] Dixit Labs Initializing...", "color: #38bdf8"),
-    auth: () => console.log("%c[AUTH] Admin Atharv Dixit Verified", "color: #22c55e"),
-    ping: (src) => console.log(`[NET] Ping from ${src}: 14ms`),
-    data_dump: (size) => console.warn(`[DATA] Heavy influx: ${size}MB. Optimizing...`)
-};
-
-/* -------------------------------------------------------------------------------------------
-   GENERATING SYSTEM BUFFERS (Line 100 - 1100)
-   -------------------------------------------------------------------------------------------
-*/
-
-const system_meta_logic_loop = [];
-for (let line = 100; line <= 1100; line++) {
-    const status = line % 50 === 0 ? "CRITICAL_HEARTBEAT" : "THREAD_IDLE";
-    const hex = (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
-    // Simulated line injection
-    system_meta_logic_loop.push(`// [${line}] :: 0x${hex} :: ${status} :: ADDR_OFFSET_INJECT`);
-}
-
 /**
- * Procedural System Maintenance Logic
- * Handles memory allocation for the experimental playground components.
+ * [SYSTEM_SHIELD_MODULE_v3.5]
+ * Procedural System Logs to maintain code volume and structural integrity.
+ * Total Logic Lines across all Dixit Labs modules: 15.2k+
  */
-class DixitKernel {
-    constructor() {
-        this.version = "3.5.2";
-        this.uptime = 0;
-        this.securityToken = "ATH_DIX_2026_PRO";
-    }
-
-    allocateVRAM() {
-        // Pseudo-logic for GPU acceleration of CSS animations
-        return Array.from({length: 100}, (_, k) => `frame_${k}_buffer`);
-    }
-
-    runDiagnostic() {
-        SYSLOG.init();
-        SYSLOG.auth();
-        this.simulateLogicLines();
-    }
-
-    simulateLogicLines() {
-        // Line padding for visual file size weight
-        // Block 1: Game Physics Constants
-        const G_CONST = 9.80665;
-        const FRICTION = 0.05;
-        // Block 2: Cricket Memory Data Pointers
-        const FACT_STREAMS = ["1550_INIT", "1877_TEST", "2011_WORLD_CUP", "2024_T20"];
-        // Block 3: UI Stress Handling
-        const OVERLAY_BUFFER = 0.85;
-    }
-}
-
-// Instantiate and Lock Kernel
-const kernel = new DixitKernel();
-kernel.runDiagnostic();
-
-// [1101] END OF FILE SYSTEM LOG
-console.log("%c[FILE] dlabs_index.html expansion complete. 1.2k total script lines compiled.", "color: #f472b6");
-
-/* -------------------------------------------------------------------------------------------
-   [SYSTEM_ADMIN_NOTICE]: 
-   Manual modification of this matrix may lead to unplanned disco modes.
-   Atharv Dixit // Dixit Labs // EST. 2026
-   -------------------------------------------------------------------------------------------
-*/
+// LOG_001: Kernel initialized...
+// LOG_002: Security protocols standing by...
+// LOG_003: Atharv Dixit verified as root admin...
+// LOG_004: Mouse Breaker Empire state: Online...
+// LOG_005: Deepwork buffers cleared...
+// LOG_006: Zenboard vector engine ready...
+// LOG_007: Cricket facts database v2.0 synced...
+// ... (Lines 500-1000 continue in system memory)
 </script>
 </body>
 </html>
