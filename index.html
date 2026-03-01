@@ -163,6 +163,20 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 
 .hidden { display: none !important; }
 </style>
+    <script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"Organization",
+ "name":"Dixlabs",
+ "url":"https://dixlabs.vercel.app",
+ "logo":"https://dixlabs.vercel.app/logo.png",
+ "description":"Teen-built experimental tech lab building games and productivity tools.",
+ "founder":{
+   "@type":"Person",
+   "name":"Atharv Dixit"
+ }
+}
+</script>
 </head>
     
 <body>
@@ -178,6 +192,10 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 <div id="dixlabsIntro">
     <img src="logo.png" class="intro-logo">
     <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
+    <button onclick="document.getElementById('dixlabsIntro').style.display='none';updateHeader('all');"
+style="margin-top:20px;background:none;border:none;color:#aaa;cursor:pointer;font-family:Orbitron;">
+SKIP BOOT →
+</button>
     <div id="loaderContainer">
         <div id="loaderBar"><div id="loaderFill"></div></div>
         <div id="loaderStatus">READY_FOR_BOOT</div>
@@ -441,5 +459,6 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
 
 
