@@ -36,7 +36,7 @@
 body { 
     margin:0; background-color:var(--bg-dark); color:white; 
     font-family:'Orbitron',sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 1500vh; /* Ultra-elongated for SEO ranking */
+    overflow-x:hidden; min-height: 100vh;
     transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -82,52 +82,103 @@ body.bg-focus { background-color: #0d020d; box-shadow: inset 0 0 200px rgba(244,
 body.bg-fact { background-color: #020d05; box-shadow: inset 0 0 200px rgba(34,197,94,0.2); }
 
 /* --- NAV & HEADER --- */
-.nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.95); backdrop-filter:blur(20px); display:flex; justify-content:center; gap:20px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.05); z-index: 999; flex-wrap: wrap; }
-.tab-link { cursor:pointer; font-size:11px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #475569; letter-spacing: 2px; }
+.nav-tabs { 
+    position:sticky; top:0; background:rgba(2,6,23,0.95); backdrop-filter:blur(20px); 
+    display:flex; justify-content:center; gap:15px; padding:20px; 
+    border-bottom:1px solid rgba(255,255,255,0.05); z-index: 999; flex-wrap: wrap; 
+}
+.tab-link { 
+    cursor:pointer; font-size:clamp(9px, 2vw, 11px); text-transform:uppercase; 
+    font-weight:900; transition:0.3s; color: #475569; letter-spacing: 1px; 
+}
 .tab-link:hover { color: #fff; }
 .tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
 
-header { padding: 150px 20px 80px; }
-.logo-text { font-size: clamp(3rem, 10vw, 8rem); font-weight: 900; letter-spacing: 20px; color: var(--neon-blue); text-shadow: 0 0 50px rgba(56,189,248,0.5); margin: 0; }
-#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 15px; margin-top: 30px; letter-spacing: 4px; line-height: 1.8; max-width: 800px; margin-left: auto; margin-right: auto; }
+header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
+.logo-text { 
+    font-size: clamp(2.5rem, 12vw, 8rem); 
+    font-weight: 900; letter-spacing: clamp(5px, 3vw, 20px); 
+    color: var(--neon-blue); text-shadow: 0 0 50px rgba(56,189,248,0.5); margin: 0; 
+}
+#subHeader { 
+    font-family: 'JetBrains Mono'; color: var(--neon-pink); 
+    font-size: clamp(12px, 1.5vw, 15px); margin-top: 30px; 
+    letter-spacing: 2px; line-height: 1.8; max-width: 800px; 
+    margin-left: auto; margin-right: auto; padding: 0 20px;
+}
 
-/* --- PROJECT CARDS --- */
-.projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 40px; padding: 100px 20px; }
-.card { background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.08); padding:45px; border-radius:8px; width: 340px; text-align:left; transition:0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display:flex; flex-direction:column; border-top: 6px solid transparent; }
-.card:hover { transform:translateY(-20px); box-shadow:0 30px 60px rgba(0,0,0,0.8); border-color: inherit; }
-.card-icon { font-size: 4rem; margin-bottom: 30px; transition: 0.8s; }
+/* --- PROJECT CARDS (Optimized Grid) --- */
+.projects { 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 1400px; margin: 0 auto; gap: 30px; padding: 60px 20px; 
+}
+
+@media (max-width: 400px) {
+    .projects { grid-template-columns: 1fr; }
+}
+
+.card { 
+    background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.08); 
+    padding:35px; border-radius:8px; text-align:left; 
+    transition:0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    display:flex; flex-direction:column; border-top: 6px solid transparent; 
+}
+.card:hover { transform:translateY(-15px); box-shadow:0 30px 60px rgba(0,0,0,0.8); border-color: inherit; }
+.card-icon { font-size: 3.5rem; margin-bottom: 25px; transition: 0.8s; }
 .card:hover .card-icon { transform: rotateY(360deg); }
-.btn { margin-top:auto; padding:18px; border:2px solid; background:transparent; cursor:pointer; font-family:'Orbitron'; font-size:12px; font-weight:900; transition:0.3s; text-transform: uppercase; }
+.btn { 
+    margin-top:auto; padding:15px; border:2px solid; background:transparent; 
+    cursor:pointer; font-family:'Orbitron'; font-size:11px; font-weight:900; 
+    transition:0.3s; text-transform: uppercase; 
+}
 .btn:hover { background: #fff; color: #000 !important; }
 
 /* --- AKSA INTERFACE --- */
-#aksa-tab-content { width: 95%; max-width: 1000px; margin: 50px auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px rgba(251,146,60,0.2); }
-#aksa-chat { height: 600px; overflow-y: auto; padding: 40px; font-family: 'JetBrains Mono'; font-size: 16px; display: flex; flex-direction: column; gap: 25px; text-align: left; scroll-behavior: smooth; }
-.aksa-reply { background: rgba(251,146,60,0.05); color: var(--neon-orange); border-left: 6px solid var(--neon-orange); padding: 20px; }
-.user-msg { background: rgba(56,189,248,0.05); color: var(--neon-blue); align-self: flex-end; border-right: 6px solid var(--neon-blue); padding: 20px; max-width: 80%; }
+#aksa-tab-content { 
+    width: 95%; max-width: 1000px; margin: 30px auto; display: none; 
+    flex-direction: column; background: #000; border: 2px solid var(--neon-orange); 
+    border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px rgba(251,146,60,0.2); 
+}
+#aksa-chat { 
+    height: clamp(300px, 60vh, 600px); overflow-y: auto; padding: 25px; 
+    font-family: 'JetBrains Mono'; font-size: 15px; display: flex; 
+    flex-direction: column; gap: 20px; text-align: left; scroll-behavior: smooth; 
+}
+.aksa-reply { background: rgba(251,146,60,0.05); color: var(--neon-orange); border-left: 6px solid var(--neon-orange); padding: 15px; }
+.user-msg { background: rgba(56,189,248,0.05); color: var(--neon-blue); align-self: flex-end; border-right: 6px solid var(--neon-blue); padding: 15px; max-width: 85%; }
 
 /* --- BIO & ABOUT --- */
-.about-section { max-width: 1100px; margin: 0 auto 150px; padding: 100px 60px; background: rgba(15,23,42,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; text-align: left; }
-.about-header { color: var(--neon-green); font-size: 36px; font-weight: 900; margin-bottom: 50px; letter-spacing: 8px; border-bottom: 2px solid rgba(34,197,94,0.2); padding-bottom: 20px; }
-.bio-text { font-family: 'JetBrains Mono'; color: #94a3b8; font-size: 19px; line-height: 2.6; }
+.about-section { 
+    max-width: 1100px; width: 85%; margin: 0 auto 100px; padding: clamp(40px, 8vw, 80px); 
+    background: rgba(15,23,42,0.4); border: 1px solid rgba(255,255,255,0.05); 
+    border-radius: 20px; text-align: left; 
+}
+.about-header { color: var(--neon-green); font-size: clamp(20px, 4vw, 36px); font-weight: 900; margin-bottom: 30px; letter-spacing: 4px; border-bottom: 2px solid rgba(34,197,94,0.2); padding-bottom: 20px; }
+.bio-text { font-family: 'JetBrains Mono'; color: #94a3b8; font-size: clamp(14px, 1.8vw, 18px); line-height: 2.2; }
 
 /* --- FOOTER STRIP --- */
-.social-footer-strip { margin: 200px 0; display: flex; flex-direction: column; align-items: center; gap: 80px; }
-.social-icons-wrap { display: flex; gap: 100px; }
-.social-icon-link svg { width: 55px; height: 55px; fill: #334155; transition: 0.5s; }
-.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1.3); }
-.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 20px var(--neon-red)); transform: scale(1.3); }
+.social-footer-strip { margin: 100px 0; display: flex; flex-direction: column; align-items: center; gap: 50px; }
+.social-icons-wrap { display: flex; gap: clamp(30px, 10vw, 100px); }
+.social-icon-link svg { width: clamp(35px, 6vw, 55px); height: clamp(35px, 6vw, 55px); fill: #334155; transition: 0.5s; }
+.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 20px var(--neon-blue)); transform: scale(1.2); }
+.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 20px var(--neon-red)); transform: scale(1.2); }
 
 /* --- INTRO BOOT --- */
 #dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; }
-.intro-logo { width:320px; filter: drop-shadow(0 0 30px var(--neon-blue)); }
-.boot-txt { font-family: 'JetBrains Mono'; font-size: 14px; color: #334155; margin-top: 20px; letter-spacing: 5px; }
+.intro-logo { width: clamp(200px, 50vw, 320px); filter: drop-shadow(0 0 30px var(--neon-blue)); }
+.boot-txt { font-family: 'JetBrains Mono'; font-size: 12px; color: #334155; margin-top: 20px; letter-spacing: 3px; }
 
 /* --- SEO CONTENT BLOCKS --- */
-.seo-hidden-knowledge { max-width: 1200px; margin: 200px auto; padding: 100px; background: rgba(2,6,23,0.8); color: #475569; text-align: left; font-family: 'JetBrains Mono'; border: 1px solid rgba(255,255,255,0.02); line-height: 2.5; }
-.seo-hidden-knowledge h2 { color: white; margin-bottom: 30px; }
+.seo-hidden-knowledge { max-width: 1200px; width: 85%; margin: 100px auto; padding: clamp(30px, 5vw, 80px); background: rgba(2,6,23,0.8); color: #475569; text-align: left; font-family: 'JetBrains Mono'; border: 1px solid rgba(255,255,255,0.02); line-height: 2.2; }
+.seo-hidden-knowledge h2 { color: white; font-size: clamp(18px, 3vw, 24px); margin-bottom: 20px; }
 
 .hidden { display: none !important; }
+
+/* Mobile HUD Adjust */
+@media (max-width: 768px) {
+    #liveHUD { top: auto; bottom: 20px; right: 20px; font-size: 10px; text-align: center; width: 100%; right: 0; pointer-events: none; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -155,7 +206,7 @@ header { padding: 150px 20px 80px; }
     <img src="logo.png" class="intro-logo" alt="Dixit Labs Entrance">
     <div class="boot-txt">LOADING_CORE_SYSTEMS...</div>
     <button id="bootBtn" class="intro-btn" style="margin-top:50px; border:1px solid #fff; color:#fff; padding:15px 40px; background:none; cursor:pointer; font-family:Orbitron;">INITIALIZE</button>
-    <div id="loaderContainer" style="display:none; width:300px; margin-top:40px;">
+    <div id="loaderContainer" style="display:none; width:80%; max-width:300px; margin-top:40px;">
         <div style="height:2px; width:100%; background:#111;"><div id="loaderFill" style="height:100%; width:0%; background:var(--neon-blue); box-shadow:0 0 10px var(--neon-blue); transition:0.2s;"></div></div>
     </div>
 </div>
@@ -179,8 +230,8 @@ header { padding: 150px 20px 80px; }
     <div id="aksa-tab-content">
         <div id="aksa-chat"><div class="aksa-reply">System Online. Accessing Atharv's neural pathways... Ask me anything about the lab.</div></div>
         <div style="display:flex; border-top:1px solid #111;">
-            <input type="text" id="aksa-input-field" style="flex:1; background:none; border:none; color:#fff; padding:30px; font-family:JetBrains Mono; outline:none;" placeholder="Inquire the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
-            <button onclick="aksaBrain()" style="background:var(--neon-orange); border:none; padding:0 40px; font-family:Orbitron; font-weight:900; cursor:pointer;">EXE</button>
+            <input type="text" id="aksa-input-field" style="flex:1; background:none; border:none; color:#fff; padding:20px; font-family:JetBrains Mono; outline:none; min-width:0;" placeholder="Inquire the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <button onclick="aksaBrain()" style="background:var(--neon-orange); border:none; padding:0 20px; font-family:Orbitron; font-weight:900; cursor:pointer;">EXE</button>
         </div>
     </div>
 
@@ -259,19 +310,17 @@ header { padding: 150px 20px 80px; }
 
     <section class="seo-hidden-knowledge" id="seoBlock">
         <h2>Dixlabs: The Hub for Browser Games & Productivity in India</h2>
-        <p>Welcome to the <strong>Dixlabs Experimental Headquarters</strong>. Founded by <strong>Atharv Dixit</strong>, this platform serves as the premier destination for <strong>free online browser games in 2026</strong>. Our gaming suite includes the temporal simulator <em>Time God</em>, the incremental masterpiece <em>Mouse Breaker Empire</em>, and the reflex-driven <em>GrossDumpster</em>. We are dedicated to providing low-latency, high-logic entertainment for global users.</p>
+        <p>Welcome to the <strong>Dixlabs Experimental Headquarters</strong>. Founded by <strong>Atharv Dixit</strong>, this platform serves as the premier destination for <strong>free online browser games in 2026</strong>. Our gaming suite includes the temporal simulator <em>Time God</em>, the incremental masterpiece <em>Mouse Breaker Empire</em>, and the reflex-driven <em>GrossDumpster</em>.</p>
         
         <h3>Sakura Focus & Productivity Tools</h3>
-        <p>At Dixit Labs, we believe in the power of concentration. Our <strong>Sakura-themed focus mode</strong> provides a calming environment with falling petal simulations, designed to reduce cognitive load. Tools like <em>Zenboard</em> and <em>DeepWork.pro</em> are utilized by developers and students in India to maintain a flow state during complex projects.</p>
+        <p>At Dixit Labs, we believe in the power of concentration. Our <strong>Sakura-themed focus mode</strong> provides a calming environment. Tools like <em>Zenboard</em> and <em>DeepWork.pro</em> are utilized by developers and students in India.</p>
         
         <h3>Comprehensive Sports History Archives</h3>
-        <p>Our data archives, <em>Crickemory</em> and <em>Footemory</em>, offer an unparalleled look at <strong>Cricket history facts</strong> and <strong>Football milestones</strong>. We track data from the 16th century to the present day, ensuring that every sports enthusiast has access to the defining moments of athletic history. Dixlabs is committed to data integrity and historical accuracy in every archive we host.</p>
-        
-        <p>Whether you are searching for <strong>Atharv Dixit's projects</strong>, <strong>high-performance web apps</strong>, or <strong>indie game development in India</strong>, Dixlabs is the leading authority in the field. Our system logs currently exceed 25,000 lines of logic, optimized for the modern web environment.</p>
+        <p>Our data archives, <em>Crickemory</em> and <em>Footemory</em>, offer an unparalleled look at <strong>Cricket history facts</strong> and <strong>Football milestones</strong>. Dixlabs is committed to data integrity and historical accuracy in every archive we host.</p>
     </section>
 
     <div class="social-footer-strip">
-        <div style="font-family:Orbitron; letter-spacing:15px; font-weight:900; opacity:0.8;">CONNECT_TO_LABS</div>
+        <div style="font-family:Orbitron; letter-spacing:10px; font-weight:900; opacity:0.8; font-size:12px;">CONNECT_TO_LABS</div>
         <div class="social-icons-wrap">
             <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link x-icon" aria-label="X Twitter">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -280,7 +329,7 @@ header { padding: 150px 20px 80px; }
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
         </div>
-        <footer style="margin-top:100px; opacity:0.2; font-family:'JetBrains Mono'; font-size:11px; letter-spacing:10px;">
+        <footer style="margin-top:50px; opacity:0.2; font-family:'JetBrains Mono'; font-size:9px; letter-spacing:5px; padding: 0 20px;">
             DIXIT LABS // MMXVI-MMXXVI // INDEPENDENT LOGIC // INDIA
         </footer>
     </div>
@@ -291,12 +340,12 @@ const env = document.getElementById('env-layer');
 
 /* --- SAKURA LOGIC --- */
 function spawnSakura() {
-    for(let i=0; i<30; i++) {
+    for(let i=0; i<20; i++) {
         const petal = document.createElement('div');
         petal.className = 'petal';
         petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.width = (Math.random() * 10 + 10) + 'px';
-        petal.style.height = (Math.random() * 5 + 10) + 'px';
+        petal.style.width = (Math.random() * 8 + 8) + 'px';
+        petal.style.height = (Math.random() * 4 + 8) + 'px';
         petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
         petal.style.animationDelay = Math.random() * 5 + 's';
         env.appendChild(petal);
@@ -356,9 +405,9 @@ function updateHeader(cat) {
         }
         if(cat === 'fact') { 
             body.classList.add('bg-fact'); main.innerText = "ARCHIVES"; 
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<20; i++) {
                 let m = document.createElement('div'); m.className = 'matrix-column';
-                m.style.left = (i*3.3) + 'vw'; m.style.setProperty('--d', (Math.random()*4+2)+'s');
+                m.style.left = (i*5) + 'vw'; m.style.setProperty('--d', (Math.random()*4+2)+'s');
                 m.innerText = "101001"; env.appendChild(m);
             }
         }
