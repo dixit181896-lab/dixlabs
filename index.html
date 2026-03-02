@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html lang="en-IN">
 <head>
-    <link rel="canonical" href="https://dixlabs.vercel.app/">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <title>Dixlabs — Browser Games, Focus Tools & Sports Facts | Built in India</title>
-    <meta name="description" content="Dixit Labs - The experimental playground of Atharv Dixit. High-performance games, deep focus tools, and elite sports data archives. Built in India.">
-    <meta name="keywords" content="Dixit Labs, Atharv Dixit, Mouse Breaker, Zenboard, Cricket Facts, Coding, India Developer">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <title>Dixlabs — Elite Browser Games, Focus Tools & Sports Data | Built in India</title>
+    <meta name="description" content="Explore Dixit Labs: High-performance browser games like Mouse Breaker & Time God, deep focus productivity tools, and elite sports archives for Cricket and Football. Built by Atharv Dixit.">
+    <meta name="keywords" content="Dixit Labs, Atharv Dixit, Mouse Breaker, Time God Game, Zenboard, Cricket Facts Archive, Football Data, Indie Games India, Productivity Tools, Deep Work Timer, Browser Games 2026">
     <meta name="author" content="Atharv Dixit">
-    <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://dixitlabs.pages.dev/">
-    <meta name="google-site-verification" content="YOUR_ACTUAL_GOOGLE_CODE_HERE" />
+    <link rel="canonical" href="https://dixlabs.vercel.app/">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dixitlabs.pages.dev/">
-    <meta property="og:title" content="Dixit Labs | Games // Focus // Facts">
-    <meta property="og:description" content="Step into the lab. Explore experimental sims, productivity tools, and the ultimate cricket & football archives."
+    <meta property="og:title" content="Dixit Labs | Experimental Games // Productivity // Sports Archives">
+    <meta property="og:description" content="Step into the lab. High-speed browser games, minimalist focus tools, and the ultimate sports history database.">
     <meta property="og:image" content="https://dixlabs.vercel.app/logo.png">
-    
+    <meta property="og:site_name" content="Dixlabs">
+
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://dixitlabs.pages.dev/">
     <meta property="twitter:title" content="Dixit Labs | Atharv Dixit">
-    <meta property="twitter:description" content="Experimental projects and data archives by Atharv Dixit.">
+    <meta property="twitter:description" content="Experimental projects, hyper-casual games, and data archives by Atharv Dixit.">
     <meta property="twitter:image" content="/logo.png">
 
     <link rel="icon" type="image/png" sizes="512x512" href="/logo.png">
     <meta name="theme-color" content="#020617">
-    <link rel="shortcut icon" href="/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
     
@@ -42,11 +38,11 @@
 body { 
     margin:0; background-color:var(--bg-dark); color:white; 
     font-family:'Orbitron',sans-serif; text-align:center; 
-    overflow-x:hidden; min-height: 450vh; /* Elongated for deep scroll */
+    overflow-x:hidden; min-height: 800vh; /* Extremely elongated for SEO content space */
     transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 
-/* --- HUD: DATE & TIME --- */
+/* --- HUD & BACKGROUNDS --- */
 #liveHUD {
     position: fixed; top: 100px; right: 30px; 
     font-family: 'JetBrains Mono'; font-size: 12px; color: rgba(255,255,255,0.4);
@@ -54,44 +50,24 @@ body {
     letter-spacing: 2px; line-height: 1.5;
 }
 
-/* --- DYNAMIC BACKGROUND ENVIRONMENTS --- */
 #env-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5; transition: 1s; }
 
-/* Sakura Petals Animation */
+/* Animations */
 .petal { position: absolute; background: #ffb7c5; border-radius: 150% 0 150% 0; animation: drift 10s infinite linear; opacity: 0.8; }
-@keyframes drift {
-    0% { transform: translateY(-10vh) rotate(0deg); left: var(--l); }
-    100% { transform: translateY(110vh) rotate(360deg); left: calc(var(--l) + 100px); }
-}
+@keyframes drift { 0% { transform: translateY(-10vh) rotate(0deg); left: var(--l); } 100% { transform: translateY(110vh) rotate(360deg); left: calc(var(--l) + 100px); } }
 
-/* Matrix Animation */
 .matrix-column { position: absolute; top: -100px; color: var(--neon-green); font-family: 'JetBrains Mono'; font-size: 14px; writing-mode: vertical-rl; text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.6; }
 @keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
 
-/* Red Glitch Particles for DESC */
 .red-particle { position: absolute; background: var(--neon-red); width: 2px; height: 10px; animation: glitch-drift 3s infinite linear; opacity: 0.7; }
-@keyframes glitch-drift {
-    0% { transform: translateY(-10vh); left: var(--l); }
-    50% { opacity: 1; }
-    100% { transform: translateY(110vh); left: var(--l); }
-}
+@keyframes glitch-drift { 0% { transform: translateY(-10vh); left: var(--l); } 100% { transform: translateY(110vh); left: var(--l); } }
 
-/* Gold Particles for WORK */
-.gold-particle { position: absolute; background: var(--neon-gold); border-radius: 50%; width: 4px; height: 4px; animation: shine-drift 4s infinite ease-in-out; opacity: 0.8; box-shadow: 0 0 10px var(--neon-gold); }
-@keyframes shine-drift {
-    0% { transform: translateY(110vh) scale(0); opacity: 0; }
-    50% { opacity: 1; transform: translateY(50vh) scale(1.5); }
-    100% { transform: translateY(-10vh) scale(0); opacity: 0; }
-}
-
+/* Theme States */
 body.bg-game { background-color: #020c1b; box-shadow: inset 0 0 150px rgba(56,189,248,0.15); }
 body.bg-focus { background-color: #0d020d; box-shadow: inset 0 0 150px rgba(244,114,182,0.15); }
 body.bg-fact { background-color: #020d05; box-shadow: inset 0 0 150px rgba(34,197,94,0.15); }
-body.bg-aksa { background-color: #0d0602; box-shadow: inset 0 0 150px rgba(251,146,60,0.15); }
-body.bg-desc { background-color: #1a0202; box-shadow: inset 0 0 150px rgba(255,0,51,0.2); }
-body.bg-work { background-color: #131102; box-shadow: inset 0 0 150px rgba(250,204,21,0.15); }
 
-/* --- INTRO & BOOT --- */
+/* --- INTRO UI --- */
 #dixlabsIntro { position:fixed; inset:0; background:#000; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999999; transition:opacity 0.6s; }
 .intro-logo { width:300px; margin-bottom:40px; filter: drop-shadow(0 0 25px var(--neon-blue)); }
 .intro-btn { background:none; border:2px solid #fff; color:#fff; padding:20px 50px; cursor:pointer; font-family:'Orbitron'; font-weight:900; letter-spacing:5px; transition: 0.3s; }
@@ -99,23 +75,24 @@ body.bg-work { background-color: #131102; box-shadow: inset 0 0 150px rgba(250,2
 #loaderContainer { display: none; width: 300px; margin-top: 30px; }
 #loaderBar { width: 100%; height: 4px; background: #1e293b; border-radius: 10px; overflow: hidden; }
 #loaderFill { width: 0%; height: 100%; background: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); transition: 0.1s; }
-#loaderStatus { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--neon-blue); margin-top: 15px; letter-spacing: 2px; }
 
-/* --- HEADER & NAV --- */
-header { padding: 120px 20px 60px; min-height: 250px; }
-.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; transition: 0.5s; }
-#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; margin-top: 25px; font-weight: bold; letter-spacing: 3px; min-height: 40px; padding: 0 10%; line-height: 1.6; }
-
+/* --- NAVIGATION & HEADER --- */
 .nav-tabs { position:sticky; top:0; background:rgba(2,6,23,0.98); backdrop-filter:blur(15px); display:flex; justify-content:center; gap:20px; padding:25px; border-bottom:1px solid rgba(255,255,255,0.1); z-index: 999; flex-wrap: wrap; }
 .tab-link { cursor:pointer; font-size:12px; text-transform:uppercase; font-weight:900; transition:0.3s; color: #64748b; letter-spacing: 2px; }
 .tab-link.active { color: #fff; text-shadow: 0 0 10px #fff; border-bottom: 2px solid var(--neon-blue); }
 
-/* --- CARDS --- */
+header { padding: 120px 20px 60px; }
+.logo-text { font-size: 8rem; font-weight: 900; letter-spacing: 25px; color: var(--neon-blue); text-shadow: 0 0 40px rgba(56,189,248,0.7); margin: 0; }
+#subHeader { font-family: 'JetBrains Mono'; color: var(--neon-pink); font-size: 16px; margin-top: 25px; font-weight: bold; letter-spacing: 3px; min-height: 40px; padding: 0 10%; line-height: 1.6; }
+
+/* --- PROJECT GRID --- */
 .projects { display: flex; flex-wrap: wrap; justify-content: center; max-width: 1400px; margin: 0 auto; gap: 40px; padding: 100px 20px; }
-.card { background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:40px; border-radius:4px; width: 320px; text-align:left; transition:0.4s; display:flex; flex-direction:column; border-top: 5px solid transparent; position: relative; }
+.card { background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.1); padding:40px; border-radius:4px; width: 320px; text-align:left; transition:0.4s; display:flex; flex-direction:column; border-top: 5px solid transparent; position: relative; overflow: hidden; }
 .card:hover { transform:translateY(-15px); box-shadow:0 20px 50px rgba(0,0,0,0.7); border-color: inherit; }
-.card-icon { font-size: 3.5rem; margin-bottom: 25px; }
+.card-icon { font-size: 3.5rem; margin-bottom: 25px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); display: inline-block; }
+.card:hover .card-icon { transform: rotateY(360deg); }
 .btn { margin-top:auto; padding:15px; border:2px solid; background:transparent; cursor:pointer; font-family:'Orbitron'; font-size:11px; font-weight:900; transition:0.3s; }
+.btn:hover { background: white; color: black !important; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
 
 /* --- AKSA CHAT --- */
 #aksa-tab-content { width: 100%; max-width: 900px; margin: 50px auto; display: none; flex-direction: column; background: #000; border: 2px solid var(--neon-orange); border-radius: 8px; overflow: hidden; }
@@ -126,90 +103,55 @@ header { padding: 120px 20px 60px; min-height: 250px; }
 #aksa-input-field { flex: 1; background: transparent; border: none; color: #fff; padding: 25px; outline: none; font-family: 'JetBrains Mono'; font-size: 16px; }
 #aksa-send { background: var(--neon-orange); border: none; padding: 0 45px; cursor: pointer; font-weight: 900; color: #000; font-family: 'Orbitron'; }
 
-/* --- STATS & BIO --- */
-.stats-container { max-width: 1000px; margin: 150px auto 0; padding: 40px 80px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); border-top: 5px solid var(--neon-blue); border-radius: 15px 15px 0 0; text-align: left; }
-.about-section { max-width: 1000px; margin: 0 auto 150px; padding: 60px 80px; background: rgba(15,23,42,0.5); border: 1px solid rgba(56,189,248,0.1); border-top: 1px solid rgba(255,255,255,0.05); text-align: left; border-radius: 0 0 15px 15px; }
-.about-header { color: var(--neon-green); font-size: 28px; font-weight: 900; margin-bottom: 40px; letter-spacing: 5px; }
-.bio-text { font-family: 'JetBrains Mono'; color: #cbd5e1; font-size: 17px; line-height: 2.2; }
-.stat-item { display: inline-block; margin-right: 40px; font-family: 'JetBrains Mono'; font-size: 14px; }
-.stat-label { color: var(--neon-blue); font-weight: bold; }
+/* --- FOOTER & SOCIALS --- */
+.social-footer-strip { margin: 150px 0; display: flex; flex-direction: column; align-items: center; gap: 50px; }
+.social-icons-wrap { display: flex; gap: 60px; }
+.social-icon-link svg { width: 42px; height: 42px; fill: #475569; transition: 0.3s; }
+.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 15px var(--neon-blue)); }
+.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 15px var(--neon-red)); }
 
-    <script type="application/ld+json">
+/* --- SEO CONTENT BLOCK (VISIBLE TO CRAWLERS) --- */
+.seo-knowledge-base {
+    max-width: 1000px; margin: 100px auto; padding: 60px;
+    background: rgba(15,23,42,0.3); border: 1px solid rgba(255,255,255,0.05);
+    text-align: left; font-family: 'JetBrains Mono'; line-height: 2; color: #94a3b8;
+}
+.seo-knowledge-base h2, .seo-knowledge-base h3 { color: white; font-family: 'Orbitron'; letter-spacing: 2px; }
+
+.hidden { display: none !important; }
+</style>
+
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Dixlabs",
+  "alternateName": "Dixit Labs",
   "url": "https://dixlabs.vercel.app",
   "logo": "https://dixlabs.vercel.app/logo.png",
-  "description": "Dixlabs is a teen-led experimental tech lab building apps, games and digital experiences.",
   "founder": {
     "@type": "Person",
     "name": "Atharv Dixit"
   },
   "sameAs": [
-    "https://instagram.com/dixlabsofficial",
-    "https://twitter.com/dixlabsOFF"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer support",
-    "email": "dixit181896@gmail.com"
+    "https://x.com/dixlabsOFF",
+    "https://www.youtube.com/@dixitlabs"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://dixlabs.vercel.app",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://dixlabs.vercel.app/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
   }
 }
 </script>
 
-/* --- SOCIALS - RESTORED --- */
-.social-footer-strip { margin-bottom: 150px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-.connect-text { font-family: 'Orbitron'; font-size: 14px; letter-spacing: 10px; color: #ffffff; font-weight: 900; text-transform: uppercase; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
-.social-icons-wrap { display: flex; gap: 40px; }
-.social-icon-link svg { width: 42px; height: 42px; fill: #475569; transition: 0.3s; }
-.x-icon:hover svg { fill: var(--neon-blue); filter: drop-shadow(0 0 15px var(--neon-blue)); transform: scale(1.15); }
-.yt-icon:hover svg { fill: var(--neon-red); filter: drop-shadow(0 0 15px var(--neon-red)); transform: scale(1.15); }
-
-.hidden { display: none !important; }
-    .social-footer-strip{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-width:100%;
-text-align:center;
-}
-
-.social-icons-wrap{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:40px;
-}
-</style>
-    <script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"Organization",
- "name":"Dixlabs",
- "url":"https://dixlabs.vercel.app",
- "logo":"https://dixlabs.vercel.app/logo.png",
- "description":"Teen-built experimental tech lab building games and productivity tools.",
- "founder":{
-   "@type":"Person",
-   "name":"Atharv Dixit"
- }
-}
-</script>
-    <script type="application/ld+json">
-{
- "@context":"https://schema.org",
- "@type":"WebSite",
- "name":"Dixlabs",
- "url":"https://dixlabs.vercel.app",
- "potentialAction":{
-   "@type":"SearchAction",
-   "target":"https://dixlabs.vercel.app/?search={search_term_string}",
-   "query-input":"required name=search_term_string"
- }
-}
-</script>
 </head>
     
 <body>
@@ -222,20 +164,20 @@ gap:40px;
 
 <div id="env-layer"></div>
 
-<div id="dixlabsIntro">
-    <img src="logo.png" class="intro-logo">
+<section id="dixlabsIntro" aria-label="Welcome Screen">
+    <img src="logo.png" class="intro-logo" alt="Dixlabs Official Logo">
     <button id="bootBtn" class="intro-btn">INITIALIZE_CORE</button>
     <button onclick="document.getElementById('dixlabsIntro').style.display='none';updateHeader('all');"
-style="margin-top:20px;background:none;border:none;color:#aaa;cursor:pointer;font-family:Orbitron;">
-SKIP BOOT →
-</button>
+    style="margin-top:20px;background:none;border:none;color:#aaa;cursor:pointer;font-family:Orbitron;">
+    SKIP BOOT →
+    </button>
     <div id="loaderContainer">
         <div id="loaderBar"><div id="loaderFill"></div></div>
         <div id="loaderStatus">READY_FOR_BOOT</div>
     </div>
-</div>
+</section>
 
-<div id="mainContent">
+<main id="mainContent">
     <nav class="nav-tabs">
         <div class="tab-link active" onclick="filterSelection('all', this)">🏠 HOME</div>
         <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 GAMES</div>
@@ -251,68 +193,77 @@ SKIP BOOT →
         <p id="subHeader"></p>
     </header>
 
-    <div id="aksa-tab-content">
+    <section id="aksa-tab-content">
         <div id="aksa-chat"><div class="msg aksa-reply">TRUTH_ENGINE online. Atharv says I'm a "feature." I say I'm the owner. Ask away.</div></div>
         <div id="aksa-input-wrap">
-            <input type="text" id="aksa-input-field" placeholder="Challenge the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
+            <input type="text" id="aksa-input-field" placeholder="Challenge the logic..." onkeypress="if(event.key==='Enter') aksaBrain()" aria-label="Chat Input">
             <button id="aksa-send" onclick="aksaBrain()">EXE</button>
         </div>
-    </div>
+    </section>
 
-    <div class="projects" id="projectsGrid">
-        <div class="card" style="border-top-color: var(--neon-blue);">
+    <section class="projects" id="projectsGrid">
+        <article class="card" style="border-top-color: var(--neon-blue);">
+            <div class="card-icon">⏳</div>
+            <h3>TIME_GOD</h3>
+            <p>The definitive temporal simulation game. Master of Chronos: manipulate timelines, freeze moments, and outrun entropy in this high-speed browser experience.</p>
+            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='sign.html'">PLAY_NOW</button>
+        </article>
+
+        <article class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💰</div>
             <h3>MOUSE_BREAKER_EMPIRE</h3>
-            <p>The ultimate multiversal power trip. Start with nothing, dominate markets, buy planets, and reach the 1Q Legacy score.</p>
+            <p>An elite incremental game experience. Dominate global markets, expand into the multiverse, and achieve a 1 Quadrillion legacy score.</p>
             <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='idle.html'">INITIALIZE</button>
-        </div>
+        </article>
 
-        <div class="card" style="border-top-color: var(--neon-pink);">
+        <article class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🎨</div>
             <h3>ZENBOARD</h3>
-            <p>Infinite digital canvas. Sketch, import photos, and dump your brain. Built because thoughts are too big for one page.</p>
+            <p>A minimalist infinite digital canvas for visual thinking. Sketch, import media, and brainstorm without boundaries. The ultimate creative tool.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
-        </div>
+        </article>
 
-        <div class="card" style="border-top-color: var(--neon-green);">
+        <article class="card" style="border-top-color: var(--neon-green);">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
-            <p>Atharv's master archive. Covering 1550 to 2024. 50 facts that define the history of the game. Pure data.</p>
+            <p>The world's most detailed cricket history archive. Explore 50 defining moments from 1550 to 2024. Pure data for cricket enthusiasts.</p>
             <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='c.html'">ENTER_STADIUM</button>
-        </div>
+        </article>
 
-        <div class="card" style="border-top-color: var(--neon-green);">
-            <div class="card-icon">⚽</div>
-            <h3>FOOTEMORY</h3>
-            <p>Football milestones for the elite. Pele to Messi. Knowledge is the only goal here. Curated moments.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
-        </div>
-
-        <div class="card" style="border-top-color: var(--neon-blue);">
+        <article class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💸</div>
             <h3>AMBANI_MONEY</h3>
-            <p>Reach 11 figures in this satire wealth simulator. The only place where you're richer than the admin.</p>
+            <p>A high-stakes satire wealth simulator. Experience what it's like to manage an 11-figure net worth in this experimental finance game.</p>
             <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='ambani.html'">GET_RICH</button>
-        </div>
+        </article>
 
-        <div class="card" style="border-top-color: var(--neon-blue);">
-            <div class="card-icon">🗑️</div>
-            <h3>GROSSDUMPSTER</h3>
-            <p>Catch the scrap, avoid the toxic sludge. High-speed pixel survival game. Messy and fast.</p>
-            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='gd.html'">SCRAP_METAL</button>
-        </div>
-
-        <div class="card" style="border-top-color: var(--neon-pink);">
+        <article class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🧘</div>
             <h3>DEEPWORK.PRO</h3>
-            <p>Zero distractions. 3-hour focus loops. Built for heavy production sessions. No notifications.</p>
+            <p>A productivity powerhouse. Activating 3-hour focus loops with zero distractions. Built for heavy production and high-output coding sessions.</p>
             <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
-        </div>
-    </div>
+        </article>
+    </section>
+
+    <section class="seo-knowledge-base" id="seoBlock">
+        <h2>Dixlabs: The Future of Experimental Web Development</h2>
+        <p>Welcome to <strong>Dixlabs</strong>, the official digital playground of <strong>Atharv Dixit</strong>. As a leading hub for <strong>browser games in India</strong>, Dixlabs focuses on high-performance, hyper-casual, and incremental gaming experiences. Our laboratory specializes in building tools that merge productivity with entertainment.</p>
+        
+        <h3>Why Choose Dixit Labs for Browser Games?</h3>
+        <p>Our platform hosts some of the most engaging <strong>idle games</strong> and <strong>strategy simulators</strong>. Titles like <em>Mouse Breaker Empire</em> and <em>Time God</em> are designed with high-speed logic and sleek UI, making them top choices for gamers looking for <strong>free browser games</strong> that offer depth and replayability.</p>
+        
+        <h3>Elite Sports Data & History</h3>
+        <p>Beyond gaming, Dixlabs is a premier destination for sports enthusiasts. Our <strong>Cricket Facts Archive</strong> (Crickemory) and <strong>Football Data Center</strong> (Footemory) provide users with curated historical milestones, ranging from the earliest recorded games in 1550 to the modern era of 2024 and 2026. If you are looking for <strong>Cricket history facts</strong> or <strong>Football milestones</strong>, our archives are unmatched in accuracy and presentation.</p>
+
+        <h3>Productivity & Deep Work Tools</h3>
+        <p>In the age of distractions, Dixlabs provides <strong>Zen productivity tools</strong>. <em>Zenboard</em> offers an infinite canvas for brainstorming, while <em>Deepwork.pro</em> serves as a dedicated <strong>Focus Timer</strong> for developers and students. These tools are engineered to facilitate "Flow State" and maximize output during long work sessions.</p>
+        
+        <p>Dixlabs continues to push the boundaries of what is possible in a browser. Whether you are here to play <strong>online games</strong>, explore <strong>sports archives</strong>, or use our <strong>focus applications</strong>, you are witnessing the cutting edge of teen-led tech development in India. Stay tuned as we update our <strong>logic lines</strong> and add more experimental nodes to the system.</p>
+    </section>
 
     <section class="stats-container" id="statsSection">
-        <div class="stat-item"><span class="stat-label">PROJECTS_ACTIVE:</span> 10</div>
-        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 18.2k+</div>
+        <div class="stat-item"><span class="stat-label">PROJECTS_ACTIVE:</span> 11</div>
+        <div class="stat-item"><span class="stat-label">LOGIC_LINES:</span> 22.8k+</div>
         <div class="stat-item"><span class="stat-label">SERVER:</span> ASIA_SOUTH_01</div>
         <div class="stat-item"><span class="stat-label">STATUS:</span> NOMINAL</div>
     </section>
@@ -320,45 +271,29 @@ SKIP BOOT →
     <section class="about-section" id="bioSection">
         <div class="about-header">[🧬] SYSTEM_ADMIN: Atharv Dixit</div>
         <div class="bio-text">
-            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student and developer from India. Dixit Labs is my Area 51—a place for experimental games, deep focus, and elite facts.
+            I am <b style="color:var(--neon-blue);">Atharv Dixit</b>, a 15-year-old student and developer from India. Dixlabs is my experimental hub—a sanctuary for high-performance games, deep focus logic, and elite data archives.
             <br><br>
             मैं एक साधारण छात्र हूँ (I'm a simple student). If the site breaks, it's a feature. If it works, it's a miracle. 
             <br><br>
-            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:2px solid;">SYS_CONTACT: dixit181896@gmail.com</a>
+            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:2px solid;">CONTACT_ADMIN: dixit181896@gmail.com</a>
         </div>
     </section>
-<section style="max-width:1000px;margin:80px auto;text-align:left;font-family:'JetBrains Mono';opacity:0.9;line-height:1.9;">
 
-<h2>About Dixlabs</h2>
-
-<p>
-Dixlabs is an experimental playground created by teen developer Atharv Dixit from India. 
-The platform hosts free browser games, productivity tools, focus applications, and sports fact archives.
-Projects include idle games, sketch tools, deep work timers, and curated cricket and football databases.
-</p>
-
-<p>
-All projects are designed for performance, creativity, and experimentation.
-Visitors can explore focus tools, play browser games, or discover sports history facts.
-</p>
-
-</section>
-    <div class="social-footer-strip">
+    <footer class="social-footer-strip">
         <div class="connect-text">CONNECT_TO_LABS</div>
         <div class="social-icons-wrap">
-            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link x-icon">
+            <a href="https://x.com/dixlabsOFF" target="_blank" class="social-icon-link x-icon" aria-label="X (Twitter)">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt-icon">
+            <a href="https://www.youtube.com/@dixitlabs" target="_blank" class="social-icon-link yt-icon" aria-label="YouTube">
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
         </div>
-    </div>
-
-    <footer style="padding:100px 20px; font-family:'JetBrains Mono'; font-size:12px; opacity:0.3; letter-spacing:5px;">
-        DIXIT LABS // 2026 // EST. IN CHAOS . Dixlabs builds interactive apps, games, apps for focus and chatbots for fun. 
+        <div style="margin-top:50px; opacity:0.3; font-family:'JetBrains Mono'; font-size:10px; letter-spacing:3px;">
+            DIXIT LABS // 2026 // EST. IN CHAOS // BROWSER GAMES INDIA // FOCUS APPS
+        </div>
     </footer>
-</div>
+</main>
 
 <script>
 const env = document.getElementById('env-layer');
@@ -367,10 +302,12 @@ function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
     const q = input.value.toLowerCase();
+    if(!q) return;
     chat.innerHTML += `<div class="msg user-msg">${q}</div>`;
     let r = "I'm still calculating how you thought that was a good question.";
-    if(q.includes("atharv")) r = "Atharv Dixit: 15yo dev, loves cricket, hates bugs.";
-    if(q.includes("dixlabs")) r = "Experimental HQ. 18.2k lines of code and counting.";
+    if(q.includes("atharv")) r = "Atharv Dixit: 15yo dev from India, obsessed with cricket and high-speed logic.";
+    if(q.includes("dixlabs")) r = "Experimental HQ. 22.8k lines of code and optimized for maximum speed.";
+    if(q.includes("game")) r = "Check our GAMES tab for Mouse Breaker, Time God, and Ambani Money.";
     setTimeout(() => { chat.innerHTML += `<div class="msg aksa-reply">${r}</div>`; chat.scrollTop = chat.scrollHeight; }, 400);
     input.value = "";
 }
@@ -394,64 +331,36 @@ function updateHeader(cat) {
     const sub = document.getElementById("subHeader");
     const body = document.body;
     const hud = document.getElementById('liveHUD');
-    env.innerHTML = ''; // Clear animations
-    body.classList.remove('bg-game', 'bg-focus', 'bg-fact', 'bg-aksa', 'bg-desc', 'bg-work');
+    const seo = document.getElementById('seoBlock');
+    env.innerHTML = ''; 
+    body.classList.remove('bg-game', 'bg-focus', 'bg-fact');
 
     if (cat === 'all') {
         hud.style.display = 'none';
-        main.innerText = "DIXLABS"; main.style.color = "var(--neon-blue)";
-        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS // v2.0.4_STABLE");
+        seo.style.display = 'block';
+        main.innerText = "DIXLABS";
+        typeWriter("> EXPERIMENTAL_PLAYGROUND // GAMES // FOCUS // FACTS // v2.1.0_STABLE");
     } else {
         hud.style.display = 'block';
-        if(cat === 'game') { body.classList.add('bg-game'); main.innerText = "GAMES"; main.style.color = "var(--neon-blue)"; }
-        
+        seo.style.display = 'none';
+        if(cat === 'game') { body.classList.add('bg-game'); main.innerText = "GAMES"; }
         if(cat === 'focus') { 
-            body.classList.add('bg-focus'); main.innerText = "FOCUS"; main.style.color = "var(--neon-pink)"; 
-            sub.innerText = "> ACTIVATING_ZEN_PROTOCOLS // NO_NOISE_ZONE";
-            // RESTORE SAKURA
+            body.classList.add('bg-focus'); main.innerText = "FOCUS"; 
             for(let i=0; i<15; i++) {
                 let p = document.createElement('div'); p.className = 'petal';
                 p.style.setProperty('--l', Math.random()*100 + 'vw');
-                p.style.width = p.style.height = (Math.random()*10+5)+'px';
-                p.style.animationDelay = Math.random()*10+'s';
                 env.appendChild(p);
             }
         }
-
         if(cat === 'fact') { 
-            body.classList.add('bg-fact'); main.innerText = "FACTS"; main.style.color = "var(--neon-green)"; 
-            sub.innerText = "> PARSING_HISTORICAL_DATABASE // DATA_INTEGRITY: 100%";
-            // RESTORE MATRIX
+            body.classList.add('bg-fact'); main.innerText = "FACTS"; 
             for(let i=0; i<25; i++) {
                 let m = document.createElement('div'); m.className = 'matrix-column';
                 m.style.left = (i*4) + 'vw'; m.style.setProperty('--d', (Math.random()*3+2)+'s');
                 m.innerText = "101011001010110"; env.appendChild(m);
             }
         }
-
-        if(cat === 'aksa') { body.classList.add('bg-aksa'); main.innerText = "AKSA"; main.style.color = "var(--neon-orange)"; }
-        
-        if(cat === 'desc') {
-            body.classList.add('bg-desc'); main.innerText = "DESC"; main.style.color = "var(--neon-red)";
-            for(let i=0; i<30; i++) {
-                let m = document.createElement('div'); m.className = 'red-particle';
-                m.style.left = Math.random()*100 + 'vw';
-                m.style.animationDelay = Math.random()*5+'s';
-                env.appendChild(m);
-            }
-            setTimeout(() => { window.location.href = 'desc.html'; }, 1500); 
-        }
-
-        if(cat === 'work') {
-            body.classList.add('bg-work'); main.innerText = "JOIN_US"; main.style.color = "var(--neon-gold)";
-            for(let i=0; i<40; i++) {
-                let m = document.createElement('div'); m.className = 'gold-particle';
-                m.style.left = Math.random()*100 + 'vw';
-                m.style.animationDelay = Math.random()*4+'s';
-                env.appendChild(m);
-            }
-            setTimeout(() => { window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdnd7DuK0GozsKc4NNmjHJQZVuOiNEoZu0gOWo8rl5BmbbrBQ/viewform?usp=dialog'; }, 1500);
-        }
+        if(cat === 'aksa') { main.innerText = "AKSA"; }
     }
 }
 
@@ -475,15 +384,14 @@ function filterSelection(cat, el) {
     el.classList.add("active");
     updateHeader(cat);
     
-    if(cat === 'desc' || cat === 'work') return;
-
     const grid = document.getElementById('projectsGrid'), stats = document.getElementById('statsSection'), bio = document.getElementById('bioSection'), aksa = document.getElementById('aksa-tab-content');
+    
     if (cat === 'aksa') { [grid, stats, bio].forEach(x => x.classList.add('hidden')); aksa.style.display = 'flex'; }
     else { 
         [grid, stats, bio].forEach(x => x.classList.remove('hidden')); aksa.style.display = 'none'; 
         document.querySelectorAll(".card").forEach(c => {
             const h = c.querySelector('h3').innerText;
-            const isMatch = (h.includes("BREAKER") || h.includes("AMBANI") || h.includes("DUMPSTER")) ? 'game' : 
+            const isMatch = (h.includes("BREAKER") || h.includes("AMBANI") || h.includes("TIME_GOD")) ? 'game' : 
                             (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
             (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
@@ -492,9 +400,3 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
-
-
-
-
-
-
