@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Time God & Reflex | DixLabs</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg: #050508;
+            --panel: rgba(15, 15, 25, 0.9);
+            --accent: #00f2ff;
+            --text: #ffffff;
+            --error: #ff2d55;
+            --success: #00ff88;
+            --warning: #ffaa00;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #050508 100%);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .back-btn {
+            position: fixed; top: 20px; right: 20px; padding: 10px 20px;
+            border: 1px solid var(--accent); color: var(--accent);
+            text-decoration: none; border-radius: 8px; font-weight: 800; font-size: 12px;
+            text-transform: uppercase; z-index: 100; transition: 0.3s;
+        }
+
+        .back-btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+
+        .app-container {
+            width: 90%; max-width: 450px; background: var(--panel);
+            backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px; padding: 30px; text-align: center;
+        }
+
+        .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+        .mode-btn { 
+            flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #888; border-radius: 10px; cursor: pointer; font-weight: 700; transition: 0.3s;
+        }
+        .mode-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(0, 242, 255, 0.05); }
+
+        .game-zone { height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 20px; border-radius: 16px; position: relative; overflow: hidden; }
+        .target-val { font-size: 3.5rem; font-weight: 900; color: var(--accent); margin: 10px 0; }
+        
+        .reaction-trigger { 
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; 
+            font-size: 1.5rem; font-weight: 800; cursor: pointer; transition: background 0.1s ease;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .waiting { background: var(--warning) !important; color: #000 !important; }
+        .ready { background: var(--success) !important; color: #000 !important; }
+        .too-early { background: var(--error) !important; color: #fff !important; }
+
+        .btn {
+            width: 100%; padding: 20px; border-radius: 12px; border: none;
+            font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: 0.2s; text-transform: uppercase;
+        }
+        .btn-main { background: var(--accent); color: #000; }
+        .btn-stop { background: var(--error); color: #fff; }
+
+        /* Dialog Box */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center;
+        }
+        .modal {
+            background: #11111a; border: 2px solid var(--accent); border-radius: 20px;
+            padding: 30px; width: 85%; max-width: 350px; text-align: center;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        .modal h2 { color: var(--accent); margin-bottom: 15px; letter-spacing: 1px; }
+        .modal p { margin-bottom: 20px; line-height: 1.5; color: #ccc; }
+        .modal b { color: #fff; font-size: 1.2rem; }
+
+        #result-ui { display: none; }
+        .score-display { font-size: 4rem; font-weight: 900; color: var(--accent); margin: 10px 0; }
+        .stat-line { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+        .stat-val { font-weight: 700; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <a href="https://dixlabs.vercel.app" class="back-btn">Back to DixLabs</a>
+
+    <div class="modal-overlay" id="reflex-modal">
+        <div class="modal">
+            <h2>REFLEX DATA</h2>
+            <p>Your reaction time is <b id="modal-ms">0ms</b>.<br>Your rank is <b id="modal-rank">Sloth</b>.</p>
+            <p>Wanna improve?</p>
+            <button class="btn btn-main" onclick="closeModalAndPlay()">Play Again</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="mode-selector">
+            <button class="mode-btn active" id="mode-god" onclick="switchMode('GOD')">Time God</button>
+            <button class="mode-btn" id="mode-reflex" onclick="switchMode('REFLEX')">Reaction</button>
+        </div>
+
+        <div id="god-ui">
+            <div class="game-zone">
+                <p id="god-label" style="text-transform: uppercase; letter-spacing: 2px; color: #666;">Ready?</p>
+                <div id="god-display" class="target-val">0.00</div>
+                <p id="god-inst" style="color: #444; font-size: 0.8rem;">Hit start to generate target</p>
+            </div>
+            <button id="god-btn" class="btn btn-main" onclick="handleGod()">Start Challenge</button>
+        </div>
+
+        <div id="reflex-ui" style="display: none;">
+            <div class="game-zone" style="height: 250px;">
+                <div id="reflex-box" class="reaction-trigger" onclick="handleReflexClick()">
+                    TAP TO START
+                </div>
+            </div>
+        </div>
+
+        <div id="result-ui">
+            <h2 id="res-title">ANALYSIS</h2>
+            <div class="score-display" id="res-score">0%</div>
+            <div id="res-stats"></div>
+            <button class="btn btn-main" style="margin-top: 20px;" onclick="resetAll()">Try Again</button>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'GOD';
+        let state = 'IDLE';
+        let targetTime = 0;
+        let startTime = 0;
+        let timeoutRef;
+
+        function switchMode(m) {
+            currentMode = m;
+            resetAll();
+            document.getElementById('mode-god').classList.toggle('active', m === 'GOD');
+            document.getElementById('mode-reflex').classList.toggle('active', m === 'REFLEX');
+        }
+
+        function resetAll() {
+            state = 'IDLE';
+            clearTimeout(timeoutRef);
+            document.getElementById('god-ui').style.display = currentMode === 'GOD' ? 'block' : 'none';
+            document.getElementById('reflex-ui').style.display = currentMode === 'REFLEX' ? 'block' : 'none';
+            document.getElementById('result-ui').style.display = 'none';
+            document.getElementById('reflex-modal').style.display = 'none';
+            
+            document.getElementById('god-label').innerText = "Ready?";
+            document.getElementById('god-display').innerText = "0.00";
+            document.getElementById('god-btn').innerText = "Start Challenge";
+            document.getElementById('god-btn').className = "btn btn-main";
+            document.getElementById('god-btn').style.opacity = '1';
+
+            const rb = document.getElementById('reflex-box');
+            rb.className = "reaction-trigger"; 
+            rb.innerText = "TAP TO START";
+        }
+
+        function closeModalAndPlay() {
+            document.getElementById('reflex-modal').style.display = 'none';
+            resetAll();
+        }
+
+        /* --- TIME GOD LOGIC --- */
+        function handleGod() {
+            if (state === 'IDLE') {
+                targetTime = Number((Math.random() * 7 + 3).toFixed(2));
+                document.getElementById('god-label').innerText = "Targeting";
+                document.getElementById('god-display').innerText = targetTime.toFixed(2) + "s";
+                state = 'MEMORIZE';
+                document.getElementById('god-btn').style.opacity = '0.5';
+
+                setTimeout(() => {
+                    state = 'RUNNING';
+                    document.getElementById('god-display').innerText = "??.??";
+                    document.getElementById('god-label').innerText = "COUNTING...";
+                    document.getElementById('god-btn').innerText = "STOP";
+                    document.getElementById('god-btn').className = "btn btn-stop";
+                    document.getElementById('god-btn').style.opacity = '1';
+                    startTime = performance.now();
+                }, 2500);
+            } else if (state === 'RUNNING') {
+                const elapsed = (performance.now() - startTime) / 1000;
+                showGodResults(elapsed);
+            }
+        }
+
+        function showGodResults(userTime) {
+            state = 'RESULT';
+            const target = Number(targetTime.toFixed(2));
+            const user = Number(userTime.toFixed(2));
+            
+            let rawPercent = (user / target) * 100;
+            let score = rawPercent > 100 ? 100 - (rawPercent - 100) : rawPercent;
+            score = Math.max(0, Math.round(score));
+
+            document.getElementById('god-ui').style.display = 'none';
+            document.getElementById('result-ui').style.display = 'block';
+            document.getElementById('res-score').innerText = score + "%";
+            document.getElementById('res-title').innerText = "TIMING PRECISION";
+            
+            document.getElementById('res-stats').innerHTML = `
+                <div class="stat-line"><span>Target:</span><span class="stat-val">${target.toFixed(2)}s</span></div>
+                <div class="stat-line"><span>Actual:</span><span class="stat-val">${user.toFixed(2)}s</span></div>
+            `;
+            if (score >= 98) confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+
+        /* --- REACTION TIME LOGIC --- */
+        function handleReflexClick() {
+            const rb = document.getElementById('reflex-box');
+
+            if (state === 'IDLE') {
+                state = 'WAITING';
+                rb.innerText = "WAIT FOR GREEN...";
+                rb.classList.add('waiting');
+                
+                const delay = Math.random() * 3000 + 1500; 
+                timeoutRef = setTimeout(() => {
+                    state = 'READY';
+                    rb.classList.remove('waiting');
+                    rb.classList.add('ready');
+                    rb.innerText = "TAP NOW!";
+                    startTime = performance.now();
+                }, delay);
+
+            } else if (state === 'WAITING') {
+                clearTimeout(timeoutRef);
+                state = 'RESULT';
+                rb.className = "reaction-trigger too-early";
+                rb.innerText = "TOO EARLY!";
+                setTimeout(resetAll, 1200);
+
+            } else if (state === 'READY') {
+                const ms = Math.round(performance.now() - startTime);
+                showReflexModal(ms);
+            }
+        }
+
+        function showReflexModal(ms) {
+            state = 'RESULT';
+            let rank = "";
+            if (ms < 180) rank = "Time God ⚡";
+            else if (ms < 250) rank = "Reflex Pro 🏃";
+            else if (ms < 350) rank = "Human 🚶";
+            else rank = "Sloth 🦥";
+
+            document.getElementById('modal-ms').innerText = ms + "ms";
+            document.getElementById('modal-rank').innerText = rank;
+            document.getElementById('reflex-modal').style.display = 'flex';
+            
+            if (ms < 200) confetti({ particleCount: 150, spread: 100 });
+        }
+    </script>
+</body>
+</html>
