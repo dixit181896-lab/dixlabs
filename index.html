@@ -38,34 +38,6 @@ body {
     transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-    /* --- GLOBAL RED CURSOR & GLOW --- */
-* {
-    cursor: none !important; /* Hide default pointer everywhere */
-}
-
-#custom-cursor {
-    width: 8px;
-    height: 8px;
-    background: #ff0000;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999999; /* Higher than the intro screen */
-    box-shadow: 
-        0 0 15px #ff0000, 
-        0 0 30px #ff0000, 
-        0 0 45px rgba(255, 0, 0, 0.5);
-    transition: transform 0.1s ease-out;
-    transform: translate(-50%, -50%);
-}
-
-/* Make it expand slightly when hovering over links/buttons */
-.cursor-hover {
-    transform: translate(-50%, -50%) scale(2.5) !important;
-    background: transparent !important;
-    border: 1px solid #ff0000;
-}
-
 /* --- HUD SYSTEM --- */
 #liveHUD {
     position: fixed; top: 100px; right: 30px; 
@@ -203,8 +175,6 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 </style>
 </head>
 <body>
-
-    <div id="custom-cursor"></div>
 
 <div id="liveHUD">
     <div id="hudDate"></div>
@@ -389,27 +359,6 @@ function aksaBrain() {
     input.value = "";
 }
 
-    const cursor = document.getElementById('custom-cursor');
-
-// Smooth Follow Logic
-window.addEventListener('mousemove', (e) => {
-    requestAnimationFrame(() => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
-});
-
-// Interactive Logic: Pulse on Click and Expand on Hover
-document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.7)');
-document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
-
-// Detect all buttons and links for the "Expansion" effect
-const targets = document.querySelectorAll('button, a, .tab-link, .card');
-targets.forEach(target => {
-    target.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-    target.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
-});
-
 /* --- CORE SYSTEMS --- */
 function updateHUD() {
     const now = new Date();
@@ -509,4 +458,3 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
-
