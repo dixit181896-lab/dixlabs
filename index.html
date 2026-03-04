@@ -38,6 +38,32 @@ body {
     transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+    /* --- CUSTOM FLASK CURSOR --- */
+* {
+    cursor: none !important; /* Hide the default boring cursor */
+}
+
+#flask-cursor {
+    width: 35px;
+    height: 35px;
+    position: fixed;
+    pointer-events: none; /* Critical: so it doesn't block clicks */
+    z-index: 1000000;
+    filter: drop-shadow(0 0 10px var(--neon-green));
+    transform: translate(-50%, -50%); /* Center it on the tip of the mouse */
+}
+
+/* The "Acid" inside the flask */
+.flask-acid {
+    fill: var(--neon-green);
+    animation: acid-slosh 2s infinite ease-in-out;
+}
+
+@keyframes acid-slosh {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
 /* --- HUD SYSTEM --- */
 #liveHUD {
     position: fixed; top: 100px; right: 30px; 
@@ -175,6 +201,13 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 </style>
 </head>
 <body>
+
+    <div id="flask-cursor">
+    <svg viewBox="0 0 24 24" width="35" height="35" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.5,19l-4.2-10.5V4h1V2h-7v2h1v4.5L5.1,19c-0.6,1.5,0.5,3,2,3h9.8C18.4,22,19.1,20.5,18.5,19z M10.3,4h3.4v4h-3.4V4z" fill="#cbd5e1"/>
+        <path class="flask-acid" d="M15.5,19h-7.4l2.1-5.2h3.2L15.5,19z" fill="#22c55e"/>
+    </svg>
+</div>
 
 <div id="liveHUD">
     <div id="hudDate"></div>
@@ -359,6 +392,24 @@ function aksaBrain() {
     input.value = "";
 }
 
+    const flask = document.getElementById('flask-cursor');
+
+window.addEventListener('mousemove', (e) => {
+    // We use requestAnimationFrame for butter-smooth movement
+    requestAnimationFrame(() => {
+        flask.style.left = e.clientX + 'px';
+        flask.style.top = e.clientY + 'px';
+    });
+});
+
+// Optional: Hide the cursor when it leaves the window
+document.addEventListener('mouseleave', () => {
+    flask.style.opacity = '0';
+});
+document.addEventListener('mouseenter', () => {
+    flask.style.opacity = '1';
+});
+
 /* --- CORE SYSTEMS --- */
 function updateHUD() {
     const now = new Date();
@@ -458,3 +509,4 @@ function filterSelection(cat, el) {
 </script>
 </body>
 </html>
+
