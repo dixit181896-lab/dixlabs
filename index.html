@@ -218,6 +218,18 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
         <p id="subHeader"></p>
     </header>
 
+    <div id="countdown-container" style="margin: 20px auto; max-width: 600px; padding: 20px; border: 1px double var(--neon-blue); background: rgba(0,0,0,0.5); font-family: 'JetBrains Mono';">
+    <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase;">
+        Protocol: Aging_Process // Target: Age_18
+    </div>
+    <div id="birthday-timer" style="font-size: clamp(1.2rem, 3vw, 2rem); color: var(--neon-blue); font-weight: 700; text-shadow: 0 0 10px var(--neon-blue);">
+        00D : 00H : 00M : 00S
+    </div>
+    <div style="margin-top: 10px; color: #475569; font-size: 11px; letter-spacing: 2px;">
+        TILL I TURN 18 <span style="color: var(--neon-green); font-weight: 900;">< MASSIVE UPDATES ></span>
+    </div>
+</div>
+
     <div id="aksa-tab-content">
         <div class="aksa-header">
             <span>AKSA_NEURAL_INTERFACE_V2.6</span>
@@ -509,6 +521,38 @@ function filterSelection(cat, el) {
         });
     }
 }
+
+    /* --- CHRONO_GATEWAY: 18TH BIRTHDAY TIMER --- */
+function startBirthdayCountdown() {
+    // Your 18th Birthday: 4th Jan 2029
+    const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
+
+    const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        // Calculations for days, hours, minutes and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result
+        const timerElement = document.getElementById("birthday-timer");
+        if (timerElement) {
+            timerElement.innerHTML = `${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+        }
+
+        // If the countdown is finished
+        if (distance < 0) {
+            clearInterval(interval);
+            timerElement.innerHTML = "SYSTEM_UPGRADED: AGE_18_REACHED";
+        }
+    }, 1000);
+}
+
+// Initialize the timer
+startBirthdayCountdown();
 </script>
 </body>
 </html>
