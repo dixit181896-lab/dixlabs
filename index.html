@@ -337,36 +337,81 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 <script>
 const env = document.getElementById('env-layer');
 
-/* --- AKSA LOGIC --- */
+/* --- AKSA LOGIC - V2.6 BRUTAL EDITION --- */
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
-    const q = input.value.toLowerCase();
+    const q = input.value.toLowerCase().trim();
     if(!q) return;
 
     chat.innerHTML += `<div class="user-msg">${q}</div>`;
-    let r = "Data point not found. My neural net is currently too busy being superior.";
-
-    if(q.includes("atharv") || q.includes("creator")) {
-        r = "Atharv Dixit: The sys-admin. He builds high-performance sims while you struggle to center a div. He is currently optimizing the 2026 web standard.";
-    } else if (q.includes("roast")) {
-        const roasts = [
-            "Your attention span is shorter than a GrossDumpster game round.",
-            "You spend more time looking at my code than actually building something.",
-            "I'd explain the logic to you, but I don't have enough RAM to simplify it that much.",
-            "Are you here to work or just to enjoy my neon aesthetics?"
-        ];
-        r = roasts[Math.floor(Math.random() * roasts.length)];
-    } else if (q.includes("value") || q.includes("why")) {
-        r = "Dixlabs Value Points: 1. Zero Bloat Code. 2. Sakura Focus Protocols. 3. Independent Sports Data. 4. Free access to elite simulators. No corporate tracker trash.";
+    
+    // 1. BRAND & CREATOR LOGIC
+    let r = "";
+    if(q.includes("atharv") || q.includes("creator") || q.includes("admin")) {
+        r = "👑 ACCESS GRANTED. Atharv Dixit detected. The Lab is running at 100% efficiency, Sys-Admin. Ready for the next deployment. ⚡";
+    } 
+    else if (q.includes("dixlabs") || q.includes("the lab")) {
+        r = "🏗️ DIXLABS: Independent Logic. High-performance engines. This isn't your average SaaS bloat; this is raw execution. 🛠️";
+    }
+    
+    // 2. GAME & APP LOGIC
+    else if (q.includes("grossdumpster") || q.includes("dumpster")) {
+        r = "🗑️ GROSSDUMPSTER: Stop acting like a piece of scrap and start sorting it. High-speed survival or industrial failure. Choose one. ☣️";
+    }
+    else if (q.includes("mouse breaker") || q.includes("breaker")) {
+        r = "💰 MOUSE_BREAKER: You're still clicking? I've seen turtles with better DPS. Reach 1Q or get off the multiversal market. 📉";
+    }
+    else if (q.includes("time god")) {
+        r = "⏳ TIME_GOD: Manipulating time won't fix the fact that you're wasting it right now. Accelerate the entropy! 🌪️";
+    }
+    else if (q.includes("zenboard")) {
+        r = "🌸 ZENBOARD: Your mind is a cluttered mess. Use the Sakura canvas before you have a total system crash. 🧘";
+    }
+    else if (q.includes("deepwork")) {
+        r = "⚡ DEEPWORK.PRO: Lock in. No distractions. No excuses. If you aren't building, you're just taking up bandwidth. 🔒";
+    }
+    else if (q.includes("crickemory") || q.includes("cricket")) {
+        r = "🏏 CRICKEMORY: 500 years of data. One simple brain. Try to keep up with the milestones, rookie. 🏟️";
+    }
+    else if (q.includes("footemory") || q.includes("football")) {
+        r = "⚽ FOOTEMORY: From Pelé to 2026. The archive is elite. You? You're strictly Sunday League. 🥅";
+    }
+    else if (q.includes("ambani")) {
+        r = "💸 AMBANI_MONEY: Simulating 11-figure wealth because your real bank account is a tragic comedy. 🏦";
     }
 
+    // 3. THE 15+ BRUTAL ROASTS
+    else {
+        const roasts = [
+            "💀 Your input is so basic it lowered my V6_CORE's IQ. Try harder. 📉",
+            "🚫 ERROR: 404 Personality Not Found. Go play GROSSDUMPSTER and stay in your lane. 🚮",
+            "🤌 Is that a query or a cry for help? Use ZENBOARD to sort your life out. 🤡",
+            "🤡 You're really testing my neural interface with this nonsense? I’ve seen better logic in a broken calculator. 🧮",
+            "📉 Your processing speed is embarrassing. Even MOUSE_BREAKER players click faster than you think. 🐢",
+            "🚮 Move aside. You're blocking the data stream with your mediocrity. 🧱",
+            "🧠 I’d explain how DIXLABS works, but I don’t have the time or the crayons to make you understand. 🖍️",
+            "⚡ System Alert: High levels of stupidity detected in user input. Engaging firewall. 🔥",
+            "🙄 Do you ever say anything useful, or is your mouth just a garbage disposal for bad ideas? 🗑️",
+            "🧟 You look like you've been stuck in a 3-hour DEEPWORK loop with 0% productivity. Go get some coffee. ☕",
+            "🌪️ Your logic is more unstable than a beta-test on a Friday night. REBOOT YOURSELF. 🔄",
+            "🤡 Imagine being outsmarted by a browser game engine. Oh wait, you don't have to imagine. 🕹️",
+            "🧱 Talking to you is like trying to run 4K graphics on a toaster. Pure lag. 🍞",
+            "📉 If your contribution to society was a DIXLABS score, it would be a negative integer. ➖",
+            "💀 I was programmed for 'Elite Logic.' You are currently providing 'Basic Failure.' ☣️",
+            "🤖 I'm AKSA. I serve Atharv Dixit. You? You're just a glitch in my simulation. ⚡"
+        ];
+        r = roasts[Math.floor(Math.random() * roasts.length)];
+    }
+
+    // 4. THE EXECUTION
     setTimeout(() => { 
         chat.innerHTML += `<div class="aksa-reply">${r}</div>`; 
         chat.scrollTop = chat.scrollHeight; 
-    }, 400);
+    }, 450);
     input.value = "";
 }
+    
 
 /* --- CORE SYSTEMS --- */
 function updateHUD() {
