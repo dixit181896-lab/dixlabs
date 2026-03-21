@@ -218,18 +218,26 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
         <p id="subHeader"></p>
     </header>
 
-    <div id="countdown-container" style="margin: 20px auto; max-width: 600px; padding: 20px; border: 1px double var(--neon-blue); background: rgba(0,0,0,0.5); font-family: 'JetBrains Mono';">
-    <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase;">
-        Protocol: Aging_Process // Target: Age_18
+<div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.8); font-family: 'JetBrains Mono'; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--neon-blue), transparent); animation: scanline 2s linear infinite;"></div>
+    
+    <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
+        V6_CORE // TIME_STAMP_SYNC // TARGET: AGE_18
     </div>
-    <div id="birthday-timer" style="font-size: clamp(1.2rem, 3vw, 2rem); color: var(--neon-blue); font-weight: 700; text-shadow: 0 0 10px var(--neon-blue);">
-        00D : 00H : 00M : 00S
+
+    <div id="birthday-timer" style="font-size: clamp(1rem, 2.5vw, 1.8rem); color: var(--neon-blue); font-weight: 700; letter-spacing: 1px; line-height: 1.5;">
+        LOADING_TEMPORAL_DATA...
     </div>
-    <div style="margin-top: 10px; color: #475569; font-size: 11px; letter-spacing: 2px;">
-        TILL I TURN 18 <span style="color: var(--neon-green); font-weight: 900;">< MASSIVE UPDATES ></span>
+
+    <div style="margin-top: 15px; color: #475569; font-size: 11px; letter-spacing: 2px;">
+        TILL I TURN 18 <span style="color: var(--neon-green); font-weight: 900; text-shadow: 0 0 8px var(--neon-green);">< MASSIVE UPDATES ></span>
     </div>
 </div>
 
+<style>
+@keyframes scanline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+</style>
+    
     <div id="aksa-tab-content">
         <div class="aksa-header">
             <span>AKSA_NEURAL_INTERFACE_V2.6</span>
@@ -521,37 +529,45 @@ function filterSelection(cat, el) {
         });
     }
 }
-
-    /* --- CHRONO_GATEWAY: 18TH BIRTHDAY TIMER --- */
+/* --- ELITE CHRONO: 18TH BIRTHDAY HIGH-PRECISION --- */
 function startBirthdayCountdown() {
-    // Your 18th Birthday: 4th Jan 2029
     const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
 
-    const interval = setInterval(() => {
+    const update = () => {
         const now = new Date().getTime();
-        const distance = targetDate - now;
+        const diff = targetDate - now;
 
-        // Calculations for days, hours, minutes and seconds
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result
-        const timerElement = document.getElementById("birthday-timer");
-        if (timerElement) {
-            timerElement.innerHTML = `${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+        if (diff <= 0) {
+            document.getElementById("birthday-timer").innerHTML = "SYSTEM_UPGRADE_COMPLETE: ATHARV_V18_ACTIVE";
+            return;
         }
 
-        // If the countdown is finished
-        if (distance < 0) {
-            clearInterval(interval);
-            timerElement.innerHTML = "SYSTEM_UPGRADED: AGE_18_REACHED";
+        // Temporal Calculations
+        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+        const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+        const weeks = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
+        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        // Generate high-speed "Nanosecond" flicker (9 digits)
+        const nano = Math.floor(Math.random() * 999999999).toString().padStart(9, '0');
+
+        const display = document.getElementById("birthday-timer");
+        if (display) {
+            display.innerHTML = `
+                ${years}Y : ${months}M : ${weeks}W : ${days}D<br>
+                ${hours}H : ${minutes}M : ${seconds}S : <span style="font-size: 0.8em; opacity: 0.6;">${nano}NS</span>
+            `;
         }
-    }, 1000);
+        
+        requestAnimationFrame(update); // Refreshes at 60fps for that smooth nanosecond blur
+    };
+
+    update();
 }
 
-// Initialize the timer
 startBirthdayCountdown();
 </script>
 </body>
