@@ -218,26 +218,49 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
         <p id="subHeader"></p>
     </header>
 
-<div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.8); font-family: 'JetBrains Mono'; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--neon-blue), transparent); animation: scanline 2s linear infinite;"></div>
+<div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.9); font-family: 'JetBrains Mono'; position: relative; border-radius: 4px;">
     
     <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
         V6_CORE // TIME_STAMP_SYNC // TARGET: AGE_18
     </div>
 
-    <div id="birthday-timer" style="font-size: clamp(1rem, 2.5vw, 1.8rem); color: var(--neon-blue); font-weight: 700; letter-spacing: 1px; line-height: 1.5;">
-        LOADING_TEMPORAL_DATA...
+    <div id="birthday-timer" style="font-size: clamp(1rem, 2.5vw, 1.8rem); color: var(--neon-blue); font-weight: 700; letter-spacing: 1px; line-height: 1.5; margin-bottom: 15px;">
+        CALIBRATING_TEMPORAL_FLUX...
     </div>
 
-    <div style="margin-top: 15px; color: #475569; font-size: 11px; letter-spacing: 2px;">
-        TILL I TURN 18 <span style="color: var(--neon-green); font-weight: 900; text-shadow: 0 0 8px var(--neon-green);">< MASSIVE UPDATES ></span>
+    <div class="glowing-red" style="font-size: 13px; letter-spacing: 2px; font-weight: 700;">
+        TILL I TURN 18 
+        <span onclick="showUpdates()" style="color: var(--neon-green); cursor: pointer; text-decoration: underline; text-shadow: 0 0 10px var(--neon-green);">
+            < MASSIVE UPDATES >
+        </span>
+    </div>
+</div>
+
+<div id="updates-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; flex-direction:column; justify-content:center; align-items:center; font-family:'JetBrains Mono'; border: 2px solid var(--neon-green);">
+    <div style="text-align:left; background:#000; padding:40px; border:1px solid var(--neon-green); box-shadow: 0 0 20px var(--neon-green);">
+        <h2 style="color:var(--neon-green); font-family:'Orbitron'; margin-bottom:20px;">SYSTEM_UPGRADE_MANIFESTO</h2>
+        <ul style="list-style:none; color:#fff; line-height:2.5; padding:0;">
+            <li><span style="color:var(--neon-green);">01_</span> Focii Chrome Theme</li>
+            <li><span style="color:var(--neon-green);">02_</span> Deepzen Extension</li>
+            <li><span style="color:var(--neon-green);">03_</span> <a href="#" style="color:var(--neon-gold); text-decoration:none;">Buy Me A Coffee [DONATE]</a></li>
+            <li><span style="color:var(--neon-green);">04_</span> More Coming Soon...</li>
+        </ul>
+        <button onclick="closeUpdates()" style="margin-top:30px; background:var(--neon-green); color:#000; border:none; padding:10px 20px; font-family:'Orbitron'; cursor:pointer; font-weight:900;">RETURN_TO_LAB</button>
     </div>
 </div>
 
 <style>
-@keyframes scanline { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.glowing-red {
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    animation: critical-pulse 1.5s infinite alternate;
+}
+
+@keyframes critical-pulse {
+    from { opacity: 0.6; text-shadow: 0 0 5px #ff0000; }
+    to { opacity: 1; text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
+}
 </style>
-    
     <div id="aksa-tab-content">
         <div class="aksa-header">
             <span>AKSA_NEURAL_INTERFACE_V2.6</span>
@@ -529,7 +552,16 @@ function filterSelection(cat, el) {
         });
     }
 }
-/* --- ELITE CHRONO: 18TH BIRTHDAY HIGH-PRECISION --- */
+/* --- UPDATE PAGE LOGIC --- */
+function showUpdates() {
+    document.getElementById('updates-overlay').style.display = 'flex';
+}
+
+function closeUpdates() {
+    document.getElementById('updates-overlay').style.display = 'none';
+}
+
+/* --- HIGH-PRECISION TIMER (RE-INITIALIZED) --- */
 function startBirthdayCountdown() {
     const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
 
@@ -537,12 +569,6 @@ function startBirthdayCountdown() {
         const now = new Date().getTime();
         const diff = targetDate - now;
 
-        if (diff <= 0) {
-            document.getElementById("birthday-timer").innerHTML = "SYSTEM_UPGRADE_COMPLETE: ATHARV_V18_ACTIVE";
-            return;
-        }
-
-        // Temporal Calculations
         const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
         const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
         const weeks = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
@@ -550,8 +576,6 @@ function startBirthdayCountdown() {
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        // Generate high-speed "Nanosecond" flicker (9 digits)
         const nano = Math.floor(Math.random() * 999999999).toString().padStart(9, '0');
 
         const display = document.getElementById("birthday-timer");
@@ -561,13 +585,12 @@ function startBirthdayCountdown() {
                 ${hours}H : ${minutes}M : ${seconds}S : <span style="font-size: 0.8em; opacity: 0.6;">${nano}NS</span>
             `;
         }
-        
-        requestAnimationFrame(update); // Refreshes at 60fps for that smooth nanosecond blur
+        requestAnimationFrame(update);
     };
-
     update();
 }
 
+// Start on load
 startBirthdayCountdown();
 </script>
 </body>
