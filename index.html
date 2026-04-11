@@ -225,6 +225,7 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 
 <main id="mainContent">
     <nav class="nav-tabs">
+        <div class="tab-link" id="meltdown-trigger" style="color:var(--neon-green) !important;">⚠️ MELTDOWN</div>
         <div class="tab-link active" onclick="filterSelection('all', this)">🏠 CORE</div>
         <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 SIMS</div>
         <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">🌸 FOCUS</div>
@@ -272,6 +273,31 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 </div>
 
 <style>
+    #meltdown-trigger {
+    text-shadow: 0 0 10px var(--neon-green);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: cell; /* Custom 'experimental' cursor */
+}
+
+.falling-card {
+    pointer-events: none;
+    transform: translateY(120vh) rotate(30deg) scale(0.7) !important;
+    opacity: 0;
+    filter: blur(4px);
+    transition: transform 1.2s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 1s !important;
+}
+
+#meltdown-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: #000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
 .glowing-red {
     color: #ff0000;
     text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
@@ -583,6 +609,60 @@ function closeUpdates() {
     document.getElementById('updates-overlay').style.display = 'none';
 }
 
+            const meltdownTrigger = document.getElementById('meltdown-trigger');
+const partyAudio = document.getElementById('party-audio');
+const meltdownOverlay = document.getElementById('meltdown-overlay');
+const meltdownVid = document.getElementById('meltdown-vid');
+
+function runMeltdown() {
+    const cards = document.querySelectorAll('.card');
+    
+    // 1. Play Audio
+    partyAudio.currentTime = 0;
+    partyAudio.play().catch(e => console.log("Audio play blocked until user interaction."));
+
+    // 2. Staggered card fall
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('falling-card');
+        }, index * 60); 
+    });
+
+    // 3. Show Video/Overlay
+    setTimeout(() => {
+        meltdownOverlay.style.display = 'flex';
+        meltdownVid.play();
+    }, 800);
+
+    // 4. Reset sequence
+    meltdownVid.onended = () => {
+        meltdownOverlay.style.display = 'none';
+        partyAudio.pause();
+        cards.forEach(card => card.classList.remove('falling-card'));
+        
+        // Flash effect for 'System Reboot'
+        document.body.style.backgroundColor = "white";
+        setTimeout(() => document.body.style.backgroundColor = "#020617", 100);
+    };
+}
+
+// Click Trigger
+if(meltdownTrigger) {
+    meltdownTrigger.addEventListener('click', runMeltdown);
+}
+
+// Random Meltdown Logic (Scroll-based)
+let scrollDistance = 0;
+window.addEventListener('scroll', () => {
+    scrollDistance++;
+    if (scrollDistance > 800) { // Every ~800 scroll events
+        if (Math.random() < 0.02) { // 2% chance
+            scrollDistance = 0;
+            runMeltdown();
+        }
+    }
+});
+
 /* --- HIGH-PRECISION TIMER (RE-INITIALIZED) --- */
 function startBirthdayCountdown() {
     const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
@@ -615,6 +695,12 @@ function startBirthdayCountdown() {
 // Start on load
 startBirthdayCountdown();
 </script>
+    <div id="meltdown-overlay">
+    <video id="meltdown-vid" style="width:100%; height:100%; object-fit:cover;">
+        <source src="robot.mp4" type="video/mp4">
+    </video>
+</div>
+<audio id="party-audio" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
 </body>
 </html>
 
