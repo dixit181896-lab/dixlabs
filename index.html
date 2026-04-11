@@ -214,12 +214,13 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 
 <div id="env-layer"></div>
 
-<div id="dixlabsIntro">
-    <img src="logo.png" class="intro-logo" alt="Dixit Labs Entrance">
-    <div class="boot-txt" style="font-family: 'JetBrains Mono'; font-size: 12px; color: #334155; margin-top: 20px; letter-spacing: 3px;">CALIBRATING_V6_CORE...</div>
-    <button id="bootBtn" style="margin-top:50px; border:1px solid #fff; color:#fff; padding:15px 40px; background:none; cursor:pointer; font-family:Orbitron;">INITIALIZE</button>
-    <div id="loaderContainer" style="display:none; width:80%; max-width:300px; margin-top:40px;">
-        <div style="height:2px; width:100%; background:#111;"><div id="loaderFill" style="height:100%; width:0%; background:var(--neon-blue); box-shadow:0 0 10px var(--neon-blue); transition:0.2s;"></div></div>
+<div id="startup-screen" style="position:fixed; inset:0; z-index:999999; background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+    <video id="intro-video" muted playsinline style="width:100%; height:100%; object-fit:cover; filter: contrast(1.1);">
+        <source src="introduction.mp4" type="video/mp4">
+    </video>
+    
+    <div id="skip-btn" style="position:absolute; bottom:40px; right:40px; color:rgba(255,255,255,0.4); font-family:'Orbitron'; cursor:pointer; font-size:10px; letter-spacing:2px; border:1px solid rgba(255,255,255,0.1); padding:8px 15px; transition: 0.3s; z-index: 1000000;">
+        SKIP_SEQUENCE //
     </div>
 </div>
 
@@ -307,6 +308,15 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 @keyframes critical-pulse {
     from { opacity: 0.6; text-shadow: 0 0 5px #ff0000; }
     to { opacity: 1; text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
+}
+
+    #startup-screen {
+    background-color: #000 !important;
+}
+
+/* Hide scrollbar during intro */
+body.intro-active {
+    overflow: hidden;
 }
 </style>
     <div id="aksa-tab-content">
@@ -756,6 +766,49 @@ if (trigger) {
         startChaos();
     };
 }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const introVid = document.getElementById('intro-video');
+    const startup = document.getElementById('startup-screen');
+    const skip = document.getElementById('skip-btn');
+
+    const exitLoader = () => {
+        startup.style.transition = "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s ease";
+        startup.style.opacity = "0";
+        startup.style.transform = "scale(1.1)"; // Slight zoom effect on exit
+        
+        setTimeout(() => {
+            startup.style.display = "none";
+            // Optional: Trigger your site's entrance animations here
+        }, 800);
+    };
+
+    // Attempt to play immediately
+    const playPromise = introVid.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            // If autoplay is blocked, site waits for a click or reveals immediately
+            console.log("Autoplay prevented. Click anywhere to start or wait for load.");
+            window.addEventListener('click', () => {
+                introVid.play();
+            }, { once: true });
+        });
+    }
+
+    // When the bomb finishes and the logo appears...
+    introVid.onended = () => {
+        exitLoader();
+    };
+
+    // Skip Button
+    skip.onclick = () => exitLoader();
+    
+    // Safety Timeout: If video fails to load, don't trap the user
+    setTimeout(() => {
+        if (startup.style.display !== "none") exitLoader();
+    }, 10000); // 10 second max wait
+});
 </script>
 </html>
 
