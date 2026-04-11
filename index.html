@@ -241,6 +241,19 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
         <p id="subHeader"></p>
     </header>
 
+    <div class="orbit-container">
+    <h1 class="logo-text">Dix<span>Labs</span></h1>
+
+    <div class="plane-path">
+        <div class="jet">
+            <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20">
+                <path d="M21,16L14,14V9L15,8V7L14,7L13,4L12,7L11,7L10,8V9L11,14L4,16V18L11,17L12,21L13,17L20,18V16Z" />
+            </svg>
+            <div class="neon-trail"></div>
+        </div>
+    </div>
+</div>
+
 <div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.9); font-family: 'JetBrains Mono'; position: relative; border-radius: 4px;">
     
     <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
@@ -355,6 +368,57 @@ body.intro-active {
 
 @media (max-width: 600px) {
     .mobile-hide { display: none; }
+}
+
+    .orbit-container {
+    position: relative;
+    display: inline-block;
+    padding: 60px; /* Space for the plane to orbit */
+}
+
+.plane-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* This defines the oval path around the text */
+    offset-path: ellipse(60% 50% at 50% 50%);
+    animation: orbit 6s linear infinite;
+}
+
+.jet {
+    width: 20px;
+    height: 20px;
+    transform: rotate(90deg); /* Adjust based on path direction */
+    filter: drop-shadow(0 0 5px #fff);
+}
+
+/* The Neon Red Back Light Line */
+.neon-trail {
+    position: absolute;
+    top: 50%;
+    right: 100%; /* Sits behind the jet */
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to left, #ff0000, transparent);
+    box-shadow: 0 0 15px #ff0000, 0 0 5px #ff0000;
+    transform: translateY(-50%);
+    border-radius: 2px;
+}
+
+@keyframes orbit {
+    from { offset-distance: 0%; }
+    to { offset-distance: 100%; }
+}
+
+/* Make sure your logo text doesn't get pushed around */
+.logo-text {
+    position: relative;
+    z-index: 5;
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
 }
 </style>
     <div id="aksa-tab-content">
