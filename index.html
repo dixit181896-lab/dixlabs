@@ -702,6 +702,62 @@ startBirthdayCountdown();
 </div>
 <audio id="party-audio" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
 </body>
+    <script>
+// 1. FORCE THE BUTTON TO BE CLICKABLE AND FIX CURSOR
+const trigger = document.getElementById('meltdown-trigger');
+if (trigger) {
+    trigger.style.cursor = 'pointer'; // Changes plus sign back to hand
+    trigger.style.pointerEvents = 'auto'; // Ensures it can be clicked
+    trigger.style.zIndex = '9999'; // Brings it to the front
+}
+
+// 2. THE MELTDOWN FUNCTION
+function startChaos() {
+    const cards = document.querySelectorAll('.card');
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    const overlay = document.getElementById('meltdown-overlay');
+    const video = document.getElementById('meltdown-vid');
+
+    // Play Music
+    audio.play();
+
+    // Make Cards Fall
+    cards.forEach((card, i) => {
+        setTimeout(() => {
+            card.style.transition = "transform 1s ease-in, opacity 0.5s";
+            card.style.transform = "translateY(150vh) rotate(45deg)";
+            card.style.opacity = "0";
+        }, i * 50);
+    });
+
+    // Show Video Overlay
+    setTimeout(() => {
+        if(overlay) {
+            overlay.style.display = 'flex';
+            if(video) video.play();
+        }
+    }, 800);
+
+    // Reset when video ends
+    if(video) {
+        video.onended = () => {
+            overlay.style.display = 'none';
+            audio.pause();
+            cards.forEach(c => {
+                c.style.transform = "none";
+                c.style.opacity = "1";
+            });
+        };
+    }
+}
+
+// 3. ATTACH THE CLICK
+if (trigger) {
+    trigger.onclick = function() {
+        startChaos();
+    };
+}
+</script>
 </html>
 
 
