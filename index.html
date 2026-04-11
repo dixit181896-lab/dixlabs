@@ -318,6 +318,44 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 body.intro-active {
     overflow: hidden;
 }
+
+    .system-dashboard {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(2, 6, 23, 0.9);
+    border-top: 1px solid rgba(56, 189, 248, 0.3);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 15px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.stat-item { display: flex; align-items: center; gap: 8px; }
+.label { color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; }
+.value { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+
+.load-bg { width: 60px; height: 6px; background: #111; border-radius: 10px; overflow: hidden; }
+.load-fill { height: 100%; background: #38bdf8; width: 12%; transition: width 0.5s ease; }
+
+.status-blink {
+    color: #22c55e;
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .mobile-hide { display: none; }
+}
 </style>
     <div id="aksa-tab-content">
         <div class="aksa-header">
@@ -504,6 +542,26 @@ function aksaBrain() {
         ];
         r = roasts[Math.floor(Math.random() * roasts.length)];
     }
+
+    function updateDashboard() {
+    // 1. Randomize Temp (40-45°C)
+    const temp = (40 + Math.random() * 5).toFixed(1);
+    document.getElementById('stat-temp').innerText = `${temp}°C`;
+
+    // 2. Randomize Load (5-25%)
+    const load = Math.floor(5 + Math.random() * 20);
+    document.getElementById('stat-load-bar').style.width = `${load}%`;
+    document.getElementById('stat-load-text').innerText = `${load}%`;
+
+    // 3. System Uptime (Hours:Mins:Secs since you opened the tab)
+    const now = new Date();
+    const uptime = now.toTimeString().split(' ')[0];
+    document.getElementById('stat-uptime').innerText = uptime;
+}
+
+// Update every 2 seconds
+setInterval(updateDashboard, 2000);
+updateDashboard(); // Initial run
 
     // 4. THE EXECUTION
     setTimeout(() => { 
@@ -709,6 +767,25 @@ startBirthdayCountdown();
     <video id="meltdown-vid" style="width:100%; height:100%; object-fit:cover;">
         <source src="robot.mp4" type="video/mp4">
     </video>
+</div>
+    <div class="system-dashboard">
+    <div class="stat-item">
+        <span class="label">CORE_TEMP:</span>
+        <span id="stat-temp" class="value">42.0°C</span>
+    </div>
+    <div class="stat-item">
+        <span class="label">SYS_LOAD:</span>
+        <div class="load-bg"><div id="stat-load-bar" class="load-fill"></div></div>
+        <span id="stat-load-text" class="value">12%</span>
+    </div>
+    <div class="stat-item mobile-hide">
+        <span class="label">UPLINK:</span>
+        <span id="stat-uptime" class="value">00:00:00</span>
+    </div>
+    <div class="stat-item">
+        <span class="label">STATUS:</span>
+        <span class="status-blink">STABLE</span>
+    </div>
 </div>
 </body>
     <script>
