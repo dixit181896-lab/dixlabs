@@ -180,6 +180,79 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
     }
 }
 
+#homeQuickNav {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    z-index: 10000;
+}
+
+.quicknav-button {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #00d4ff; /* Keeps the UI consistent with DixLabs */
+    color: #fff;
+    padding: 10px 18px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+.quicknav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 380px;
+    background: rgba(2, 6, 23, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+#homeQuickNav:hover .quicknav-menu {
+    display: grid;
+}
+
+.nav-item {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Logo Image Styling */
+.nav-item img {
+    width: 32px;
+    height: 32px;
+    filter: grayscale(100%) brightness(0.7); /* Dead/Offline look */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-item span {
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #666;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+/* THE MAGIC HOVER: Colors and Glows based on the --brand variable */
+.nav-item:hover img {
+    filter: grayscale(0%) brightness(1); /* Powers up */
+    transform: scale(1.2) translateY(-5px);
+    /* Individual Glow */
+    filter: drop-shadow(0 0 8px var(--brand)) drop-shadow(0 0 15px var(--brand));
+}
+
+.nav-item:hover span {
+    color: #fff;
+    text-shadow: 0 0 5px var(--brand);
+}
+    
 /* --- AKSA INTERFACE --- */
 #aksa-tab-content { 
     width: 95%; max-width: 1000px; margin: 30px auto; display: none; 
@@ -265,6 +338,47 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
 </style>
 </head>
 <body>
+
+    <div class="quicknav-container" id="homeQuickNav">
+    <div class="quicknav-button">QUICKNAV <span class="grid-icon">::</span></div>
+    <div class="quicknav-menu">
+        <a href="https://google.com" class="nav-item" style="--brand: #4285F4;"><img src="https://cdn.simpleicons.org/google" alt=""><span>Google</span></a>
+        <a href="https://youtube.com" class="nav-item" style="--brand: #FF0000;"><img src="https://cdn.simpleicons.org/youtube" alt=""><span>YouTube</span></a>
+        <a href="https://github.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/github" alt=""><span>GitHub</span></a>
+        <a href="https://discord.com" class="nav-item" style="--brand: #5865F2;"><img src="https://cdn.simpleicons.org/discord" alt=""><span>Discord</span></a>
+        <a href="https://openai.com" class="nav-item" style="--brand: #74aa9c;"><img src="https://cdn.simpleicons.org/openai" alt=""><span>ChatGPT</span></a>
+        
+        <a href="https://gmail.com" class="nav-item" style="--brand: #EA4335;"><img src="https://cdn.simpleicons.org/gmail" alt=""><span>Gmail</span></a>
+        <a href="https://twitter.com" class="nav-item" style="--brand: #1DA1F2;"><img src="https://cdn.simpleicons.org/twitter" alt=""><span>Twitter</span></a>
+        <a href="https://instagram.com" class="nav-item" style="--brand: #E4405F;"><img src="https://cdn.simpleicons.org/instagram" alt=""><span>Insta</span></a>
+        <a href="https://facebook.com" class="nav-item" style="--brand: #1877F2;"><img src="https://cdn.simpleicons.org/facebook" alt=""><span>Facebook</span></a>
+        <a href="https://linkedin.com" class="nav-item" style="--brand: #0A66C2;"><img src="https://cdn.simpleicons.org/linkedin" alt=""><span>LinkedIn</span></a>
+
+        <a href="https://netflix.com" class="nav-item" style="--brand: #E50914;"><img src="https://cdn.simpleicons.org/netflix" alt=""><span>Netflix</span></a>
+        <a href="https://spotify.com" class="nav-item" style="--brand: #1DB954;"><img src="https://cdn.simpleicons.org/spotify" alt=""><span>Spotify</span></a>
+        <a href="https://amazon.com" class="nav-item" style="--brand: #FF9900;"><img src="https://cdn.simpleicons.org/amazon" alt=""><span>Amazon</span></a>
+        <a href="https://reddit.com" class="nav-item" style="--brand: #FF4500;"><img src="https://cdn.simpleicons.org/reddit" alt=""><span>Reddit</span></a>
+        <a href="https://twitch.tv" class="nav-item" style="--brand: #9146FF;"><img src="https://cdn.simpleicons.org/twitch" alt=""><span>Twitch</span></a>
+
+        <a href="https://whatsapp.com" class="nav-item" style="--brand: #25D366;"><img src="https://cdn.simpleicons.org/whatsapp" alt=""><span>WhatsApp</span></a>
+        <a href="https://telegram.org" class="nav-item" style="--brand: #26A5E4;"><img src="https://cdn.simpleicons.org/telegram" alt=""><span>Telegram</span></a>
+        <a href="https://pinterest.com" class="nav-item" style="--brand: #BD081C;"><img src="https://cdn.simpleicons.org/pinterest" alt=""><span>Pinterest</span></a>
+        <a href="https://stackoverflow.com" class="nav-item" style="--brand: #F48024;"><img src="https://cdn.simpleicons.org/stackoverflow" alt=""><span>Stack</span></a>
+        <a href="https://canva.com" class="nav-item" style="--brand: #00C4CC;"><img src="https://cdn.simpleicons.org/canva" alt=""><span>Canva</span></a>
+
+        <a href="https://figma.com" class="nav-item" style="--brand: #F24E1E;"><img src="https://cdn.simpleicons.org/figma" alt=""><span>Figma</span></a>
+        <a href="https://zoom.us" class="nav-item" style="--brand: #2D8CFF;"><img src="https://cdn.simpleicons.org/zoom" alt=""><span>Zoom</span></a>
+        <a href="https://microsoft.com" class="nav-item" style="--brand: #F25022;"><img src="https://cdn.simpleicons.org/microsoft" alt=""><span>MSFT</span></a>
+        <a href="https://apple.com" class="nav-item" style="--brand: #A2AAAD;"><img src="https://cdn.simpleicons.org/apple" alt=""><span>Apple</span></a>
+        <a href="https://adobe.com" class="nav-item" style="--brand: #FF0000;"><img src="https://cdn.simpleicons.org/adobe" alt=""><span>Adobe</span></a>
+
+        <a href="https://medium.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/medium" alt=""><span>Medium</span></a>
+        <a href="https://quora.com" class="nav-item" style="--brand: #B92B27;"><img src="https://cdn.simpleicons.org/quora" alt=""><span>Quora</span></a>
+        <a href="https://ebay.com" class="nav-item" style="--brand: #E53238;"><img src="https://cdn.simpleicons.org/ebay" alt=""><span>eBay</span></a>
+        <a href="https://dropbox.com" class="nav-item" style="--brand: #0061FF;"><img src="https://cdn.simpleicons.org/dropbox" alt=""><span>Dropbox</span></a>
+        <a href="https://notion.so" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/notion" alt=""><span>Notion</span></a>
+    </div>
+</div>
 
 <div id="liveHUD">
     <div id="hudDate"></div>
