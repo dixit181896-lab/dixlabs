@@ -120,6 +120,35 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
     margin-left: auto; margin-right: auto; padding: 0 20px;
 }
 
+    header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.logo-wrapper {
+    text-align: center;
+}
+
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 5rem;
+    letter-spacing: 10px;
+    margin: 0;
+    color: #fff;
+}
+
+.sub-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 5px;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
 /* --- AKSA INTERFACE --- */
 #aksa-tab-content { 
     width: 95%; max-width: 1000px; margin: 30px auto; display: none; 
@@ -237,9 +266,11 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
     </nav>
 
     <header>
-        <h1 class="logo-text" id="mainHeader">DIXLABS</h1>
-        <p id="subHeader"></p>
-    </header>
+    <div class="logo-wrapper">
+        <h1 class="logo-text" id="mainHeader">DIX<span>LABS</span></h1>
+        <p class="sub-text" id="subHeader">A 🇮🇳 DOMAIN</p>
+    </div>
+</header>
 
 <div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.9); font-family: 'JetBrains Mono'; position: relative; border-radius: 4px;">
     
