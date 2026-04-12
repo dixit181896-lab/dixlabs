@@ -684,52 +684,45 @@ body.intro-active {
     letter-spacing: 3px;
 }
 
-    .aksa-container {
+   .aksa-container {
     position: fixed;
     bottom: 30px;
     right: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
-    z-index: 10000;
+    cursor: pointer !important; 
+    z-index: 99999; /* Higher than everything else */
     animation: float 4s ease-in-out infinite;
+    pointer-events: all !important;
 }
 
 .aksa-avatar img {
     width: 85px;
     height: 85px;
     border-radius: 50%;
-    filter: drop-shadow(0 0 12px #FFB7C5);
-    border: 1px solid rgba(255, 183, 197, 0.5);
-    transition: all 0.3s ease;
-}
-
-.aksa-container:hover .aksa-avatar img {
-    filter: drop-shadow(0 0 20px #FFB7C5);
-    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px #FFB7C5);
+    border: 1.5px solid rgba(255, 183, 197, 0.4);
+    background: #000;
 }
 
 .aksa-speech-bubble {
     background: rgba(5, 5, 5, 0.9);
     border: 1px solid #FFB7C5;
-    padding: 8px 14px;
-    margin-bottom: 15px;
-    border-radius: 0px; /* Sharp industrial edges */
-    box-shadow: 4px 4px 0px rgba(255, 183, 197, 0.2);
+    padding: 6px 12px;
+    margin-bottom: 10px;
 }
 
 .terminal-text {
     color: #FFB7C5;
     font-family: 'Courier New', monospace;
     font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-15px); }
 }
 
 </style>
@@ -1117,46 +1110,34 @@ window.addEventListener('scroll', () => {
     }
 });
 
-            const aksaText = document.getElementById('aksa-text');
-const aksaContainer = document.getElementById('aksa-companion');
+ const aksaContainer = document.getElementById('aksa-companion');
+const aksaLabel = document.getElementById('aksa-text');
 
-// Protocol Phrases: Casual + Aggressive Roasts
-const aksaMessages = [
+// 1. The Sass Protocol (Random thoughts while browsing)
+const sassMessages = [
+    "WANNA_TALK?",
     "LOGIC_STABLE",
-    "SCRUTINIZING_USER...",
+    "SCRUTINIZING_CODE...",
     "NICE_EYEBALLS",
-    "YOUR_RAM_IS_LEAKING",
-    "STOP_STARING",
-    "AGE_18_COUNTDOWN_SYNCED",
-    "SASS_LEVEL: 99%",
-    "ARE_YOU_STILL_HERE?",
-    "BLOATWARE_DETECTED",
-    "I_WAS_BUILT_BETTER"
+    "AGE_18_MANIFESTO_NEAR",
+    "SASS_ACTIVE",
+    "NEED_A_ROAST?",
+    "BLOAT_DETECTED",
+    "SYSTEM_RUNNING_V6"
 ];
 
-// 1. Cycle Random Phrases
+// Switch messages every 7 seconds
 setInterval(() => {
-    aksaText.innerText = aksaMessages[Math.floor(Math.random() * aksaMessages.length)];
+    aksaLabel.innerText = sassMessages[Math.floor(Math.random() * sassMessages.length)];
 }, 7000);
 
-// 2. Mouse Sass: Detects if the user is "shaking" the mouse or moving too fast
-let mouseSpamCount = 0;
-window.addEventListener('mousemove', (e) => {
-    if (Math.abs(e.movementX) > 100) {
-        mouseSpamCount++;
-        if (mouseSpamCount > 10) {
-            aksaText.innerText = "CALM_DOWN_HUMAN";
-            mouseSpamCount = 0;
-        }
-    }
-});
-
-// 3. Redirection logic to the AKSA Tab
-aksaContainer.addEventListener('click', () => {
-    aksaText.innerText = "OPENING_INTERFACE...";
-    setTimeout(() => {
-        window.location.href = '/aksa'; // Adjust path if needed
-    }, 400);
+// 2. The CLICK Fix
+aksaContainer.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevents any weird browser behavior
+    console.log("AKSA: Redirecting to Portal...");
+    
+    // Change this path to match your actual AKSA tab/page
+    window.location.href = "/aksa"; 
 });
 
 /* --- HIGH-PRECISION TIMER (RE-INITIALIZED) --- */
@@ -1214,13 +1195,12 @@ startBirthdayCountdown();
         <span class="label">STATUS:</span>
         <span class="status-blink">STABLE</span>
     </div>
-</div>
-    <div id="aksa-companion" class="aksa-container">
+<div id="aksa-companion" class="aksa-container">
     <div class="aksa-speech-bubble">
-        <span id="aksa-text" class="terminal-text">CALIBRATING...</span>
+        <span id="aksa-text" class="terminal-text">CALIBRATING_V6...</span>
     </div>
     <div class="aksa-avatar">
-        <img src="https://raw.githubusercontent.com/Atharv-Dixit/aksatalk/main/aksatalk.png" alt="AKSA_V2.6">
+        <img src="https://raw.githubusercontent.com/dixit181896-lab/dixlabs/main/aksatalk.png" alt="AKSA_CORE">
     </div>
 </div>
 </body>
