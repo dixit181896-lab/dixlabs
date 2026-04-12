@@ -265,10 +265,12 @@ header { padding: clamp(60px, 15vh, 150px) 20px 60px; }
         <div class="tab-link" onclick="filterSelection('work', this)" style="color:var(--neon-gold)">🤝 WORK</div>
     </nav>
 
-    <header>
+  <header>
     <div class="logo-wrapper">
         <h1 class="logo-text" id="mainHeader">DIX<span>LABS</span></h1>
-        <p class="sub-text" id="subHeader">A 🇮🇳 DOMAIN</p>
+        <div class="sub-text" id="subHeader">
+            A <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="IN" class="inline-flag"> DOMAIN
+        </div>
     </div>
 </header>
 
@@ -386,6 +388,55 @@ body.intro-active {
 
 @media (max-width: 600px) {
     .mobile-hide { display: none; }
+}
+
+    header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.logo-wrapper {
+    text-align: center;
+    perspective: 1000px; /* Gives it a slight 3D feel */
+}
+
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(4rem, 15vw, 8rem); /* MASSIVE responsive size */
+    font-weight: 900;
+    margin: 0;
+    color: #00d4ff; /* Deep Cyan/Blue */
+    letter-spacing: 15px;
+    text-transform: uppercase;
+    /* Neon Glow Effect */
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.7),
+                 0 0 20px rgba(0, 212, 255, 0.5),
+                 0 0 40px rgba(0, 212, 255, 0.3);
+}
+
+.logo-text span {
+    color: #fff; /* "LABS" remains white for contrast */
+}
+
+.sub-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 6px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.inline-flag {
+    width: 24px; /* Adjust size of flag */
+    height: auto;
+    border-radius: 2px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
 }
 
 </style>
