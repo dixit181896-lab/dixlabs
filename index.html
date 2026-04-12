@@ -605,6 +605,76 @@ body.intro-active {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
 }
 
+    .patriotic-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px; /* Taller to show the full flag and Chakra */
+    overflow: hidden;
+    border-top: 2px solid rgba(255, 255, 255, 0.1); /* Subtle separation */
+    z-index: 1000;
+    font-family: 'Orbitron', sans-serif; /* DixLabs signature font */
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5); /* Lift effect */
+}
+
+.footer-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.flag-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Video fills the entire bar perfectly */
+    filter: saturate(1.4) brightness(0.8); /* Enhances colours, dims slightly for text */
+}
+
+/* The Shader: Critical for making the white text readable on the Saffron/White/Green */
+.footer-shader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg, 
+        rgba(2, 6, 23, 1) 0%, /* Blends with your site's dark mode */
+        rgba(2, 6, 23, 0.4) 50%, 
+        rgba(2, 6, 23, 0.9) 100%
+    );
+}
+
+.footer-patriotic-content {
+    position: relative;
+    z-index: 2; /* Sits on top of the video and shader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 5px; /* Technical spacing for 'Labs' feel */
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Slight white glow */
+}
+
+.chakra-icon {
+    display: inline-block;
+    color: #000080; /* Navy Blue for the Ashok Chakra */
+    margin-right: 15px;
+    font-size: 1.4rem;
+    animation: slow-spin 20s linear infinite; /* Respectful, very slow rotation */
+    text-shadow: none; /* Keeps it sharp */
+}
+
+@keyframes slow-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 </style>
     <div id="aksa-tab-content">
         <div class="aksa-header">
@@ -716,9 +786,17 @@ body.intro-active {
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
         </div>
-        <footer style="margin-top:50px; opacity:0.2; font-family:'JetBrains Mono'; font-size:9px; letter-spacing:5px;">
-            DIXIT LABS // MMXVI-MMXXVI // INDEPENDENT LOGIC // INDIA
-        </footer>
+       <footer class="patriotic-footer">
+    <div class="footer-video-wrapper">
+        <video autoplay muted loop playsinline class="flag-video">
+            <source src="your-indian-flag-loop.mp4" type="video/mp4">
+        </video>
+        <div class="footer-shader"></div> </div>
+
+    <div class="footer-patriotic-content">
+        <span class="chakra-icon">☀️</span> Proudly Developed in India
+    </div>
+</footer>
     </div>
 </main>
 
