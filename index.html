@@ -684,6 +684,54 @@ body.intro-active {
     letter-spacing: 3px;
 }
 
+    .aksa-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10000;
+    animation: float 4s ease-in-out infinite;
+}
+
+.aksa-avatar img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 12px #FFB7C5);
+    border: 1px solid rgba(255, 183, 197, 0.5);
+    transition: all 0.3s ease;
+}
+
+.aksa-container:hover .aksa-avatar img {
+    filter: drop-shadow(0 0 20px #FFB7C5);
+    transform: scale(1.05);
+}
+
+.aksa-speech-bubble {
+    background: rgba(5, 5, 5, 0.9);
+    border: 1px solid #FFB7C5;
+    padding: 8px 14px;
+    margin-bottom: 15px;
+    border-radius: 0px; /* Sharp industrial edges */
+    box-shadow: 4px 4px 0px rgba(255, 183, 197, 0.2);
+}
+
+.terminal-text {
+    color: #FFB7C5;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
 </style>
     <div id="aksa-tab-content">
         <div class="aksa-header">
@@ -1069,6 +1117,48 @@ window.addEventListener('scroll', () => {
     }
 });
 
+            const aksaText = document.getElementById('aksa-text');
+const aksaContainer = document.getElementById('aksa-companion');
+
+// Protocol Phrases: Casual + Aggressive Roasts
+const aksaMessages = [
+    "LOGIC_STABLE",
+    "SCRUTINIZING_USER...",
+    "NICE_EYEBALLS",
+    "YOUR_RAM_IS_LEAKING",
+    "STOP_STARING",
+    "AGE_18_COUNTDOWN_SYNCED",
+    "SASS_LEVEL: 99%",
+    "ARE_YOU_STILL_HERE?",
+    "BLOATWARE_DETECTED",
+    "I_WAS_BUILT_BETTER"
+];
+
+// 1. Cycle Random Phrases
+setInterval(() => {
+    aksaText.innerText = aksaMessages[Math.floor(Math.random() * aksaMessages.length)];
+}, 7000);
+
+// 2. Mouse Sass: Detects if the user is "shaking" the mouse or moving too fast
+let mouseSpamCount = 0;
+window.addEventListener('mousemove', (e) => {
+    if (Math.abs(e.movementX) > 100) {
+        mouseSpamCount++;
+        if (mouseSpamCount > 10) {
+            aksaText.innerText = "CALM_DOWN_HUMAN";
+            mouseSpamCount = 0;
+        }
+    }
+});
+
+// 3. Redirection logic to the AKSA Tab
+aksaContainer.addEventListener('click', () => {
+    aksaText.innerText = "OPENING_INTERFACE...";
+    setTimeout(() => {
+        window.location.href = '/aksa'; // Adjust path if needed
+    }, 400);
+});
+
 /* --- HIGH-PRECISION TIMER (RE-INITIALIZED) --- */
 function startBirthdayCountdown() {
     const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
@@ -1123,6 +1213,14 @@ startBirthdayCountdown();
     <div class="stat-item">
         <span class="label">STATUS:</span>
         <span class="status-blink">STABLE</span>
+    </div>
+</div>
+    <div id="aksa-companion" class="aksa-container">
+    <div class="aksa-speech-bubble">
+        <span id="aksa-text" class="terminal-text">CALIBRATING...</span>
+    </div>
+    <div class="aksa-avatar">
+        <img src="https://raw.githubusercontent.com/Atharv-Dixit/aksatalk/main/aksatalk.png" alt="AKSA_V2.6">
     </div>
 </div>
 </body>
