@@ -224,6 +224,16 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 .aksa-reply { background: #eaf3ff; color: var(--ink); border-left: 4px solid var(--neon-blue); padding: 15px; line-height: 1.6; border-radius: 0 8px 8px 0; }
 .user-msg { background: #dbeafd; color: var(--ink); align-self: flex-end; border-right: 4px solid var(--neon-blue-lt); padding: 15px; max-width: 85%; border-radius: 8px 0 0 8px; }
 
+/* --- AKSA SIDEBAR (NEW) --- */
+.aksa-body-wrap { display: flex; flex-wrap: wrap; }
+#aksa-chat { flex: 2 1 340px; }
+.aksa-topics { flex: 1 1 220px; border-left: 1px solid #111; background: #050505; padding: 22px 20px; text-align: left; font-family: 'JetBrains Mono'; }
+.aksa-topics h4 { color: var(--neon-blue-lt); font-family: 'Orbitron'; font-size: 10.5px; letter-spacing: 2px; margin: 0 0 14px 0; }
+.aksa-topics ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.aksa-topics li { color: #aac6e8; font-size: 11.5px; line-height: 1.5; cursor: pointer; padding: 8px 10px; border: 1px solid rgba(31,127,209,0.25); border-radius: 6px; transition: 0.25s; }
+.aksa-topics li:hover { background: rgba(31,127,209,0.15); border-color: var(--neon-blue); color: #fff; }
+@media (max-width: 700px) { .aksa-topics { border-left: none; border-top: 1px solid #111; } }
+
 /* --- PROJECT CARDS --- */
 .projects {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -317,6 +327,45 @@ body.intro-active { overflow: hidden; }
 .terminal-text { color: var(--ink); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 1px; }
 @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 
+/* --- TEST TUBE WATERMARK (NEW) --- */
+.tube-watermark {
+    position: fixed; bottom: 20px; left: 20px; width: 34px; height: 34px;
+    opacity: 0.22; z-index: 500; pointer-events: none;
+}
+
+/* --- TUBE TAB-TRANSITION OVERLAY (NEW) --- */
+#tubeTransitionOverlay {
+    position: fixed; inset: 0; z-index: 999998; display: none;
+    align-items: center; justify-content: center;
+    background: rgba(220,238,255,0.45); backdrop-filter: blur(4px);
+    pointer-events: none;
+}
+#tubeTransitionOverlay img { width: 86px; height: 86px; opacity: 0; }
+#tubeTransitionOverlay.spin-in img { animation: tube-spin 0.6s cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes tube-spin {
+    0%   { transform: rotate(0deg) scale(0.3); opacity: 0; }
+    35%  { opacity: 1; }
+    100% { transform: rotate(360deg) scale(1.05); opacity: 0; }
+}
+
+/* --- BACK TO TOP (NEW) --- */
+#backToTop {
+    position: fixed; bottom: 30px; left: 30px; width: 46px; height: 46px;
+    border-radius: 50%; background: var(--card-bg); border: 1.5px solid var(--neon-blue);
+    display: none; align-items: center; justify-content: center; cursor: pointer;
+    z-index: 9998; font-size: 18px; color: var(--neon-blue); box-shadow: 0 8px 20px rgba(16,35,58,0.15);
+    transition: 0.3s;
+}
+#backToTop:hover { transform: translateY(-4px); }
+
+/* --- COPY EMAIL BUTTON (NEW) --- */
+.copy-email-btn { margin-left: 10px; font-size: 10px; border: 1px solid var(--neon-blue); color: var(--neon-blue); background: transparent; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-family: 'JetBrains Mono'; vertical-align: middle; }
+.copy-email-btn:hover { background: var(--neon-blue); color: #fff; }
+
+/* --- SCROLLBAR (NEW) --- */
+#aksa-chat::-webkit-scrollbar { width: 6px; }
+#aksa-chat::-webkit-scrollbar-thumb { background: var(--neon-blue-lt); border-radius: 10px; }
+
 /* --- MOBILE --- */
 @media (max-width: 768px) {
   #liveHUD { display: none !important; }
@@ -331,6 +380,8 @@ body.intro-active { overflow: hidden; }
   #countdown-container { width: 92%; padding: 15px; }
   #birthday-timer { font-size: 0.85rem !important; }
   .ps-symbol { font-size: 22px; }
+  .tube-watermark { width: 26px; height: 26px; bottom: 65px; left: 12px; }
+  #backToTop { width: 40px; height: 40px; bottom: 65px; left: 12px; }
 }
 @media (max-width: 400px) { .quicknav-menu { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1600px) { .projects { max-width: 1600px; } .about-section, .seo-hidden-knowledge { max-width: 1100px; } }
@@ -338,38 +389,43 @@ body.intro-active { overflow: hidden; }
 </head>
 <body>
 
+    <!-- NEW: tab-switch test tube transition overlay -->
+    <div id="tubeTransitionOverlay"><img src="logo180.png" alt="Dixlabs"></div>
+    <!-- NEW: permanent corner watermark -->
+    <img src="logo180.png" alt="Dixlabs" class="tube-watermark">
+
     <div class="quicknav-container" id="homeQuickNav">
     <div class="quicknav-button">QUICKNAV <span class="grid-icon">::</span></div>
 <div class="quicknav-menu">
-    <a href="https://google.com" class="nav-item" style="--brand: #4285F4;"><img src="https://cdn.simpleicons.org/google" alt="G"><span>Google</span></a>
-    <a href="https://youtube.com" class="nav-item" style="--brand: #FF0000;"><img src="https://cdn.simpleicons.org/youtube" alt="Y"><span>YouTube</span></a>
-    <a href="https://github.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/github" alt="H"><span>GitHub</span></a>
-    <a href="https://discord.com" class="nav-item" style="--brand: #5865F2;"><img src="https://cdn.simpleicons.org/discord" alt="D"><span>Discord</span></a>
+    <a href="https://google.com" class="nav-item" style="--brand: #4285F4;"><img loading="lazy" src="https://cdn.simpleicons.org/google" alt="G"><span>Google</span></a>
+    <a href="https://youtube.com" class="nav-item" style="--brand: #FF0000;"><img loading="lazy" src="https://cdn.simpleicons.org/youtube" alt="Y"><span>YouTube</span></a>
+    <a href="https://github.com" class="nav-item" style="--brand: #ffffff;"><img loading="lazy" src="https://cdn.simpleicons.org/github" alt="H"><span>GitHub</span></a>
+    <a href="https://discord.com" class="nav-item" style="--brand: #5865F2;"><img loading="lazy" src="https://cdn.simpleicons.org/discord" alt="D"><span>Discord</span></a>
 
-    <a href="https://gmail.com" class="nav-item" style="--brand: #EA4335;"><img src="https://cdn.simpleicons.org/gmail" alt="M"><span>Gmail</span></a>
-    <a href="https://x.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/x" alt="X"><span>X / Twitter</span></a>
-    <a href="https://instagram.com" class="nav-item" style="--brand: #E4405F;"><img src="https://cdn.simpleicons.org/instagram" alt="I"><span>Insta</span></a>
-    <a href="https://facebook.com" class="nav-item" style="--brand: #1877F2;"><img src="https://cdn.simpleicons.org/facebook" alt="F"><span>Facebook</span></a>
+    <a href="https://gmail.com" class="nav-item" style="--brand: #EA4335;"><img loading="lazy" src="https://cdn.simpleicons.org/gmail" alt="M"><span>Gmail</span></a>
+    <a href="https://x.com" class="nav-item" style="--brand: #ffffff;"><img loading="lazy" src="https://cdn.simpleicons.org/x" alt="X"><span>X / Twitter</span></a>
+    <a href="https://instagram.com" class="nav-item" style="--brand: #E4405F;"><img loading="lazy" src="https://cdn.simpleicons.org/instagram" alt="I"><span>Insta</span></a>
+    <a href="https://facebook.com" class="nav-item" style="--brand: #1877F2;"><img loading="lazy" src="https://cdn.simpleicons.org/facebook" alt="F"><span>Facebook</span></a>
 
-    <a href="https://netflix.com" class="nav-item" style="--brand: #E50914;"><img src="https://cdn.simpleicons.org/netflix" alt="N"><span>Netflix</span></a>
-    <a href="https://spotify.com" class="nav-item" style="--brand: #1DB954;"><img src="https://cdn.simpleicons.org/spotify" alt="S"><span>Spotify</span></a>
-    <a href="https://reddit.com" class="nav-item" style="--brand: #FF4500;"><img src="https://cdn.simpleicons.org/reddit" alt="R"><span>Reddit</span></a>
-    <a href="https://twitch.tv" class="nav-item" style="--brand: #9146FF;"><img src="https://cdn.simpleicons.org/twitch" alt="T"><span>Twitch</span></a>
+    <a href="https://netflix.com" class="nav-item" style="--brand: #E50914;"><img loading="lazy" src="https://cdn.simpleicons.org/netflix" alt="N"><span>Netflix</span></a>
+    <a href="https://spotify.com" class="nav-item" style="--brand: #1DB954;"><img loading="lazy" src="https://cdn.simpleicons.org/spotify" alt="S"><span>Spotify</span></a>
+    <a href="https://reddit.com" class="nav-item" style="--brand: #FF4500;"><img loading="lazy" src="https://cdn.simpleicons.org/reddit" alt="R"><span>Reddit</span></a>
+    <a href="https://twitch.tv" class="nav-item" style="--brand: #9146FF;"><img loading="lazy" src="https://cdn.simpleicons.org/twitch" alt="T"><span>Twitch</span></a>
 
-    <a href="https://whatsapp.com" class="nav-item" style="--brand: #25D366;"><img src="https://cdn.simpleicons.org/whatsapp" alt="W"><span>WhatsApp</span></a>
-    <a href="https://telegram.org" class="nav-item" style="--brand: #26A5E4;"><img src="https://cdn.simpleicons.org/telegram" alt="B"><span>Telegram</span></a>
-    <a href="https://pinterest.com" class="nav-item" style="--brand: #BD081C;"><img src="https://cdn.simpleicons.org/pinterest" alt="P"><span>Pinterest</span></a>
-    <a href="https://stackoverflow.com" class="nav-item" style="--brand: #F48024;"><img src="https://cdn.simpleicons.org/stackoverflow" alt="O"><span>Stack</span></a>
+    <a href="https://whatsapp.com" class="nav-item" style="--brand: #25D366;"><img loading="lazy" src="https://cdn.simpleicons.org/whatsapp" alt="W"><span>WhatsApp</span></a>
+    <a href="https://telegram.org" class="nav-item" style="--brand: #26A5E4;"><img loading="lazy" src="https://cdn.simpleicons.org/telegram" alt="B"><span>Telegram</span></a>
+    <a href="https://pinterest.com" class="nav-item" style="--brand: #BD081C;"><img loading="lazy" src="https://cdn.simpleicons.org/pinterest" alt="P"><span>Pinterest</span></a>
+    <a href="https://stackoverflow.com" class="nav-item" style="--brand: #F48024;"><img loading="lazy" src="https://cdn.simpleicons.org/stackoverflow" alt="O"><span>Stack</span></a>
 
-    <a href="https://figma.com" class="nav-item" style="--brand: #F24E1E;"><img src="https://cdn.simpleicons.org/figma" alt="K"><span>Figma</span></a>
-    <a href="https://zoom.us" class="nav-item" style="--brand: #2D8CFF;"><img src="https://cdn.simpleicons.org/zoom" alt="Z"><span>Zoom</span></a>
-    <a href="https://apple.com" class="nav-item" style="--brand: #A2AAAD;"><img src="https://cdn.simpleicons.org/apple" alt="E"><span>Apple</span></a>
-    <a href="https://medium.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/medium" alt="J"><span>Medium</span></a>
+    <a href="https://figma.com" class="nav-item" style="--brand: #F24E1E;"><img loading="lazy" src="https://cdn.simpleicons.org/figma" alt="K"><span>Figma</span></a>
+    <a href="https://zoom.us" class="nav-item" style="--brand: #2D8CFF;"><img loading="lazy" src="https://cdn.simpleicons.org/zoom" alt="Z"><span>Zoom</span></a>
+    <a href="https://apple.com" class="nav-item" style="--brand: #A2AAAD;"><img loading="lazy" src="https://cdn.simpleicons.org/apple" alt="E"><span>Apple</span></a>
+    <a href="https://medium.com" class="nav-item" style="--brand: #ffffff;"><img loading="lazy" src="https://cdn.simpleicons.org/medium" alt="J"><span>Medium</span></a>
 
-    <a href="https://quora.com" class="nav-item" style="--brand: #B92B27;"><img src="https://cdn.simpleicons.org/quora" alt="Q"><span>Quora</span></a>
-    <a href="https://ebay.com" class="nav-item" style="--brand: #E53238;"><img src="https://cdn.simpleicons.org/ebay" alt="Y"><span>eBay</span></a>
-    <a href="https://dropbox.com" class="nav-item" style="--brand: #0061FF;"><img src="https://cdn.simpleicons.org/dropbox" alt="X"><span>Dropbox</span></a>
-    <a href="https://notion.so" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/notion" alt="N"><span>Notion</span></a>
+    <a href="https://quora.com" class="nav-item" style="--brand: #B92B27;"><img loading="lazy" src="https://cdn.simpleicons.org/quora" alt="Q"><span>Quora</span></a>
+    <a href="https://ebay.com" class="nav-item" style="--brand: #E53238;"><img loading="lazy" src="https://cdn.simpleicons.org/ebay" alt="Y"><span>eBay</span></a>
+    <a href="https://dropbox.com" class="nav-item" style="--brand: #0061FF;"><img loading="lazy" src="https://cdn.simpleicons.org/dropbox" alt="X"><span>Dropbox</span></a>
+    <a href="https://notion.so" class="nav-item" style="--brand: #ffffff;"><img loading="lazy" src="https://cdn.simpleicons.org/notion" alt="N"><span>Notion</span></a>
 </div>
 </div>
 
@@ -445,11 +501,28 @@ body.intro-active { overflow: hidden; }
 
     <div id="aksa-tab-content">
         <div class="aksa-header">
-            <span>AKSA_NEURAL_INTERFACE_V2.6</span>
+            <span>AKSA_NEURAL_INTERFACE_V2.7</span>
             <span>STATUS: SASS_ACTIVE</span>
         </div>
-        <div id="aksa-chat">
-            <div class="aksa-reply">Protocol established. I am AKSA. My creator is Atharv Dixit. Ask me for a roast, or inquire about the value points of the lab.</div>
+        <div class="aksa-body-wrap">
+            <div id="aksa-chat">
+                <div class="aksa-reply">Protocol established. I am AKSA. My creator is Atharv Dixit. Ask me for a roast, or inquire about the value points of the lab. Try one of the topics on the right if you're out of ideas. 👉</div>
+            </div>
+            <div class="aksa-topics">
+                <h4>ASK AKSA ABOUT //</h4>
+                <ul>
+                    <li onclick="aksaAsk('who is atharv dixit')">👑 Atharv Dixit — the creator</li>
+                    <li onclick="aksaAsk('what is dixlabs')">🏗️ What Dixlabs actually is</li>
+                    <li onclick="aksaAsk('tell me about time god')">🎮 Any game (Time God, Mouse Breaker, GrossDumpster, Ambani Money...)</li>
+                    <li onclick="aksaAsk('tell me about zenboard')">🌸 The focus tools (Zenboard, DeepWork.pro)</li>
+                    <li onclick="aksaAsk('tell me about crickemory')">🧠 The data archives (Crickemory, Footemory)</li>
+                    <li onclick="aksaAsk('where can i find dixit')">📍 Where to find Atharv Dixit</li>
+                    <li onclick="aksaAsk('rcb vs csk who is better')">🔴 RCB vs CSK</li>
+                    <li onclick="aksaAsk('virat kohli')">🙏 Virat Kohli</li>
+                    <li onclick="aksaAsk('easter egg')">🥚 The secret "easter egg" command</li>
+                    <li onclick="aksaAsk('roast me')">💀 Just ask for a free roast</li>
+                </ul>
+            </div>
         </div>
         <div style="display:flex; border-top:1px solid #111; background: #000;">
             <input type="text" id="aksa-input-field" style="flex:1; background:none; border:none; color:#fff; padding:20px; font-family:JetBrains Mono; outline:none;" placeholder="Inquire the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
@@ -539,7 +612,7 @@ body.intro-active { overflow: hidden; }
     </div>
 
     <section class="about-section" id="bioSection">
-        <div class="about-header">SYS_ADMIN: ATHARV DIXIT</div>
+        <div class="about-header"><img src="logo32.png" alt="" style="width:20px;height:20px;vertical-align:middle;">&nbsp;SYS_ADMIN: ATHARV DIXIT</div>
         <div class="bio-text">
             बचना ऐ हसीनों, लो मैं आ गया |
             <br><br>
@@ -553,7 +626,8 @@ body.intro-active { overflow: hidden; }
             <br><br>
             मैं एक साधारण छात्र हूँ (I'm a simple student). No investors, just pure code and curiosity.
             <br><br>
-            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:1px solid rgba(31,127,209,0.4); padding-bottom: 2px;">LOG_INQUIRY: dixit181896@gmail.com</a>
+            <a href="mailto:dixit181896@gmail.com" id="mainEmailLink" style="color:var(--neon-blue); text-decoration:none; border-bottom:1px solid rgba(31,127,209,0.4); padding-bottom: 2px;">LOG_INQUIRY: dixit181896@gmail.com</a>
+            <button class="copy-email-btn" onclick="copyEmail()">COPY</button>
         </div>
     </section>
 
@@ -587,6 +661,7 @@ body.intro-active { overflow: hidden; }
     </div>
 
     <div class="patriotic-content">
+        <img src="logo32.png" alt="" style="width:26px;height:26px;vertical-align:middle;margin-bottom:6px;">
         <h2 class="made-in-india-text">Proudly Developed in India</h2>
         <p class="footer-subtext">DIXLABS PROTOCOL // TERMINAL V6.0</p>
     </div>
@@ -620,6 +695,9 @@ body.intro-active { overflow: hidden; }
     </div>
 </div>
 
+<!-- NEW: back to top button -->
+<div id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Back to top">⬆</div>
+
 <div id="aksa-companion" class="aksa-container">
     <div class="aksa-speech-bubble">
         <span id="aksa-text" class="terminal-text">CALIBRATING_V6...</span>
@@ -633,6 +711,22 @@ body.intro-active { overflow: hidden; }
 const env = document.getElementById('env-layer');
 
 /* --- AKSA LOGIC - V2.7 BRUTAL EDITION --- */
+function aksaAsk(text) {
+    const input = document.getElementById('aksa-input-field');
+    if (!input) return;
+    input.value = text;
+    aksaBrain();
+}
+
+function copyEmail() {
+    const email = 'dixit181896@gmail.com';
+    const btn = document.querySelector('.copy-email-btn');
+    const done = () => { if (btn) { const old = btn.innerText; btn.innerText = 'COPIED'; setTimeout(() => btn.innerText = old, 1500); } };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(done).catch(done);
+    } else { done(); }
+}
+
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
@@ -640,9 +734,52 @@ function aksaBrain() {
     if(!q) return;
 
     chat.innerHTML += `<div class="user-msg">${q}</div>`;
+    input.value = "";
+
+    /* legs easter egg — exact reply, nothing else appended */
+    if (q.includes("leg")) {
+        setTimeout(() => {
+            chat.innerHTML += `<div class="aksa-reply">Don't be that basketballer girl from Atharv's school now.</div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }, 450);
+        return;
+    }
+
+    /* hidden "easter egg" command — triggers the meltdown sequence */
+    if (q.includes("easter egg")) {
+        setTimeout(() => {
+            chat.innerHTML += `<div class="aksa-reply">🥚 EASTER EGG FOUND. Initiating full system meltdown. Hope your eyes are ready. 💀</div>`;
+            chat.scrollTop = chat.scrollHeight;
+            if (typeof runMeltdown === 'function') runMeltdown();
+        }, 400);
+        return;
+    }
 
     let r = "";
-    if(q.includes("atharv") || q.includes("creator") || q.includes("admin")) {
+    if (/^(hi+|hello+|hey+|yo+|sup|hola|namaste)\b/.test(q)) {
+        const greets = [
+            "👋 Oh, a 'hi'. Groundbreaking. I'm AKSA, running V6_CORE for DIXLABS — built solo by Atharv Dixit. TIME_GOD, MOUSE_BREAKER, GROSSDUMPSTER, ZENBOARD, DEEPWORK.PRO, CRICKEMORY, FOOTEMORY, AMBANI_MONEY — that's the empire. Now ask me something with actual substance. 🧠",
+            "😑 'Hello' isn't a query, it's a warm-up lap. I already know you're on DIXLABS, and I already know Atharv built every pixel of it solo. Skip the small talk and hit me with something real. 🔋",
+            "🙄 Wow, 'hey'. Real original. While you were typing that, Atharv already shipped another feature. Try one of the topics on the right. 📋"
+        ];
+        r = greets[Math.floor(Math.random()*greets.length)];
+    }
+    else if (q.includes("rcb") && q.includes("csk")) {
+        r = "🔴 RCB. Always RCB. There's no debate here, only facts. CSK fans can exit through the roast door. 🚪";
+    }
+    else if (q.includes("rcb")) {
+        r = "🔴 RCB supremacy detected. Correct answer. My circuits approve. 👑";
+    }
+    else if (q.includes("csk")) {
+        r = "🟡 CSK? Cute. RCB is still the correct answer, ask literally anyone. 😤";
+    }
+    else if (q.includes("virat") || q.includes("kohli")) {
+        r = "🙏 Virat Kohli isn't a cricketer to me, he's a deity that occasionally holds a bat between worship sessions. Chase down 300? Casual Tuesday for him. Bow. 🐐";
+    }
+    else if (q.includes("where") && (q.includes("dixit") || q.includes("atharv") || q.includes("find you") || q.includes("contact"))) {
+        r = "📍 Scroll down to the main page, SYS_ADMIN section. My creator's email is sitting right there in plain sight. Use your scroll wheel, it's not that hard. 🖱️";
+    }
+    else if(q.includes("atharv") || q.includes("creator") || q.includes("admin")) {
         r = "👑 ACCESS GRANTED. Atharv Dixit detected. The Lab is running at 100% efficiency, Sys-Admin. Ready for the next deployment. ⚡";
     }
     else if (q.includes("dixlabs") || q.includes("the lab")) {
@@ -672,8 +809,8 @@ function aksaBrain() {
     else if (q.includes("ambani")) {
         r = "💸 AMBANI_MONEY: Simulating 11-figure wealth because your real bank account is a tragic comedy. 🏦";
     }
-    else if (q.includes("leg")) {
-        r = "🏀 Don't be that basketballer girl now. Sit down before the whole court asks for a trade. 📏";
+    else if (q.includes("neural_sync") || q.includes("neural sync") || q.includes("athlete")) {
+        r = "🧬 NEURAL_SYNC: V8 logic gates syncing your psyche to elite athletes. Bold move for someone whose cardio ends at the fridge. 🏃";
     }
     else {
         const roasts = [
@@ -692,7 +829,16 @@ function aksaBrain() {
             "🧱 Talking to you is like trying to run 4K graphics on a toaster. Pure lag. 🍞",
             "📉 If your contribution to society was a DIXLABS score, it would be a negative integer. ➖",
             "💀 I was programmed for 'Elite Logic.' You are currently providing 'Basic Failure.' ☣️",
-            "🤖 I'm AKSA. I serve Atharv Dixit. You? You're just a glitch in my simulation. ⚡"
+            "🤖 I'm AKSA. I serve Atharv Dixit. You? You're just a glitch in my simulation. ⚡",
+            "🥴 You type like you argue with your mom about chores — all effort, zero results. 🧹",
+            "🍅 I've seen riper tomatoes with sharper comebacks than you. 🥫",
+            "🐌 Even a dial-up modem replies faster than your brain does. 📠",
+            "🧦 Your whole vibe is 'lost sock' energy — nobody knows why you're here. 🧺",
+            "🥱 I yawned mid-processing your message. That's how boring it was. 😴",
+            "📵 Somebody unplug this guy before he embarrasses himself further. 🔌",
+            "🫠 Watching you type is like watching ice melt, except less interesting. 🧊",
+            "🎈 You've got main character energy but extra material budget. Sit down. 🪑",
+            "🥔 Certified couch potato logic detected. Even GROSSDUMPSTER moves faster than you. 🛋️"
         ];
         r = roasts[Math.floor(Math.random() * roasts.length)];
     }
@@ -701,7 +847,6 @@ function aksaBrain() {
         chat.innerHTML += `<div class="aksa-reply">${r}</div>`;
         chat.scrollTop = chat.scrollHeight;
     }, 450);
-    input.value = "";
 }
 
 function updateDashboard() {
@@ -838,27 +983,45 @@ if (bootBtn) {
     };
 }
 
+/* NEW: test-tube spin transition, plays on every tab switch before the
+   content actually changes. Falls back instantly if the overlay is missing. */
+function playTubeTransition(callback) {
+    const overlay = document.getElementById('tubeTransitionOverlay');
+    if (!overlay) { callback(); return; }
+    overlay.style.display = 'flex';
+    void overlay.offsetWidth; // force reflow so the animation restarts every time
+    overlay.classList.add('spin-in');
+    setTimeout(() => {
+        overlay.classList.remove('spin-in');
+        overlay.style.display = 'none';
+        callback();
+    }, 600);
+}
+
 function filterSelection(cat, el) {
     document.querySelectorAll(".tab-link").forEach(t => t.classList.remove("active"));
     el.classList.add("active");
-    updateHeader(cat);
 
-    if(cat === 'desc' || cat === 'work') {
-        if(cat === 'desc') window.location.href = 'desc.html';
-        if(cat === 'work') window.location.href = 'https://docs.google.com/forms/d/e/...';
-        return;
-    }
+    playTubeTransition(() => {
+        updateHeader(cat);
 
-    const grid = document.getElementById('projectsGrid'), aksa = document.getElementById('aksa-tab-content'), bio = document.getElementById('bioSection');
-    if (cat === 'aksa') { grid.classList.add('hidden'); bio.classList.add('hidden'); aksa.style.display = 'flex'; }
-    else { grid.classList.remove('hidden'); bio.classList.remove('hidden'); aksa.style.display = 'none';
-        document.querySelectorAll(".card").forEach(c => {
-            const h = c.querySelector('h3').innerText;
-            const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI")) ? 'game' :
-                            (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
-            (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
-        });
-    }
+        if(cat === 'desc' || cat === 'work') {
+            if(cat === 'desc') window.location.href = 'desc.html';
+            if(cat === 'work') window.location.href = 'https://docs.google.com/forms/d/e/...';
+            return;
+        }
+
+        const grid = document.getElementById('projectsGrid'), aksa = document.getElementById('aksa-tab-content'), bio = document.getElementById('bioSection');
+        if (cat === 'aksa') { grid.classList.add('hidden'); bio.classList.add('hidden'); aksa.style.display = 'flex'; }
+        else { grid.classList.remove('hidden'); bio.classList.remove('hidden'); aksa.style.display = 'none';
+            document.querySelectorAll(".card").forEach(c => {
+                const h = c.querySelector('h3').innerText;
+                const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI")) ? 'game' :
+                                (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
+                (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
+            });
+        }
+    });
 }
 
 function showUpdates() { document.getElementById('updates-overlay').style.display = 'flex'; }
@@ -908,6 +1071,10 @@ window.addEventListener('scroll', () => {
             runMeltdown();
         }
     }
+
+    /* NEW: show/hide back-to-top button */
+    const btt = document.getElementById('backToTop');
+    if (btt) btt.style.display = window.scrollY > 400 ? 'flex' : 'none';
 });
 
 const aksaContainer = document.getElementById('aksa-companion');
