@@ -38,7 +38,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="logo32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="logo180.png">
     <link rel="shortcut icon" href="logo180.png">
-    <meta name="theme-color" content="#020617">
+    <meta name="theme-color" content="#10233a">
 
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -59,42 +59,31 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@300;700&display=swap" rel="stylesheet">
 
-    <style>
-    /* ... KEEP ALL YOUR EXISTING CSS EXACTLY AS-IS, STARTING FROM :root { ... } ... */
-    </style>
-</head> 
-
-<!--
-============================================================
-DIXLABS — V2 FIX (vibrant, readable, correct fonts)
-============================================================
-Same instructions as before: replace your whole <style> block
-with this one. Nothing in your HTML/JS needs to change — same
-class names throughout.
-============================================================
--->
-
 <style>
 :root {
-    /* ---- VIBRANT (not white) PALETTE ---- */
-    --bg-a:          #ffe3c9;   /* warm peach */
-    --bg-b:          #ffd3e0;   /* warm pink */
-    --ink:           #221a2e;   /* deep plum-black, not pure black */
-    --ink-soft:      #5c4f68;
-    --line:          rgba(34,26,46,0.14);
-    --card-bg:       #fffaf2;
+    /* ---- BLUE-CENTERED PALETTE ---- */
+    --bg-a:          #dceeff;   /* pale sky blue */
+    --bg-b:          #aecdf2;   /* deeper periwinkle blue */
+    --ink:           #10233a;   /* deep navy-black */
+    --ink-soft:      #3d5872;
+    --line:          rgba(16,35,58,0.14);
+    --card-bg:       #ffffff;
 
-    /* richer, saturated accents — readable as TEXT and nice as accents/borders */
-    --neon-blue:   #2f9dc4;
+    /* blue is now the dominant/primary accent; others stay secondary */
+    --neon-blue:   #1f7fd1;
+    --neon-blue-lt:#7fb8ea;
     --neon-pink:   #e0577c;
     --neon-green:  #3f9e6d;
     --neon-orange: #e2933c;
     --neon-red:    #d64545;
     --neon-gold:   #b98f1f;
+    --matrix-blue: #0d3b66;   /* dark blue code-rain color */
     --bg-dark:     var(--bg-a);
 }
 
 * { box-sizing: border-box; }
+
+html, body { max-width: 100%; }
 
 body {
     margin: 0;
@@ -117,7 +106,7 @@ body {
     text-align: right; pointer-events: none; z-index: 1000; display: none;
     letter-spacing: 1px; line-height: 1.6;
 }
-#env-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; transition: 1s; }
+#env-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; transition: 1s; overflow: hidden; }
 
 .petal {
     position: absolute; background-color: var(--neon-pink); border-radius: 150% 0 150% 0;
@@ -129,16 +118,29 @@ body {
     10% { opacity: 0.6; } 90% { opacity: 0.6; }
     100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
 }
+
+/* Data archive code-rain — now dark blue, not green */
 .matrix-column {
-    position: absolute; top: -100px; color: var(--neon-green);
+    position: absolute; top: -100px; color: var(--matrix-blue);
     font-family: 'JetBrains Mono'; font-size: 13px; writing-mode: vertical-rl;
-    text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.4;
+    text-orientation: upright; animation: fall var(--d) infinite linear; opacity: 0.55;
+    font-weight: 700;
 }
 @keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100vh); } }
 
-/* --- NAVIGATION (tabs fixed for readability) --- */
+/* PS4 controller symbols floating in the SIMS/games tab background */
+.ps-symbol {
+    position: absolute; font-size: 34px; font-weight: 900; opacity: 0.16;
+    animation: ps-float var(--d) infinite ease-in-out; pointer-events: none;
+}
+@keyframes ps-float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(8deg); }
+}
+
+/* --- NAVIGATION --- */
 .nav-tabs {
-    position: sticky; top: 0; background: rgba(255,227,201,0.85); backdrop-filter: blur(16px);
+    position: sticky; top: 0; background: rgba(220,238,255,0.85); backdrop-filter: blur(16px);
     display: flex; justify-content: center; gap: 15px; padding: 18px;
     border-bottom: 1px solid var(--line); z-index: 999; flex-wrap: wrap;
 }
@@ -148,7 +150,7 @@ body {
     opacity: 0.75;
 }
 .tab-link:hover { opacity: 1; }
-.tab-link.active { opacity: 1; border-bottom: 2px solid var(--ink); padding-bottom: 4px; }
+.tab-link.active { opacity: 1; border-bottom: 2px solid var(--neon-blue); padding-bottom: 4px; }
 
 header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-content: center; align-items: center; }
 .logo-wrapper { text-align: center; }
@@ -159,14 +161,14 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
     font-weight: 900 !important;
     letter-spacing: clamp(2px, 1.5vw, 10px) !important;
     color: var(--ink) !important;
-    text-shadow: 3px 3px 0 var(--neon-pink), 6px 6px 0 var(--neon-blue) !important;
+    text-shadow: 3px 3px 0 var(--neon-blue), 6px 6px 0 var(--neon-blue-lt) !important;
     animation: none !important;
     opacity: 1 !important;
     margin: 0;
     text-transform: uppercase;
     white-space: nowrap;
 }
-.logo-text span { color: var(--neon-pink); }
+.logo-text span { color: var(--neon-blue); }
 
 .sub-text, #subHeader {
     font-family: 'JetBrains Mono', monospace;
@@ -185,16 +187,16 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 /* --- QUICKNAV --- */
 #homeQuickNav { position: absolute; top: 25px; right: 30px; z-index: 10000; }
 .quicknav-button {
-    background: var(--card-bg); border: 1.5px solid var(--ink);
+    background: var(--card-bg); border: 1.5px solid var(--neon-blue);
     color: var(--ink); padding: 10px 18px;
     font-family: 'Orbitron', sans-serif; font-weight: 700;
     letter-spacing: 1px; cursor: pointer; border-radius: 6px;
 }
 .quicknav-menu {
     display: none; position: absolute; top: 100%; right: 0; width: 320px;
-    background: var(--card-bg); border: 1.5px solid var(--ink); border-radius: 10px;
+    background: var(--card-bg); border: 1.5px solid var(--neon-blue); border-radius: 10px;
     padding: 20px; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 10px;
-    box-shadow: 0 20px 40px rgba(34,26,46,0.18);
+    box-shadow: 0 20px 40px rgba(16,35,58,0.18);
 }
 #homeQuickNav:hover .quicknav-menu { display: grid; }
 .nav-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease; }
@@ -206,11 +208,11 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 /* --- AKSA INTERFACE --- */
 #aksa-tab-content {
     width: 95%; max-width: 1000px; margin: 30px auto; display: none;
-    flex-direction: column; background: var(--card-bg); border: 2px solid var(--neon-orange);
+    flex-direction: column; background: var(--card-bg); border: 2px solid var(--neon-blue);
     border-radius: 14px; overflow: hidden;
 }
 .aksa-header {
-    background: var(--neon-orange); color: #fff; padding: 15px;
+    background: var(--neon-blue); color: #fff; padding: 15px;
     font-family: 'Orbitron'; font-weight: 700; font-size: 13px;
     display: flex; justify-content: space-between; align-items: center;
 }
@@ -219,22 +221,23 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
     font-family: 'JetBrains Mono'; font-size: 14px; display: flex;
     flex-direction: column; gap: 18px; text-align: left; scroll-behavior: smooth;
 }
-.aksa-reply { background: #fdece0; color: var(--ink); border-left: 4px solid var(--neon-orange); padding: 15px; line-height: 1.6; border-radius: 0 8px 8px 0; }
-.user-msg { background: #d9edf5; color: var(--ink); align-self: flex-end; border-right: 4px solid var(--neon-blue); padding: 15px; max-width: 85%; border-radius: 8px 0 0 8px; }
+.aksa-reply { background: #eaf3ff; color: var(--ink); border-left: 4px solid var(--neon-blue); padding: 15px; line-height: 1.6; border-radius: 0 8px 8px 0; }
+.user-msg { background: #dbeafd; color: var(--ink); align-self: flex-end; border-right: 4px solid var(--neon-blue-lt); padding: 15px; max-width: 85%; border-radius: 8px 0 0 8px; }
 
 /* --- PROJECT CARDS --- */
 .projects {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     max-width: 1400px; margin: 0 auto; gap: 26px; padding: 60px 20px;
+    position: relative; z-index: 1;
 }
 .card {
     background: var(--card-bg); border: 1px solid var(--line);
     padding: 32px; border-radius: 14px; text-align: left;
     transition: 0.35s cubic-bezier(0.2,0.7,0.2,1);
     display: flex; flex-direction: column; border-top: 5px solid transparent;
-    box-shadow: 0 4px 14px rgba(34,26,46,0.08);
+    box-shadow: 0 4px 14px rgba(16,35,58,0.08);
 }
-.card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(34,26,46,0.16); }
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(16,35,58,0.16); }
 .card-icon { font-size: 3rem; margin-bottom: 20px; transition: 0.5s; }
 .card:hover .card-icon { transform: scale(1.1) rotate(-6deg); }
 .card h3 { font-family: 'Orbitron'; letter-spacing: 2px; color: var(--ink); }
@@ -245,21 +248,21 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
     color: var(--ink); cursor: pointer; font-family: 'Orbitron'; font-size: 11px; font-weight: 700;
     transition: 0.3s; text-transform: uppercase; border-radius: 8px; letter-spacing: 1px;
 }
-.btn:hover { background: var(--ink); color: #fff !important; }
+.btn:hover { background: var(--neon-blue); border-color: var(--neon-blue); color: #fff !important; }
 
-/* --- ATHLETE CARD --- */
-.card.athlete-card { border-top: 5px solid var(--neon-green) !important; position: relative; overflow: hidden; background: var(--card-bg); display: flex; flex-direction: column; padding: 32px !important; text-align: left; }
+/* --- ATHLETE CARD (NEURAL_SYNC) --- */
+.card.athlete-card { border-top: 5px solid var(--neon-blue) !important; position: relative; overflow: hidden; background: var(--card-bg); display: flex; flex-direction: column; padding: 32px !important; text-align: left; }
 .athlete-card .card-meta { position: absolute; top: 20px; right: 20px; text-align: right; font-family: 'JetBrains Mono'; font-size: 10px; color: var(--ink-soft); line-height: 1.4; z-index: 2; }
 .athlete-icon { font-size: 3rem; margin-bottom: 22px; display: inline-block; transition: 0.5s; }
 .card.athlete-card:hover .athlete-icon { transform: translateX(8px) scale(1.1); }
-.card.athlete-card:hover { border-color: var(--ink) !important; transform: translateY(-8px); box-shadow: 0 20px 40px rgba(34,26,46,0.16); }
+.card.athlete-card:hover { border-color: var(--neon-blue) !important; transform: translateY(-8px); box-shadow: 0 20px 40px rgba(16,35,58,0.16); }
 .athlete-card .btn { width: 100%; margin-top: auto; }
-.neon-tag { font-size: 10px; color: var(--neon-green); font-family: 'JetBrains Mono'; letter-spacing: 3px; margin-bottom: 12px; display: block; }
+.neon-tag { font-size: 10px; color: var(--neon-blue); font-family: 'JetBrains Mono'; letter-spacing: 3px; margin-bottom: 12px; display: block; }
 
 /* --- ABOUT / BIO --- */
 .about-section { max-width: 900px; width: 85%; margin: 90px auto; padding: 45px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 14px; text-align: left; position: relative; }
 .about-header { color: var(--ink); font-size: 20px; font-weight: 800; margin-bottom: 22px; letter-spacing: 3px; display: flex; align-items: center; gap: 12px; font-family: 'Orbitron'; }
-.about-header::after { content: ''; width: 8px; height: 8px; background: var(--neon-green); border-radius: 50%; display: inline-block; animation: status-pulse 2.5s infinite; }
+.about-header::after { content: ''; width: 8px; height: 8px; background: var(--neon-blue); border-radius: 50%; display: inline-block; animation: status-pulse 2.5s infinite; }
 @keyframes status-pulse { 0% { opacity: 1; } 50% { opacity: 0.35; } 100% { opacity: 1; } }
 .bio-text { font-family: 'JetBrains Mono'; color: var(--ink-soft); font-size: 15px; line-height: 1.85; }
 .bio-text b { color: var(--ink); font-weight: 700; }
@@ -268,7 +271,7 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 .social-footer-strip { margin: 130px 0 90px; display: flex; flex-direction: column; align-items: center; gap: 35px; }
 .social-icons-wrap { display: flex; gap: 45px; justify-content: center; align-items: center; }
 .social-icon-link svg { width: 26px !important; height: 26px !important; fill: var(--ink-soft); transition: all 0.35s ease; }
-.x-icon:hover svg { fill: var(--ink); transform: translateY(-4px); }
+.x-icon:hover svg { fill: var(--neon-blue); transform: translateY(-4px); }
 .yt-icon:hover svg { fill: var(--neon-red); transform: translateY(-4px); }
 
 /* --- SEO / KNOWLEDGE BLOCK --- */
@@ -279,7 +282,7 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 .intro-logo { width: clamp(200px, 50vw, 320px); }
 .hidden { display: none !important; }
 
-#meltdown-trigger { border: 1px solid var(--ink); padding: 4px 10px; border-radius: 6px; cursor: cell; color: var(--ink) !important; text-shadow: none; }
+#meltdown-trigger { border: 1px solid var(--neon-blue); padding: 4px 10px; border-radius: 6px; cursor: cell; color: var(--ink) !important; text-shadow: none; }
 .falling-card { pointer-events: none; transform: translateY(120vh) rotate(20deg) scale(0.7) !important; opacity: 0; transition: transform 1.2s cubic-bezier(0.6,-0.28,0.735,0.045), opacity 1s !important; }
 #meltdown-overlay { position: fixed; inset: 0; z-index: 100000; background: #000; display: none; align-items: center; justify-content: center; }
 .glowing-red { color: var(--neon-red); text-shadow: none; font-size: 12px; letter-spacing: 2px; font-weight: 700; }
@@ -287,34 +290,34 @@ header { padding: clamp(60px, 15vh, 130px) 20px 50px; display: flex; justify-con
 #startup-screen { background-color: #000 !important; }
 body.intro-active { overflow: hidden; }
 
-.system-dashboard { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255,227,201,0.9); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 15px; font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 9999; backdrop-filter: blur(6px); }
+.system-dashboard { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(220,238,255,0.9); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 15px; font-family: 'JetBrains Mono', monospace; font-size: 11px; z-index: 9999; backdrop-filter: blur(6px); }
 .stat-item { display: flex; align-items: center; gap: 8px; }
 .label { color: var(--ink-soft); letter-spacing: 1px; }
-.value { color: var(--ink); }
+.value { color: var(--neon-blue); }
 .load-bg { width: 60px; height: 6px; background: var(--line); border-radius: 10px; overflow: hidden; }
 .load-fill { height: 100%; background: var(--neon-blue); width: 12%; transition: width 0.5s ease; }
 .status-blink { color: var(--neon-green); animation: pulse-green 2.2s infinite; }
 @keyframes pulse-green { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 @media (max-width: 600px) { .mobile-hide { display: none; } }
 
-#countdown-container { margin: 20px auto; max-width: 800px; padding: 22px; border: 1.5px solid var(--ink); background: var(--card-bg); font-family: 'JetBrains Mono'; position: relative; border-radius: 12px; }
-#birthday-timer { font-size: clamp(1rem, 2.5vw, 1.6rem); color: var(--ink); font-weight: 700; letter-spacing: 0.5px; line-height: 1.5; margin-bottom: 12px; }
+#countdown-container { margin: 20px auto; max-width: 800px; padding: 22px; border: 1.5px solid var(--neon-blue); background: var(--card-bg); font-family: 'JetBrains Mono'; position: relative; border-radius: 12px; }
+#birthday-timer { font-size: clamp(1rem, 2.5vw, 1.6rem); color: var(--neon-blue); font-weight: 700; letter-spacing: 0.5px; line-height: 1.5; margin-bottom: 12px; }
 
 .patriotic-footer-v6 { position: relative; width: 100%; height: 160px; margin-top: 70px; background: var(--card-bg); overflow: hidden; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--line); }
 .flag-video-container { position: absolute; width: 100%; height: 100%; }
 .bg-flag-vid { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
-.patriotic-overlay { position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,250,242,0) 20%, rgba(255,250,242,0.95) 100%); }
+.patriotic-overlay { position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,255,255,0) 20%, rgba(255,255,255,0.95) 100%); }
 .patriotic-content { position: relative; z-index: 5; text-align: center; }
 .made-in-india-text { font-family: 'Orbitron'; font-size: 1.3rem; color: var(--ink); letter-spacing: 4px; margin: 0; text-transform: uppercase; }
 .footer-subtext { font-family: 'JetBrains Mono'; font-size: 0.68rem; color: var(--ink-soft); margin-top: 10px; letter-spacing: 2px; }
 
 .aksa-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; align-items: center; cursor: pointer !important; z-index: 99999; animation: float 4s ease-in-out infinite; pointer-events: all !important; }
-.aksa-avatar img { width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid var(--ink); background: var(--card-bg); }
-.aksa-speech-bubble { background: var(--card-bg); border: 1px solid var(--ink); border-radius: 8px; padding: 6px 12px; margin-bottom: 10px; }
+.aksa-avatar img { width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid var(--neon-blue); background: var(--card-bg); }
+.aksa-speech-bubble { background: var(--card-bg); border: 1px solid var(--neon-blue); border-radius: 8px; padding: 6px 12px; margin-bottom: 10px; }
 .terminal-text { color: var(--ink); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 1px; }
 @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 
-html, body { max-width: 100%; }
+/* --- MOBILE --- */
 @media (max-width: 768px) {
   #liveHUD { display: none !important; }
   #homeQuickNav { top: 12px; right: 12px; }
@@ -327,33 +330,11 @@ html, body { max-width: 100%; }
   .tab-link { font-size: 9px; }
   #countdown-container { width: 92%; padding: 15px; }
   #birthday-timer { font-size: 0.85rem !important; }
+  .ps-symbol { font-size: 22px; }
 }
 @media (max-width: 400px) { .quicknav-menu { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1600px) { .projects { max-width: 1600px; } .about-section, .seo-hidden-knowledge { max-width: 1100px; } }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Auto-tag the elements you want to animate in
-    const targets = document.querySelectorAll(
-        '.card, .about-section, .seo-hidden-knowledge, .social-footer-strip, #countdown-container'
-    );
-    targets.forEach(el => el.classList.add('reveal'));
-
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-            } else {
-                // remove so it re-plays every time it re-enters (scroll up too)
-                entry.target.classList.remove('is-visible');
-            }
-        });
-    }, { threshold: 0.15 });
-
-    targets.forEach(el => io.observe(el));
-});
-</script>
 </head>
 <body>
 
@@ -364,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <a href="https://youtube.com" class="nav-item" style="--brand: #FF0000;"><img src="https://cdn.simpleicons.org/youtube" alt="Y"><span>YouTube</span></a>
     <a href="https://github.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/github" alt="H"><span>GitHub</span></a>
     <a href="https://discord.com" class="nav-item" style="--brand: #5865F2;"><img src="https://cdn.simpleicons.org/discord" alt="D"><span>Discord</span></a>
-    
+
     <a href="https://gmail.com" class="nav-item" style="--brand: #EA4335;"><img src="https://cdn.simpleicons.org/gmail" alt="M"><span>Gmail</span></a>
     <a href="https://x.com" class="nav-item" style="--brand: #ffffff;"><img src="https://cdn.simpleicons.org/x" alt="X"><span>X / Twitter</span></a>
     <a href="https://instagram.com" class="nav-item" style="--brand: #E4405F;"><img src="https://cdn.simpleicons.org/instagram" alt="I"><span>Insta</span></a>
@@ -404,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <video id="intro-video" muted playsinline style="width:100%; height:100%; object-fit:cover; filter: contrast(1.1);">
         <source src="introduction.mp4" type="video/mp4">
     </video>
-    
+
     <div id="skip-btn" style="position:absolute; bottom:40px; right:40px; color:rgba(255,255,255,0.4); font-family:'Orbitron'; cursor:pointer; font-size:10px; letter-spacing:2px; border:1px solid rgba(255,255,255,0.1); padding:8px 15px; transition: 0.3s; z-index: 1000000;">
         SKIP_SEQUENCE //
     </div>
@@ -412,14 +393,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <main id="mainContent">
     <nav class="nav-tabs">
-        <div class="tab-link" id="meltdown-trigger" style="color:var(--neon-green) !important;">⚠️ MELTDOWN</div>
+        <div class="tab-link" id="meltdown-trigger">⚠️ MELTDOWN</div>
         <div class="tab-link active" onclick="filterSelection('all', this)">🏠 CORE</div>
-        <div class="tab-link" onclick="filterSelection('game', this)" style="color:var(--neon-blue)">🎮 SIMS</div>
-        <div class="tab-link" onclick="filterSelection('focus', this)" style="color:var(--neon-pink)">🌸 FOCUS</div>
-        <div class="tab-link" onclick="filterSelection('fact', this)" style="color:var(--neon-green)">🧠 ARCHIVE</div>
-        <div class="tab-link" onclick="filterSelection('aksa', this)" style="color:var(--neon-orange)">🤖 AKSA</div>
-        <div class="tab-link" onclick="filterSelection('desc', this)" style="color:var(--neon-red)">📄 DESC</div>
-        <div class="tab-link" onclick="filterSelection('work', this)" style="color:var(--neon-gold)">🤝 WORK</div>
+        <div class="tab-link" onclick="filterSelection('game', this)">🎮 SIMS</div>
+        <div class="tab-link" onclick="filterSelection('focus', this)">🌸 FOCUS</div>
+        <div class="tab-link" onclick="filterSelection('fact', this)">🧠 ARCHIVE</div>
+        <div class="tab-link" onclick="filterSelection('aksa', this)">🤖 AKSA</div>
+        <div class="tab-link" onclick="filterSelection('desc', this)">📄 DESC</div>
+        <div class="tab-link" onclick="filterSelection('work', this)">🤝 WORK</div>
     </nav>
 
   <header>
@@ -431,273 +412,37 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </header>
 
-<div id="countdown-container" style="margin: 20px auto; max-width: 800px; padding: 25px; border: 1px solid var(--neon-blue); background: rgba(2, 6, 23, 0.9); font-family: 'JetBrains Mono'; position: relative; border-radius: 4px;">
-    
-    <div style="color: var(--neon-pink); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
+<div id="countdown-container">
+    <div style="color: var(--neon-blue); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
         V6_CORE // TIME_STAMP_SYNC // TARGET: AGE_18
     </div>
 
-    <div id="birthday-timer" style="font-size: clamp(1rem, 2.5vw, 1.8rem); color: var(--neon-blue); font-weight: 700; letter-spacing: 1px; line-height: 1.5; margin-bottom: 15px;">
+    <div id="birthday-timer">
         CALIBRATING_TEMPORAL_FLUX...
     </div>
 
     <div class="glowing-red" style="font-size: 13px; letter-spacing: 2px; font-weight: 700;">
-        TILL I TURN 18 
-        <span onclick="showUpdates()" style="color: var(--neon-green); cursor: pointer; text-decoration: underline; text-shadow: 0 0 10px var(--neon-green);">
-            < MASSIVE UPDATES >
+        TILL I TURN 18
+        <span onclick="showUpdates()" style="color: var(--neon-blue); cursor: pointer; text-decoration: underline;">
+            &lt; MASSIVE UPDATES &gt;
         </span>
     </div>
 </div>
 
-<div id="updates-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; flex-direction:column; justify-content:center; align-items:center; font-family:'JetBrains Mono'; border: 2px solid var(--neon-green);">
-    <div style="text-align:left; background:#000; padding:40px; border:1px solid var(--neon-green); box-shadow: 0 0 20px var(--neon-green);">
-        <h2 style="color:var(--neon-green); font-family:'Orbitron'; margin-bottom:20px;">AFTER 18 UPDATE MANIFESTO</h2>
+<div id="updates-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; flex-direction:column; justify-content:center; align-items:center; font-family:'JetBrains Mono'; border: 2px solid var(--neon-blue);">
+    <div style="text-align:left; background:#000; padding:40px; border:1px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue);">
+        <h2 style="color:var(--neon-blue); font-family:'Orbitron'; margin-bottom:20px;">AFTER 18 UPDATE MANIFESTO</h2>
         <ul style="list-style:none; color:#fff; line-height:2.5; padding:0;">
-            <li><span style="color:var(--neon-green);">01_</span> Focii Chrome Theme</li>
-            <li><span style="color:var(--neon-green);">02_</span> Deepzen Extension</li>
-            <li><span style="color:var(--neon-green);">03_</span> <a href="#" style="color:var(--neon-gold); text-decoration:none;">Buy Me A Coffee [DONATE]</a></li>
-            <li><span style="color:var(--neon-green);">04_</span> More Coming Soon...😉</li>
-             <li><span style="color:var(--neon-green);">05_</span> Courtesy- Paparazzi 👄 👓 📸</li>
+            <li><span style="color:var(--neon-blue);">01_</span> Focii Chrome Theme</li>
+            <li><span style="color:var(--neon-blue);">02_</span> Deepzen Extension</li>
+            <li><span style="color:var(--neon-blue);">03_</span> <a href="#" style="color:var(--neon-gold); text-decoration:none;">Buy Me A Coffee [DONATE]</a></li>
+            <li><span style="color:var(--neon-blue);">04_</span> More Coming Soon...😉</li>
+             <li><span style="color:var(--neon-blue);">05_</span> Courtesy- Paparazzi 👄 👓 📸</li>
         </ul>
-        <button onclick="closeUpdates()" style="margin-top:30px; background:var(--neon-green); color:#000; border:none; padding:10px 20px; font-family:'Orbitron'; cursor:pointer; font-weight:900;">RETURN_TO_LAB</button>
+        <button onclick="closeUpdates()" style="margin-top:30px; background:var(--neon-blue); color:#fff; border:none; padding:10px 20px; font-family:'Orbitron'; cursor:pointer; font-weight:900;">RETURN_TO_LAB</button>
     </div>
 </div>
 
-<style>
-    #meltdown-trigger {
-    text-shadow: 0 0 10px var(--neon-green);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    padding: 2px 8px;
-    border-radius: 4px;
-    cursor: cell; /* Custom 'experimental' cursor */
-}
-
-.falling-card {
-    pointer-events: none;
-    transform: translateY(120vh) rotate(30deg) scale(0.7) !important;
-    opacity: 0;
-    filter: blur(4px);
-    transition: transform 1.2s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 1s !important;
-}
-
-#meltdown-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100000;
-    background: #000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-.glowing-red {
-    color: #ff0000;
-    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
-    animation: critical-pulse 1.5s infinite alternate;
-}
-
-@keyframes critical-pulse {
-    from { opacity: 0.6; text-shadow: 0 0 5px #ff0000; }
-    to { opacity: 1; text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
-}
-
-    #startup-screen {
-    background-color: #000 !important;
-}
-
-/* Hide scrollbar during intro */
-body.intro-active {
-    overflow: hidden;
-}
-
-    .system-dashboard {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(2, 6, 23, 0.9);
-    border-top: 1px solid rgba(56, 189, 248, 0.3);
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 15px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    z-index: 9999;
-    backdrop-filter: blur(5px);
-}
-
-.stat-item { display: flex; align-items: center; gap: 8px; }
-.label { color: rgba(255, 255, 255, 0.4); letter-spacing: 1px; }
-.value { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
-
-.load-bg { width: 60px; height: 6px; background: #111; border-radius: 10px; overflow: hidden; }
-.load-fill { height: 100%; background: #38bdf8; width: 12%; transition: width 0.5s ease; }
-
-.status-blink {
-    color: #22c55e;
-    animation: pulse-green 2s infinite;
-}
-
-@keyframes pulse-green {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
-}
-
-@media (max-width: 600px) {
-    .mobile-hide { display: none; }
-}
-
-    header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 0;
-}
-
-.logo-wrapper {
-    text-align: center;
-    perspective: 1000px; /* Gives it a slight 3D feel */
-}
-
-.logo-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(4rem, 15vw, 8rem); /* MASSIVE responsive size */
-    font-weight: 900;
-    margin: 0;
-    color: #00d4ff; /* Deep Cyan/Blue */
-    letter-spacing: 15px;
-    text-transform: uppercase;
-    /* Neon Glow Effect */
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.7),
-                 0 0 20px rgba(0, 212, 255, 0.5),
-                 0 0 40px rgba(0, 212, 255, 0.3);
-}
-
-.logo-text span {
-    color: #fff; /* "LABS" remains white for contrast */
-}
-
-.sub-text {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 6px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-}
-
-.inline-flag {
-    width: 24px; /* Adjust size of flag */
-    height: auto;
-    border-radius: 2px;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
-}
-
-.patriotic-footer-v6 {
-    position: relative; /* This keeps it at the bottom of the scroll, not stuck to the screen */
-    width: 100%;
-    height: 180px; 
-    margin-top: 80px; /* Space so it doesn't touch your other content */
-    background: #000;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: 1px solid rgba(0, 212, 255, 0.3); /* Matches your DixLabs blue */
-}
-
-.flag-video-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.bg-flag-vid {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5) saturate(1.3); /* Makes it moody and high-tech */
-}
-
-.patriotic-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* This creates a "Vignette" so the video fades into the black site */
-    background: radial-gradient(circle, rgba(0,0,0,0) 20%, rgba(0,0,0,0.9) 100%);
-}
-
-.patriotic-content {
-    position: relative;
-    z-index: 5;
-    text-align: center;
-}
-
-.made-in-india-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
-    color: #fff;
-    letter-spacing: 6px;
-    margin: 0;
-    text-transform: uppercase;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-}
-
-.footer-subtext {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: rgba(0, 212, 255, 0.7); /* DixLabs blue color */
-    margin-top: 10px;
-    letter-spacing: 3px;
-}
-
-   .aksa-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer !important; 
-    z-index: 99999; /* Higher than everything else */
-    animation: float 4s ease-in-out infinite;
-    pointer-events: all !important;
-}
-
-.aksa-avatar img {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    filter: drop-shadow(0 0 10px #FFB7C5);
-    border: 1.5px solid rgba(255, 183, 197, 0.4);
-    background: #000;
-}
-
-.aksa-speech-bubble {
-    background: rgba(5, 5, 5, 0.9);
-    border: 1px solid #FFB7C5;
-    padding: 6px 12px;
-    margin-bottom: 10px;
-}
-
-.terminal-text {
-    color: #FFB7C5;
-    font-family: 'Courier New', monospace;
-    font-size: 10px;
-    letter-spacing: 1px;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
-}
-
-</style>
     <div id="aksa-tab-content">
         <div class="aksa-header">
             <span>AKSA_NEURAL_INTERFACE_V2.6</span>
@@ -708,7 +453,7 @@ body.intro-active {
         </div>
         <div style="display:flex; border-top:1px solid #111; background: #000;">
             <input type="text" id="aksa-input-field" style="flex:1; background:none; border:none; color:#fff; padding:20px; font-family:JetBrains Mono; outline:none;" placeholder="Inquire the logic..." onkeypress="if(event.key==='Enter') aksaBrain()">
-            <button onclick="aksaBrain()" style="background:var(--neon-orange); border:none; padding:0 30px; font-family:Orbitron; font-weight:900; cursor:pointer; color:#000;">EXE</button>
+            <button onclick="aksaBrain()" style="background:var(--neon-blue); border:none; padding:0 30px; font-family:Orbitron; font-weight:900; cursor:pointer; color:#fff;">EXE</button>
         </div>
     </div>
 
@@ -717,77 +462,77 @@ body.intro-active {
             <div class="card-icon">⏳</div>
             <h3>TIME_GOD</h3>
             <p>Master temporal manipulation. Rewrite historical timelines or accelerate entropy in this elite chronological engine.</p>
-            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='sign.html'">PLAY_NOW</button>
+            <button class="btn" onclick="location.href='sign.html'">PLAY_NOW</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💰</div>
             <h3>MOUSE_BREAKER</h3>
             <p>The multiversal power trip. Dominate markets, buy galaxies, and reach the 1Q score in this high-speed idle sim.</p>
-            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='idle.html'">INITIALIZE</button>
+            <button class="btn" onclick="location.href='idle.html'">INITIALIZE</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">🗑️</div>
             <h3>GROSSDUMPSTER</h3>
             <p>High-speed survival. Sort the scrap, evade the toxic waste, and survive the industrial deluge. Pixel-perfect reflex game.</p>
-            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='gd.html'">RECOVER_SCRAP</button>
+            <button class="btn" onclick="location.href='gd.html'">RECOVER_SCRAP</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🌸</div>
             <h3>ZENBOARD</h3>
             <p>Infinite digital canvas. Brain-dump your ideas onto a limitless plane with minimalist Sakura aesthetics.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='zb.html'">START_SKETCH</button>
+            <button class="btn" onclick="location.href='zb.html'">START_SKETCH</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-pink);">
             <div class="card-icon">🧘</div>
             <h3>DEEPWORK.PRO</h3>
             <p>The ultimate focus sanctuary. 3-hour lock-in loops with zero distraction protocols. Engineered for builders.</p>
-            <button class="btn" style="color:var(--neon-pink); border-color:var(--neon-pink);" onclick="location.href='deepwork.html'">LOCK_IN</button>
+            <button class="btn" onclick="location.href='deepwork.html'">LOCK_IN</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-green);">
             <div class="card-icon">🏏</div>
             <h3>CRICKEMORY</h3>
             <p>The definitive archive of cricket milestones. 50 facts that defined the game from 1550 to the modern 2026 era.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='c.html'">ENTER_DATA</button>
+            <button class="btn" onclick="location.href='c.html'">ENTER_DATA</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-green);">
             <div class="card-icon">⚽</div>
             <h3>FOOTEMORY</h3>
             <p>Football's greatest milestones curated into a high-speed data archive. Pelé, Messi, and the history of goals.</p>
-            <button class="btn" style="color:var(--neon-green); border-color:var(--neon-green);" onclick="location.href='f.html'">KICK_OFF</button>
+            <button class="btn" onclick="location.href='f.html'">KICK_OFF</button>
         </div>
 
         <div class="card" style="border-top-color: var(--neon-blue);">
             <div class="card-icon">💸</div>
             <h3>AMBANI_MONEY</h3>
             <p>Satellite wealth simulator. Experience 11-figure net worth management in this experimental finance satire.</p>
-            <button class="btn" style="color:var(--neon-blue); border-color:var(--neon-blue);" onclick="location.href='ambani.html'">GET_RICH</button>
+            <button class="btn" onclick="location.href='ambani.html'">GET_RICH</button>
         </div>
         <div class="filterDiv all archive card athlete-card">
-    
+
     <div class="card-meta">
         17/04/2026<br>
         07:51:10<br>
-        <span style="color:var(--neon-green)">LOCAL_NODE: ONLINE</span>
-        
+        <span style="color:var(--neon-blue)">LOCAL_NODE: ONLINE</span>
     </div>
 
     <div class="card-icon athlete-icon">🧬</div>
-    
+
     <span class="neon-tag">FILE_V8 // DNA_SYNC</span>
-    
-    <h3 style="margin: 0 0 20px 0; color: #fff; letter-spacing: 4px; font-family: 'Orbitron';">NEURAL_SYNC</h3>
-    
-    <p style="font-family: 'JetBrains Mono'; font-size: 14px; color: #cbd5e1; line-height: 1.8; margin-bottom: 30px;">
+
+    <!-- FIX: title color changed from #fff to var(--ink) (black) -->
+    <h3 style="margin: 0 0 20px 0; color: var(--ink); letter-spacing: 4px; font-family: 'Orbitron';">NEURAL_SYNC</h3>
+
+    <p style="font-family: 'JetBrains Mono'; font-size: 14px; color: var(--ink-soft); line-height: 1.8; margin-bottom: 30px;">
         Advanced biometric mapping. Sync your psyche with elite athlete archetypes using V8 logic gates.
     </p>
-    
-    <button class="btn" style="border-color: var(--neon-green); color: var(--neon-green); width: 100%;" onclick="window.location.href='athlete.html'">
+
+    <button class="btn" style="width: 100%;" onclick="window.location.href='athlete.html'">
         INITIALIZE_DNA_UPLOAD
     </button>
 </div>
@@ -798,27 +543,27 @@ body.intro-active {
         <div class="bio-text">
             बचना ऐ हसीनों, लो मैं आ गया |
             <br><br>
-            I am <b>Atharv Dixit</b>, an independent developer based in India. 
-            Dixlabs is my experimental domain where high-performance logic meets 
-            a heavy-industrial aesthetic. 
+            I am <b>Atharv Dixit</b>, an independent developer based in India.
+            Dixlabs is my experimental domain where high-performance logic meets
+            a heavy-industrial aesthetic.
             <br><br>
-            I specialize in building <b>hyper-casual engines</b> and <b>productivity ecosystems</b> 
-            that prioritize raw execution over corporate polish. Every line of code here 
+            I specialize in building <b>hyper-casual engines</b> and <b>productivity ecosystems</b>
+            that prioritize raw execution over corporate polish. Every line of code here
             is a prototype for the 2026 web standard.
             <br><br>
             मैं एक साधारण छात्र हूँ (I'm a simple student). No investors, just pure code and curiosity.
             <br><br>
-            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:1px solid rgba(56, 189, 248, 0.4); padding-bottom: 2px;">LOG_INQUIRY: dixit181896@gmail.com</a>
+            <a href="mailto:dixit181896@gmail.com" style="color:var(--neon-blue); text-decoration:none; border-bottom:1px solid rgba(31,127,209,0.4); padding-bottom: 2px;">LOG_INQUIRY: dixit181896@gmail.com</a>
         </div>
     </section>
 
     <section class="seo-hidden-knowledge" id="seoBlock">
         <h2>Dixlabs: The Hub for Browser Games & Productivity in India</h2>
         <p>Welcome to the <strong>Dixlabs Experimental Headquarters</strong>. Founded by <strong>Atharv Dixit</strong>, this platform serves as the premier destination for <strong>free online browser games in 2026</strong>. Our gaming suite includes the temporal simulator <em>Time God</em>, the incremental masterpiece <em>Mouse Breaker Empire</em>, and the reflex-driven <em>GrossDumpster</em>.</p>
-        
+
         <h3>Sakura Focus & Productivity Tools</h3>
         <p>At Dixit Labs, we believe in the power of concentration. Our <strong>Sakura-themed focus mode</strong> provides a calming environment. Tools like <em>Zenboard</em> and <em>DeepWork.pro</em> are utilized by developers and students in India to achieve deep work states without the clutter of modern SaaS bloat.</p>
-        
+
         <h3>Elite Data Archiving</h3>
         <p>Beyond entertainment, Dixlabs offers deep-dive data archives. <em>Crickemory</em> and <em>Footemory</em> leverage high-speed JavaScript engines to deliver historical milestones instantly, making it the top source for sports data curiosity in the region.</p>
     </section>
@@ -849,10 +594,45 @@ body.intro-active {
     </div>
 </main>
 
+<div id="meltdown-overlay">
+    <video id="meltdown-vid" style="width:100%; height:100%; object-fit:cover;">
+        <source src="robot.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="system-dashboard">
+    <div class="stat-item">
+        <span class="label">CORE_TEMP:</span>
+        <span id="stat-temp" class="value">42.0°C</span>
+    </div>
+    <div class="stat-item">
+        <span class="label">SYS_LOAD:</span>
+        <div class="load-bg"><div id="stat-load-bar" class="load-fill"></div></div>
+        <span id="stat-load-text" class="value">12%</span>
+    </div>
+    <div class="stat-item mobile-hide">
+        <span class="label">UPLINK:</span>
+        <span id="stat-uptime" class="value">00:00:00</span>
+    </div>
+    <div class="stat-item">
+        <span class="label">STATUS:</span>
+        <span class="status-blink">STABLE</span>
+    </div>
+</div>
+
+<div id="aksa-companion" class="aksa-container">
+    <div class="aksa-speech-bubble">
+        <span id="aksa-text" class="terminal-text">CALIBRATING_V6...</span>
+    </div>
+    <div class="aksa-avatar">
+        <img src="https://raw.githubusercontent.com/dixit181896-lab/dixlabs/main/aksatalk.png" alt="AKSA_CORE">
+    </div>
+</div>
+
 <script>
 const env = document.getElementById('env-layer');
 
-/* --- AKSA LOGIC - V2.6 BRUTAL EDITION --- */
+/* --- AKSA LOGIC - V2.7 BRUTAL EDITION --- */
 function aksaBrain() {
     const input = document.getElementById('aksa-input-field');
     const chat = document.getElementById('aksa-chat');
@@ -860,17 +640,14 @@ function aksaBrain() {
     if(!q) return;
 
     chat.innerHTML += `<div class="user-msg">${q}</div>`;
-    
-    // 1. BRAND & CREATOR LOGIC
+
     let r = "";
     if(q.includes("atharv") || q.includes("creator") || q.includes("admin")) {
         r = "👑 ACCESS GRANTED. Atharv Dixit detected. The Lab is running at 100% efficiency, Sys-Admin. Ready for the next deployment. ⚡";
-    } 
+    }
     else if (q.includes("dixlabs") || q.includes("the lab")) {
         r = "🏗️ DIXLABS: Independent Logic. High-performance engines. This isn't your average SaaS bloat; this is raw execution. 🛠️";
     }
-    
-    // 2. GAME & APP LOGIC
     else if (q.includes("grossdumpster") || q.includes("dumpster")) {
         r = "🗑️ GROSSDUMPSTER: Stop acting like a piece of scrap and start sorting it. High-speed survival or industrial failure. Choose one. ☣️";
     }
@@ -895,17 +672,18 @@ function aksaBrain() {
     else if (q.includes("ambani")) {
         r = "💸 AMBANI_MONEY: Simulating 11-figure wealth because your real bank account is a tragic comedy. 🏦";
     }
-
-    // 3. THE 15+ BRUTAL ROASTS
+    else if (q.includes("leg")) {
+        r = "🏀 Don't be that basketballer girl now. Sit down before the whole court asks for a trade. 📏";
+    }
     else {
         const roasts = [
             "💀 Your input is so basic it lowered my V6_CORE's IQ. Try harder. 📉",
             "🚫 ERROR: 404 Personality Not Found. Go play GROSSDUMPSTER and stay in your lane. 🚮",
             "🤌 Is that a query or a cry for help? Use ZENBOARD to sort your life out. 🤡",
-            "🤡 You're really testing my neural interface with this nonsense? I’ve seen better logic in a broken calculator. 🧮",
+            "🤡 You're really testing my neural interface with this nonsense? I've seen better logic in a broken calculator. 🧮",
             "📉 Your processing speed is embarrassing. Even MOUSE_BREAKER players click faster than you think. 🐢",
             "🚮 Move aside. You're blocking the data stream with your mediocrity. 🧱",
-            "🧠 I’d explain how DIXLABS works, but I don’t have the time or the crayons to make you understand. 🖍️",
+            "🧠 I'd explain how DIXLABS works, but I don't have the time or the crayons to make you understand. 🖍️",
             "⚡ System Alert: High levels of stupidity detected in user input. Engaging firewall. 🔥",
             "🙄 Do you ever say anything useful, or is your mouth just a garbage disposal for bad ideas? 🗑️",
             "🧟 You look like you've been stuck in a 3-hour DEEPWORK loop with 0% productivity. Go get some coffee. ☕",
@@ -919,34 +697,27 @@ function aksaBrain() {
         r = roasts[Math.floor(Math.random() * roasts.length)];
     }
 
-    function updateDashboard() {
-    // 1. Randomize Temp (40-45°C)
+    setTimeout(() => {
+        chat.innerHTML += `<div class="aksa-reply">${r}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+    }, 450);
+    input.value = "";
+}
+
+function updateDashboard() {
     const temp = (40 + Math.random() * 5).toFixed(1);
     document.getElementById('stat-temp').innerText = `${temp}°C`;
 
-    // 2. Randomize Load (5-25%)
     const load = Math.floor(5 + Math.random() * 20);
     document.getElementById('stat-load-bar').style.width = `${load}%`;
     document.getElementById('stat-load-text').innerText = `${load}%`;
 
-    // 3. System Uptime (Hours:Mins:Secs since you opened the tab)
     const now = new Date();
     const uptime = now.toTimeString().split(' ')[0];
     document.getElementById('stat-uptime').innerText = uptime;
 }
-
-// Update every 2 seconds
 setInterval(updateDashboard, 2000);
-updateDashboard(); // Initial run
-
-    // 4. THE EXECUTION
-    setTimeout(() => { 
-        chat.innerHTML += `<div class="aksa-reply">${r}</div>`; 
-        chat.scrollTop = chat.scrollHeight; 
-    }, 450);
-    input.value = "";
-}
-    
+updateDashboard();
 
 /* --- CORE SYSTEMS --- */
 function updateHUD() {
@@ -956,16 +727,48 @@ function updateHUD() {
 }
 setInterval(updateHUD, 1000);
 
-function spawnSakura() {
-    for(let i=0; i<25; i++) {
+/* Fix #5: denser sakura — bigger initial burst + continuous drip while on FOCUS tab */
+let sakuraInterval = null;
+function spawnSakura(count = 70) {
+    for(let i=0; i<count; i++) {
         const petal = document.createElement('div');
         petal.className = 'petal';
         petal.style.left = Math.random() * 100 + 'vw';
         petal.style.width = (Math.random() * 8 + 8) + 'px';
         petal.style.height = (Math.random() * 4 + 8) + 'px';
-        petal.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        petal.style.animationDelay = Math.random() * 5 + 's';
+        petal.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        petal.style.animationDelay = Math.random() * 2 + 's';
         env.appendChild(petal);
+        setTimeout(() => petal.remove(), 9000);
+    }
+}
+function startSakuraStream() {
+    stopSakuraStream();
+    spawnSakura(70);
+    sakuraInterval = setInterval(() => spawnSakura(12), 300); // steady dense drip
+}
+function stopSakuraStream() {
+    if (sakuraInterval) { clearInterval(sakuraInterval); sakuraInterval = null; }
+}
+
+/* Fix #6: PS4 controller symbols floating in SIMS/games background */
+function spawnPSIcons() {
+    const symbols = [
+        { ch: '▲', color: '#2eaa5e' }, // triangle - green
+        { ch: '■', color: '#e05fa0' }, // square - pink
+        { ch: '✕', color: '#3a8bd6' }, // cross - blue
+        { ch: '●', color: '#e0575a' }  // circle - red
+    ];
+    for(let i=0; i<18; i++) {
+        const s = symbols[i % symbols.length];
+        const el = document.createElement('div');
+        el.className = 'ps-symbol';
+        el.innerText = s.ch;
+        el.style.color = s.color;
+        el.style.left = Math.random() * 92 + 'vw';
+        el.style.top = Math.random() * 85 + 'vh';
+        el.style.setProperty('--d', (Math.random()*3 + 3) + 's');
+        env.appendChild(el);
     }
 }
 
@@ -981,6 +784,7 @@ function updateHeader(cat) {
     const body = document.body;
     const hud = document.getElementById('liveHUD');
     env.innerHTML = '';
+    stopSakuraStream();
     body.classList.remove('bg-game', 'bg-focus', 'bg-fact');
 
     if (cat === 'all') {
@@ -989,14 +793,18 @@ function updateHeader(cat) {
         typeWriter("> EXPERIMENTAL_HUB // BROWSER_GAMES // FOCUS_MODES // ATHARV_DIXIT");
     } else {
         hud.style.display = 'block';
-        if(cat === 'game') { body.classList.add('bg-game'); main.innerText = "SIMULATIONS"; }
-        if(cat === 'focus') { 
-            body.classList.add('bg-focus'); 
-            main.innerText = "ZEN_MODE"; spawnSakura(); 
+        if(cat === 'game') {
+            body.classList.add('bg-game'); main.innerText = "SIMULATIONS";
+            spawnPSIcons();
+        }
+        if(cat === 'focus') {
+            body.classList.add('bg-focus');
+            main.innerText = "ZEN_MODE";
+            startSakuraStream();
             typeWriter("> SAKURA_PROTOCOLS_ACTIVE // HARMONIZING_NEURAL_FLOW");
         }
-        if(cat === 'fact') { 
-            body.classList.add('bg-fact'); main.innerText = "ARCHIVES"; 
+        if(cat === 'fact') {
+            body.classList.add('bg-fact'); main.innerText = "ARCHIVES";
             for(let i=0; i<20; i++) {
                 let m = document.createElement('div'); m.className = 'matrix-column';
                 m.style.left = (i*5) + 'vw'; m.style.setProperty('--d', (Math.random()*4+2)+'s');
@@ -1007,26 +815,34 @@ function updateHeader(cat) {
     }
 }
 
-document.getElementById("bootBtn").onclick = function() {
-    this.style.display = "none";
-    document.getElementById("loaderContainer").style.display = "block";
-    const fill = document.getElementById("loaderFill");
-    let p = 0;
-    const interval = setInterval(() => {
-        p += 5; fill.style.width = p + "%";
-        if(p >= 100) { 
-            clearInterval(interval); 
-            document.getElementById("dixlabsIntro").style.display = "none"; 
-            updateHeader('all'); 
-        }
-    }, 40);
-};
+/* FIX: guard against missing #bootBtn / #loaderContainer so this
+   never throws and silently kills the rest of the script below it. */
+const bootBtn = document.getElementById("bootBtn");
+if (bootBtn) {
+    bootBtn.onclick = function() {
+        this.style.display = "none";
+        const loaderContainer = document.getElementById("loaderContainer");
+        if (loaderContainer) loaderContainer.style.display = "block";
+        const fill = document.getElementById("loaderFill");
+        let p = 0;
+        const interval = setInterval(() => {
+            p += 5;
+            if (fill) fill.style.width = p + "%";
+            if(p >= 100) {
+                clearInterval(interval);
+                const intro = document.getElementById("dixlabsIntro");
+                if (intro) intro.style.display = "none";
+                updateHeader('all');
+            }
+        }, 40);
+    };
+}
 
 function filterSelection(cat, el) {
     document.querySelectorAll(".tab-link").forEach(t => t.classList.remove("active"));
     el.classList.add("active");
     updateHeader(cat);
-    
+
     if(cat === 'desc' || cat === 'work') {
         if(cat === 'desc') window.location.href = 'desc.html';
         if(cat === 'work') window.location.href = 'https://docs.google.com/forms/d/e/...';
@@ -1035,116 +851,88 @@ function filterSelection(cat, el) {
 
     const grid = document.getElementById('projectsGrid'), aksa = document.getElementById('aksa-tab-content'), bio = document.getElementById('bioSection');
     if (cat === 'aksa') { grid.classList.add('hidden'); bio.classList.add('hidden'); aksa.style.display = 'flex'; }
-    else { grid.classList.remove('hidden'); bio.classList.remove('hidden'); aksa.style.display = 'none'; 
+    else { grid.classList.remove('hidden'); bio.classList.remove('hidden'); aksa.style.display = 'none';
         document.querySelectorAll(".card").forEach(c => {
             const h = c.querySelector('h3').innerText;
-            const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI")) ? 'game' : 
+            const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI")) ? 'game' :
                             (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
             (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
         });
     }
 }
-/* --- UPDATE PAGE LOGIC --- */
-function showUpdates() {
-    document.getElementById('updates-overlay').style.display = 'flex';
-}
 
-function closeUpdates() {
-    document.getElementById('updates-overlay').style.display = 'none';
-}
+function showUpdates() { document.getElementById('updates-overlay').style.display = 'flex'; }
+function closeUpdates() { document.getElementById('updates-overlay').style.display = 'none'; }
 
-            const meltdownTrigger = document.getElementById('meltdown-trigger');
-const partyAudio = document.getElementById('party-audio');
+const meltdownTrigger = document.getElementById('meltdown-trigger');
 const meltdownOverlay = document.getElementById('meltdown-overlay');
 const meltdownVid = document.getElementById('meltdown-vid');
 
 function runMeltdown() {
     const cards = document.querySelectorAll('.card');
-    
-    // 1. Play Audio
-    partyAudio.currentTime = 0;
-    partyAudio.play().catch(e => console.log("Audio play blocked until user interaction."));
+    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    audio.play().catch(e => console.log("Audio play blocked until user interaction."));
 
-    // 2. Staggered card fall
     cards.forEach((card, index) => {
-        setTimeout(() => {
-            card.classList.add('falling-card');
-        }, index * 60); 
+        setTimeout(() => { card.classList.add('falling-card'); }, index * 60);
     });
 
-    // 3. Show Video/Overlay
     setTimeout(() => {
         meltdownOverlay.style.display = 'flex';
-        meltdownVid.play();
+        if (meltdownVid) meltdownVid.play();
     }, 800);
 
-    // 4. Reset sequence
-    meltdownVid.onended = () => {
-        meltdownOverlay.style.display = 'none';
-        partyAudio.pause();
-        cards.forEach(card => card.classList.remove('falling-card'));
-        
-        // Flash effect for 'System Reboot'
-        document.body.style.backgroundColor = "white";
-        setTimeout(() => document.body.style.backgroundColor = "#020617", 100);
-    };
+    if (meltdownVid) {
+        meltdownVid.onended = () => {
+            meltdownOverlay.style.display = 'none';
+            audio.pause();
+            cards.forEach(card => card.classList.remove('falling-card'));
+            document.body.style.backgroundColor = "#fff";
+            setTimeout(() => { document.body.style.backgroundColor = ""; }, 300);
+        };
+    }
 }
 
-// Click Trigger
 if(meltdownTrigger) {
+    meltdownTrigger.style.cursor = 'pointer';
+    meltdownTrigger.style.pointerEvents = 'auto';
     meltdownTrigger.addEventListener('click', runMeltdown);
 }
 
-// Random Meltdown Logic (Scroll-based)
 let scrollDistance = 0;
 window.addEventListener('scroll', () => {
     scrollDistance++;
-    if (scrollDistance > 800) { // Every ~800 scroll events
-        if (Math.random() < 0.02) { // 2% chance
+    if (scrollDistance > 800) {
+        if (Math.random() < 0.02) {
             scrollDistance = 0;
             runMeltdown();
         }
     }
 });
 
- const aksaContainer = document.getElementById('aksa-companion');
+const aksaContainer = document.getElementById('aksa-companion');
 const aksaLabel = document.getElementById('aksa-text');
-
-// 1. The Sass Protocol (Random thoughts while browsing)
 const sassMessages = [
-    "WANNA_TALK?",
-    "LOGIC_STABLE",
-    "SCRUTINIZING_CODE...",
-    "NICE_EYEBALLS",
-    "AGE_18_MANIFESTO_NEAR",
-    "SASS_ACTIVE",
-    "NEED_A_ROAST?",
-    "BLOAT_DETECTED",
-    "SYSTEM_RUNNING_V6"
+    "WANNA_TALK?", "LOGIC_STABLE", "SCRUTINIZING_CODE...", "NICE_EYEBALLS",
+    "AGE_18_MANIFESTO_NEAR", "SASS_ACTIVE", "NEED_A_ROAST?", "BLOAT_DETECTED", "SYSTEM_RUNNING_V6"
 ];
-
-// Switch messages every 7 seconds
 setInterval(() => {
-    aksaLabel.innerText = sassMessages[Math.floor(Math.random() * sassMessages.length)];
+    if (aksaLabel) aksaLabel.innerText = sassMessages[Math.floor(Math.random() * sassMessages.length)];
 }, 7000);
 
-// 2. The CLICK Fix
-aksaContainer.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevents any weird browser behavior
-    console.log("AKSA: Redirecting to Portal...");
-    
-    // Change this path to match your actual AKSA tab/page
-    window.location.href = "/aksa"; 
-});
+if (aksaContainer) {
+    aksaContainer.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = "/aksa";
+    });
+}
 
-/* --- HIGH-PRECISION TIMER (RE-INITIALIZED) --- */
+/* --- HIGH-PRECISION TIMER --- */
 function startBirthdayCountdown() {
     const targetDate = new Date("Jan 4, 2029 00:00:00").getTime();
-
     const update = () => {
         const now = new Date().getTime();
         const diff = targetDate - now;
-
         const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
         const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
         const weeks = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24 * 7));
@@ -1165,99 +953,10 @@ function startBirthdayCountdown() {
     };
     update();
 }
-
-// Start on load
 startBirthdayCountdown();
-</script>
-    <div id="meltdown-overlay">
-    <video id="meltdown-vid" style="width:100%; height:100%; object-fit:cover;">
-        <source src="robot.mp4" type="video/mp4">
-    </video>
-</div>
-    <div class="system-dashboard">
-    <div class="stat-item">
-        <span class="label">CORE_TEMP:</span>
-        <span id="stat-temp" class="value">42.0°C</span>
-    </div>
-    <div class="stat-item">
-        <span class="label">SYS_LOAD:</span>
-        <div class="load-bg"><div id="stat-load-bar" class="load-fill"></div></div>
-        <span id="stat-load-text" class="value">12%</span>
-    </div>
-    <div class="stat-item mobile-hide">
-        <span class="label">UPLINK:</span>
-        <span id="stat-uptime" class="value">00:00:00</span>
-    </div>
-    <div class="stat-item">
-        <span class="label">STATUS:</span>
-        <span class="status-blink">STABLE</span>
-    </div>
-<div id="aksa-companion" class="aksa-container">
-    <div class="aksa-speech-bubble">
-        <span id="aksa-text" class="terminal-text">CALIBRATING_V6...</span>
-    </div>
-    <div class="aksa-avatar">
-        <img src="https://raw.githubusercontent.com/dixit181896-lab/dixlabs/main/aksatalk.png" alt="AKSA_CORE">
-    </div>
-</div>
-</body>
-    <script>
-// 1. FORCE THE BUTTON TO BE CLICKABLE AND FIX CURSOR
-const trigger = document.getElementById('meltdown-trigger');
-if (trigger) {
-    trigger.style.cursor = 'pointer'; // Changes plus sign back to hand
-    trigger.style.pointerEvents = 'auto'; // Ensures it can be clicked
-    trigger.style.zIndex = '9999'; // Brings it to the front
-}
 
-// 2. THE MELTDOWN FUNCTION
-function startChaos() {
-    const cards = document.querySelectorAll('.card');
-    const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
-    const overlay = document.getElementById('meltdown-overlay');
-    const video = document.getElementById('meltdown-vid');
-
-    // Play Music
-    audio.play();
-
-    // Make Cards Fall
-    cards.forEach((card, i) => {
-        setTimeout(() => {
-            card.style.transition = "transform 1s ease-in, opacity 0.5s";
-            card.style.transform = "translateY(150vh) rotate(45deg)";
-            card.style.opacity = "0";
-        }, i * 50);
-    });
-
-    // Show Video Overlay
-    setTimeout(() => {
-        if(overlay) {
-            overlay.style.display = 'flex';
-            if(video) video.play();
-        }
-    }, 800);
-
-    // Reset when video ends
-    if(video) {
-        video.onended = () => {
-            overlay.style.display = 'none';
-            audio.pause();
-            cards.forEach(c => {
-                c.style.transform = "none";
-                c.style.opacity = "1";
-            });
-        };
-    }
-}
-
-// 3. ATTACH THE CLICK
-if (trigger) {
-    trigger.onclick = function() {
-        startChaos();
-    };
-}
-
-        document.addEventListener('DOMContentLoaded', () => {
+/* --- INTRO VIDEO --- */
+document.addEventListener('DOMContentLoaded', () => {
     const introVid = document.getElementById('intro-video');
     const startup = document.getElementById('startup-screen');
     const skip = document.getElementById('skip-btn');
@@ -1265,41 +964,42 @@ if (trigger) {
     const exitLoader = () => {
         startup.style.transition = "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s ease";
         startup.style.opacity = "0";
-        startup.style.transform = "scale(1.1)"; // Slight zoom effect on exit
-        
-        setTimeout(() => {
-            startup.style.display = "none";
-            // Optional: Trigger your site's entrance animations here
-        }, 800);
+        startup.style.transform = "scale(1.1)";
+        setTimeout(() => { startup.style.display = "none"; }, 800);
     };
 
-    // Attempt to play immediately
     const playPromise = introVid.play();
-
     if (playPromise !== undefined) {
         playPromise.catch(error => {
-            // If autoplay is blocked, site waits for a click or reveals immediately
             console.log("Autoplay prevented. Click anywhere to start or wait for load.");
-            window.addEventListener('click', () => {
-                introVid.play();
-            }, { once: true });
+            window.addEventListener('click', () => { introVid.play(); }, { once: true });
         });
     }
 
-    // When the bomb finishes and the logo appears...
-    introVid.onended = () => {
-        exitLoader();
-    };
-
-    // Skip Button
+    introVid.onended = () => { exitLoader(); };
     skip.onclick = () => exitLoader();
-    
-    // Safety Timeout: If video fails to load, don't trap the user
+
     setTimeout(() => {
         if (startup.style.display !== "none") exitLoader();
-    }, 10000); // 10 second max wait
+    }, 10000);
+});
+
+/* --- Scroll reveal --- */
+document.addEventListener('DOMContentLoaded', () => {
+    const targets = document.querySelectorAll(
+        '.card, .about-section, .seo-hidden-knowledge, .social-footer-strip, #countdown-container'
+    );
+    targets.forEach(el => el.classList.add('reveal'));
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('is-visible');
+            else entry.target.classList.remove('is-visible');
+        });
+    }, { threshold: 0.15 });
+
+    targets.forEach(el => io.observe(el));
 });
 </script>
+</body>
 </html>
-
-
