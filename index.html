@@ -373,7 +373,22 @@ body.intro-active { overflow: hidden; }
     opacity: 0.22; z-index: 500; pointer-events: none;
 }
 
-/* --- TUBE TAB-TRANSITION OVERLAY (NEW) --- */
+.scroll-logo-track {
+    height: 500px;         /* how far down the page the image is allowed to travel */
+    position: relative;
+    pointer-events: none;
+    z-index: 5;
+}
+.scroll-logo-img {
+    position: sticky;
+    top: 20px;              /* how far from the top it sits once it "locks" */
+    width: 60px;
+    height: 60px;
+    opacity: 0.85;
+    margin-left: 30px;      /* nudge it wherever you want horizontally */
+}
+    
+/* ---TUBE TAB-TRANSITION OVERLAY (NEW) --- */
 #tubeTransitionOverlay {
     position: fixed; inset: 0; z-index: 999998; display: none;
     align-items: center; justify-content: center;
@@ -511,6 +526,10 @@ body.intro-active { overflow: hidden; }
     </div>
 </header>
 
+<div class="scroll-logo-track">
+    <img src="logo180.png" alt="Dixlabs" class="scroll-logo-img">
+</div>
+    
 <div id="countdown-container">
     <div style="color: var(--neon-blue); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
         V6_CORE // TIME_STAMP_SYNC // TARGET: AGE_18
