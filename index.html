@@ -1062,21 +1062,11 @@ if(meltdownTrigger) {
     meltdownTrigger.addEventListener('click', runMeltdown);
 }
 
-let scrollDistance = 0;
 window.addEventListener('scroll', () => {
-    scrollDistance++;
-    if (scrollDistance > 800) {
-        if (Math.random() < 0.02) {
-            scrollDistance = 0;
-            runMeltdown();
-        }
-    }
-
-    /* NEW: show/hide back-to-top button */
     const btt = document.getElementById('backToTop');
     if (btt) btt.style.display = window.scrollY > 400 ? 'flex' : 'none';
 });
-
+    
 const aksaContainer = document.getElementById('aksa-companion');
 const aksaLabel = document.getElementById('aksa-text');
 const sassMessages = [
