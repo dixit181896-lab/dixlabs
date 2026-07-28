@@ -185,13 +185,26 @@ body.bg-aksa  { background: linear-gradient(160deg, #ffe4c7 0%, #ffd4a3 100%); }
 }
 .mode-btn:active { background: var(--neon-blue); }
 
-#virtualTrackpad {
+#trackpadControls {
     position: fixed; bottom: 55px; left: 50%; transform: translateX(-50%);
-    width: 180px; height: 100px; z-index: 999996;
+    z-index: 999996; display: none;
+    align-items: center; gap: 10px;
+}
+#virtualTrackpad {
+    width: 180px; height: 100px;
     background: rgba(255,255,255,0.55); backdrop-filter: blur(6px);
     border: 1.5px solid var(--neon-blue); border-radius: 14px;
-    display: none; touch-action: none;
+    touch-action: none;
 }
+.scroll-btn {
+    width: 46px; height: 100px;
+    background: rgba(255,255,255,0.55); backdrop-filter: blur(6px);
+    border: 1.5px solid var(--neon-blue); border-radius: 12px;
+    color: var(--neon-blue); font-size: 18px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; touch-action: none; user-select: none;
+}
+.scroll-btn:active { background: rgba(31,127,209,0.25); }
 .trackpad-label {
     font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px;
     color: var(--ink-soft); text-align: center; padding-top: 8px; opacity: 0.7;
@@ -200,7 +213,6 @@ body.bg-aksa  { background: linear-gradient(160deg, #ffe4c7 0%, #ffd4a3 100%); }
 
 /* your mobile media query hides the cursor entirely — override it in trackpad mode */
 body.trackpad-mode #customCursor { display: block !important; }
-body.trackpad-mode { overflow: hidden; height: 100vh; }
 
 /* ---- reveal-on-scroll ---- */
 .reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.7s cubic-bezier(0.2,0.7,0.2,1), transform 0.7s cubic-bezier(0.2,0.7,0.2,1); }
@@ -510,9 +522,13 @@ body.intro-active { overflow: hidden; }
         </div>
     </div>
 
-    <!-- NEW: virtual trackpad, only shown in trackpad mode -->
-    <div id="virtualTrackpad">
-        <div class="trackpad-label">TRACKPAD</div>
+    <!-- NEW: virtual trackpad + scroll buttons, only shown in trackpad mode -->
+    <div id="trackpadControls">
+        <button id="scrollUpBtn" class="scroll-btn">▲</button>
+        <div id="virtualTrackpad">
+            <div class="trackpad-label">TRACKPAD</div>
+        </div>
+        <button id="scrollDownBtn" class="scroll-btn">▼</button>
     </div>
 
     <!-- NEW: tab-switch test tube transition overlay -->
@@ -564,7 +580,7 @@ body.intro-active { overflow: hidden; }
 <div id="env-layer"></div>
 
 <div id="startup-screen" style="position:fixed; inset:0; z-index:999999; background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-    <video id="intro-video" muted playsinline style="width:100%; height:100%; object-fit:cover; filter: contrast(1.1);">
+    <video id="intro-video" muted playsinline webkit-playsinline="true" preload="auto" style="width:100%; height:100%; object-fit:cover; filter: contrast(1.1);">
         <source src="introduction.mp4" type="video/mp4">
     </video>
 
@@ -1273,11 +1289,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     };
 
-    const playPromise = introVid.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(error => {
-            console.log("Autoplay prevented. Click anywhere to start or wait for load.");
-            window.addEventListener('click', () => { introVid.play(); }, { once: true });
+    const playPromise = () => {
+        introVid.muted = true;
+        introVid.playsInline = true;
+        return introVid.play();
+    };
+
+    const p = playPromise();
+    if (p !== undefined) {
+        p.catch(error => {
+            console.log("Autoplay prevented. Tap anywhere to start.");
+            const retry = () => { playPromise().catch(() => {}); };
+            window.addEventListener('click', retry, { once: true });
+            window.addEventListener('touchstart', retry, { once: true, passive: true });
         });
     }
 
@@ -1362,15 +1386,34 @@ function isMobileDevice() {
 
 function setInputMode(mode) {
     document.getElementById('inputModeOverlay').style.display = 'none';
-    const pad = document.getElementById('virtualTrackpad');
+    const controls = document.getElementById('trackpadControls');
     if (mode === 'trackpad') {
         document.body.classList.add('trackpad-mode');
-        pad.style.display = 'block';
+        controls.style.display = 'flex';
         initTrackpad();
+        initScrollButtons();
     } else {
         document.body.classList.remove('trackpad-mode');
-        pad.style.display = 'none';
+        controls.style.display = 'none';
     }
+}
+
+function initScrollButtons() {
+    const upBtn = document.getElementById('scrollUpBtn');
+    const downBtn = document.getElementById('scrollDownBtn');
+    let scrollTimer = null;
+
+    const startScroll = (amount) => {
+        window.scrollBy({ top: amount, behavior: 'auto' });
+        scrollTimer = setInterval(() => window.scrollBy({ top: amount, behavior: 'auto' }), 60);
+    };
+    const stopScroll = () => { clearInterval(scrollTimer); };
+
+    [[upBtn, -30], [downBtn, 30]].forEach(([btn, amount]) => {
+        btn.addEventListener('touchstart', (e) => { e.preventDefault(); startScroll(amount); }, { passive: false });
+        btn.addEventListener('touchend', stopScroll);
+        btn.addEventListener('touchcancel', stopScroll);
+    });
 }
 
 function initTrackpad() {
