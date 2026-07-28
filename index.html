@@ -94,6 +94,46 @@ body {
     text-align: center;
     overflow-x: hidden;
     min-height: 100vh;
+    transition: background 0.6s ease;
+    cursor: none;
+}
+
+/* --- PER-TAB BACKGROUNDS (NEW) --- */
+body.bg-all   { background: linear-gradient(160deg, var(--bg-a) 0%, var(--bg-b) 100%); }
+body.bg-game  { background: linear-gradient(160deg, #16233a 0%, #0a1522 100%); }
+body.bg-focus { background: linear-gradient(160deg, #ffe6ef 0%, #ffcfe0 100%); }
+body.bg-fact  { background: linear-gradient(160deg, #06231a 0%, #02100c 100%); }
+body.bg-aksa  { background: linear-gradient(160deg, #10233a 0%, #0a1626 100%); }
+
+/* --- CUSTOM CURSOR (NEW) --- */
+#customCursor {
+    position: fixed; top: 0; left: 0; width: 22px; height: 22px;
+    border: 1.5px solid var(--neon-blue); border-radius: 50%;
+    pointer-events: none; z-index: 999999; transform: translate(-50%, -50%);
+    transition: width 0.15s, height 0.15s, background 0.15s, border-color 0.15s;
+}
+#customCursor.cursor-active {
+    background: rgba(31,127,209,0.18); width: 30px; height: 30px;
+}
+@media (max-width: 768px) {
+    body { cursor: auto; }
+    #customCursor { display: none; }
+}
+
+/* --- CURSOR TEST-TUBE TRAIL (NEW) --- */
+.cursor-tube-trail {
+    position: fixed; pointer-events: none; z-index: 999997;
+    animation: tube-trail-fade 0.65s ease forwards;
+}
+@keyframes tube-trail-fade {
+    0%   { opacity: 0.85; transform: scale(1) rotate(0deg); }
+    100% { opacity: 0; transform: scale(0.4) rotate(35deg) translateY(14px); }
+}
+
+/* --- FLOATING TEST TUBES ON HOME/CORE TAB (NEW) --- */
+.floating-tube {
+    position: absolute; font-size: 30px; opacity: 0.18;
+    animation: ps-float var(--d) infinite ease-in-out; pointer-events: none;
 }
 
 /* ---- reveal-on-scroll ---- */
@@ -388,6 +428,9 @@ body.intro-active { overflow: hidden; }
 </style>
 </head>
 <body>
+
+    <!-- NEW: custom cursor dot -->
+    <div id="customCursor"></div>
 
     <!-- NEW: tab-switch test tube transition overlay -->
     <div id="tubeTransitionOverlay"><img src="logo180.png" alt="Dixlabs"></div>
@@ -930,26 +973,27 @@ function updateHeader(cat) {
     const hud = document.getElementById('liveHUD');
     env.innerHTML = '';
     stopSakuraStream();
-    body.classList.remove('bg-game', 'bg-focus', 'bg-fact');
+    body.classList.remove('bg-all', 'bg-game', 'bg-focus', 'bg-fact', 'bg-aksa');
+    body.classList.add('bg-' + cat);
 
     if (cat === 'all') {
         hud.style.display = 'none';
         main.innerText = "DIXLABS";
         typeWriter("> EXPERIMENTAL_HUB // BROWSER_GAMES // FOCUS_MODES // ATHARV_DIXIT");
+        spawnFloatingTubes();
     } else {
         hud.style.display = 'block';
         if(cat === 'game') {
-            body.classList.add('bg-game'); main.innerText = "SIMULATIONS";
+            main.innerText = "SIMULATIONS";
             spawnPSIcons();
         }
         if(cat === 'focus') {
-            body.classList.add('bg-focus');
             main.innerText = "ZEN_MODE";
             startSakuraStream();
             typeWriter("> SAKURA_PROTOCOLS_ACTIVE // HARMONIZING_NEURAL_FLOW");
         }
         if(cat === 'fact') {
-            body.classList.add('bg-fact'); main.innerText = "ARCHIVES";
+            main.innerText = "ARCHIVES";
             for(let i=0; i<20; i++) {
                 let m = document.createElement('div'); m.className = 'matrix-column';
                 m.style.left = (i*5) + 'vw'; m.style.setProperty('--d', (Math.random()*4+2)+'s');
@@ -957,6 +1001,19 @@ function updateHeader(cat) {
             }
         }
         if(cat === 'aksa') { main.innerText = "AKSA_AI"; }
+    }
+}
+
+/* NEW: floating test tubes drifting in the CORE/home tab background */
+function spawnFloatingTubes() {
+    for (let i = 0; i < 14; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating-tube';
+        el.innerText = '🧪';
+        el.style.left = Math.random() * 92 + 'vw';
+        el.style.top = Math.random() * 85 + 'vh';
+        el.style.setProperty('--d', (Math.random() * 4 + 4) + 's');
+        env.appendChild(el);
     }
 }
 
@@ -1062,11 +1119,6 @@ if(meltdownTrigger) {
     meltdownTrigger.addEventListener('click', runMeltdown);
 }
 
-window.addEventListener('scroll', () => {
-    const btt = document.getElementById('backToTop');
-    if (btt) btt.style.display = window.scrollY > 400 ? 'flex' : 'none';
-});
-    
 const aksaContainer = document.getElementById('aksa-companion');
 const aksaLabel = document.getElementById('aksa-text');
 const sassMessages = [
@@ -1141,6 +1193,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10000);
 });
 
+/* NEW: make sure the CORE tab's background + floating tubes are active by default */
+document.addEventListener('DOMContentLoaded', () => { updateHeader('all'); });
+
 /* --- Scroll reveal --- */
 document.addEventListener('DOMContentLoaded', () => {
     const targets = document.querySelectorAll(
@@ -1157,6 +1212,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     targets.forEach(el => io.observe(el));
 });
+
+/* NEW: back-to-top visibility on scroll (meltdown-on-scroll removed) */
+window.addEventListener('scroll', () => {
+    const btt = document.getElementById('backToTop');
+    if (btt) btt.style.display = window.scrollY > 400 ? 'flex' : 'none';
+});
+
+/* --- CUSTOM CURSOR + TEST-TUBE TRAIL (NEW) --- */
+(function() {
+    const cursorEl = document.getElementById('customCursor');
+    if (!cursorEl) return;
+    let lastTrail = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        cursorEl.style.left = e.clientX + 'px';
+        cursorEl.style.top = e.clientY + 'px';
+
+        const now = Date.now();
+        if (now - lastTrail > 70) {
+            lastTrail = now;
+            const tube = document.createElement('div');
+            tube.className = 'cursor-tube-trail';
+            tube.innerText = '🧪';
+            tube.style.left = (e.clientX - 9) + 'px';
+            tube.style.top = (e.clientY - 9) + 'px';
+            tube.style.fontSize = '16px';
+            document.body.appendChild(tube);
+            setTimeout(() => tube.remove(), 650);
+        }
+    });
+
+    /* grow the cursor dot slightly over clickable elements */
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('button, a, .tab-link, .btn, .card, li, input')) {
+            cursorEl.classList.add('cursor-active');
+        }
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('button, a, .tab-link, .btn, .card, li, input')) {
+            cursorEl.classList.remove('cursor-active');
+        }
+    });
+
+    window.addEventListener('mousedown', () => cursorEl.style.transform = 'translate(-50%, -50%) scale(0.8)');
+    window.addEventListener('mouseup', () => cursorEl.style.transform = 'translate(-50%, -50%) scale(1)');
+})();
 </script>
 </body>
 </html>
