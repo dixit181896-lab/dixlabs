@@ -136,6 +136,72 @@ body.bg-aksa  { background: linear-gradient(160deg, #ffe4c7 0%, #ffd4a3 100%); }
     animation: ps-float var(--d) infinite ease-in-out; pointer-events: none;
 }
 
+/* --- SCROLL-FOLLOWING LOGO (NEW) --- */
+.scroll-logo-track {
+    height: 500px;
+    position: relative;
+    pointer-events: none;
+    z-index: 5;
+}
+.scroll-logo-sticky-wrap {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.scroll-logo-img {
+    width: 110px;
+    height: 110px;
+    opacity: 0.9;
+}
+.scroll-logo-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    margin: 0;
+    text-transform: lowercase;
+}
+
+/* --- MOBILE INPUT MODE SELECTOR (NEW) --- */
+#inputModeOverlay {
+    position: fixed; inset: 0; z-index: 9999990; display: none;
+    background: rgba(10,20,35,0.96); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+}
+.mode-select-box { text-align: center; padding: 30px; }
+.mode-select-logo { width: 70px; height: 70px; margin-bottom: 18px; opacity: 0.9; }
+.mode-select-title {
+    font-family: 'Orbitron'; color: #fff; letter-spacing: 3px;
+    font-size: 12px; margin-bottom: 22px;
+}
+.mode-select-btns { display: flex; gap: 16px; justify-content: center; }
+.mode-btn {
+    background: transparent; border: 1.5px solid var(--neon-blue); color: #fff;
+    padding: 14px 20px; font-family: 'Orbitron'; font-size: 11px;
+    letter-spacing: 1px; border-radius: 10px; cursor: pointer;
+}
+.mode-btn:active { background: var(--neon-blue); }
+
+#virtualTrackpad {
+    position: fixed; bottom: 55px; left: 50%; transform: translateX(-50%);
+    width: 180px; height: 100px; z-index: 999996;
+    background: rgba(255,255,255,0.55); backdrop-filter: blur(6px);
+    border: 1.5px solid var(--neon-blue); border-radius: 14px;
+    display: none; touch-action: none;
+}
+.trackpad-label {
+    font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px;
+    color: var(--ink-soft); text-align: center; padding-top: 8px; opacity: 0.7;
+    pointer-events: none;
+}
+
+/* your mobile media query hides the cursor entirely — override it in trackpad mode */
+body.trackpad-mode #customCursor { display: block !important; }
+body.trackpad-mode { overflow: hidden; height: 100vh; }
+
 /* ---- reveal-on-scroll ---- */
 .reveal { opacity: 0; transform: translateY(48px); transition: opacity 0.7s cubic-bezier(0.2,0.7,0.2,1), transform 0.7s cubic-bezier(0.2,0.7,0.2,1); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
@@ -373,34 +439,7 @@ body.intro-active { overflow: hidden; }
     opacity: 0.22; z-index: 500; pointer-events: none;
 }
 
-.scroll-logo-track {
-    height: 500px;
-    position: relative;
-    pointer-events: none;
-    z-index: 5;
-}
-.scroll-logo-sticky-wrap {
-    position: sticky;
-    top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-.scroll-logo-img {
-    width: 110px;
-    height: 110px;
-    opacity: 0.9;
-}
-.scroll-logo-caption {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    color: var(--ink-soft);
-    margin: 0;
-    text-transform: lowercase;
-}
-/* ---TUBE TAB-TRANSITION OVERLAY (NEW) --- */
+/* --- TUBE TAB-TRANSITION OVERLAY (NEW) --- */
 #tubeTransitionOverlay {
     position: fixed; inset: 0; z-index: 999998; display: none;
     align-items: center; justify-content: center;
@@ -458,6 +497,23 @@ body.intro-active { overflow: hidden; }
 
     <!-- NEW: custom cursor dot -->
     <div id="customCursor"></div>
+
+    <!-- NEW: mobile input mode selector (shown after intro, phones only) -->
+    <div id="inputModeOverlay">
+        <div class="mode-select-box">
+            <img src="logo180.png" alt="Dixlabs" class="mode-select-logo">
+            <p class="mode-select-title">CHOOSE YOUR INPUT MODE</p>
+            <div class="mode-select-btns">
+                <button class="mode-btn" onclick="setInputMode('fingers')">🖐️ FINGERS</button>
+                <button class="mode-btn" onclick="setInputMode('trackpad')">🖱️ TRACKPAD</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: virtual trackpad, only shown in trackpad mode -->
+    <div id="virtualTrackpad">
+        <div class="trackpad-label">TRACKPAD</div>
+    </div>
 
     <!-- NEW: tab-switch test tube transition overlay -->
     <div id="tubeTransitionOverlay"><img src="logo180.png" alt="Dixlabs"></div>
@@ -538,13 +594,14 @@ body.intro-active { overflow: hidden; }
     </div>
 </header>
 
+<!-- NEW: scroll-following logo -->
 <div class="scroll-logo-track">
     <div class="scroll-logo-sticky-wrap">
         <img src="logo180.png" alt="Dixlabs" class="scroll-logo-img">
         <p class="scroll-logo-caption">scroll down mah child 🙏</p>
     </div>
 </div>
-    
+
 <div id="countdown-container">
     <div style="color: var(--neon-blue); font-size: 10px; letter-spacing: 4px; margin-bottom: 15px; text-transform: uppercase; opacity: 0.8;">
         V6_CORE // TIME_STAMP_SYNC // TARGET: AGE_18
@@ -1208,7 +1265,12 @@ document.addEventListener('DOMContentLoaded', () => {
         startup.style.transition = "opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s ease";
         startup.style.opacity = "0";
         startup.style.transform = "scale(1.1)";
-        setTimeout(() => { startup.style.display = "none"; }, 800);
+        setTimeout(() => {
+            startup.style.display = "none";
+            if (isMobileDevice()) {
+                document.getElementById('inputModeOverlay').style.display = 'flex';
+            }
+        }, 800);
     };
 
     const playPromise = introVid.play();
@@ -1292,6 +1354,60 @@ window.addEventListener('scroll', () => {
     window.addEventListener('mousedown', () => cursorEl.style.transform = 'translate(-50%, -50%) scale(0.8)');
     window.addEventListener('mouseup', () => cursorEl.style.transform = 'translate(-50%, -50%) scale(1)');
 })();
+
+/* --- MOBILE INPUT MODE (NEW) --- */
+function isMobileDevice() {
+    return window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+}
+
+function setInputMode(mode) {
+    document.getElementById('inputModeOverlay').style.display = 'none';
+    const pad = document.getElementById('virtualTrackpad');
+    if (mode === 'trackpad') {
+        document.body.classList.add('trackpad-mode');
+        pad.style.display = 'block';
+        initTrackpad();
+    } else {
+        document.body.classList.remove('trackpad-mode');
+        pad.style.display = 'none';
+    }
+}
+
+function initTrackpad() {
+    const pad = document.getElementById('virtualTrackpad');
+    const cursor = document.getElementById('customCursor');
+    let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    let lastX = 0, lastY = 0, moved = false;
+
+    cursor.style.left = cx + 'px';
+    cursor.style.top = cy + 'px';
+
+    pad.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        lastX = t.clientX; lastY = t.clientY; moved = false;
+    }, { passive: true });
+
+    pad.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        const dx = t.clientX - lastX, dy = t.clientY - lastY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+
+        cx = Math.max(0, Math.min(window.innerWidth, cx + dx * 1.6));
+        cy = Math.max(0, Math.min(window.innerHeight, cy + dy * 1.6));
+        cursor.style.left = cx + 'px';
+        cursor.style.top = cy + 'px';
+
+        lastX = t.clientX; lastY = t.clientY;
+        e.preventDefault();
+    }, { passive: false });
+
+    pad.addEventListener('touchend', () => {
+        if (!moved) {
+            const target = document.elementFromPoint(cx, cy);
+            if (target) target.click();
+        }
+    });
+}
 </script>
 </body>
 </html>
