@@ -705,6 +705,13 @@ body.intro-active { overflow: hidden; }
             <p>Satellite wealth simulator. Experience 11-figure net worth management in this experimental finance satire.</p>
             <a class="btn" href="ambani.html">GET_RICH</a>
         </div>
+
+        <div class="card" style="border-top-color: var(--neon-blue);">
+    <div class="card-icon">🥤</div>
+    <h3>FIZZGUARD</h3>
+    <p>Type-to-survive lab defense. Stop the mentos before it drops, or watch the cola erupt. Speed and accuracy under pressure.</p>
+    <a class="btn" href="fizz.html">PLAY_NOW</a>
+</div>
         <div class="filterDiv all archive card athlete-card">
 
     <div class="card-meta">
@@ -1150,7 +1157,7 @@ function filterSelection(cat, el) {
         else { grid.classList.remove('hidden'); bio.classList.remove('hidden'); aksa.style.display = 'none';
             document.querySelectorAll(".card").forEach(c => {
                 const h = c.querySelector('h3').innerText;
-                const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI")) ? 'game' :
+               const isMatch = (h.includes("GOD") || h.includes("BREAKER") || h.includes("DUMPSTER") || h.includes("AMBANI") || h.includes("FIZZ")) ? 'game' :
                                 (h.includes("ZEN") || h.includes("DEEP")) ? 'focus' : 'fact';
                 (cat === 'all' || cat === isMatch) ? c.classList.remove("hidden") : c.classList.add("hidden");
             });
